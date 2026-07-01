@@ -6,7 +6,7 @@
   <img src="https://img.shields.io/badge/Security-Encrypted_Core-blueviolet?style=for-the-badge" alt="Security">
 </p>
 
-یک پنل فوق‌العاده سبک، سریع و ریسپانسیو مبتنی بر **Cloudflare Workers** و دیتابیس ابری **Cloudflare D1** برای مدیریت اسکن هوشمند آی‌پي‌ها و تولید کانفیگ‌های سفارشی VLESS و Trojan به همراه خروجی سابسکریپشن (Subscription).
+یک پنل فوق‌العاده سبک، سریع و ریسپانسیو مبتنی بر **Cloudflare Workers** و دیتابیس ابری **Kv** برای مدیریت اسکن هوشمند آی‌پي‌ها و تولید کانفیگ‌های سفارشی VLESS و Trojan به همراه خروجی سابسکریپشن (Subscription).
 
 
 ## ✨ قابلیت‌های کلیدی / Features
