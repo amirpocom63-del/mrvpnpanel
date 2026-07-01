@@ -2,7 +2,6 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Cloudflare-Workers-F38020?style=for-the-badge&logo=Cloudflare&logoColor=white" alt="Cloudflare">
-  <img src="https://img.shields.io/badge/SQLite-D1_Database-003B57?style=for-the-badge&logo=SQLite&logoColor=white" alt="SQLite">
   <img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge" alt="Status">
   <img src="https://img.shields.io/badge/Security-Encrypted_Core-blueviolet?style=for-the-badge" alt="Security">
 </p>
