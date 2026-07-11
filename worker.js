@@ -899,7 +899,7 @@ var Router = {
     // ============================================
     if (url.pathname === "/api/update-check") {
       try {
-        const response = await fetch("https://api.github.com/repos/MrVpnPanel/panel/releases/latest");
+        const response = await fetch("https://raw.githubusercontent.com/amirpocom63-del/mrvpnpanel/refs/heads/main/worker.js");
         if (!response.ok) throw new Error("Failed to fetch");
         const data = await response.json();
         const latestVersion = data.tag_name || data.name || "v3.0.0";
@@ -2648,7 +2648,7 @@ var HTML_TEMPLATES = {
                 <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.94-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.37.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .24z"/></svg>
                 Telegram
             </a>
-            <span>@MrVpnPanel</span>
+            <span>@MrVpn294</span>
         </div>
     </div>
 </body>
@@ -3043,7 +3043,7 @@ var HTML_TEMPLATES = {
                 </div>
                 <div class="mt-3 flex items-center justify-between text-xs text-zinc-500">
                     <span>v3.0.0</span>
-                    <span>@MrVpnPanel</span>
+                    <span>@MrVpn294</span>
                 </div>
             </div>
         </div>
@@ -4755,7 +4755,7 @@ var HTML_TEMPLATES = {
             </div>
             <h1>Subscription Status</h1>
             <p class="username" id="display-username"></p>
-            <p class="brand-tag">@MrVpnPanel</p>
+            <p class="brand-tag">@MrVpn294</p>
         </div>
         <div id="status-card" class="status-badge status-active">
             <span id="status-text">Loading status...</span>
@@ -4899,7 +4899,7 @@ var HTML_TEMPLATES = {
             var u = window.statusUser;
             if (!u) return;
             
-            document.getElementById('display-username').innerText = '@' + u.username + ' | ' + u.port + ' | @MrVpnPanel';
+            document.getElementById('display-username').innerText = '@' + u.username + ' | ' + u.port + ' | @MrVpn294';
             
             var usedGb = u.used_gb || 0;
             var limitGb = u.limit_gb;
