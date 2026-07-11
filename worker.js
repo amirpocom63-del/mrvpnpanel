@@ -1,3 +1,4970 @@
+var __defProp = Object.defineProperty;
+var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
 
-// @ًQomaris1
-let e=77647,t=88062,r=15678,n=23895,i=13022,o=72266,s=22361,a=24509,c=7841,u=21745,l=61620,d=95689,f=22284,h=32254,p=91727,m=39831,g=30355,y=73554,b=78702,w=60343,v=46677,k=52737,S=59834,x=60763,A=56737,_=4834,C=38233,T=74112,P=8459,E=66967,I=40809,R=35788,z=21280,D=73887,O=19948,U=47327,L=65096,N=80353,M=83332,B=45567,W=53971,j=54241,H=28356,F=77095,K=43391,J=443,V=53381,Z=22613,G=64498,q=76658,Q=52119,Y=78936,X=18917,$=36625,ee=53933,te=62437,re=45383,ne=48115,ie=11908,oe=23796,se=48987,ae=26533,ce=101,ue=60999,le=88560,de=15332,fe=10610,he=18829,pe=24454,me=57291,ge=55635,ye=37651,be=87970,we=13075,ve=30759,ke=95815,Se=82454,xe=33509,Ae=30234,_e=87465,Ce=28357,Te=42926,Pe=33821,Ee=21969,Ie=81414,Re=32801,ze=10954,De=67532,Oe=44829,Ue=10454,Le=89740,Ne=16468,Me=74642,Be=57760,We=31326,je=20930,He=14259,Fe=39352,Ke=19780,Je=37488,Ve=34312,Ze=30548,Ge=78023,qe=86081,Qe=77243,Ye=56448,Xe=53645,$e=27404,et=89296,tt=17727,rt=28529;function nt(){return 302}function it(){return 915}function ot(){return 777}function st(){return 116}function at(){return 639}function ct(){return 99}function ut(){return 398}function lt(){return 465}function dt(){return 582}function ft(){return 893}function ht(){return 364}function pt(){return 579}function mt(){return 864}function gt(){return 806}function yt(){return 190}function bt(){return 777}function wt(){return 286}function vt(){return 368}function kt(){return 369}function St(){return 688}function xt(){return 203}function At(){return 633}function _t(){return 749}function Ct(){return 626}function Tt(){return 7}function Pt(){return 124}function Et(){return 782}function It(){return 790}function Rt(){return 549}function zt(){return 719}function Dt(){return 767}function Ot(){return 836}function Ut(){return 464}function Lt(){return 949}function Nt(){return 342}function Mt(){return 825}function Bt(){return 951}function Wt(){return 612}function jt(){return 977}function Ht(){return 561}function Ft(){return 350}function Kt(){return 653}function Jt(){return 510}function Vt(){return 376}function Zt(){return 92}function Gt(){return 307}function qt(){return 717}function Qt(){return 230}function Yt(){return 628}function Xt(){return 374}function $t(){return 206}function er(){return 219}function tr(){return 753}function rr(){return 699}function nr(){return 374}function ir(){return 498}function or(){return 654}function sr(){return 366}function ar(){return 340}function cr(){return 396}function ur(){return 318}function lr(){return 961}function dr(){return 48}function fr(){return 342}function hr(){return 341}function pr(){return 309}function mr(){return 660}function gr(){return 931}function yr(){return 671}function br(){return 201}function wr(){return 718}function vr(){return 840}function kr(){return 561}function Sr(){return 387}function xr(){return 717}function Ar(){return 315}function _r(){return 374}function Cr(){return 591}function Tr(){return 466}function Pr(){return 269}function Er(){return 920}function Ir(){return 125}function Rr(){return 783}function zr(){return 755}function Dr(){return 110}function Or(){return 461}function Ur(){return 737}function Lr(){return 493}function Nr(){return 149}function Mr(){return 47}function Br(){return 474}function Wr(){return 601}function jr(){return 461}function Hr(){return 847}function Fr(){return 394}function Kr(){return 524}function Jr(){return 638}function Vr(){return 159}function Zr(){return 816}function Gr(){return 718}function qr(){return 637}function Qr(){return 205}function Yr(){return 700}function Xr(){return 622}function $r(){return 342}function en(){return 769}function tn(){return 127}function rn(){return 19}function nn(){return 45}function on(){return 357}function sn(){return 813}function an(){return 518}function cn(){return 141}function un(){return 763}function ln(){return 44}function dn(){return 702}function fn(){return 224}function hn(){return 323}function pn(){return 414}function mn(){return 950}function gn(){return 330}function yn(){return 913}function bn(){return 699}function wn(){return 8}function vn(){return 233}function kn(){return 33}function Sn(){return 789}function xn(){return 673}function An(){return 514}function _n(){return 745}function Cn(){return 559}function Tn(){return 450}function Pn(){return 339}function En(){return 754}function In(){return 910}function Rn(){return 509}function zn(){return 527}function Dn(){return 172}function On(){return 995}function Un(){return 324}function Ln(){return 634}function Nn(){return 950}function Mn(){return 604}function Bn(){return 273}function Wn(){return 351}function jn(){return 941}function Hn(){return 256}function Fn(){return 165}function Kn(){return 417}function Jn(){return 176}function Vn(){return 74}function Zn(){return 661}function Gn(){return 442}function qn(){return 640}function Qn(){return 936}function Yn(){return 443}function Xn(){return 650}function $n(){return 913}function ei(){return 763}function ti(){return 175}function ri(){return 941}function ni(){return 868}function ii(){return 287}function oi(){return 390}function si(){return 411}function ai(){return 386}function ci(){return 76}function ui(){return 560}function li(){return 858}function di(){return 340}function fi(){return 263}function hi(){return 798}function pi(){return 266}function mi(){return 203}function gi(){return 306}function yi(){return 943}function bi(){return 549}function wi(){return 318}function vi(){return 914}function ki(){return 767}function Si(){return 561}function xi(){return 814}function Ai(){return 988}function _i(){return 284}function Ci(){return 49}function Ti(){return 898}function Pi(){return 505}function Ei(){return 870}function Ii(){return 104}function Ri(){return 37}function zi(){return 433}function Di(){return 834}function Oi(){return 75}function Ui(){return 633}function Li(){return 215}function Ni(){return 852}function Mi(){return 480}function Bi(){return 243}function Wi(){return 190}function ji(){return 30}function Hi(){return 752}function Fi(){return 631}function Ki(){return 286}function Ji(){return 987}function Vi(){return 356}function Zi(){return 374}function Gi(){return 680}function qi(){return 232}function Qi(){return 703}function Yi(){return 367}function Xi(){return 939}function $i(){return 869}function eo(){return 233}function to(){return 777}function ro(){return 98}function no(){return 23}function io(){return 371}function oo(){return 168}function so(){return 680}function ao(){return 277}function co(){return 334}function uo(){return 82}function lo(){return 22}function fo(){return 24}function ho(){return 39}function po(){return 916}function mo(){return 620}function go(){return 232}function yo(){return 663}function bo(){return 287}function wo(){return 15}function vo(){return 726}function ko(){return 770}function So(){return 56}function xo(){return 40}function Ao(){return 818}function _o(){return 208}function Co(){return 919}function To(){return 942}function Po(){return 375}function Eo(){return 417}function Io(){return 41}function Ro(){return 449}function zo(){return 682}function Do(){return 343}function Oo(){return 704}function Uo(){return 172}function Lo(){return 213}function No(){return 416}function Mo(){return 271}function Bo(){return 432}function Wo(){return 852}function jo(){return 485}function Ho(){return 490}function Fo(){return 712}function Ko(){return 862}function Jo(){return 380}function Vo(){return 189}function Zo(){return 492}function Go(){return 78}function qo(){return 568}function Qo(){return 294}function Yo(){return 991}function Xo(){return 747}function $o(){return 418}function es(){return 584}function ts(){return 154}function rs(){return 997}function ns(){return 306}function is(){return 294}function os(){return 483}function ss(){return 543}function as(){return 531}function cs(){return 837}function us(){return 935}function ls(){return 185}function ds(){return 724}function fs(){return 341}function hs(){return 791}function ps(){return 552}function ms(){return 702}function gs(){return 708}function ys(){return 285}function bs(){return 97}function ws(){return 431}function vs(){return 877}function ks(){return 960}function Ss(){return 14}function xs(){return 351}function As(){return 179}function _s(){return 224}function Cs(){return 891}function Ts(){return 97}function Ps(){return 298}function Es(){return 945}function Is(){return 243}function Rs(){return 340}function zs(){return 677}function Ds(){return 891}function Os(){return 605}function Us(){return 667}function Ls(){return 753}function Ns(){return 242}function Ms(){return 447}function Bs(){return 824}function Ws(){return 509}function js(){return 940}function Hs(){return 876}function Fs(){return 612}function Ks(){return 237}function Js(){return 945}function Vs(){return 707}function Zs(){return 944}function Gs(){return 856}function qs(){return 659}function Qs(){return 923}function Ys(){return 495}function Xs(){return 433}function $s(){return 692}function ea(){return 664}function ta(){return 544}function ra(){return 599}function na(){return 780}function ia(){return 719}function oa(){return 420}function sa(){return 684}function aa(){return 213}function ca(){return 181}function ua(){return 285}function la(){return 62}function da(){return 602}function fa(){return 607}function ha(){return 823}function pa(){return 593}function ma(){return 52}function ga(){return 236}function ya(){return 95}function ba(){return 728}function wa(){return 774}function va(){return 251}function ka(){return 28}function Sa(){return 80}function xa(){return 613}function Aa(){return 853}function _a(){return 968}function Ca(){return 995}function Ta(){return 613}function Pa(){return 424}function Ea(){return 361}function Ia(){return 875}function Ra(){return 478}function za(){return 184}function Da(){return 317}function Oa(){return 145}function Ua(){return 64}function La(){return 752}function Na(){return 39}function Ma(){return 729}function Ba(){return 227}function Wa(){return 374}function ja(){return 768}function Ha(){return 781}function Fa(){return 146}function Ka(){return 28}function Ja(){return 683}function Va(){return 574}function Za(){return 757}function Ga(){return 206}function qa(){return 970}function Qa(){return 281}function Ya(){return 630}function Xa(){return 768}function $a(){return 767}function ec(){return 840}function tc(){return 931}function rc(){return 471}function nc(){return 662}function ic(){return 386}function oc(){return 608}function sc(){return 590}function ac(){return 869}function cc(){return 688}function uc(){return 652}function lc(){return 37}function dc(){return 37}function fc(){return 873}function hc(){return 626}function pc(){return 278}function mc(){return 774}function gc(){return 351}function yc(){return 40}function bc(){return 736}function wc(){return 192}function vc(){return 85}function kc(){return 40}function Sc(){return 328}function xc(){return 668}function Ac(){return 955}function _c(){return 313}function Cc(){return 624}function Tc(){return 431}function Pc(){return 394}function Ec(){return 708}function Ic(){return 635}function Rc(){return 590}function zc(){return 633}function Dc(){return 634}function Oc(){return 784}function Uc(){return 565}function Lc(){return 98}function Nc(){return 954}function Mc(){return 912}function Bc(){return 650}function Wc(){return 696}function jc(){return 98}function Hc(){return 498}function Fc(){return 28}function Kc(){return 860}function Jc(){return 627}function Vc(){return 846}function Zc(){return 57}function Gc(){return 188}function qc(){return 354}function Qc(){return 771}function Yc(){return 564}function Xc(){return 145}function $c(){return 383}function eu(){return 452}function tu(){return 973}function ru(){return 332}function nu(){return 866}var iu=Object.create,ou=Object.defineProperty,su=Object.getOwnPropertyDescriptor,au=Object.getOwnPropertyNames,cu=Object.getPrototypeOf,uu=Object.prototype.hasOwnProperty,lu=(e=>"undefined"!=typeof require?require:"undefined"!=typeof Proxy?new Proxy(e,{get:(e,t)=>("undefined"!=typeof require?require:e)[t]}):e)(function(e){if("undefined"!=typeof require)return require.apply(this,arguments);throw Error('Dynamic require of "'+e+'" is not supported')}),du,fu=(e,t,r,n)=>{if(t&&"object"==typeof t||"function"==typeof t)for(let i of au(t))uu.call(e,i)||i===r||ou(e,i,{get:()=>t[i],enumerable:!(n=su(t,i))||n.enumerable});return e},hu=(e,t,r)=>(r=null!=e?iu(cu(e)):{},fu(!t&&e&&e.__esModule?r:ou(r,"default",{value:e,enumerable:!0}),e)),pu=((e,t)=>function r(){try{return t||(0,e[au(e)[0]])((t={exports:{}}).exports,t),t.exports}catch(e){throw t=0,e}})({"node_modules/jszip/dist/jszip.min.js"(e,t){!function(r){"object"==typeof e&&void 0!==t?t.exports=r():"function"==typeof define&&define.amd?define([],r):("undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this).JSZip=r()}(function(){return function e(t,r,n){function i(s,a){if(!r[s]){if(!t[s]){var c="function"==typeof lu&&lu;if(!a&&c)return c(s,!0);if(o)return o(s,!0);var u=new Error("Cannot find module '"+s+"'");throw u.code="MODULE_NOT_FOUND",u}var l=r[s]={exports:{}};t[s][0].call(l.exports,function(e){var r;return i(t[s][1][e]||e)},l,l.exports,e,t,r,n)}return r[s].exports}for(var o="function"==typeof lu&&lu,s=0;s<n.length;s++)i(n[s]);return i}({1:[function(e,t,r){var n=e("./utils"),i=e("./support"),o="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";r.encode=function(e){for(var t,r,i,s,a,c,u,l=[],d=0,f=e.length,h=f,p="string"!==n.getTypeOf(e);d<e.length;)h=f-d,i=p?(t=e[d++],r=d<f?e[d++]:0,d<f?e[d++]:0):(t=e.charCodeAt(d++),r=d<f?e.charCodeAt(d++):0,d<f?e.charCodeAt(d++):0),s=t>>2,a=(3&t)<<4|r>>4,c=1<h?(15&r)<<2|i>>6:64,u=2<h?63&i:64,l.push(o.charAt(s)+o.charAt(a)+o.charAt(c)+o.charAt(u));return l.join("")},r.decode=function(e){var t,r,n,s,a,c,u=0,l=0,d="data:";if(e.substr(0,5)===d)throw new Error("Invalid base64 input, it looks like a data url.");var f,h=3*(e=e.replace(/[^A-Za-z0-9+/=]/g,"")).length/4;if(e.charAt(e.length-1)===o.charAt(64)&&h--,e.charAt(e.length-2)===o.charAt(64)&&h--,h%1!=0)throw new Error("Invalid base64 input, bad content length.");for(f=i.uint8array?new Uint8Array(0|h):new Array(0|h);u<e.length;)t=o.indexOf(e.charAt(u++))<<2|(s=o.indexOf(e.charAt(u++)))>>4,r=(15&s)<<4|(a=o.indexOf(e.charAt(u++)))>>2,n=(3&a)<<6|(c=o.indexOf(e.charAt(u++))),f[l++]=t,64!==a&&(f[l++]=r),64!==c&&(f[l++]=n);return f}},{"./support":30,"./utils":32}],2:[function(e,t,r){var n=e("./external"),i=e("./stream/DataWorker"),o=e("./stream/Crc32Probe"),s=e("./stream/DataLengthProbe");function a(e,t,r,n,i){this.compressedSize=e,this.uncompressedSize=t,this.crc32=r,this.compression=n,this.compressedContent=i}a.prototype={getContentWorker:function(){var e=new i(n.Promise.resolve(this.compressedContent)).pipe(this.compression.uncompressWorker()).pipe(new s("data_length")),t=this;return e.on("end",function(){if(this.streamInfo.data_length!==t.uncompressedSize)throw new Error("Bug : uncompressed data size mismatch")}),e},getCompressedWorker:function(){return new i(n.Promise.resolve(this.compressedContent)).withStreamInfo("compressedSize",this.compressedSize).withStreamInfo("uncompressedSize",this.uncompressedSize).withStreamInfo("crc32",this.crc32).withStreamInfo("compression",this.compression)}},a.createWorkerFrom=function(e,t,r){return e.pipe(new o).pipe(new s("uncompressedSize")).pipe(t.compressWorker(r)).pipe(new s("compressedSize")).withStreamInfo("compression",t)},t.exports=a},{"./external":6,"./stream/Crc32Probe":25,"./stream/DataLengthProbe":26,"./stream/DataWorker":27}],3:[function(e,t,r){var n=e("./stream/GenericWorker");r.STORE={magic:"\0\0",compressWorker:function(){return new n("STORE compression")},uncompressWorker:function(){return new n("STORE decompression")}},r.DEFLATE=e("./flate")},{"./flate":7,"./stream/GenericWorker":28}],4:[function(e,t,r){var n=e("./utils"),i=function(){for(var e,t=[],r=0;r<256;r++){e=r;for(var n=0;n<8;n++)e=1&e?3988292384^e>>>1:e>>>1;t[r]=e}return t}();t.exports=function(e,t){return void 0!==e&&e.length?"string"!==n.getTypeOf(e)?function(e,t,r,n){var o=i,s=0+r;e^=-1;for(var a=0;a<s;a++)e=e>>>8^o[255&(e^t[a])];return-1^e}(0|t,e,e.length,0):function(e,t,r,n){var o=i,s=0+r;e^=-1;for(var a=0;a<s;a++)e=e>>>8^o[255&(e^t.charCodeAt(a))];return-1^e}(0|t,e,e.length,0):0}},{"./utils":32}],5:[function(e,t,r){r.base64=!1,r.binary=!1,r.dir=!1,r.createFolders=!0,r.date=null,r.compression=null,r.compressionOptions=null,r.comment=null,r.unixPermissions=null,r.dosPermissions=null},{}],6:[function(e,t,r){var n=null;n="undefined"!=typeof Promise?Promise:e("lie"),t.exports={Promise:n}},{lie:37}],7:[function(e,t,r){var n="undefined"!=typeof Uint8Array&&"undefined"!=typeof Uint16Array&&"undefined"!=typeof Uint32Array,i=e("pako"),o=e("./utils"),s=e("./stream/GenericWorker"),a=n?"uint8array":"array";function c(e,t){s.call(this,"FlateWorker/"+e),this._pako=null,this._pakoAction=e,this._pakoOptions=t,this.meta={}}r.magic="\b\0",o.inherits(c,s),c.prototype.processChunk=function(e){this.meta=e.meta,null===this._pako&&this._createPako(),this._pako.push(o.transformTo(a,e.data),!1)},c.prototype.flush=function(){s.prototype.flush.call(this),null===this._pako&&this._createPako(),this._pako.push([],!0)},c.prototype.cleanUp=function(){s.prototype.cleanUp.call(this),this._pako=null},c.prototype._createPako=function(){this._pako=new i[this._pakoAction]({raw:!0,level:this._pakoOptions.level||-1});var e=this;this._pako.onData=function(t){e.push({data:t,meta:e.meta})}},r.compressWorker=function(e){return new c("Deflate",e)},r.uncompressWorker=function(){return new c("Inflate",{})}},{"./stream/GenericWorker":28,"./utils":32,pako:38}],8:[function(e,t,r){function n(e,t){var r,n="";for(r=0;r<t;r++)n+=String.fromCharCode(255&e),e>>>=8;return n}function i(e,t,r,i,s,l){var d,f,h=e.file,p=e.compression,m=l!==a.utf8encode,g=o.transformTo("string",l(h.name)),y=o.transformTo("string",a.utf8encode(h.name)),b=h.comment,w=o.transformTo("string",l(b)),v=o.transformTo("string",a.utf8encode(b)),k=y.length!==h.name.length,S=v.length!==b.length,x="",A="",_="",C=h.dir,T=h.date,P={crc32:0,compressedSize:0,uncompressedSize:0};t&&!r||(P.crc32=e.crc32,P.compressedSize=e.compressedSize,P.uncompressedSize=e.uncompressedSize);var E=0;t&&(E|=8),m||!k&&!S||(E|=2048);var I=0,R=0,z,D,O;C&&(I|=16),"UNIX"===s?(R=798,I|=(z=h.unixPermissions,D=C,O=z,z||(O=D?16893:33204),(65535&O)<<16)):(R=20,I|=function(e){return 63&(e||0)}(h.dosPermissions)),d=T.getUTCHours(),d<<=6,d|=T.getUTCMinutes(),d<<=5,d|=T.getUTCSeconds()/2,f=T.getUTCFullYear()-1980,f<<=4,f|=T.getUTCMonth()+1,f<<=5,f|=T.getUTCDate(),k&&(A=n(1,1)+n(c(g),4)+y,x+="up"+n(A.length,2)+A),S&&(_=n(1,1)+n(c(w),4)+v,x+="uc"+n(_.length,2)+_);var U="";return U+="\n\0",U+=n(E,2),U+=p.magic,U+=n(d,2),U+=n(f,2),U+=n(P.crc32,4),U+=n(P.compressedSize,4),U+=n(P.uncompressedSize,4),U+=n(g.length,2),U+=n(x.length,2),{fileRecord:u.LOCAL_FILE_HEADER+U+g+x,dirRecord:u.CENTRAL_FILE_HEADER+n(R,2)+U+n(w.length,2)+"\0\0\0\0"+n(I,4)+n(i,4)+g+x+w}}var o=e("../utils"),s=e("../stream/GenericWorker"),a=e("../utf8"),c=e("../crc32"),u=e("../signature");function l(e,t,r,n){s.call(this,"ZipFileWorker"),this.bytesWritten=0,this.zipComment=t,this.zipPlatform=r,this.encodeFileName=n,this.streamFiles=e,this.accumulate=!1,this.contentBuffer=[],this.dirRecords=[],this.currentSourceOffset=0,this.entriesCount=0,this.currentFile=null,this._sources=[]}o.inherits(l,s),l.prototype.push=function(e){var t=e.meta.percent||0,r=this.entriesCount,n=this._sources.length;this.accumulate?this.contentBuffer.push(e):(this.bytesWritten+=e.data.length,s.prototype.push.call(this,{data:e.data,meta:{currentFile:this.currentFile,percent:r?(t+100*(r-n-1))/r:100}}))},l.prototype.openedSource=function(e){this.currentSourceOffset=this.bytesWritten,this.currentFile=e.file.name;var t=this.streamFiles&&!e.file.dir;if(t){var r=i(e,t,!1,this.currentSourceOffset,this.zipPlatform,this.encodeFileName);this.push({data:r.fileRecord,meta:{percent:0}})}else this.accumulate=!0},l.prototype.closedSource=function(e){this.accumulate=!1;var t=this.streamFiles&&!e.file.dir,r=i(e,t,!0,this.currentSourceOffset,this.zipPlatform,this.encodeFileName),o;if(this.dirRecords.push(r.dirRecord),t)this.push({data:(o=e,u.DATA_DESCRIPTOR+n(o.crc32,4)+n(o.compressedSize,4)+n(o.uncompressedSize,4)),meta:{percent:100}});else for(this.push({data:r.fileRecord,meta:{percent:0}});this.contentBuffer.length;)this.push(this.contentBuffer.shift());this.currentFile=null},l.prototype.flush=function(){for(var e=this.bytesWritten,t=0;t<this.dirRecords.length;t++)this.push({data:this.dirRecords[t],meta:{percent:100}});var r=this.bytesWritten-e,i=(s=this.dirRecords.length,a=r,c=e,l=this.zipComment,d=this.encodeFileName,f=o.transformTo("string",d(l)),u.CENTRAL_DIRECTORY_END+"\0\0\0\0"+n(s,2)+n(s,2)+n(a,4)+n(c,4)+n(f.length,2)+f),s,a,c,l,d,f;this.push({data:i,meta:{percent:100}})},l.prototype.prepareNextSource=function(){this.previous=this._sources.shift(),this.openedSource(this.previous.streamInfo),this.isPaused?this.previous.pause():this.previous.resume()},l.prototype.registerPrevious=function(e){this._sources.push(e);var t=this;return e.on("data",function(e){t.processChunk(e)}),e.on("end",function(){t.closedSource(t.previous.streamInfo),t._sources.length?t.prepareNextSource():t.end()}),e.on("error",function(e){t.error(e)}),this},l.prototype.resume=function(){return!!s.prototype.resume.call(this)&&(!this.previous&&this._sources.length?(this.prepareNextSource(),!0):this.previous||this._sources.length||this.generatedError?void 0:(this.end(),!0))},l.prototype.error=function(e){var t=this._sources;if(!s.prototype.error.call(this,e))return!1;for(var r=0;r<t.length;r++)try{t[r].error(e)}catch(e){}return!0},l.prototype.lock=function(){s.prototype.lock.call(this);for(var e=this._sources,t=0;t<e.length;t++)e[t].lock()},t.exports=l},{"../crc32":4,"../signature":23,"../stream/GenericWorker":28,"../utf8":31,"../utils":32}],9:[function(e,t,r){var n=e("../compressions"),i=e("./ZipFileWorker");r.generateWorker=function(e,t,r){var o=new i(t.streamFiles,r,t.platform,t.encodeFileName),s=0;try{e.forEach(function(e,r){s++;var i=function(e,t){var r=e||t,i=n[r];if(!i)throw new Error(r+" is not a valid compression method !");return i}(r.options.compression,t.compression),a=r.options.compressionOptions||t.compressionOptions||{},c=r.dir,u=r.date;r._compressWorker(i,a).withStreamInfo("file",{name:e,dir:c,date:u,comment:r.comment||"",unixPermissions:r.unixPermissions,dosPermissions:r.dosPermissions}).pipe(o)}),o.entriesCount=s}catch(e){o.error(e)}return o}},{"../compressions":3,"./ZipFileWorker":8}],10:[function(e,t,r){function n(){if(!(this instanceof n))return new n;if(arguments.length)throw new Error("The constructor with parameters has been removed in JSZip 3.0, please check the upgrade guide.");this.files=Object.create(null),this.comment=null,this.root="",this.clone=function(){var e=new n;for(var t in this)"function"!=typeof this[t]&&(e[t]=this[t]);return e}}(n.prototype=e("./object")).loadAsync=e("./load"),n.support=e("./support"),n.defaults=e("./defaults"),n.version="3.10.1",n.loadAsync=function(e,t){return(new n).loadAsync(e,t)},n.external=e("./external"),t.exports=n},{"./defaults":5,"./external":6,"./load":11,"./object":15,"./support":30}],11:[function(e,t,r){var n=e("./utils"),i=e("./external"),o=e("./utf8"),s=e("./zipEntries"),a=e("./stream/Crc32Probe"),c=e("./nodejsUtils");function u(e){return new i.Promise(function(t,r){var n=e.decompressed.getContentWorker().pipe(new a);n.on("error",function(e){r(e)}).on("end",function(){n.streamInfo.crc32!==e.decompressed.crc32?r(new Error("Corrupted zip : CRC32 mismatch")):t()}).resume()})}t.exports=function(e,t){var r=this;return t=n.extend(t||{},{base64:!1,checkCRC32:!1,optimizedBinaryString:!1,createFolders:!1,decodeFileName:o.utf8decode}),c.isNode&&c.isStream(e)?i.Promise.reject(new Error("JSZip can't accept a stream when loading a zip file.")):n.prepareContent("the loaded zip file",e,!0,t.optimizedBinaryString,t.base64).then(function(e){var r=new s(t);return r.load(e),r}).then(function(e){var r=[i.Promise.resolve(e)],n=e.files;if(t.checkCRC32)for(var o=0;o<n.length;o++)r.push(u(n[o]));return i.Promise.all(r)}).then(function(e){for(var i=e.shift(),o=i.files,s=0;s<o.length;s++){var a=o[s],c=a.fileNameStr,u=n.resolve(a.fileNameStr);r.file(u,a.decompressed,{binary:!0,optimizedBinaryString:!0,date:a.date,dir:a.dir,comment:a.fileCommentStr.length?a.fileCommentStr:null,unixPermissions:a.unixPermissions,dosPermissions:a.dosPermissions,createFolders:t.createFolders}),a.dir||(r.file(u).unsafeOriginalName=c)}return i.zipComment.length&&(r.comment=i.zipComment),r})}},{"./external":6,"./nodejsUtils":14,"./stream/Crc32Probe":25,"./utf8":31,"./utils":32,"./zipEntries":33}],12:[function(e,t,r){var n=e("../utils"),i=e("../stream/GenericWorker");function o(e,t){i.call(this,"Nodejs stream input adapter for "+e),this._upstreamEnded=!1,this._bindStream(t)}n.inherits(o,i),o.prototype._bindStream=function(e){var t=this;(this._stream=e).pause(),e.on("data",function(e){t.push({data:e,meta:{percent:0}})}).on("error",function(e){t.isPaused?this.generatedError=e:t.error(e)}).on("end",function(){t.isPaused?t._upstreamEnded=!0:t.end()})},o.prototype.pause=function(){return!!i.prototype.pause.call(this)&&(this._stream.pause(),!0)},o.prototype.resume=function(){return!!i.prototype.resume.call(this)&&(this._upstreamEnded?this.end():this._stream.resume(),!0)},t.exports=o},{"../stream/GenericWorker":28,"../utils":32}],13:[function(e,t,r){var n=e("readable-stream").Readable;function i(e,t,r){n.call(this,t),this._helper=e;var i=this;e.on("data",function(e,t){i.push(e)||i._helper.pause(),r&&r(t)}).on("error",function(e){i.emit("error",e)}).on("end",function(){i.push(null)})}e("../utils").inherits(i,n),i.prototype._read=function(){this._helper.resume()},t.exports=i},{"../utils":32,"readable-stream":16}],14:[function(e,t,r){t.exports={isNode:"undefined"!=typeof Buffer,newBufferFrom:function(e,t){if(Buffer.from&&Buffer.from!==Uint8Array.from)return Buffer.from(e,t);if("number"==typeof e)throw new Error('The "data" argument must not be a number');return new Buffer(e,t)},allocBuffer:function(e){if(Buffer.alloc)return Buffer.alloc(e);var t=new Buffer(e);return t.fill(0),t},isBuffer:function(e){return Buffer.isBuffer(e)},isStream:function(e){return e&&"function"==typeof e.on&&"function"==typeof e.pause&&"function"==typeof e.resume}}},{}],15:[function(e,t,r){function n(e,t,r){var n,i=o.getTypeOf(t),a=o.extend(r||{},c);a.date=a.date||new Date,null!==a.compression&&(a.compression=a.compression.toUpperCase()),"string"==typeof a.unixPermissions&&(a.unixPermissions=parseInt(a.unixPermissions,8)),a.unixPermissions&&16384&a.unixPermissions&&(a.dir=!0),a.dosPermissions&&16&a.dosPermissions&&(a.dir=!0),a.dir&&(e=m(e)),a.createFolders&&(n=p(e))&&g.call(this,n,!0);var d="string"===i&&!1===a.binary&&!1===a.base64;r&&void 0!==r.binary||(a.binary=!d),(t instanceof u&&0===t.uncompressedSize||a.dir||!t||0===t.length)&&(a.base64=!1,a.binary=!0,t="",a.compression="STORE",i="string");var y=null;y=t instanceof u||t instanceof s?t:f.isNode&&f.isStream(t)?new h(e,t):o.prepareContent(e,t,a.binary,a.optimizedBinaryString,a.base64);var b=new l(e,y,a);this.files[e]=b}var i=e("./utf8"),o=e("./utils"),s=e("./stream/GenericWorker"),a=e("./stream/StreamHelper"),c=e("./defaults"),u=e("./compressedObject"),l=e("./zipObject"),d=e("./generate"),f=e("./nodejsUtils"),h=e("./nodejs/NodejsStreamInputAdapter"),p=function(e){"/"===e.slice(-1)&&(e=e.substring(0,e.length-1));var t=e.lastIndexOf("/");return 0<t?e.substring(0,t):""},m=function(e){return"/"!==e.slice(-1)&&(e+="/"),e},g=function(e,t){return t=void 0!==t?t:c.createFolders,e=m(e),this.files[e]||n.call(this,e,null,{dir:!0,createFolders:t}),this.files[e]};function y(e){return"[object RegExp]"===Object.prototype.toString.call(e)}var b={load:function(){throw new Error("This method has been removed in JSZip 3.0, please check the upgrade guide.")},forEach:function(e){var t,r,n;for(t in this.files)n=this.files[t],(r=t.slice(this.root.length,t.length))&&t.slice(0,this.root.length)===this.root&&e(r,n)},filter:function(e){var t=[];return this.forEach(function(r,n){e(r,n)&&t.push(n)}),t},file:function(e,t,r){if(1!==arguments.length)return e=this.root+e,n.call(this,e,t,r),this;if(y(e)){var i=e;return this.filter(function(e,t){return!t.dir&&i.test(e)})}var o=this.files[this.root+e];return o&&!o.dir?o:null},folder:function(e){if(!e)return this;if(y(e))return this.filter(function(t,r){return r.dir&&e.test(t)});var t=this.root+e,r=g.call(this,t),n=this.clone();return n.root=r.name,n},remove:function(e){e=this.root+e;var t=this.files[e];if(t||("/"!==e.slice(-1)&&(e+="/"),t=this.files[e]),t&&!t.dir)delete this.files[e];else for(var r=this.filter(function(t,r){return r.name.slice(0,e.length)===e}),n=0;n<r.length;n++)delete this.files[r[n].name];return this},generate:function(){throw new Error("This method has been removed in JSZip 3.0, please check the upgrade guide.")},generateInternalStream:function(e){var t,r={};try{if((r=o.extend(e||{},{streamFiles:!1,compression:"STORE",compressionOptions:null,type:"",platform:"DOS",comment:null,mimeType:"application/zip",encodeFileName:i.utf8encode})).type=r.type.toLowerCase(),r.compression=r.compression.toUpperCase(),"binarystring"===r.type&&(r.type="string"),!r.type)throw new Error("No output type specified.");o.checkSupport(r.type),"darwin"!==r.platform&&"freebsd"!==r.platform&&"linux"!==r.platform&&"sunos"!==r.platform||(r.platform="UNIX"),"win32"===r.platform&&(r.platform="DOS");var n=r.comment||this.comment||"";t=d.generateWorker(this,r,n)}catch(e){(t=new s("error")).error(e)}return new a(t,r.type||"string",r.mimeType)},generateAsync:function(e,t){return this.generateInternalStream(e).accumulate(t)},generateNodeStream:function(e,t){return(e=e||{}).type||(e.type="nodebuffer"),this.generateInternalStream(e).toNodejsStream(t)}};t.exports=b},{"./compressedObject":2,"./defaults":5,"./generate":9,"./nodejs/NodejsStreamInputAdapter":12,"./nodejsUtils":14,"./stream/GenericWorker":28,"./stream/StreamHelper":29,"./utf8":31,"./utils":32,"./zipObject":35}],16:[function(e,t,r){t.exports=e("stream")},{stream:void 0}],17:[function(e,t,r){var n=e("./DataReader");function i(e){n.call(this,e);for(var t=0;t<this.data.length;t++)e[t]=255&e[t]}e("../utils").inherits(i,n),i.prototype.byteAt=function(e){return this.data[this.zero+e]},i.prototype.lastIndexOfSignature=function(e){for(var t=e.charCodeAt(0),r=e.charCodeAt(1),n=e.charCodeAt(2),i=e.charCodeAt(3),o=this.length-4;0<=o;--o)if(this.data[o]===t&&this.data[o+1]===r&&this.data[o+2]===n&&this.data[o+3]===i)return o-this.zero;return-1},i.prototype.readAndCheckSignature=function(e){var t=e.charCodeAt(0),r=e.charCodeAt(1),n=e.charCodeAt(2),i=e.charCodeAt(3),o=this.readData(4);return t===o[0]&&r===o[1]&&n===o[2]&&i===o[3]},i.prototype.readData=function(e){if(this.checkOffset(e),0===e)return[];var t=this.data.slice(this.zero+this.index,this.zero+this.index+e);return this.index+=e,t},t.exports=i},{"../utils":32,"./DataReader":18}],18:[function(e,t,r){var n=e("../utils");function i(e){this.data=e,this.length=e.length,this.index=0,this.zero=0}i.prototype={checkOffset:function(e){this.checkIndex(this.index+e)},checkIndex:function(e){if(this.length<this.zero+e||e<0)throw new Error("End of data reached (data length = "+this.length+", asked index = "+e+"). Corrupted zip ?")},setIndex:function(e){this.checkIndex(e),this.index=e},skip:function(e){this.setIndex(this.index+e)},byteAt:function(){},readInt:function(e){var t,r=0;for(this.checkOffset(e),t=this.index+e-1;t>=this.index;t--)r=(r<<8)+this.byteAt(t);return this.index+=e,r},readString:function(e){return n.transformTo("string",this.readData(e))},readData:function(){},lastIndexOfSignature:function(){},readAndCheckSignature:function(){},readDate:function(){var e=this.readInt(4);return new Date(Date.UTC(1980+(e>>25&127),(e>>21&15)-1,e>>16&31,e>>11&31,e>>5&63,(31&e)<<1))}},t.exports=i},{"../utils":32}],19:[function(e,t,r){var n=e("./Uint8ArrayReader");function i(e){n.call(this,e)}e("../utils").inherits(i,n),i.prototype.readData=function(e){this.checkOffset(e);var t=this.data.slice(this.zero+this.index,this.zero+this.index+e);return this.index+=e,t},t.exports=i},{"../utils":32,"./Uint8ArrayReader":21}],20:[function(e,t,r){var n=e("./DataReader");function i(e){n.call(this,e)}e("../utils").inherits(i,n),i.prototype.byteAt=function(e){return this.data.charCodeAt(this.zero+e)},i.prototype.lastIndexOfSignature=function(e){return this.data.lastIndexOf(e)-this.zero},i.prototype.readAndCheckSignature=function(e){return e===this.readData(4)},i.prototype.readData=function(e){this.checkOffset(e);var t=this.data.slice(this.zero+this.index,this.zero+this.index+e);return this.index+=e,t},t.exports=i},{"../utils":32,"./DataReader":18}],21:[function(e,t,r){var n=e("./ArrayReader");function i(e){n.call(this,e)}e("../utils").inherits(i,n),i.prototype.readData=function(e){if(this.checkOffset(e),0===e)return new Uint8Array(0);var t=this.data.subarray(this.zero+this.index,this.zero+this.index+e);return this.index+=e,t},t.exports=i},{"../utils":32,"./ArrayReader":17}],22:[function(e,t,r){var n=e("../utils"),i=e("../support"),o=e("./ArrayReader"),s=e("./StringReader"),a=e("./NodeBufferReader"),c=e("./Uint8ArrayReader");t.exports=function(e){var t=n.getTypeOf(e);return n.checkSupport(t),"string"!==t||i.uint8array?"nodebuffer"===t?new a(e):i.uint8array?new c(n.transformTo("uint8array",e)):new o(n.transformTo("array",e)):new s(e)}},{"../support":30,"../utils":32,"./ArrayReader":17,"./NodeBufferReader":19,"./StringReader":20,"./Uint8ArrayReader":21}],23:[function(e,t,r){r.LOCAL_FILE_HEADER="PK",r.CENTRAL_FILE_HEADER="PK",r.CENTRAL_DIRECTORY_END="PK",r.ZIP64_CENTRAL_DIRECTORY_LOCATOR="PK",r.ZIP64_CENTRAL_DIRECTORY_END="PK",r.DATA_DESCRIPTOR="PK\b"},{}],24:[function(e,t,r){var n=e("./GenericWorker"),i=e("../utils");function o(e){n.call(this,"ConvertWorker to "+e),this.destType=e}i.inherits(o,n),o.prototype.processChunk=function(e){this.push({data:i.transformTo(this.destType,e.data),meta:e.meta})},t.exports=o},{"../utils":32,"./GenericWorker":28}],25:[function(e,t,r){var n=e("./GenericWorker"),i=e("../crc32");function o(){n.call(this,"Crc32Probe"),this.withStreamInfo("crc32",0)}e("../utils").inherits(o,n),o.prototype.processChunk=function(e){this.streamInfo.crc32=i(e.data,this.streamInfo.crc32||0),this.push(e)},t.exports=o},{"../crc32":4,"../utils":32,"./GenericWorker":28}],26:[function(e,t,r){var n=e("../utils"),i=e("./GenericWorker");function o(e){i.call(this,"DataLengthProbe for "+e),this.propName=e,this.withStreamInfo(e,0)}n.inherits(o,i),o.prototype.processChunk=function(e){if(e){var t=this.streamInfo[this.propName]||0;this.streamInfo[this.propName]=t+e.data.length}i.prototype.processChunk.call(this,e)},t.exports=o},{"../utils":32,"./GenericWorker":28}],27:[function(e,t,r){var n=e("../utils"),i=e("./GenericWorker");function o(e){i.call(this,"DataWorker");var t=this;this.dataIsReady=!1,this.index=0,this.max=0,this.data=null,this.type="",this._tickScheduled=!1,e.then(function(e){t.dataIsReady=!0,t.data=e,t.max=e&&e.length||0,t.type=n.getTypeOf(e),t.isPaused||t._tickAndRepeat()},function(e){t.error(e)})}n.inherits(o,i),o.prototype.cleanUp=function(){i.prototype.cleanUp.call(this),this.data=null},o.prototype.resume=function(){return!!i.prototype.resume.call(this)&&(!this._tickScheduled&&this.dataIsReady&&(this._tickScheduled=!0,n.delay(this._tickAndRepeat,[],this)),!0)},o.prototype._tickAndRepeat=function(){this._tickScheduled=!1,this.isPaused||this.isFinished||(this._tick(),this.isFinished||(n.delay(this._tickAndRepeat,[],this),this._tickScheduled=!0))},o.prototype._tick=function(){if(this.isPaused||this.isFinished)return!1;var e=null,t=Math.min(this.max,this.index+16384);if(this.index>=this.max)return this.end();switch(this.type){case"string":e=this.data.substring(this.index,t);break;case"uint8array":e=this.data.subarray(this.index,t);break;case"array":case"nodebuffer":e=this.data.slice(this.index,t)}return this.index=t,this.push({data:e,meta:{percent:this.max?this.index/this.max*100:0}})},t.exports=o},{"../utils":32,"./GenericWorker":28}],28:[function(e,t,r){function n(e){this.name=e||"default",this.streamInfo={},this.generatedError=null,this.extraStreamInfo={},this.isPaused=!0,this.isFinished=!1,this.isLocked=!1,this._listeners={data:[],end:[],error:[]},this.previous=null}n.prototype={push:function(e){this.emit("data",e)},end:function(){if(this.isFinished)return!1;this.flush();try{this.emit("end"),this.cleanUp(),this.isFinished=!0}catch(e){this.emit("error",e)}return!0},error:function(e){return!this.isFinished&&(this.isPaused?this.generatedError=e:(this.isFinished=!0,this.emit("error",e),this.previous&&this.previous.error(e),this.cleanUp()),!0)},on:function(e,t){return this._listeners[e].push(t),this},cleanUp:function(){this.streamInfo=this.generatedError=this.extraStreamInfo=null,this._listeners=[]},emit:function(e,t){if(this._listeners[e])for(var r=0;r<this._listeners[e].length;r++)this._listeners[e][r].call(this,t)},pipe:function(e){return e.registerPrevious(this)},registerPrevious:function(e){if(this.isLocked)throw new Error("The stream '"+this+"' has already been used.");this.streamInfo=e.streamInfo,this.mergeStreamInfo(),this.previous=e;var t=this;return e.on("data",function(e){t.processChunk(e)}),e.on("end",function(){t.end()}),e.on("error",function(e){t.error(e)}),this},pause:function(){return!this.isPaused&&!this.isFinished&&(this.isPaused=!0,this.previous&&this.previous.pause(),!0)},resume:function(){if(!this.isPaused||this.isFinished)return!1;var e=this.isPaused=!1;return this.generatedError&&(this.error(this.generatedError),e=!0),this.previous&&this.previous.resume(),!e},flush:function(){},processChunk:function(e){this.push(e)},withStreamInfo:function(e,t){return this.extraStreamInfo[e]=t,this.mergeStreamInfo(),this},mergeStreamInfo:function(){for(var e in this.extraStreamInfo)Object.prototype.hasOwnProperty.call(this.extraStreamInfo,e)&&(this.streamInfo[e]=this.extraStreamInfo[e])},lock:function(){if(this.isLocked)throw new Error("The stream '"+this+"' has already been used.");this.isLocked=!0,this.previous&&this.previous.lock()},toString:function(){var e="Worker "+this.name;return this.previous?this.previous+" -> "+e:e}},t.exports=n},{}],29:[function(e,t,r){var n=e("../utils"),i=e("./ConvertWorker"),o=e("./GenericWorker"),s=e("../base64"),a=e("../support"),c=e("../external"),u=null;if(a.nodestream)try{u=e("../nodejs/NodejsStreamOutputAdapter")}catch(e){}function l(e,t){return new c.Promise(function(r,i){var o=[],a=e._internalType,c=e._outputType,u=e._mimeType;e.on("data",function(e,r){o.push(e),t&&t(r)}).on("error",function(e){o=[],i(e)}).on("end",function(){try{var e=function(e,t,r){switch(e){case"blob":return n.newBlob(n.transformTo("arraybuffer",t),r);case"base64":return s.encode(t);default:return n.transformTo(e,t)}}(c,function(e,t){var r,n=0,i=null,o=0;for(r=0;r<t.length;r++)o+=t[r].length;switch(e){case"string":return t.join("");case"array":return Array.prototype.concat.apply([],t);case"uint8array":for(i=new Uint8Array(o),r=0;r<t.length;r++)i.set(t[r],n),n+=t[r].length;return i;case"nodebuffer":return Buffer.concat(t);default:throw new Error("concat : unsupported type '"+e+"'")}}(a,o),u);r(e)}catch(e){i(e)}o=[]}).resume()})}function d(e,t,r){var s=t;switch(t){case"blob":case"arraybuffer":s="uint8array";break;case"base64":s="string"}try{this._internalType=s,this._outputType=t,this._mimeType=r,n.checkSupport(s),this._worker=e.pipe(new i(s)),e.lock()}catch(e){this._worker=new o("error"),this._worker.error(e)}}d.prototype={accumulate:function(e){return l(this,e)},on:function(e,t){var r=this;return"data"===e?this._worker.on(e,function(e){t.call(r,e.data,e.meta)}):this._worker.on(e,function(){n.delay(t,arguments,r)}),this},resume:function(){return n.delay(this._worker.resume,[],this._worker),this},pause:function(){return this._worker.pause(),this},toNodejsStream:function(e){if(n.checkSupport("nodestream"),"nodebuffer"!==this._outputType)throw new Error(this._outputType+" is not supported by this method");return new u(this,{objectMode:"nodebuffer"!==this._outputType},e)}},t.exports=d},{"../base64":1,"../external":6,"../nodejs/NodejsStreamOutputAdapter":13,"../support":30,"../utils":32,"./ConvertWorker":24,"./GenericWorker":28}],30:[function(e,t,r){if(r.base64=!0,r.array=!0,r.string=!0,r.arraybuffer="undefined"!=typeof ArrayBuffer&&"undefined"!=typeof Uint8Array,r.nodebuffer="undefined"!=typeof Buffer,r.uint8array="undefined"!=typeof Uint8Array,"undefined"==typeof ArrayBuffer)r.blob=!1;else{var n=new ArrayBuffer(0);try{r.blob=0===new Blob([n],{type:"application/zip"}).size}catch(e){try{var i=new(self.BlobBuilder||self.WebKitBlobBuilder||self.MozBlobBuilder||self.MSBlobBuilder);i.append(n),r.blob=0===i.getBlob("application/zip").size}catch(e){r.blob=!1}}}try{r.nodestream=!!e("readable-stream").Readable}catch(e){r.nodestream=!1}},{"readable-stream":16}],31:[function(e,t,r){for(var n=e("./utils"),i=e("./support"),o=e("./nodejsUtils"),s=e("./stream/GenericWorker"),a=new Array(256),c=0;c<256;c++)a[c]=252<=c?6:248<=c?5:240<=c?4:224<=c?3:192<=c?2:1;function u(){s.call(this,"utf-8 decode"),this.leftOver=null}function l(){s.call(this,"utf-8 encode")}a[254]=a[254]=1,r.utf8encode=function(e){return i.nodebuffer?o.newBufferFrom(e,"utf-8"):function(e){var t,r,n,o,s,a=e.length,c=0;for(o=0;o<a;o++)55296==(64512&(r=e.charCodeAt(o)))&&o+1<a&&56320==(64512&(n=e.charCodeAt(o+1)))&&(r=65536+(r-55296<<10)+(n-56320),o++),c+=r<128?1:r<2048?2:r<65536?3:4;for(t=i.uint8array?new Uint8Array(c):new Array(c),o=s=0;s<c;o++)55296==(64512&(r=e.charCodeAt(o)))&&o+1<a&&56320==(64512&(n=e.charCodeAt(o+1)))&&(r=65536+(r-55296<<10)+(n-56320),o++),r<128?t[s++]=r:(r<2048?t[s++]=192|r>>>6:(r<65536?t[s++]=224|r>>>12:(t[s++]=240|r>>>18,t[s++]=128|r>>>12&63),t[s++]=128|r>>>6&63),t[s++]=128|63&r);return t}(e)},r.utf8decode=function(e){return i.nodebuffer?n.transformTo("nodebuffer",e).toString("utf-8"):function(e){var t,r,i,o,s=e.length,c=new Array(2*s);for(t=r=0;t<s;)if((i=e[t++])<128)c[r++]=i;else if(4<(o=a[i]))c[r++]=65533,t+=o-1;else{for(i&=2===o?31:3===o?15:7;1<o&&t<s;)i=i<<6|63&e[t++],o--;1<o?c[r++]=65533:i<65536?c[r++]=i:(i-=65536,c[r++]=55296|i>>10&1023,c[r++]=56320|1023&i)}return c.length!==r&&(c.subarray?c=c.subarray(0,r):c.length=r),n.applyFromCharCode(c)}(e=n.transformTo(i.uint8array?"uint8array":"array",e))},n.inherits(u,s),u.prototype.processChunk=function(e){var t=n.transformTo(i.uint8array?"uint8array":"array",e.data);if(this.leftOver&&this.leftOver.length){if(i.uint8array){var o=t;(t=new Uint8Array(o.length+this.leftOver.length)).set(this.leftOver,0),t.set(o,this.leftOver.length)}else t=this.leftOver.concat(t);this.leftOver=null}var s=function(e,t){var r;for((t=t||e.length)>e.length&&(t=e.length),r=t-1;0<=r&&128==(192&e[r]);)r--;return r<0||0===r?t:r+a[e[r]]>t?r:t}(t),c=t;s!==t.length&&(i.uint8array?(c=t.subarray(0,s),this.leftOver=t.subarray(s,t.length)):(c=t.slice(0,s),this.leftOver=t.slice(s,t.length))),this.push({data:r.utf8decode(c),meta:e.meta})},u.prototype.flush=function(){this.leftOver&&this.leftOver.length&&(this.push({data:r.utf8decode(this.leftOver),meta:{}}),this.leftOver=null)},r.Utf8DecodeWorker=u,n.inherits(l,s),l.prototype.processChunk=function(e){this.push({data:r.utf8encode(e.data),meta:e.meta})},r.Utf8EncodeWorker=l},{"./nodejsUtils":14,"./stream/GenericWorker":28,"./support":30,"./utils":32}],32:[function(e,t,r){var n=e("./support"),i=e("./base64"),o=e("./nodejsUtils"),s=e("./external");function a(e){return e}function c(e,t){for(var r=0;r<e.length;++r)t[r]=255&e.charCodeAt(r);return t}e("setimmediate"),r.newBlob=function(e,t){r.checkSupport("blob");try{return new Blob([e],{type:t})}catch(r){try{var n=new(self.BlobBuilder||self.WebKitBlobBuilder||self.MozBlobBuilder||self.MSBlobBuilder);return n.append(e),n.getBlob(t)}catch(e){throw new Error("Bug : can't construct the Blob.")}}};var u={stringifyByChunk:function(e,t,r){var n=[],i=0,o=e.length;if(o<=r)return String.fromCharCode.apply(null,e);for(;i<o;)"array"===t||"nodebuffer"===t?n.push(String.fromCharCode.apply(null,e.slice(i,Math.min(i+r,o)))):n.push(String.fromCharCode.apply(null,e.subarray(i,Math.min(i+r,o)))),i+=r;return n.join("")},stringifyByChar:function(e){for(var t="",r=0;r<e.length;r++)t+=String.fromCharCode(e[r]);return t},applyCanBeUsed:{uint8array:function(){try{return n.uint8array&&1===String.fromCharCode.apply(null,new Uint8Array(1)).length}catch(e){return!1}}(),nodebuffer:function(){try{return n.nodebuffer&&1===String.fromCharCode.apply(null,o.allocBuffer(1)).length}catch(e){return!1}}()}};function l(e){var t=65536,n=r.getTypeOf(e),i=!0;if("uint8array"===n?i=u.applyCanBeUsed.uint8array:"nodebuffer"===n&&(i=u.applyCanBeUsed.nodebuffer),i)for(;1<t;)try{return u.stringifyByChunk(e,n,t)}catch(e){t=Math.floor(t/2)}return u.stringifyByChar(e)}function d(e,t){for(var r=0;r<e.length;r++)t[r]=e[r];return t}r.applyFromCharCode=l;var f={};f.string={string:a,array:function(e){return c(e,new Array(e.length))},arraybuffer:function(e){return f.string.uint8array(e).buffer},uint8array:function(e){return c(e,new Uint8Array(e.length))},nodebuffer:function(e){return c(e,o.allocBuffer(e.length))}},f.array={string:l,array:a,arraybuffer:function(e){return new Uint8Array(e).buffer},uint8array:function(e){return new Uint8Array(e)},nodebuffer:function(e){return o.newBufferFrom(e)}},f.arraybuffer={string:function(e){return l(new Uint8Array(e))},array:function(e){return d(new Uint8Array(e),new Array(e.byteLength))},arraybuffer:a,uint8array:function(e){return new Uint8Array(e)},nodebuffer:function(e){return o.newBufferFrom(new Uint8Array(e))}},f.uint8array={string:l,array:function(e){return d(e,new Array(e.length))},arraybuffer:function(e){return e.buffer},uint8array:a,nodebuffer:function(e){return o.newBufferFrom(e)}},f.nodebuffer={string:l,array:function(e){return d(e,new Array(e.length))},arraybuffer:function(e){return f.nodebuffer.uint8array(e).buffer},uint8array:function(e){return d(e,new Uint8Array(e.length))},nodebuffer:a},r.transformTo=function(e,t){if(t=t||"",!e)return t;r.checkSupport(e);var n=r.getTypeOf(t);return f[n][e](t)},r.resolve=function(e){for(var t=e.split("/"),r=[],n=0;n<t.length;n++){var i=t[n];"."===i||""===i&&0!==n&&n!==t.length-1||(".."===i?r.pop():r.push(i))}return r.join("/")},r.getTypeOf=function(e){return"string"==typeof e?"string":"[object Array]"===Object.prototype.toString.call(e)?"array":n.nodebuffer&&o.isBuffer(e)?"nodebuffer":n.uint8array&&e instanceof Uint8Array?"uint8array":n.arraybuffer&&e instanceof ArrayBuffer?"arraybuffer":void 0},r.checkSupport=function(e){if(!n[e.toLowerCase()])throw new Error(e+" is not supported by this platform")},r.MAX_VALUE_16BITS=65535,r.MAX_VALUE_32BITS=-1,r.pretty=function(e){var t,r,n="";for(r=0;r<(e||"").length;r++)n+="\\x"+((t=e.charCodeAt(r))<16?"0":"")+t.toString(16).toUpperCase();return n},r.delay=function(e,t,r){setImmediate(function(){e.apply(r||null,t||[])})},r.inherits=function(e,t){function r(){}r.prototype=t.prototype,e.prototype=new r},r.extend=function(){var e,t,r={};for(e=0;e<arguments.length;e++)for(t in arguments[e])Object.prototype.hasOwnProperty.call(arguments[e],t)&&void 0===r[t]&&(r[t]=arguments[e][t]);return r},r.prepareContent=function(e,t,o,a,u){return s.Promise.resolve(t).then(function(e){return n.blob&&(e instanceof Blob||-1!==["[object File]","[object Blob]"].indexOf(Object.prototype.toString.call(e)))&&"undefined"!=typeof FileReader?new s.Promise(function(t,r){var n=new FileReader;n.onload=function(e){t(e.target.result)},n.onerror=function(e){r(e.target.error)},n.readAsArrayBuffer(e)}):e}).then(function(t){var l=r.getTypeOf(t),d;return l?("arraybuffer"===l?t=r.transformTo("uint8array",t):"string"===l&&(u?t=i.decode(t):o&&!0!==a&&(t=c(d=t,n.uint8array?new Uint8Array(d.length):new Array(d.length)))),t):s.Promise.reject(new Error("Can't read the data of '"+e+"'. Is it in a supported JavaScript type (String, Blob, ArrayBuffer, etc) ?"))})}},{"./base64":1,"./external":6,"./nodejsUtils":14,"./support":30,setimmediate:54}],33:[function(e,t,r){var n=e("./reader/readerFor"),i=e("./utils"),o=e("./signature"),s=e("./zipEntry"),a=e("./support");function c(e){this.files=[],this.loadOptions=e}c.prototype={checkSignature:function(e){if(!this.reader.readAndCheckSignature(e)){this.reader.index-=4;var t=this.reader.readString(4);throw new Error("Corrupted zip or bug: unexpected signature ("+i.pretty(t)+", expected "+i.pretty(e)+")")}},isSignature:function(e,t){var r=this.reader.index;this.reader.setIndex(e);var n=this.reader.readString(4)===t;return this.reader.setIndex(r),n},readBlockEndOfCentral:function(){this.diskNumber=this.reader.readInt(2),this.diskWithCentralDirStart=this.reader.readInt(2),this.centralDirRecordsOnThisDisk=this.reader.readInt(2),this.centralDirRecords=this.reader.readInt(2),this.centralDirSize=this.reader.readInt(4),this.centralDirOffset=this.reader.readInt(4),this.zipCommentLength=this.reader.readInt(2);var e=this.reader.readData(this.zipCommentLength),t=a.uint8array?"uint8array":"array",r=i.transformTo(t,e);this.zipComment=this.loadOptions.decodeFileName(r)},readBlockZip64EndOfCentral:function(){this.zip64EndOfCentralSize=this.reader.readInt(8),this.reader.skip(4),this.diskNumber=this.reader.readInt(4),this.diskWithCentralDirStart=this.reader.readInt(4),this.centralDirRecordsOnThisDisk=this.reader.readInt(8),this.centralDirRecords=this.reader.readInt(8),this.centralDirSize=this.reader.readInt(8),this.centralDirOffset=this.reader.readInt(8),this.zip64ExtensibleData={};for(var e,t,r,n=this.zip64EndOfCentralSize-44;0<n;)e=this.reader.readInt(2),t=this.reader.readInt(4),r=this.reader.readData(t),this.zip64ExtensibleData[e]={id:e,length:t,value:r}},readBlockZip64EndOfCentralLocator:function(){if(this.diskWithZip64CentralDirStart=this.reader.readInt(4),this.relativeOffsetEndOfZip64CentralDir=this.reader.readInt(8),this.disksCount=this.reader.readInt(4),1<this.disksCount)throw new Error("Multi-volumes zip are not supported")},readLocalFiles:function(){var e,t;for(e=0;e<this.files.length;e++)t=this.files[e],this.reader.setIndex(t.localHeaderOffset),this.checkSignature(o.LOCAL_FILE_HEADER),t.readLocalPart(this.reader),t.handleUTF8(),t.processAttributes()},readCentralDir:function(){var e;for(this.reader.setIndex(this.centralDirOffset);this.reader.readAndCheckSignature(o.CENTRAL_FILE_HEADER);)(e=new s({zip64:this.zip64},this.loadOptions)).readCentralPart(this.reader),this.files.push(e);if(this.centralDirRecords!==this.files.length&&0!==this.centralDirRecords&&0===this.files.length)throw new Error("Corrupted zip or bug: expected "+this.centralDirRecords+" records in central dir, got "+this.files.length)},readEndOfCentral:function(){var e=this.reader.lastIndexOfSignature(o.CENTRAL_DIRECTORY_END);if(e<0)throw this.isSignature(0,o.LOCAL_FILE_HEADER)?new Error("Corrupted zip: can't find end of central directory"):new Error("Can't find end of central directory : is this a zip file ? If it is, see https://stuk.github.io/jszip/documentation/howto/read_zip.html");this.reader.setIndex(e);var t=e;if(this.checkSignature(o.CENTRAL_DIRECTORY_END),this.readBlockEndOfCentral(),this.diskNumber===i.MAX_VALUE_16BITS||this.diskWithCentralDirStart===i.MAX_VALUE_16BITS||this.centralDirRecordsOnThisDisk===i.MAX_VALUE_16BITS||this.centralDirRecords===i.MAX_VALUE_16BITS||this.centralDirSize===i.MAX_VALUE_32BITS||this.centralDirOffset===i.MAX_VALUE_32BITS){if(this.zip64=!0,(e=this.reader.lastIndexOfSignature(o.ZIP64_CENTRAL_DIRECTORY_LOCATOR))<0)throw new Error("Corrupted zip: can't find the ZIP64 end of central directory locator");if(this.reader.setIndex(e),this.checkSignature(o.ZIP64_CENTRAL_DIRECTORY_LOCATOR),this.readBlockZip64EndOfCentralLocator(),!this.isSignature(this.relativeOffsetEndOfZip64CentralDir,o.ZIP64_CENTRAL_DIRECTORY_END)&&(this.relativeOffsetEndOfZip64CentralDir=this.reader.lastIndexOfSignature(o.ZIP64_CENTRAL_DIRECTORY_END),this.relativeOffsetEndOfZip64CentralDir<0))throw new Error("Corrupted zip: can't find the ZIP64 end of central directory");this.reader.setIndex(this.relativeOffsetEndOfZip64CentralDir),this.checkSignature(o.ZIP64_CENTRAL_DIRECTORY_END),this.readBlockZip64EndOfCentral()}var r=this.centralDirOffset+this.centralDirSize;this.zip64&&(r+=20,r+=12+this.zip64EndOfCentralSize);var n=t-r;if(0<n)this.isSignature(t,o.CENTRAL_FILE_HEADER)||(this.reader.zero=n);else if(n<0)throw new Error("Corrupted zip: missing "+Math.abs(n)+" bytes.")},prepareReader:function(e){this.reader=n(e)},load:function(e){this.prepareReader(e),this.readEndOfCentral(),this.readCentralDir(),this.readLocalFiles()}},t.exports=c},{"./reader/readerFor":22,"./signature":23,"./support":30,"./utils":32,"./zipEntry":34}],34:[function(e,t,r){var n=e("./reader/readerFor"),i=e("./utils"),o=e("./compressedObject"),s=e("./crc32"),a=e("./utf8"),c=e("./compressions"),u=e("./support");function l(e,t){this.options=e,this.loadOptions=t}l.prototype={isEncrypted:function(){return!(1&~this.bitFlag)},useUTF8:function(){return!(2048&~this.bitFlag)},readLocalPart:function(e){var t,r;if(e.skip(22),this.fileNameLength=e.readInt(2),r=e.readInt(2),this.fileName=e.readData(this.fileNameLength),e.skip(r),-1===this.compressedSize||-1===this.uncompressedSize)throw new Error("Bug or corrupted zip : didn't get enough information from the central directory (compressedSize === -1 || uncompressedSize === -1)");if(null===(t=function(e){for(var t in c)if(Object.prototype.hasOwnProperty.call(c,t)&&c[t].magic===e)return c[t];return null}(this.compressionMethod)))throw new Error("Corrupted zip : compression "+i.pretty(this.compressionMethod)+" unknown (inner file : "+i.transformTo("string",this.fileName)+")");this.decompressed=new o(this.compressedSize,this.uncompressedSize,this.crc32,t,e.readData(this.compressedSize))},readCentralPart:function(e){this.versionMadeBy=e.readInt(2),e.skip(2),this.bitFlag=e.readInt(2),this.compressionMethod=e.readString(2),this.date=e.readDate(),this.crc32=e.readInt(4),this.compressedSize=e.readInt(4),this.uncompressedSize=e.readInt(4);var t=e.readInt(2);if(this.extraFieldsLength=e.readInt(2),this.fileCommentLength=e.readInt(2),this.diskNumberStart=e.readInt(2),this.internalFileAttributes=e.readInt(2),this.externalFileAttributes=e.readInt(4),this.localHeaderOffset=e.readInt(4),this.isEncrypted())throw new Error("Encrypted zip are not supported");e.skip(t),this.readExtraFields(e),this.parseZIP64ExtraField(e),this.fileComment=e.readData(this.fileCommentLength)},processAttributes:function(){this.unixPermissions=null,this.dosPermissions=null;var e=this.versionMadeBy>>8;this.dir=!!(16&this.externalFileAttributes),0==e&&(this.dosPermissions=63&this.externalFileAttributes),3==e&&(this.unixPermissions=this.externalFileAttributes>>16&65535),this.dir||"/"!==this.fileNameStr.slice(-1)||(this.dir=!0)},parseZIP64ExtraField:function(){if(this.extraFields[1]){var e=n(this.extraFields[1].value);this.uncompressedSize===i.MAX_VALUE_32BITS&&(this.uncompressedSize=e.readInt(8)),this.compressedSize===i.MAX_VALUE_32BITS&&(this.compressedSize=e.readInt(8)),this.localHeaderOffset===i.MAX_VALUE_32BITS&&(this.localHeaderOffset=e.readInt(8)),this.diskNumberStart===i.MAX_VALUE_32BITS&&(this.diskNumberStart=e.readInt(4))}},readExtraFields:function(e){var t,r,n,i=e.index+this.extraFieldsLength;for(this.extraFields||(this.extraFields={});e.index+4<i;)t=e.readInt(2),r=e.readInt(2),n=e.readData(r),this.extraFields[t]={id:t,length:r,value:n};e.setIndex(i)},handleUTF8:function(){var e=u.uint8array?"uint8array":"array";if(this.useUTF8())this.fileNameStr=a.utf8decode(this.fileName),this.fileCommentStr=a.utf8decode(this.fileComment);else{var t=this.findExtraFieldUnicodePath();if(null!==t)this.fileNameStr=t;else{var r=i.transformTo(e,this.fileName);this.fileNameStr=this.loadOptions.decodeFileName(r)}var n=this.findExtraFieldUnicodeComment();if(null!==n)this.fileCommentStr=n;else{var o=i.transformTo(e,this.fileComment);this.fileCommentStr=this.loadOptions.decodeFileName(o)}}},findExtraFieldUnicodePath:function(){var e=this.extraFields[28789];if(e){var t=n(e.value);return 1!==t.readInt(1)||s(this.fileName)!==t.readInt(4)?null:a.utf8decode(t.readData(e.length-5))}return null},findExtraFieldUnicodeComment:function(){var e=this.extraFields[25461];if(e){var t=n(e.value);return 1!==t.readInt(1)||s(this.fileComment)!==t.readInt(4)?null:a.utf8decode(t.readData(e.length-5))}return null}},t.exports=l},{"./compressedObject":2,"./compressions":3,"./crc32":4,"./reader/readerFor":22,"./support":30,"./utf8":31,"./utils":32}],35:[function(e,t,r){function n(e,t,r){this.name=e,this.dir=r.dir,this.date=r.date,this.comment=r.comment,this.unixPermissions=r.unixPermissions,this.dosPermissions=r.dosPermissions,this._data=t,this._dataBinary=r.binary,this.options={compression:r.compression,compressionOptions:r.compressionOptions}}var i=e("./stream/StreamHelper"),o=e("./stream/DataWorker"),s=e("./utf8"),a=e("./compressedObject"),c=e("./stream/GenericWorker");n.prototype={internalStream:function(e){var t=null,r="string";try{if(!e)throw new Error("No output type specified.");var n="string"===(r=e.toLowerCase())||"text"===r;"binarystring"!==r&&"text"!==r||(r="string"),t=this._decompressWorker();var o=!this._dataBinary;o&&!n&&(t=t.pipe(new s.Utf8EncodeWorker)),!o&&n&&(t=t.pipe(new s.Utf8DecodeWorker))}catch(e){(t=new c("error")).error(e)}return new i(t,r,"")},async:function(e,t){return this.internalStream(e).accumulate(t)},nodeStream:function(e,t){return this.internalStream(e||"nodebuffer").toNodejsStream(t)},_compressWorker:function(e,t){if(this._data instanceof a&&this._data.compression.magic===e.magic)return this._data.getCompressedWorker();var r=this._decompressWorker();return this._dataBinary||(r=r.pipe(new s.Utf8EncodeWorker)),a.createWorkerFrom(r,e,t)},_decompressWorker:function(){return this._data instanceof a?this._data.getContentWorker():this._data instanceof c?this._data:new o(this._data)}};for(var u=["asText","asBinary","asNodeBuffer","asUint8Array","asArrayBuffer"],l=function(){throw new Error("This method has been removed in JSZip 3.0, please check the upgrade guide.")},d=0;d<u.length;d++)n.prototype[u[d]]=l;t.exports=n},{"./compressedObject":2,"./stream/DataWorker":27,"./stream/GenericWorker":28,"./stream/StreamHelper":29,"./utf8":31}],36:[function(e,t,r){(function(e){var r,n,i=e.MutationObserver||e.WebKitMutationObserver;if(i){var o=0,s=new i(l),a=e.document.createTextNode("");s.observe(a,{characterData:!0}),r=function(){a.data=o=++o%2}}else if(e.setImmediate||void 0===e.MessageChannel)r="document"in e&&"onreadystatechange"in e.document.createElement("script")?function(){var t=e.document.createElement("script");t.onreadystatechange=function(){l(),t.onreadystatechange=null,t.parentNode.removeChild(t),t=null},e.document.documentElement.appendChild(t)}:function(){setTimeout(l,0)};else{var c=new e.MessageChannel;c.port1.onmessage=l,r=function(){c.port2.postMessage(0)}}var u=[];function l(){var e,t;n=!0;for(var r=u.length;r;){for(t=u,u=[],e=-1;++e<r;)t[e]();r=u.length}n=!1}t.exports=function(e){1!==u.push(e)||n||r()}}).call(this,"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{}],37:[function(e,t,r){var n=e("immediate");function i(){}var o={},s=["REJECTED"],a=["FULFILLED"],c=["PENDING"];function u(e){if("function"!=typeof e)throw new TypeError("resolver must be a function");this.state=c,this.queue=[],this.outcome=void 0,e!==i&&h(this,e)}function l(e,t,r){this.promise=e,"function"==typeof t&&(this.onFulfilled=t,this.callFulfilled=this.otherCallFulfilled),"function"==typeof r&&(this.onRejected=r,this.callRejected=this.otherCallRejected)}function d(e,t,r){n(function(){var n;try{n=t(r)}catch(t){return o.reject(e,t)}n===e?o.reject(e,new TypeError("Cannot resolve promise with itself")):o.resolve(e,n)})}function f(e){var t=e&&e.then;if(e&&("object"==typeof e||"function"==typeof e)&&"function"==typeof t)return function(){t.apply(e,arguments)}}function h(e,t){var r=!1;function n(t){r||(r=!0,o.reject(e,t))}function i(t){r||(r=!0,o.resolve(e,t))}var s=p(function(){t(i,n)});"error"===s.status&&n(s.value)}function p(e,t){var r={};try{r.value=e(t),r.status="success"}catch(e){r.status="error",r.value=e}return r}(t.exports=u).prototype.finally=function(e){if("function"!=typeof e)return this;var t=this.constructor;return this.then(function(r){return t.resolve(e()).then(function(){return r})},function(r){return t.resolve(e()).then(function(){throw r})})},u.prototype.catch=function(e){return this.then(null,e)},u.prototype.then=function(e,t){if("function"!=typeof e&&this.state===a||"function"!=typeof t&&this.state===s)return this;var r=new this.constructor(i);return this.state!==c?d(r,this.state===a?e:t,this.outcome):this.queue.push(new l(r,e,t)),r},l.prototype.callFulfilled=function(e){o.resolve(this.promise,e)},l.prototype.otherCallFulfilled=function(e){d(this.promise,this.onFulfilled,e)},l.prototype.callRejected=function(e){o.reject(this.promise,e)},l.prototype.otherCallRejected=function(e){d(this.promise,this.onRejected,e)},o.resolve=function(e,t){var r=p(f,t);if("error"===r.status)return o.reject(e,r.value);var n=r.value;if(n)h(e,n);else{e.state=a,e.outcome=t;for(var i=-1,s=e.queue.length;++i<s;)e.queue[i].callFulfilled(t)}return e},o.reject=function(e,t){e.state=s,e.outcome=t;for(var r=-1,n=e.queue.length;++r<n;)e.queue[r].callRejected(t);return e},u.resolve=function(e){return e instanceof this?e:o.resolve(new this(i),e)},u.reject=function(e){var t=new this(i);return o.reject(t,e)},u.all=function(e){var t=this;if("[object Array]"!==Object.prototype.toString.call(e))return this.reject(new TypeError("must be an array"));var r=e.length,n=!1;if(!r)return this.resolve([]);for(var s=new Array(r),a=0,c=-1,u=new this(i);++c<r;)l(e[c],c);return u;function l(e,i){t.resolve(e).then(function(e){s[i]=e,++a!==r||n||(n=!0,o.resolve(u,s))},function(e){n||(n=!0,o.reject(u,e))})}},u.race=function(e){var t=this;if("[object Array]"!==Object.prototype.toString.call(e))return this.reject(new TypeError("must be an array"));var r=e.length,n=!1;if(!r)return this.resolve([]);for(var s=-1,a=new this(i),c;++s<r;)c=e[s],t.resolve(c).then(function(e){n||(n=!0,o.resolve(a,e))},function(e){n||(n=!0,o.reject(a,e))});return a}},{immediate:36}],38:[function(e,t,r){var n={};(0,e("./lib/utils/common").assign)(n,e("./lib/deflate"),e("./lib/inflate"),e("./lib/zlib/constants")),t.exports=n},{"./lib/deflate":39,"./lib/inflate":40,"./lib/utils/common":41,"./lib/zlib/constants":44}],39:[function(e,t,r){var n=e("./zlib/deflate"),i=e("./utils/common"),o=e("./utils/strings"),s=e("./zlib/messages"),a=e("./zlib/zstream"),c=Object.prototype.toString,u=0,l=-1,d=0,f=8;function h(e){if(!(this instanceof h))return new h(e);this.options=i.assign({level:l,method:8,chunkSize:16384,windowBits:15,memLevel:8,strategy:0,to:""},e||{});var t=this.options;t.raw&&0<t.windowBits?t.windowBits=-t.windowBits:t.gzip&&0<t.windowBits&&t.windowBits<16&&(t.windowBits+=16),this.err=0,this.msg="",this.ended=!1,this.chunks=[],this.strm=new a,this.strm.avail_out=0;var r=n.deflateInit2(this.strm,t.level,t.method,t.windowBits,t.memLevel,t.strategy);if(0!==r)throw new Error(s[r]);if(t.header&&n.deflateSetHeader(this.strm,t.header),t.dictionary){var u;if(u="string"==typeof t.dictionary?o.string2buf(t.dictionary):"[object ArrayBuffer]"===c.call(t.dictionary)?new Uint8Array(t.dictionary):t.dictionary,0!==(r=n.deflateSetDictionary(this.strm,u)))throw new Error(s[r]);this._dict_set=!0}}function p(e,t){var r=new h(t);if(r.push(e,!0),r.err)throw r.msg||s[r.err];return r.result}h.prototype.push=function(e,t){var r,s,a=this.strm,u=this.options.chunkSize;if(this.ended)return!1;s=t===~~t?t:!0===t?4:0,"string"==typeof e?a.input=o.string2buf(e):"[object ArrayBuffer]"===c.call(e)?a.input=new Uint8Array(e):a.input=e,a.next_in=0,a.avail_in=a.input.length;do{if(0===a.avail_out&&(a.output=new i.Buf8(u),a.next_out=0,a.avail_out=u),1!==(r=n.deflate(a,s))&&0!==r)return this.onEnd(r),!(this.ended=!0);0!==a.avail_out&&(0!==a.avail_in||4!==s&&2!==s)||("string"===this.options.to?this.onData(o.buf2binstring(i.shrinkBuf(a.output,a.next_out))):this.onData(i.shrinkBuf(a.output,a.next_out)))}while((0<a.avail_in||0===a.avail_out)&&1!==r);return 4===s?(r=n.deflateEnd(this.strm),this.onEnd(r),this.ended=!0,0===r):2!==s||(this.onEnd(0),!(a.avail_out=0))},h.prototype.onData=function(e){this.chunks.push(e)},h.prototype.onEnd=function(e){0===e&&("string"===this.options.to?this.result=this.chunks.join(""):this.result=i.flattenChunks(this.chunks)),this.chunks=[],this.err=e,this.msg=this.strm.msg},r.Deflate=h,r.deflate=p,r.deflateRaw=function(e,t){return(t=t||{}).raw=!0,p(e,t)},r.gzip=function(e,t){return(t=t||{}).gzip=!0,p(e,t)}},{"./utils/common":41,"./utils/strings":42,"./zlib/deflate":46,"./zlib/messages":51,"./zlib/zstream":53}],40:[function(e,t,r){var n=e("./zlib/inflate"),i=e("./utils/common"),o=e("./utils/strings"),s=e("./zlib/constants"),a=e("./zlib/messages"),c=e("./zlib/zstream"),u=e("./zlib/gzheader"),l=Object.prototype.toString;function d(e){if(!(this instanceof d))return new d(e);this.options=i.assign({chunkSize:16384,windowBits:0,to:""},e||{});var t=this.options;t.raw&&0<=t.windowBits&&t.windowBits<16&&(t.windowBits=-t.windowBits,0===t.windowBits&&(t.windowBits=-15)),!(0<=t.windowBits&&t.windowBits<16)||e&&e.windowBits||(t.windowBits+=32),15<t.windowBits&&t.windowBits<48&&!(15&t.windowBits)&&(t.windowBits|=15),this.err=0,this.msg="",this.ended=!1,this.chunks=[],this.strm=new c,this.strm.avail_out=0;var r=n.inflateInit2(this.strm,t.windowBits);if(r!==s.Z_OK)throw new Error(a[r]);this.header=new u,n.inflateGetHeader(this.strm,this.header)}function f(e,t){var r=new d(t);if(r.push(e,!0),r.err)throw r.msg||a[r.err];return r.result}d.prototype.push=function(e,t){var r,a,c,u,d,f,h=this.strm,p=this.options.chunkSize,m=this.options.dictionary,g=!1;if(this.ended)return!1;a=t===~~t?t:!0===t?s.Z_FINISH:s.Z_NO_FLUSH,"string"==typeof e?h.input=o.binstring2buf(e):"[object ArrayBuffer]"===l.call(e)?h.input=new Uint8Array(e):h.input=e,h.next_in=0,h.avail_in=h.input.length;do{if(0===h.avail_out&&(h.output=new i.Buf8(p),h.next_out=0,h.avail_out=p),(r=n.inflate(h,s.Z_NO_FLUSH))===s.Z_NEED_DICT&&m&&(f="string"==typeof m?o.string2buf(m):"[object ArrayBuffer]"===l.call(m)?new Uint8Array(m):m,r=n.inflateSetDictionary(this.strm,f)),r===s.Z_BUF_ERROR&&!0===g&&(r=s.Z_OK,g=!1),r!==s.Z_STREAM_END&&r!==s.Z_OK)return this.onEnd(r),!(this.ended=!0);h.next_out&&(0!==h.avail_out&&r!==s.Z_STREAM_END&&(0!==h.avail_in||a!==s.Z_FINISH&&a!==s.Z_SYNC_FLUSH)||("string"===this.options.to?(c=o.utf8border(h.output,h.next_out),u=h.next_out-c,d=o.buf2string(h.output,c),h.next_out=u,h.avail_out=p-u,u&&i.arraySet(h.output,h.output,c,u,0),this.onData(d)):this.onData(i.shrinkBuf(h.output,h.next_out)))),0===h.avail_in&&0===h.avail_out&&(g=!0)}while((0<h.avail_in||0===h.avail_out)&&r!==s.Z_STREAM_END);return r===s.Z_STREAM_END&&(a=s.Z_FINISH),a===s.Z_FINISH?(r=n.inflateEnd(this.strm),this.onEnd(r),this.ended=!0,r===s.Z_OK):a!==s.Z_SYNC_FLUSH||(this.onEnd(s.Z_OK),!(h.avail_out=0))},d.prototype.onData=function(e){this.chunks.push(e)},d.prototype.onEnd=function(e){e===s.Z_OK&&("string"===this.options.to?this.result=this.chunks.join(""):this.result=i.flattenChunks(this.chunks)),this.chunks=[],this.err=e,this.msg=this.strm.msg},r.Inflate=d,r.inflate=f,r.inflateRaw=function(e,t){return(t=t||{}).raw=!0,f(e,t)},r.ungzip=f},{"./utils/common":41,"./utils/strings":42,"./zlib/constants":44,"./zlib/gzheader":47,"./zlib/inflate":49,"./zlib/messages":51,"./zlib/zstream":53}],41:[function(e,t,r){var n="undefined"!=typeof Uint8Array&&"undefined"!=typeof Uint16Array&&"undefined"!=typeof Int32Array;r.assign=function(e){for(var t=Array.prototype.slice.call(arguments,1);t.length;){var r=t.shift();if(r){if("object"!=typeof r)throw new TypeError(r+"must be non-object");for(var n in r)r.hasOwnProperty(n)&&(e[n]=r[n])}}return e},r.shrinkBuf=function(e,t){return e.length===t?e:e.subarray?e.subarray(0,t):(e.length=t,e)};var i={arraySet:function(e,t,r,n,i){if(t.subarray&&e.subarray)e.set(t.subarray(r,r+n),i);else for(var o=0;o<n;o++)e[i+o]=t[r+o]},flattenChunks:function(e){var t,r,n,i,o,s;for(t=n=0,r=e.length;t<r;t++)n+=e[t].length;for(s=new Uint8Array(n),t=i=0,r=e.length;t<r;t++)o=e[t],s.set(o,i),i+=o.length;return s}},o={arraySet:function(e,t,r,n,i){for(var o=0;o<n;o++)e[i+o]=t[r+o]},flattenChunks:function(e){return[].concat.apply([],e)}};r.setTyped=function(e){e?(r.Buf8=Uint8Array,r.Buf16=Uint16Array,r.Buf32=Int32Array,r.assign(r,i)):(r.Buf8=Array,r.Buf16=Array,r.Buf32=Array,r.assign(r,o))},r.setTyped(n)},{}],42:[function(e,t,r){var n=e("./common"),i=!0,o=!0;try{String.fromCharCode.apply(null,[0])}catch(e){i=!1}try{String.fromCharCode.apply(null,new Uint8Array(1))}catch(e){o=!1}for(var s=new n.Buf8(256),a=0;a<256;a++)s[a]=252<=a?6:248<=a?5:240<=a?4:224<=a?3:192<=a?2:1;function c(e,t){if(t<65537&&(e.subarray&&o||!e.subarray&&i))return String.fromCharCode.apply(null,n.shrinkBuf(e,t));for(var r="",s=0;s<t;s++)r+=String.fromCharCode(e[s]);return r}s[254]=s[254]=1,r.string2buf=function(e){var t,r,i,o,s,a=e.length,c=0;for(o=0;o<a;o++)55296==(64512&(r=e.charCodeAt(o)))&&o+1<a&&56320==(64512&(i=e.charCodeAt(o+1)))&&(r=65536+(r-55296<<10)+(i-56320),o++),c+=r<128?1:r<2048?2:r<65536?3:4;for(t=new n.Buf8(c),o=s=0;s<c;o++)55296==(64512&(r=e.charCodeAt(o)))&&o+1<a&&56320==(64512&(i=e.charCodeAt(o+1)))&&(r=65536+(r-55296<<10)+(i-56320),o++),r<128?t[s++]=r:(r<2048?t[s++]=192|r>>>6:(r<65536?t[s++]=224|r>>>12:(t[s++]=240|r>>>18,t[s++]=128|r>>>12&63),t[s++]=128|r>>>6&63),t[s++]=128|63&r);return t},r.buf2binstring=function(e){return c(e,e.length)},r.binstring2buf=function(e){for(var t=new n.Buf8(e.length),r=0,i=t.length;r<i;r++)t[r]=e.charCodeAt(r);return t},r.buf2string=function(e,t){var r,n,i,o,a=t||e.length,u=new Array(2*a);for(r=n=0;r<a;)if((i=e[r++])<128)u[n++]=i;else if(4<(o=s[i]))u[n++]=65533,r+=o-1;else{for(i&=2===o?31:3===o?15:7;1<o&&r<a;)i=i<<6|63&e[r++],o--;1<o?u[n++]=65533:i<65536?u[n++]=i:(i-=65536,u[n++]=55296|i>>10&1023,u[n++]=56320|1023&i)}return c(u,n)},r.utf8border=function(e,t){var r;for((t=t||e.length)>e.length&&(t=e.length),r=t-1;0<=r&&128==(192&e[r]);)r--;return r<0||0===r?t:r+s[e[r]]>t?r:t}},{"./common":41}],43:[function(e,t,r){t.exports=function(e,t,r,n){for(var i=65535&e,o=e>>>16&65535,s=0;0!==r;){for(r-=s=2e3<r?2e3:r;o=o+(i=i+t[n++]|0)|0,--s;);i%=65521,o%=65521}return i|o<<16}},{}],44:[function(e,t,r){t.exports={Z_NO_FLUSH:0,Z_PARTIAL_FLUSH:1,Z_SYNC_FLUSH:2,Z_FULL_FLUSH:3,Z_FINISH:4,Z_BLOCK:5,Z_TREES:6,Z_OK:0,Z_STREAM_END:1,Z_NEED_DICT:2,Z_ERRNO:-1,Z_STREAM_ERROR:-2,Z_DATA_ERROR:-3,Z_BUF_ERROR:-5,Z_NO_COMPRESSION:0,Z_BEST_SPEED:1,Z_BEST_COMPRESSION:9,Z_DEFAULT_COMPRESSION:-1,Z_FILTERED:1,Z_HUFFMAN_ONLY:2,Z_RLE:3,Z_FIXED:4,Z_DEFAULT_STRATEGY:0,Z_BINARY:0,Z_TEXT:1,Z_UNKNOWN:2,Z_DEFLATED:8}},{}],45:[function(e,t,r){var n=function(){for(var e,t=[],r=0;r<256;r++){e=r;for(var n=0;n<8;n++)e=1&e?3988292384^e>>>1:e>>>1;t[r]=e}return t}();t.exports=function(e,t,r,i){var o=n,s=i+r;e^=-1;for(var a=i;a<s;a++)e=e>>>8^o[255&(e^t[a])];return-1^e}},{}],46:[function(e,t,r){var n,i=e("../utils/common"),o=e("./trees"),s=e("./adler32"),a=e("./crc32"),c=e("./messages"),u=0,l=4,d=0,f=-2,h=-1,p=4,m=2,g=8,y=9,b=286,w=30,v=19,k=573,S=15,x=3,A=258,_=262,C=42,T=113,P=1,E=2,I=3,R=4;function z(e,t){return e.msg=c[t],t}function D(e){return(e<<1)-(4<e?9:0)}function O(e){for(var t=e.length;0<=--t;)e[t]=0}function U(e){var t=e.state,r=t.pending;r>e.avail_out&&(r=e.avail_out),0!==r&&(i.arraySet(e.output,t.pending_buf,t.pending_out,r,e.next_out),e.next_out+=r,t.pending_out+=r,e.total_out+=r,e.avail_out-=r,t.pending-=r,0===t.pending&&(t.pending_out=0))}function L(e,t){o._tr_flush_block(e,0<=e.block_start?e.block_start:-1,e.strstart-e.block_start,t),e.block_start=e.strstart,U(e.strm)}function N(e,t){e.pending_buf[e.pending++]=t}function M(e,t){e.pending_buf[e.pending++]=t>>>8&255,e.pending_buf[e.pending++]=255&t}function B(e,t){var r,n,i=e.max_chain_length,o=e.strstart,s=e.prev_length,a=e.nice_match,c=e.strstart>e.w_size-_?e.strstart-(e.w_size-_):0,u=e.window,l=e.w_mask,d=e.prev,f=e.strstart+A,h=u[o+s-1],p=u[o+s];e.prev_length>=e.good_match&&(i>>=2),a>e.lookahead&&(a=e.lookahead);do{if(u[(r=t)+s]===p&&u[r+s-1]===h&&u[r]===u[o]&&u[++r]===u[o+1]){o+=2,r++;do{}while(u[++o]===u[++r]&&u[++o]===u[++r]&&u[++o]===u[++r]&&u[++o]===u[++r]&&u[++o]===u[++r]&&u[++o]===u[++r]&&u[++o]===u[++r]&&u[++o]===u[++r]&&o<f);if(n=A-(f-o),o=f-A,s<n){if(e.match_start=t,a<=(s=n))break;h=u[o+s-1],p=u[o+s]}}}while((t=d[t&l])>c&&0!=--i);return s<=e.lookahead?s:e.lookahead}function W(e){var t,r,n,o,c,u,l,d,f,h,p=e.w_size;do{if(o=e.window_size-e.lookahead-e.strstart,e.strstart>=p+(p-_)){for(i.arraySet(e.window,e.window,p,p,0),e.match_start-=p,e.strstart-=p,e.block_start-=p,t=r=e.hash_size;n=e.head[--t],e.head[t]=p<=n?n-p:0,--r;);for(t=r=p;n=e.prev[--t],e.prev[t]=p<=n?n-p:0,--r;);o+=p}if(0===e.strm.avail_in)break;if(u=e.strm,l=e.window,d=e.strstart+e.lookahead,h=void 0,(f=o)<(h=u.avail_in)&&(h=f),r=0===h?0:(u.avail_in-=h,i.arraySet(l,u.input,u.next_in,h,d),1===u.state.wrap?u.adler=s(u.adler,l,h,d):2===u.state.wrap&&(u.adler=a(u.adler,l,h,d)),u.next_in+=h,u.total_in+=h,h),e.lookahead+=r,e.lookahead+e.insert>=3)for(c=e.strstart-e.insert,e.ins_h=e.window[c],e.ins_h=(e.ins_h<<e.hash_shift^e.window[c+1])&e.hash_mask;e.insert&&(e.ins_h=(e.ins_h<<e.hash_shift^e.window[c+3-1])&e.hash_mask,e.prev[c&e.w_mask]=e.head[e.ins_h],e.head[e.ins_h]=c,c++,e.insert--,!(e.lookahead+e.insert<3)););}while(e.lookahead<_&&0!==e.strm.avail_in)}function j(e,t){for(var r,n;;){if(e.lookahead<_){if(W(e),e.lookahead<_&&0===t)return 1;if(0===e.lookahead)break}if(r=0,e.lookahead>=3&&(e.ins_h=(e.ins_h<<e.hash_shift^e.window[e.strstart+3-1])&e.hash_mask,r=e.prev[e.strstart&e.w_mask]=e.head[e.ins_h],e.head[e.ins_h]=e.strstart),0!==r&&e.strstart-r<=e.w_size-_&&(e.match_length=B(e,r)),e.match_length>=3)if(n=o._tr_tally(e,e.strstart-e.match_start,e.match_length-3),e.lookahead-=e.match_length,e.match_length<=e.max_lazy_match&&e.lookahead>=3){for(e.match_length--;e.strstart++,e.ins_h=(e.ins_h<<e.hash_shift^e.window[e.strstart+3-1])&e.hash_mask,r=e.prev[e.strstart&e.w_mask]=e.head[e.ins_h],e.head[e.ins_h]=e.strstart,0!=--e.match_length;);e.strstart++}else e.strstart+=e.match_length,e.match_length=0,e.ins_h=e.window[e.strstart],e.ins_h=(e.ins_h<<e.hash_shift^e.window[e.strstart+1])&e.hash_mask;else n=o._tr_tally(e,0,e.window[e.strstart]),e.lookahead--,e.strstart++;if(n&&(L(e,!1),0===e.strm.avail_out))return 1}return e.insert=e.strstart<2?e.strstart:2,4===t?(L(e,!0),0===e.strm.avail_out?3:4):e.last_lit&&(L(e,!1),0===e.strm.avail_out)?1:2}function H(e,t){for(var r,n,i;;){if(e.lookahead<_){if(W(e),e.lookahead<_&&0===t)return 1;if(0===e.lookahead)break}if(r=0,e.lookahead>=3&&(e.ins_h=(e.ins_h<<e.hash_shift^e.window[e.strstart+3-1])&e.hash_mask,r=e.prev[e.strstart&e.w_mask]=e.head[e.ins_h],e.head[e.ins_h]=e.strstart),e.prev_length=e.match_length,e.prev_match=e.match_start,e.match_length=2,0!==r&&e.prev_length<e.max_lazy_match&&e.strstart-r<=e.w_size-_&&(e.match_length=B(e,r),e.match_length<=5&&(1===e.strategy||3===e.match_length&&4096<e.strstart-e.match_start)&&(e.match_length=2)),e.prev_length>=3&&e.match_length<=e.prev_length){for(i=e.strstart+e.lookahead-3,n=o._tr_tally(e,e.strstart-1-e.prev_match,e.prev_length-3),e.lookahead-=e.prev_length-1,e.prev_length-=2;++e.strstart<=i&&(e.ins_h=(e.ins_h<<e.hash_shift^e.window[e.strstart+3-1])&e.hash_mask,r=e.prev[e.strstart&e.w_mask]=e.head[e.ins_h],e.head[e.ins_h]=e.strstart),0!=--e.prev_length;);if(e.match_available=0,e.match_length=2,e.strstart++,n&&(L(e,!1),0===e.strm.avail_out))return 1}else if(e.match_available){if((n=o._tr_tally(e,0,e.window[e.strstart-1]))&&L(e,!1),e.strstart++,e.lookahead--,0===e.strm.avail_out)return 1}else e.match_available=1,e.strstart++,e.lookahead--}return e.match_available&&(n=o._tr_tally(e,0,e.window[e.strstart-1]),e.match_available=0),e.insert=e.strstart<2?e.strstart:2,4===t?(L(e,!0),0===e.strm.avail_out?3:4):e.last_lit&&(L(e,!1),0===e.strm.avail_out)?1:2}function F(e,t,r,n,i){this.good_length=e,this.max_lazy=t,this.nice_length=r,this.max_chain=n,this.func=i}function K(){this.strm=null,this.status=0,this.pending_buf=null,this.pending_buf_size=0,this.pending_out=0,this.pending=0,this.wrap=0,this.gzhead=null,this.gzindex=0,this.method=8,this.last_flush=-1,this.w_size=0,this.w_bits=0,this.w_mask=0,this.window=null,this.window_size=0,this.prev=null,this.head=null,this.ins_h=0,this.hash_size=0,this.hash_bits=0,this.hash_mask=0,this.hash_shift=0,this.block_start=0,this.match_length=0,this.prev_match=0,this.match_available=0,this.strstart=0,this.match_start=0,this.lookahead=0,this.prev_length=0,this.max_chain_length=0,this.max_lazy_match=0,this.level=0,this.strategy=0,this.good_match=0,this.nice_match=0,this.dyn_ltree=new i.Buf16(2*k),this.dyn_dtree=new i.Buf16(122),this.bl_tree=new i.Buf16(78),O(this.dyn_ltree),O(this.dyn_dtree),O(this.bl_tree),this.l_desc=null,this.d_desc=null,this.bl_desc=null,this.bl_count=new i.Buf16(16),this.heap=new i.Buf16(573),O(this.heap),this.heap_len=0,this.heap_max=0,this.depth=new i.Buf16(573),O(this.depth),this.l_buf=0,this.lit_bufsize=0,this.last_lit=0,this.d_buf=0,this.opt_len=0,this.static_len=0,this.matches=0,this.insert=0,this.bi_buf=0,this.bi_valid=0}function J(e){var t;return e&&e.state?(e.total_in=e.total_out=0,e.data_type=2,(t=e.state).pending=0,t.pending_out=0,t.wrap<0&&(t.wrap=-t.wrap),t.status=t.wrap?C:T,e.adler=2===t.wrap?0:1,t.last_flush=0,o._tr_init(t),0):z(e,f)}function V(e){var t=J(e),r;return 0===t&&((r=e.state).window_size=2*r.w_size,O(r.head),r.max_lazy_match=n[r.level].max_lazy,r.good_match=n[r.level].good_length,r.nice_match=n[r.level].nice_length,r.max_chain_length=n[r.level].max_chain,r.strstart=0,r.block_start=0,r.lookahead=0,r.insert=0,r.match_length=r.prev_length=2,r.match_available=0,r.ins_h=0),t}function Z(e,t,r,n,o,s){if(!e)return f;var a=1;if(t===h&&(t=6),n<0?(a=0,n=-n):15<n&&(a=2,n-=16),o<1||9<o||8!==r||n<8||15<n||t<0||9<t||s<0||4<s)return z(e,f);8===n&&(n=9);var c=new K;return(e.state=c).strm=e,c.wrap=a,c.gzhead=null,c.w_bits=n,c.w_size=1<<c.w_bits,c.w_mask=c.w_size-1,c.hash_bits=o+7,c.hash_size=1<<c.hash_bits,c.hash_mask=c.hash_size-1,c.hash_shift=~~((c.hash_bits+3-1)/3),c.window=new i.Buf8(2*c.w_size),c.head=new i.Buf16(c.hash_size),c.prev=new i.Buf16(c.w_size),c.lit_bufsize=1<<o+6,c.pending_buf_size=4*c.lit_bufsize,c.pending_buf=new i.Buf8(c.pending_buf_size),c.d_buf=1*c.lit_bufsize,c.l_buf=3*c.lit_bufsize,c.level=t,c.strategy=s,c.method=r,V(e)}n=[new F(0,0,0,0,function(e,t){var r=65535;for(r>e.pending_buf_size-5&&(r=e.pending_buf_size-5);;){if(e.lookahead<=1){if(W(e),0===e.lookahead&&0===t)return 1;if(0===e.lookahead)break}e.strstart+=e.lookahead,e.lookahead=0;var n=e.block_start+r;if((0===e.strstart||e.strstart>=n)&&(e.lookahead=e.strstart-n,e.strstart=n,L(e,!1),0===e.strm.avail_out))return 1;if(e.strstart-e.block_start>=e.w_size-_&&(L(e,!1),0===e.strm.avail_out))return 1}return e.insert=0,4===t?(L(e,!0),0===e.strm.avail_out?3:4):(e.strstart>e.block_start&&(L(e,!1),e.strm.avail_out),1)}),new F(4,4,8,4,j),new F(4,5,16,8,j),new F(4,6,32,32,j),new F(4,4,16,16,H),new F(8,16,32,32,H),new F(8,16,128,128,H),new F(8,32,128,256,H),new F(32,128,258,1024,H),new F(32,258,258,4096,H)],r.deflateInit=function(e,t){return Z(e,t,8,15,8,0)},r.deflateInit2=Z,r.deflateReset=V,r.deflateResetKeep=J,r.deflateSetHeader=function(e,t){return e&&e.state?2!==e.state.wrap?f:(e.state.gzhead=t,0):f},r.deflate=function(e,t){var r,i,s,c;if(!e||!e.state||5<t||t<0)return e?z(e,f):f;if(i=e.state,!e.output||!e.input&&0!==e.avail_in||666===i.status&&4!==t)return z(e,0===e.avail_out?-5:f);if(i.strm=e,r=i.last_flush,i.last_flush=t,i.status===C)if(2===i.wrap)e.adler=0,N(i,31),N(i,139),N(i,8),i.gzhead?(N(i,(i.gzhead.text?1:0)+(i.gzhead.hcrc?2:0)+(i.gzhead.extra?4:0)+(i.gzhead.name?8:0)+(i.gzhead.comment?16:0)),N(i,255&i.gzhead.time),N(i,i.gzhead.time>>8&255),N(i,i.gzhead.time>>16&255),N(i,i.gzhead.time>>24&255),N(i,9===i.level?2:2<=i.strategy||i.level<2?4:0),N(i,255&i.gzhead.os),i.gzhead.extra&&i.gzhead.extra.length&&(N(i,255&i.gzhead.extra.length),N(i,i.gzhead.extra.length>>8&255)),i.gzhead.hcrc&&(e.adler=a(e.adler,i.pending_buf,i.pending,0)),i.gzindex=0,i.status=69):(N(i,0),N(i,0),N(i,0),N(i,0),N(i,0),N(i,9===i.level?2:2<=i.strategy||i.level<2?4:0),N(i,3),i.status=T);else{var u=8+(i.w_bits-8<<4)<<8;u|=(2<=i.strategy||i.level<2?0:i.level<6?1:6===i.level?2:3)<<6,0!==i.strstart&&(u|=32),u+=31-u%31,i.status=T,M(i,u),0!==i.strstart&&(M(i,e.adler>>>16),M(i,65535&e.adler)),e.adler=1}if(69===i.status)if(i.gzhead.extra){for(s=i.pending;i.gzindex<(65535&i.gzhead.extra.length)&&(i.pending!==i.pending_buf_size||(i.gzhead.hcrc&&i.pending>s&&(e.adler=a(e.adler,i.pending_buf,i.pending-s,s)),U(e),s=i.pending,i.pending!==i.pending_buf_size));)N(i,255&i.gzhead.extra[i.gzindex]),i.gzindex++;i.gzhead.hcrc&&i.pending>s&&(e.adler=a(e.adler,i.pending_buf,i.pending-s,s)),i.gzindex===i.gzhead.extra.length&&(i.gzindex=0,i.status=73)}else i.status=73;if(73===i.status)if(i.gzhead.name){s=i.pending;do{if(i.pending===i.pending_buf_size&&(i.gzhead.hcrc&&i.pending>s&&(e.adler=a(e.adler,i.pending_buf,i.pending-s,s)),U(e),s=i.pending,i.pending===i.pending_buf_size)){c=1;break}c=i.gzindex<i.gzhead.name.length?255&i.gzhead.name.charCodeAt(i.gzindex++):0,N(i,c)}while(0!==c);i.gzhead.hcrc&&i.pending>s&&(e.adler=a(e.adler,i.pending_buf,i.pending-s,s)),0===c&&(i.gzindex=0,i.status=91)}else i.status=91;if(91===i.status)if(i.gzhead.comment){s=i.pending;do{if(i.pending===i.pending_buf_size&&(i.gzhead.hcrc&&i.pending>s&&(e.adler=a(e.adler,i.pending_buf,i.pending-s,s)),U(e),s=i.pending,i.pending===i.pending_buf_size)){c=1;break}c=i.gzindex<i.gzhead.comment.length?255&i.gzhead.comment.charCodeAt(i.gzindex++):0,N(i,c)}while(0!==c);i.gzhead.hcrc&&i.pending>s&&(e.adler=a(e.adler,i.pending_buf,i.pending-s,s)),0===c&&(i.status=103)}else i.status=103;if(103===i.status&&(i.gzhead.hcrc?(i.pending+2>i.pending_buf_size&&U(e),i.pending+2<=i.pending_buf_size&&(N(i,255&e.adler),N(i,e.adler>>8&255),e.adler=0,i.status=T)):i.status=T),0!==i.pending){if(U(e),0===e.avail_out)return i.last_flush=-1,0}else if(0===e.avail_in&&D(t)<=D(r)&&4!==t)return z(e,-5);if(666===i.status&&0!==e.avail_in)return z(e,-5);if(0!==e.avail_in||0!==i.lookahead||0!==t&&666!==i.status){var l=2===i.strategy?function(e,t){for(var r;;){if(0===e.lookahead&&(W(e),0===e.lookahead)){if(0===t)return 1;break}if(e.match_length=0,r=o._tr_tally(e,0,e.window[e.strstart]),e.lookahead--,e.strstart++,r&&(L(e,!1),0===e.strm.avail_out))return 1}return e.insert=0,4===t?(L(e,!0),0===e.strm.avail_out?3:4):e.last_lit&&(L(e,!1),0===e.strm.avail_out)?1:2}(i,t):3===i.strategy?function(e,t){for(var r,n,i,s,a=e.window;;){if(e.lookahead<=A){if(W(e),e.lookahead<=A&&0===t)return 1;if(0===e.lookahead)break}if(e.match_length=0,e.lookahead>=3&&0<e.strstart&&(n=a[i=e.strstart-1])===a[++i]&&n===a[++i]&&n===a[++i]){s=e.strstart+A;do{}while(n===a[++i]&&n===a[++i]&&n===a[++i]&&n===a[++i]&&n===a[++i]&&n===a[++i]&&n===a[++i]&&n===a[++i]&&i<s);e.match_length=A-(s-i),e.match_length>e.lookahead&&(e.match_length=e.lookahead)}if(e.match_length>=3?(r=o._tr_tally(e,1,e.match_length-3),e.lookahead-=e.match_length,e.strstart+=e.match_length,e.match_length=0):(r=o._tr_tally(e,0,e.window[e.strstart]),e.lookahead--,e.strstart++),r&&(L(e,!1),0===e.strm.avail_out))return 1}return e.insert=0,4===t?(L(e,!0),0===e.strm.avail_out?3:4):e.last_lit&&(L(e,!1),0===e.strm.avail_out)?1:2}(i,t):n[i.level].func(i,t);if(3!==l&&4!==l||(i.status=666),1===l||3===l)return 0===e.avail_out&&(i.last_flush=-1),0;if(2===l&&(1===t?o._tr_align(i):5!==t&&(o._tr_stored_block(i,0,0,!1),3===t&&(O(i.head),0===i.lookahead&&(i.strstart=0,i.block_start=0,i.insert=0))),U(e),0===e.avail_out))return i.last_flush=-1,0}return 4!==t?0:i.wrap<=0?1:(2===i.wrap?(N(i,255&e.adler),N(i,e.adler>>8&255),N(i,e.adler>>16&255),N(i,e.adler>>24&255),N(i,255&e.total_in),N(i,e.total_in>>8&255),N(i,e.total_in>>16&255),N(i,e.total_in>>24&255)):(M(i,e.adler>>>16),M(i,65535&e.adler)),U(e),0<i.wrap&&(i.wrap=-i.wrap),0!==i.pending?0:1)},r.deflateEnd=function(e){var t;return e&&e.state?(t=e.state.status)!==C&&69!==t&&73!==t&&91!==t&&103!==t&&t!==T&&666!==t?z(e,f):(e.state=null,t===T?z(e,-3):0):f},r.deflateSetDictionary=function(e,t){var r,n,o,a,c,u,l,d,h=t.length;if(!e||!e.state)return f;if(2===(a=(r=e.state).wrap)||1===a&&r.status!==C||r.lookahead)return f;for(1===a&&(e.adler=s(e.adler,t,h,0)),r.wrap=0,h>=r.w_size&&(0===a&&(O(r.head),r.strstart=0,r.block_start=0,r.insert=0),d=new i.Buf8(r.w_size),i.arraySet(d,t,h-r.w_size,r.w_size,0),t=d,h=r.w_size),c=e.avail_in,u=e.next_in,l=e.input,e.avail_in=h,e.next_in=0,e.input=t,W(r);r.lookahead>=3;){for(n=r.strstart,o=r.lookahead-2;r.ins_h=(r.ins_h<<r.hash_shift^r.window[n+3-1])&r.hash_mask,r.prev[n&r.w_mask]=r.head[r.ins_h],r.head[r.ins_h]=n,n++,--o;);r.strstart=n,r.lookahead=2,W(r)}return r.strstart+=r.lookahead,r.block_start=r.strstart,r.insert=r.lookahead,r.lookahead=0,r.match_length=r.prev_length=2,r.match_available=0,e.next_in=u,e.input=l,e.avail_in=c,r.wrap=a,0},r.deflateInfo="pako deflate (from Nodeca project)"},{"../utils/common":41,"./adler32":43,"./crc32":45,"./messages":51,"./trees":52}],47:[function(e,t,r){t.exports=function(){this.text=0,this.time=0,this.xflags=0,this.os=0,this.extra=null,this.extra_len=0,this.name="",this.comment="",this.hcrc=0,this.done=!1}},{}],48:[function(e,t,r){t.exports=function(e,t){var r,n,i,o,s,a,c,u,l,d,f,h,p,m,g,y,b,w,v,k,S,x,A,_,C;r=e.state,n=e.next_in,_=e.input,i=n+(e.avail_in-5),o=e.next_out,C=e.output,s=o-(t-e.avail_out),a=o+(e.avail_out-257),c=r.dmax,u=r.wsize,l=r.whave,d=r.wnext,f=r.window,h=r.hold,p=r.bits,m=r.lencode,g=r.distcode,y=(1<<r.lenbits)-1,b=(1<<r.distbits)-1;e:do{p<15&&(h+=_[n++]<<p,p+=8,h+=_[n++]<<p,p+=8),w=m[h&y];t:for(;;){if(h>>>=v=w>>>24,p-=v,0==(v=w>>>16&255))C[o++]=65535&w;else{if(!(16&v)){if(!(64&v)){w=m[(65535&w)+(h&(1<<v)-1)];continue t}if(32&v){r.mode=12;break e}e.msg="invalid literal/length code",r.mode=30;break e}k=65535&w,(v&=15)&&(p<v&&(h+=_[n++]<<p,p+=8),k+=h&(1<<v)-1,h>>>=v,p-=v),p<15&&(h+=_[n++]<<p,p+=8,h+=_[n++]<<p,p+=8),w=g[h&b];r:for(;;){if(h>>>=v=w>>>24,p-=v,!(16&(v=w>>>16&255))){if(!(64&v)){w=g[(65535&w)+(h&(1<<v)-1)];continue r}e.msg="invalid distance code",r.mode=30;break e}if(S=65535&w,p<(v&=15)&&(h+=_[n++]<<p,(p+=8)<v&&(h+=_[n++]<<p,p+=8)),c<(S+=h&(1<<v)-1)){e.msg="invalid distance too far back",r.mode=30;break e}if(h>>>=v,p-=v,(v=o-s)<S){if(l<(v=S-v)&&r.sane){e.msg="invalid distance too far back",r.mode=30;break e}if(A=f,(x=0)===d){if(x+=u-v,v<k){for(k-=v;C[o++]=f[x++],--v;);x=o-S,A=C}}else if(d<v){if(x+=u+d-v,(v-=d)<k){for(k-=v;C[o++]=f[x++],--v;);if(x=0,d<k){for(k-=v=d;C[o++]=f[x++],--v;);x=o-S,A=C}}}else if(x+=d-v,v<k){for(k-=v;C[o++]=f[x++],--v;);x=o-S,A=C}for(;2<k;)C[o++]=A[x++],C[o++]=A[x++],C[o++]=A[x++],k-=3;k&&(C[o++]=A[x++],1<k&&(C[o++]=A[x++]))}else{for(x=o-S;C[o++]=C[x++],C[o++]=C[x++],C[o++]=C[x++],2<(k-=3););k&&(C[o++]=C[x++],1<k&&(C[o++]=C[x++]))}break}}break}}while(n<i&&o<a);n-=k=p>>3,h&=(1<<(p-=k<<3))-1,e.next_in=n,e.next_out=o,e.avail_in=n<i?i-n+5:5-(n-i),e.avail_out=o<a?a-o+257:257-(o-a),r.hold=h,r.bits=p}},{}],49:[function(e,t,r){var n=e("../utils/common"),i=e("./adler32"),o=e("./crc32"),s=e("./inffast"),a=e("./inftrees"),c=1,u=2,l=0,d=-2,f=1,h=852,p=592;function m(e){return(e>>>24&255)+(e>>>8&65280)+((65280&e)<<8)+((255&e)<<24)}function g(){this.mode=0,this.last=!1,this.wrap=0,this.havedict=!1,this.flags=0,this.dmax=0,this.check=0,this.total=0,this.head=null,this.wbits=0,this.wsize=0,this.whave=0,this.wnext=0,this.window=null,this.hold=0,this.bits=0,this.length=0,this.offset=0,this.extra=0,this.lencode=null,this.distcode=null,this.lenbits=0,this.distbits=0,this.ncode=0,this.nlen=0,this.ndist=0,this.have=0,this.next=null,this.lens=new n.Buf16(320),this.work=new n.Buf16(288),this.lendyn=null,this.distdyn=null,this.sane=0,this.back=0,this.was=0}function y(e){var t;return e&&e.state?(t=e.state,e.total_in=e.total_out=t.total=0,e.msg="",t.wrap&&(e.adler=1&t.wrap),t.mode=1,t.last=0,t.havedict=0,t.dmax=32768,t.head=null,t.hold=0,t.bits=0,t.lencode=t.lendyn=new n.Buf32(h),t.distcode=t.distdyn=new n.Buf32(p),t.sane=1,t.back=-1,0):d}function b(e){var t;return e&&e.state?((t=e.state).wsize=0,t.whave=0,t.wnext=0,y(e)):d}function w(e,t){var r,n;return e&&e.state?(n=e.state,t<0?(r=0,t=-t):(r=1+(t>>4),t<48&&(t&=15)),t&&(t<8||15<t)?d:(null!==n.window&&n.wbits!==t&&(n.window=null),n.wrap=r,n.wbits=t,b(e))):d}function v(e,t){var r,n;return e?(n=new g,(e.state=n).window=null,0!==(r=w(e,t))&&(e.state=null),r):d}var k,S,x=!0;function A(e){if(x){var t;for(k=new n.Buf32(512),S=new n.Buf32(32),t=0;t<144;)e.lens[t++]=8;for(;t<256;)e.lens[t++]=9;for(;t<280;)e.lens[t++]=7;for(;t<288;)e.lens[t++]=8;for(a(1,e.lens,0,288,k,0,e.work,{bits:9}),t=0;t<32;)e.lens[t++]=5;a(2,e.lens,0,32,S,0,e.work,{bits:5}),x=!1}e.lencode=k,e.lenbits=9,e.distcode=S,e.distbits=5}function _(e,t,r,i){var o,s=e.state;return null===s.window&&(s.wsize=1<<s.wbits,s.wnext=0,s.whave=0,s.window=new n.Buf8(s.wsize)),i>=s.wsize?(n.arraySet(s.window,t,r-s.wsize,s.wsize,0),s.wnext=0,s.whave=s.wsize):(i<(o=s.wsize-s.wnext)&&(o=i),n.arraySet(s.window,t,r-i,o,s.wnext),(i-=o)?(n.arraySet(s.window,t,r-i,i,0),s.wnext=i,s.whave=s.wsize):(s.wnext+=o,s.wnext===s.wsize&&(s.wnext=0),s.whave<s.wsize&&(s.whave+=o))),0}r.inflateReset=b,r.inflateReset2=w,r.inflateResetKeep=y,r.inflateInit=function(e){return v(e,15)},r.inflateInit2=v,r.inflate=function(e,t){var r,c,u,l,f,h,p,g,y,b,w,v,k,S,x,C,T,P,E,I,R,z,D,O,U=0,L=new n.Buf8(4),N=[16,17,18,0,8,7,9,6,10,5,11,4,12,3,13,2,14,1,15];if(!e||!e.state||!e.output||!e.input&&0!==e.avail_in)return d;12===(r=e.state).mode&&(r.mode=13),f=e.next_out,u=e.output,p=e.avail_out,l=e.next_in,c=e.input,h=e.avail_in,g=r.hold,y=r.bits,b=h,w=p,z=0;e:for(;;)switch(r.mode){case 1:if(0===r.wrap){r.mode=13;break}for(;y<16;){if(0===h)break e;h--,g+=c[l++]<<y,y+=8}if(2&r.wrap&&35615===g){L[r.check=0]=255&g,L[1]=g>>>8&255,r.check=o(r.check,L,2,0),y=g=0,r.mode=2;break}if(r.flags=0,r.head&&(r.head.done=!1),!(1&r.wrap)||(((255&g)<<8)+(g>>8))%31){e.msg="incorrect header check",r.mode=30;break}if(8!=(15&g)){e.msg="unknown compression method",r.mode=30;break}if(y-=4,R=8+(15&(g>>>=4)),0===r.wbits)r.wbits=R;else if(R>r.wbits){e.msg="invalid window size",r.mode=30;break}r.dmax=1<<R,e.adler=r.check=1,r.mode=512&g?10:12,y=g=0;break;case 2:for(;y<16;){if(0===h)break e;h--,g+=c[l++]<<y,y+=8}if(r.flags=g,8!=(255&r.flags)){e.msg="unknown compression method",r.mode=30;break}if(57344&r.flags){e.msg="unknown header flags set",r.mode=30;break}r.head&&(r.head.text=g>>8&1),512&r.flags&&(L[0]=255&g,L[1]=g>>>8&255,r.check=o(r.check,L,2,0)),y=g=0,r.mode=3;case 3:for(;y<32;){if(0===h)break e;h--,g+=c[l++]<<y,y+=8}r.head&&(r.head.time=g),512&r.flags&&(L[0]=255&g,L[1]=g>>>8&255,L[2]=g>>>16&255,L[3]=g>>>24&255,r.check=o(r.check,L,4,0)),y=g=0,r.mode=4;case 4:for(;y<16;){if(0===h)break e;h--,g+=c[l++]<<y,y+=8}r.head&&(r.head.xflags=255&g,r.head.os=g>>8),512&r.flags&&(L[0]=255&g,L[1]=g>>>8&255,r.check=o(r.check,L,2,0)),y=g=0,r.mode=5;case 5:if(1024&r.flags){for(;y<16;){if(0===h)break e;h--,g+=c[l++]<<y,y+=8}r.length=g,r.head&&(r.head.extra_len=g),512&r.flags&&(L[0]=255&g,L[1]=g>>>8&255,r.check=o(r.check,L,2,0)),y=g=0}else r.head&&(r.head.extra=null);r.mode=6;case 6:if(1024&r.flags&&(h<(v=r.length)&&(v=h),v&&(r.head&&(R=r.head.extra_len-r.length,r.head.extra||(r.head.extra=new Array(r.head.extra_len)),n.arraySet(r.head.extra,c,l,v,R)),512&r.flags&&(r.check=o(r.check,c,v,l)),h-=v,l+=v,r.length-=v),r.length))break e;r.length=0,r.mode=7;case 7:if(2048&r.flags){if(0===h)break e;for(v=0;R=c[l+v++],r.head&&R&&r.length<65536&&(r.head.name+=String.fromCharCode(R)),R&&v<h;);if(512&r.flags&&(r.check=o(r.check,c,v,l)),h-=v,l+=v,R)break e}else r.head&&(r.head.name=null);r.length=0,r.mode=8;case 8:if(4096&r.flags){if(0===h)break e;for(v=0;R=c[l+v++],r.head&&R&&r.length<65536&&(r.head.comment+=String.fromCharCode(R)),R&&v<h;);if(512&r.flags&&(r.check=o(r.check,c,v,l)),h-=v,l+=v,R)break e}else r.head&&(r.head.comment=null);r.mode=9;case 9:if(512&r.flags){for(;y<16;){if(0===h)break e;h--,g+=c[l++]<<y,y+=8}if(g!==(65535&r.check)){e.msg="header crc mismatch",r.mode=30;break}y=g=0}r.head&&(r.head.hcrc=r.flags>>9&1,r.head.done=!0),e.adler=r.check=0,r.mode=12;break;case 10:for(;y<32;){if(0===h)break e;h--,g+=c[l++]<<y,y+=8}e.adler=r.check=m(g),y=g=0,r.mode=11;case 11:if(0===r.havedict)return e.next_out=f,e.avail_out=p,e.next_in=l,e.avail_in=h,r.hold=g,r.bits=y,2;e.adler=r.check=1,r.mode=12;case 12:if(5===t||6===t)break e;case 13:if(r.last){g>>>=7&y,y-=7&y,r.mode=27;break}for(;y<3;){if(0===h)break e;h--,g+=c[l++]<<y,y+=8}switch(r.last=1&g,y-=1,3&(g>>>=1)){case 0:r.mode=14;break;case 1:if(A(r),r.mode=20,6!==t)break;g>>>=2,y-=2;break e;case 2:r.mode=17;break;case 3:e.msg="invalid block type",r.mode=30}g>>>=2,y-=2;break;case 14:for(g>>>=7&y,y-=7&y;y<32;){if(0===h)break e;h--,g+=c[l++]<<y,y+=8}if((65535&g)!=(g>>>16^65535)){e.msg="invalid stored block lengths",r.mode=30;break}if(r.length=65535&g,y=g=0,r.mode=15,6===t)break e;case 15:r.mode=16;case 16:if(v=r.length){if(h<v&&(v=h),p<v&&(v=p),0===v)break e;n.arraySet(u,c,l,v,f),h-=v,l+=v,p-=v,f+=v,r.length-=v;break}r.mode=12;break;case 17:for(;y<14;){if(0===h)break e;h--,g+=c[l++]<<y,y+=8}if(r.nlen=257+(31&g),g>>>=5,y-=5,r.ndist=1+(31&g),g>>>=5,y-=5,r.ncode=4+(15&g),g>>>=4,y-=4,286<r.nlen||30<r.ndist){e.msg="too many length or distance symbols",r.mode=30;break}r.have=0,r.mode=18;case 18:for(;r.have<r.ncode;){for(;y<3;){if(0===h)break e;h--,g+=c[l++]<<y,y+=8}r.lens[N[r.have++]]=7&g,g>>>=3,y-=3}for(;r.have<19;)r.lens[N[r.have++]]=0;if(r.lencode=r.lendyn,r.lenbits=7,D={bits:r.lenbits},z=a(0,r.lens,0,19,r.lencode,0,r.work,D),r.lenbits=D.bits,z){e.msg="invalid code lengths set",r.mode=30;break}r.have=0,r.mode=19;case 19:for(;r.have<r.nlen+r.ndist;){for(;C=(U=r.lencode[g&(1<<r.lenbits)-1])>>>16&255,T=65535&U,!((x=U>>>24)<=y);){if(0===h)break e;h--,g+=c[l++]<<y,y+=8}if(T<16)g>>>=x,y-=x,r.lens[r.have++]=T;else{if(16===T){for(O=x+2;y<O;){if(0===h)break e;h--,g+=c[l++]<<y,y+=8}if(g>>>=x,y-=x,0===r.have){e.msg="invalid bit length repeat",r.mode=30;break}R=r.lens[r.have-1],v=3+(3&g),g>>>=2,y-=2}else if(17===T){for(O=x+3;y<O;){if(0===h)break e;h--,g+=c[l++]<<y,y+=8}y-=x,R=0,v=3+(7&(g>>>=x)),g>>>=3,y-=3}else{for(O=x+7;y<O;){if(0===h)break e;h--,g+=c[l++]<<y,y+=8}y-=x,R=0,v=11+(127&(g>>>=x)),g>>>=7,y-=7}if(r.have+v>r.nlen+r.ndist){e.msg="invalid bit length repeat",r.mode=30;break}for(;v--;)r.lens[r.have++]=R}}if(30===r.mode)break;if(0===r.lens[256]){e.msg="invalid code -- missing end-of-block",r.mode=30;break}if(r.lenbits=9,D={bits:r.lenbits},z=a(1,r.lens,0,r.nlen,r.lencode,0,r.work,D),r.lenbits=D.bits,z){e.msg="invalid literal/lengths set",r.mode=30;break}if(r.distbits=6,r.distcode=r.distdyn,D={bits:r.distbits},z=a(2,r.lens,r.nlen,r.ndist,r.distcode,0,r.work,D),r.distbits=D.bits,z){e.msg="invalid distances set",r.mode=30;break}if(r.mode=20,6===t)break e;case 20:r.mode=21;case 21:if(6<=h&&258<=p){e.next_out=f,e.avail_out=p,e.next_in=l,e.avail_in=h,r.hold=g,r.bits=y,s(e,w),f=e.next_out,u=e.output,p=e.avail_out,l=e.next_in,c=e.input,h=e.avail_in,g=r.hold,y=r.bits,12===r.mode&&(r.back=-1);break}for(r.back=0;C=(U=r.lencode[g&(1<<r.lenbits)-1])>>>16&255,T=65535&U,!((x=U>>>24)<=y);){if(0===h)break e;h--,g+=c[l++]<<y,y+=8}if(C&&!(240&C)){for(P=x,E=C,I=T;C=(U=r.lencode[I+((g&(1<<P+E)-1)>>P)])>>>16&255,T=65535&U,!(P+(x=U>>>24)<=y);){if(0===h)break e;h--,g+=c[l++]<<y,y+=8}g>>>=P,y-=P,r.back+=P}if(g>>>=x,y-=x,r.back+=x,r.length=T,0===C){r.mode=26;break}if(32&C){r.back=-1,r.mode=12;break}if(64&C){e.msg="invalid literal/length code",r.mode=30;break}r.extra=15&C,r.mode=22;case 22:if(r.extra){for(O=r.extra;y<O;){if(0===h)break e;h--,g+=c[l++]<<y,y+=8}r.length+=g&(1<<r.extra)-1,g>>>=r.extra,y-=r.extra,r.back+=r.extra}r.was=r.length,r.mode=23;case 23:for(;C=(U=r.distcode[g&(1<<r.distbits)-1])>>>16&255,T=65535&U,!((x=U>>>24)<=y);){if(0===h)break e;h--,g+=c[l++]<<y,y+=8}if(!(240&C)){for(P=x,E=C,I=T;C=(U=r.distcode[I+((g&(1<<P+E)-1)>>P)])>>>16&255,T=65535&U,!(P+(x=U>>>24)<=y);){if(0===h)break e;h--,g+=c[l++]<<y,y+=8}g>>>=P,y-=P,r.back+=P}if(g>>>=x,y-=x,r.back+=x,64&C){e.msg="invalid distance code",r.mode=30;break}r.offset=T,r.extra=15&C,r.mode=24;case 24:if(r.extra){for(O=r.extra;y<O;){if(0===h)break e;h--,g+=c[l++]<<y,y+=8}r.offset+=g&(1<<r.extra)-1,g>>>=r.extra,y-=r.extra,r.back+=r.extra}if(r.offset>r.dmax){e.msg="invalid distance too far back",r.mode=30;break}r.mode=25;case 25:if(0===p)break e;if(v=w-p,r.offset>v){if((v=r.offset-v)>r.whave&&r.sane){e.msg="invalid distance too far back",r.mode=30;break}k=v>r.wnext?(v-=r.wnext,r.wsize-v):r.wnext-v,v>r.length&&(v=r.length),S=r.window}else S=u,k=f-r.offset,v=r.length;for(p<v&&(v=p),p-=v,r.length-=v;u[f++]=S[k++],--v;);0===r.length&&(r.mode=21);break;case 26:if(0===p)break e;u[f++]=r.length,p--,r.mode=21;break;case 27:if(r.wrap){for(;y<32;){if(0===h)break e;h--,g|=c[l++]<<y,y+=8}if(w-=p,e.total_out+=w,r.total+=w,w&&(e.adler=r.check=r.flags?o(r.check,u,w,f-w):i(r.check,u,w,f-w)),w=p,(r.flags?g:m(g))!==r.check){e.msg="incorrect data check",r.mode=30;break}y=g=0}r.mode=28;case 28:if(r.wrap&&r.flags){for(;y<32;){if(0===h)break e;h--,g+=c[l++]<<y,y+=8}if(g!==(4294967295&r.total)){e.msg="incorrect length check",r.mode=30;break}y=g=0}r.mode=29;case 29:z=1;break e;case 30:z=-3;break e;case 31:return-4;case 32:default:return d}return e.next_out=f,e.avail_out=p,e.next_in=l,e.avail_in=h,r.hold=g,r.bits=y,(r.wsize||w!==e.avail_out&&r.mode<30&&(r.mode<27||4!==t))&&_(e,e.output,e.next_out,w-e.avail_out)?(r.mode=31,-4):(b-=e.avail_in,w-=e.avail_out,e.total_in+=b,e.total_out+=w,r.total+=w,r.wrap&&w&&(e.adler=r.check=r.flags?o(r.check,u,w,e.next_out-w):i(r.check,u,w,e.next_out-w)),e.data_type=r.bits+(r.last?64:0)+(12===r.mode?128:0)+(20===r.mode||15===r.mode?256:0),(0==b&&0===w||4===t)&&0===z&&(z=-5),z)},r.inflateEnd=function(e){if(!e||!e.state)return d;var t=e.state;return t.window&&(t.window=null),e.state=null,0},r.inflateGetHeader=function(e,t){var r;return e&&e.state&&2&(r=e.state).wrap?((r.head=t).done=!1,0):d},r.inflateSetDictionary=function(e,t){var r,n=t.length;return e&&e.state?0!==(r=e.state).wrap&&11!==r.mode?d:11===r.mode&&i(1,t,n,0)!==r.check?-3:_(e,t,n,n)?(r.mode=31,-4):(r.havedict=1,0):d},r.inflateInfo="pako inflate (from Nodeca project)"},{"../utils/common":41,"./adler32":43,"./crc32":45,"./inffast":48,"./inftrees":50}],50:[function(e,t,r){var n=e("../utils/common"),i=[3,4,5,6,7,8,9,10,11,13,15,17,19,23,27,31,35,43,51,59,67,83,99,115,131,163,195,227,258,0,0],o=[16,16,16,16,16,16,16,16,17,17,17,17,18,18,18,18,19,19,19,19,20,20,20,20,21,21,21,21,16,72,78],s=[1,2,3,4,5,7,9,13,17,25,33,49,65,97,129,193,257,385,513,769,1025,1537,2049,3073,4097,6145,8193,12289,16385,24577,0,0],a=[16,16,16,16,17,17,18,18,19,19,20,20,21,21,22,22,23,23,24,24,25,25,26,26,27,27,28,28,29,29,64,64];t.exports=function(e,t,r,c,u,l,d,f){var h,p,m,g,y,b,w,v,k,S=f.bits,x=0,A=0,_=0,C=0,T=0,P=0,E=0,I=0,R=0,z=0,D=null,O=0,U=new n.Buf16(16),L=new n.Buf16(16),N=null,M=0;for(x=0;x<=15;x++)U[x]=0;for(A=0;A<c;A++)U[t[r+A]]++;for(T=S,C=15;1<=C&&0===U[C];C--);if(C<T&&(T=C),0===C)return u[l++]=20971520,u[l++]=20971520,f.bits=1,0;for(_=1;_<C&&0===U[_];_++);for(T<_&&(T=_),x=I=1;x<=15;x++)if(I<<=1,(I-=U[x])<0)return-1;if(0<I&&(0===e||1!==C))return-1;for(L[1]=0,x=1;x<15;x++)L[x+1]=L[x]+U[x];for(A=0;A<c;A++)0!==t[r+A]&&(d[L[t[r+A]]++]=A);if(b=0===e?(D=N=d,19):1===e?(D=i,O-=257,N=o,M-=257,256):(D=s,N=a,-1),x=_,y=l,E=A=z=0,m=-1,g=(R=1<<(P=T))-1,1===e&&852<R||2===e&&592<R)return 1;for(;;){for(w=x-E,k=d[A]<b?(v=0,d[A]):d[A]>b?(v=N[M+d[A]],D[O+d[A]]):(v=96,0),h=1<<x-E,_=p=1<<P;u[y+(z>>E)+(p-=h)]=w<<24|v<<16|k,0!==p;);for(h=1<<x-1;z&h;)h>>=1;if(0!==h?(z&=h-1,z+=h):z=0,A++,0==--U[x]){if(x===C)break;x=t[r+d[A]]}if(T<x&&(z&g)!==m){for(0===E&&(E=T),y+=_,I=1<<(P=x-E);P+E<C&&!((I-=U[P+E])<=0);)P++,I<<=1;if(R+=1<<P,1===e&&852<R||2===e&&592<R)return 1;u[m=z&g]=T<<24|P<<16|y-l}}return 0!==z&&(u[y+z]=x-E<<24|64<<16),f.bits=T,0}},{"../utils/common":41}],51:[function(e,t,r){t.exports={2:"need dictionary",1:"stream end",0:"","-1":"file error","-2":"stream error","-3":"data error","-4":"insufficient memory","-5":"buffer error","-6":"incompatible version"}},{}],52:[function(e,t,r){var n=e("../utils/common"),i=0,o=1;function s(e){for(var t=e.length;0<=--t;)e[t]=0}var a=0,c=29,u=256,l=286,d=30,f=19,h=573,p=15,m=16,g=7,y=256,b=16,w=17,v=18,k=[0,0,0,0,0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,0],S=[0,0,0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13],x=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,3,7],A=[16,17,18,0,8,7,9,6,10,5,11,4,12,3,13,2,14,1,15],_=new Array(576);s(_);var C=new Array(60);s(C);var T=new Array(512);s(T);var P=new Array(256);s(P);var E=new Array(c);s(E);var I,R,z,D=new Array(d);function O(e,t,r,n,i){this.static_tree=e,this.extra_bits=t,this.extra_base=r,this.elems=n,this.max_length=i,this.has_stree=e&&e.length}function U(e,t){this.dyn_tree=e,this.max_code=0,this.stat_desc=t}function L(e){return e<256?T[e]:T[256+(e>>>7)]}function N(e,t){e.pending_buf[e.pending++]=255&t,e.pending_buf[e.pending++]=t>>>8&255}function M(e,t,r){e.bi_valid>m-r?(e.bi_buf|=t<<e.bi_valid&65535,N(e,e.bi_buf),e.bi_buf=t>>m-e.bi_valid,e.bi_valid+=r-m):(e.bi_buf|=t<<e.bi_valid&65535,e.bi_valid+=r)}function B(e,t,r){M(e,r[2*t],r[2*t+1])}function W(e,t){for(var r=0;r|=1&e,e>>>=1,r<<=1,0<--t;);return r>>>1}function j(e,t,r){var n,i,o=new Array(16),s=0;for(n=1;n<=p;n++)o[n]=s=s+r[n-1]<<1;for(i=0;i<=t;i++){var a=e[2*i+1];0!==a&&(e[2*i]=W(o[a]++,a))}}function H(e){var t;for(t=0;t<l;t++)e.dyn_ltree[2*t]=0;for(t=0;t<d;t++)e.dyn_dtree[2*t]=0;for(t=0;t<f;t++)e.bl_tree[2*t]=0;e.dyn_ltree[512]=1,e.opt_len=e.static_len=0,e.last_lit=e.matches=0}function F(e){8<e.bi_valid?N(e,e.bi_buf):0<e.bi_valid&&(e.pending_buf[e.pending++]=e.bi_buf),e.bi_buf=0,e.bi_valid=0}function K(e,t,r,n){var i=2*t,o=2*r;return e[i]<e[o]||e[i]===e[o]&&n[t]<=n[r]}function J(e,t,r){for(var n=e.heap[r],i=r<<1;i<=e.heap_len&&(i<e.heap_len&&K(t,e.heap[i+1],e.heap[i],e.depth)&&i++,!K(t,n,e.heap[i],e.depth));)e.heap[r]=e.heap[i],r=i,i<<=1;e.heap[r]=n}function V(e,t,r){var n,i,o,s,a=0;if(0!==e.last_lit)for(;n=e.pending_buf[e.d_buf+2*a]<<8|e.pending_buf[e.d_buf+2*a+1],i=e.pending_buf[e.l_buf+a],a++,0===n?B(e,i,t):(B(e,(o=P[i])+u+1,t),0!==(s=k[o])&&M(e,i-=E[o],s),B(e,o=L(--n),r),0!==(s=S[o])&&M(e,n-=D[o],s)),a<e.last_lit;);B(e,y,t)}function Z(e,t){var r,n,i,o=t.dyn_tree,s=t.stat_desc.static_tree,a=t.stat_desc.has_stree,c=t.stat_desc.elems,u=-1;for(e.heap_len=0,e.heap_max=h,r=0;r<c;r++)0!==o[2*r]?(e.heap[++e.heap_len]=u=r,e.depth[r]=0):o[2*r+1]=0;for(;e.heap_len<2;)o[2*(i=e.heap[++e.heap_len]=u<2?++u:0)]=1,e.depth[i]=0,e.opt_len--,a&&(e.static_len-=s[2*i+1]);for(t.max_code=u,r=e.heap_len>>1;1<=r;r--)J(e,o,r);for(i=c;r=e.heap[1],e.heap[1]=e.heap[e.heap_len--],J(e,o,1),n=e.heap[1],e.heap[--e.heap_max]=r,e.heap[--e.heap_max]=n,o[2*i]=o[2*r]+o[2*n],e.depth[i]=(e.depth[r]>=e.depth[n]?e.depth[r]:e.depth[n])+1,o[2*r+1]=o[2*n+1]=i,e.heap[1]=i++,J(e,o,1),2<=e.heap_len;);e.heap[--e.heap_max]=e.heap[1],function(e,t){var r,n,i,o,s,a,c=t.dyn_tree,u=t.max_code,l=t.stat_desc.static_tree,d=t.stat_desc.has_stree,f=t.stat_desc.extra_bits,m=t.stat_desc.extra_base,g=t.stat_desc.max_length,y=0;for(o=0;o<=p;o++)e.bl_count[o]=0;for(c[2*e.heap[e.heap_max]+1]=0,r=e.heap_max+1;r<h;r++)g<(o=c[2*c[2*(n=e.heap[r])+1]+1]+1)&&(o=g,y++),c[2*n+1]=o,u<n||(e.bl_count[o]++,s=0,m<=n&&(s=f[n-m]),a=c[2*n],e.opt_len+=a*(o+s),d&&(e.static_len+=a*(l[2*n+1]+s)));if(0!==y){do{for(o=g-1;0===e.bl_count[o];)o--;e.bl_count[o]--,e.bl_count[o+1]+=2,e.bl_count[g]--,y-=2}while(0<y);for(o=g;0!==o;o--)for(n=e.bl_count[o];0!==n;)u<(i=e.heap[--r])||(c[2*i+1]!==o&&(e.opt_len+=(o-c[2*i+1])*c[2*i],c[2*i+1]=o),n--)}}(e,t),j(o,u,e.bl_count)}function G(e,t,r){var n,i,o=-1,s=t[1],a=0,c=7,u=4;for(0===s&&(c=138,u=3),t[2*(r+1)+1]=65535,n=0;n<=r;n++)i=s,s=t[2*(n+1)+1],++a<c&&i===s||(a<u?e.bl_tree[2*i]+=a:0!==i?(i!==o&&e.bl_tree[2*i]++,e.bl_tree[32]++):a<=10?e.bl_tree[34]++:e.bl_tree[36]++,o=i,u=(a=0)===s?(c=138,3):i===s?(c=6,3):(c=7,4))}function q(e,t,r){var n,i,o=-1,s=t[1],a=0,c=7,u=4;for(0===s&&(c=138,u=3),n=0;n<=r;n++)if(i=s,s=t[2*(n+1)+1],!(++a<c&&i===s)){if(a<u)for(;B(e,i,e.bl_tree),0!=--a;);else 0!==i?(i!==o&&(B(e,i,e.bl_tree),a--),B(e,b,e.bl_tree),M(e,a-3,2)):a<=10?(B(e,w,e.bl_tree),M(e,a-3,3)):(B(e,v,e.bl_tree),M(e,a-11,7));o=i,u=(a=0)===s?(c=138,3):i===s?(c=6,3):(c=7,4)}}s(D);var Q=!1;function Y(e,t,r,i){var o,s,a,c;M(e,0+(i?1:0),3),s=t,a=r,c=!0,F(o=e),N(o,a),N(o,~a),n.arraySet(o.pending_buf,o.window,s,a,o.pending),o.pending+=a}r._tr_init=function(e){Q||(function(){var e,t,r,n,i,o=new Array(16);for(n=r=0;n<28;n++)for(E[n]=r,e=0;e<1<<k[n];e++)P[r++]=n;for(P[r-1]=n,n=i=0;n<16;n++)for(D[n]=i,e=0;e<1<<S[n];e++)T[i++]=n;for(i>>=7;n<d;n++)for(D[n]=i<<7,e=0;e<1<<S[n]-7;e++)T[256+i++]=n;for(t=0;t<=p;t++)o[t]=0;for(e=0;e<=143;)_[2*e+1]=8,e++,o[8]++;for(;e<=255;)_[2*e+1]=9,e++,o[9]++;for(;e<=279;)_[2*e+1]=7,e++,o[7]++;for(;e<=287;)_[2*e+1]=8,e++,o[8]++;for(j(_,287,o),e=0;e<d;e++)C[2*e+1]=5,C[2*e]=W(e,5);I=new O(_,k,257,l,p),R=new O(C,S,0,d,p),z=new O(new Array(0),x,0,f,7)}(),Q=!0),e.l_desc=new U(e.dyn_ltree,I),e.d_desc=new U(e.dyn_dtree,R),e.bl_desc=new U(e.bl_tree,z),e.bi_buf=0,e.bi_valid=0,H(e)},r._tr_stored_block=Y,r._tr_flush_block=function(e,t,r,n){var i,o,s=0;0<e.level?(2===e.strm.data_type&&(e.strm.data_type=function(e){var t,r=4093624447;for(t=0;t<=31;t++,r>>>=1)if(1&r&&0!==e.dyn_ltree[2*t])return 0;if(0!==e.dyn_ltree[18]||0!==e.dyn_ltree[20]||0!==e.dyn_ltree[26])return 1;for(t=32;t<u;t++)if(0!==e.dyn_ltree[2*t])return 1;return 0}(e)),Z(e,e.l_desc),Z(e,e.d_desc),s=function(e){var t;for(G(e,e.dyn_ltree,e.l_desc.max_code),G(e,e.dyn_dtree,e.d_desc.max_code),Z(e,e.bl_desc),t=18;3<=t&&0===e.bl_tree[2*A[t]+1];t--);return e.opt_len+=3*(t+1)+5+5+4,t}(e),i=e.opt_len+3+7>>>3,(o=e.static_len+3+7>>>3)<=i&&(i=o)):i=o=r+5,r+4<=i&&-1!==t?Y(e,t,r,n):4===e.strategy||o===i?(M(e,2+(n?1:0),3),V(e,_,C)):(M(e,4+(n?1:0),3),function(e,t,r,n){var i;for(M(e,t-257,5),M(e,r-1,5),M(e,n-4,4),i=0;i<n;i++)M(e,e.bl_tree[2*A[i]+1],3);q(e,e.dyn_ltree,t-1),q(e,e.dyn_dtree,r-1)}(e,e.l_desc.max_code+1,e.d_desc.max_code+1,s+1),V(e,e.dyn_ltree,e.dyn_dtree)),H(e),n&&F(e)},r._tr_tally=function(e,t,r){return e.pending_buf[e.d_buf+2*e.last_lit]=t>>>8&255,e.pending_buf[e.d_buf+2*e.last_lit+1]=255&t,e.pending_buf[e.l_buf+e.last_lit]=255&r,e.last_lit++,0===t?e.dyn_ltree[2*r]++:(e.matches++,t--,e.dyn_ltree[2*(P[r]+u+1)]++,e.dyn_dtree[2*L(t)]++),e.last_lit===e.lit_bufsize-1},r._tr_align=function(e){var t;M(e,2,3),B(e,y,_),16===(t=e).bi_valid?(N(t,t.bi_buf),t.bi_buf=0,t.bi_valid=0):8<=t.bi_valid&&(t.pending_buf[t.pending++]=255&t.bi_buf,t.bi_buf>>=8,t.bi_valid-=8)}},{"../utils/common":41}],53:[function(e,t,r){t.exports=function(){this.input=null,this.next_in=0,this.avail_in=0,this.total_in=0,this.output=null,this.next_out=0,this.avail_out=0,this.total_out=0,this.msg="",this.state=null,this.data_type=2,this.adler=0}},{}],54:[function(e,t,r){(function(e){!function(e,t){if(!e.setImmediate){var r,n,i,o,s=1,a={},c=!1,u=e.document,l=Object.getPrototypeOf&&Object.getPrototypeOf(e);l=l&&l.setTimeout?l:e,r="[object process]"==={}.toString.call(e.process)?function(e){process.nextTick(function(){f(e)})}:function(){if(e.postMessage&&!e.importScripts){var t=!0,r=e.onmessage;return e.onmessage=function(){t=!1},e.postMessage("","*"),e.onmessage=r,t}}()?(o="setImmediate$"+Math.random()+"$",e.addEventListener?e.addEventListener("message",h,!1):e.attachEvent("onmessage",h),function(t){e.postMessage(o+t,"*")}):e.MessageChannel?((i=new MessageChannel).port1.onmessage=function(e){f(e.data)},function(e){i.port2.postMessage(e)}):u&&"onreadystatechange"in u.createElement("script")?(n=u.documentElement,function(e){var t=u.createElement("script");t.onreadystatechange=function(){f(e),t.onreadystatechange=null,n.removeChild(t),t=null},n.appendChild(t)}):function(e){setTimeout(f,0,e)},l.setImmediate=function(e){"function"!=typeof e&&(e=new Function(""+e));for(var t=new Array(arguments.length-1),n=0;n<t.length;n++)t[n]=arguments[n+1];var i={callback:e,args:t};return a[s]=i,r(s),s++},l.clearImmediate=d}function d(e){delete a[e]}function f(e){if(c)setTimeout(f,0,e);else{var r=a[e];if(r){c=!0;try{!function(e){var r=e.callback,n=e.args;switch(n.length){case 0:r();break;case 1:r(n[0]);break;case 2:r(n[0],n[1]);break;case 3:r(n[0],n[1],n[2]);break;default:r.apply(t,n)}}(r)}finally{d(e),c=!1}}}}function h(t){t.source===e&&"string"==typeof t.data&&0===t.data.indexOf(o)&&f(+t.data.slice(o.length))}}("undefined"==typeof self?void 0===e?this:e:self)}).call(this,"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{}]},{},[10])(10)})}}),mu=[{privateKey:"sBmQVHEywGAKQ8Ratzo/f5OUCa7MSozZpz1JK2PSVXE=",publicKey:"bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=",warpIPv6:"2606:4700:110:8dd8:de5f:9a89:bfac:749c/128",reserved:"59nK"},{privateKey:"OPiD4dePq8652DICknJsTJS4UH0FoWY1ffOZzZhIsUs=",publicKey:"bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=",warpIPv6:"2606:4700:110:8912:1225:70c8:1ad7:6ce0/128",reserved:"G/nh"}];async function gu(e){const t=[];try{const r=[await bu(),await bu()];for(const[e,n]of r.entries()){const{config:r}=await yu(n);t.push({privateKey:n.privateKey,warpIPv6:`${r.interface.addresses.v6}/128`,reserved:r.client_id,publicKey:r.peers[0].public_key}),0===e&&await new Promise(e=>setTimeout(e,1e3))}return await e.kv.put("warpAccounts",JSON.stringify(t)),t}catch(e){return console.error("Failed to fetch new WARP accounts:",e instanceof Error?e.message:String(e)),mu}}async function yu(e){const t=await fetch("https://api.cloudflareclient.com/v0a4005/reg",{method:"POST",headers:{"User-Agent":"insomnia/8.6.1","Content-Type":"application/json"},body:JSON.stringify({install_id:"",fcm_token:"",tos:(new Date).toISOString(),type:"Android",model:"PC",locale:"en_US",warp_enabled:!0,key:e.publicKey})});if(!t.ok)throw new Error(`API returned status ${t.status}: ${await t.text()}`);return t.json()}async function bu(){const e=await crypto.subtle.generateKey({name:"X25519",namedCurve:"X25519"},!0,["deriveBits"]),t=await crypto.subtle.exportKey("pkcs8",e.privateKey),r=new Uint8Array(t).slice(-32),n=void 0,i=e=>btoa(String.fromCharCode(...e));return{publicKey:i(new Uint8Array(await crypto.subtle.exportKey("raw",e.publicKey))),privateKey:i(r)}}function wu(e){const t=(new TextEncoder).encode(e),r=Array.from(t,e=>String.fromCharCode(e)).join("");return btoa(r)}function vu(e){return(new TextDecoder).decode(Uint8Array.from(atob(e),e=>e.charCodeAt(0)))}function ku(e){const t=void 0;return/^[0-9a-f]{8}-[0-9a-f]{4}-[4][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(e)}function Su(e,t,r,n,i){const o={"Content-Type":"application/json",...i},s={success:e,status:t,message:r??null,body:n??null};return new Response(JSON.stringify(s),{status:t,headers:o})}function xu(e){return e instanceof Error?e.message:String(e)}function Au(e){if(!e)return!1;const t=void 0;return/^(?!-)(?:[A-Za-z0-9-]{1,63}.)+[A-Za-z]{2,}$/.test(e)}async function _u(e,t=!1){const r=`https://cloudflare-dns.com/dns-query?name=${encodeURIComponent(e)}`,n={ipv4:`${r}&type=A`,ipv6:`${r}&type=AAAA`};try{const e=await Cu(n.ipv4,1),r=void 0;return{ipv4:e,ipv6:t?[]:await Cu(n.ipv6,28)}}catch(t){throw new Error(`Error resolving DNS for ${e}: ${xu(t)}`)}}async function Cu(e,t){try{const r=await fetch(e,{headers:{accept:"application/dns-json"}}),n=await r.json();return n.Answer?n.Answer.filter(e=>e.type===t).map(e=>e.data):[]}catch(t){throw new Error(`Failed to fetch DNS records from ${e}: ${xu(t)}`)}}function Tu(){const{settings:{VLConfigs:e,TRConfigs:t},dict:{_VL_:r,_TR_:n}}=globalThis;return[].concatIf(e,r).concatIf(t,n)}async function Pu(e){const{httpConfig:{hostName:t},settings:{enableIPv6:r,customCdnAddrs:n,cleanIPs:i}}=globalThis,{ipv4:o,ipv6:s}=await _u(t,!r),a=void 0;return[t,"www.speedtest.net",...o,...s.map(e=>`[${e}]`),...i].concatIf(!e,n)}function Eu(e,t,r,n,i,o){const{settings:{cleanIPs:s,customCdnAddrs:a,upstreamParams:{upstreamServer:c}},dict:{_VL_:u,_VL_CAP_:l,_TR_CAP_:d}}=globalThis,f=void 0,h=a.includes(r)?" C":i?" F":"",p=o?"🔗 ":"",m=n===u?l:d;let g;return g=s.includes(r)?"Clean IP":Au(r)?"Domain":Ou(r)?"IPv4":Uu(r)?"IPv6":"",r===c?`${e} - ${p}${m}${h} - Upstream Proxy`:`${e} - ${p}${m}${h} - ${g} : ${t}`}function Iu(e){let t="";for(let r=0;r<e.length;r++)t+=Math.random()<.5?e[r].toUpperCase():e[r];return t}function Ru(e,t){let r="";const n="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",i=Math.floor(Math.random()*(t-e+1))+e;for(let e=0;e<i;e++)r+=n.charAt(Math.floor(62*Math.random()));return r}function zu(e){const{settings:{proxyIPMode:t,proxyIPs:r,prefixes:n},dict:{_VL_:i}}=globalThis,o={junk:Ru(8,16),protocol:e===i?"vl":"tr",mode:t,panelIPs:"proxyip"===t?r:n};return`/${btoa(JSON.stringify(o))}`}function Du(e){const t=atob(e),r=void 0,n=void 0;return Array.from(t).map(e=>e.charCodeAt(0).toString(16).padStart(2,"0")).join("").match(/.{2}/g).map(e=>parseInt(e,16))}function Ou(e){const t=void 0;return/^(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(?:\/([0-9]|[1-2][0-9]|3[0-2]))?$/.test(e)}function Uu(e){const t=void 0;return/^\[(?:(?:[a-fA-F0-9]{1,4}:){7}[a-fA-F0-9]{1,4}|(?:[a-fA-F0-9]{1,4}:){1,7}:|::(?:[a-fA-F0-9]{1,4}:){0,7}|(?:[a-fA-F0-9]{1,4}:){1,6}:[a-fA-F0-9]{1,4}|(?:[a-fA-F0-9]{1,4}:){1,5}(?::[a-fA-F0-9]{1,4}){1,2}|(?:[a-fA-F0-9]{1,4}:){1,4}(?::[a-fA-F0-9]{1,4}){1,3}|(?:[a-fA-F0-9]{1,4}:){1,3}(?::[a-fA-F0-9]{1,4}){1,4}|(?:[a-fA-F0-9]{1,4}:){1,2}(?::[a-fA-F0-9]{1,4}){1,5}|[a-fA-F0-9]{1,4}:(?::[a-fA-F0-9]{1,4}){1,6})\](?:\/(1[0-1][0-9]|12[0-8]|[0-9]?[0-9]))?$/.test(e)}function Lu(e){try{const t=void 0,r=new URL(e).hostname,n=void 0;return{host:r,isHostDomain:Au(r)}}catch{return{host:"",isHostDomain:!1}}}function Nu(e){const{httpConfig:{hostName:t},settings:{customCdnAddrs:r,customCdnHost:n,customCdnSni:i}}=globalThis,o=r.includes(e),s=void 0,a=void 0;return{host:o?n:t,sni:o?i:Iu(t),allowInsecure:o}}function Mu(e,t){const r=/^(?:\[(?<ipv6>.+?)\]|(?<host>[^:]+))(:(?<port>\d+))?$/,n=e.match(r);if(!n||!n.groups)return{host:"",port:0};const{ipv6:i,host:o,port:s}=n.groups;let a=i??o??"";t&&i&&(a=`[${i}]`);const c=void 0;return{host:a,port:s?Number(s):0}}function Bu(e){const{defaultHttpsPorts:t}=globalThis.httpConfig;return t.includes(e)}var Wu=e=>"direct"===e,ju=e=>"block"===e;function Hu(e){const{customBypassRules:t,customBypassSanctionRules:r,customBlockRules:n}=globalThis.settings;return{bypass:{geosites:e.filter(e=>Wu(e.type)).map(e=>e.geosite),geoips:e.filter(e=>Wu(e.type)&&e.geoip).map(e=>e.geoip),domains:[...t.filter(Au),...r.filter(Au)],ips:t.filter(e=>!Au(e))},block:{geosites:e.filter(e=>ju(e.type)).map(e=>e.geosite),geoips:e.filter(e=>ju(e.type)&&e.geoip).map(e=>e.geoip),domains:n.filter(Au),ips:n.filter(e=>!Au(e))}}}function Fu(e){const{localDNS:t,antiSanctionDNS:r,customBypassRules:n,customBypassSanctionRules:i,customBlockRules:o}=globalThis.settings;return{bypass:{localDNS:{geositeGeoips:e.filter(({type:e,geoip:r,dns:n})=>Wu(e)&&r&&n===t).map(({geosite:e,geoip:t})=>({geosite:e,geoip:t})),geosites:e.filter(({type:e,geoip:r,dns:n})=>Wu(e)&&!r&&n===t).map(e=>e.geosite),domains:n.filter(Au)},antiSanctionDNS:{geosites:e.filter(e=>Wu(e.type)&&e.dns===r).map(e=>e.geosite),domains:i.filter(Au)}},block:{geosites:e.filter(e=>ju(e.type)).map(e=>e.geosite),domains:o.filter(Au)}}}function Ku(e,t){if(e&&t)return e===t?String(e):`${e}-${t}`}async function Ju(e,t){const{httpConfig:{panelVersion:r},settings:n}=globalThis;let i,o;try{return i=await t.kv.get("proxySettings",{type:"json"}),o=await t.kv.get("warpAccounts",{type:"json"}),i||(await t.kv.put("proxySettings",JSON.stringify(n)),i=n),o||(o=await gu(t)),r!==i.panelVersion&&(i=await Vu(e,t)),{settings:i,warpAccounts:o}}catch(e){throw console.log(e),new Error(`An error occurred while getting KV: ${xu(e)}`)}}async function Vu(e,t){const{settings:r,httpConfig:{panelVersion:n}}=globalThis,i="PUT"===e.method?await e.json():null;let o;try{o=await t.kv.get("proxySettings",{type:"json"})}catch(e){throw console.log(e),new Error(`An error occurred while getting current KV settings: ${xu(e)}`)}const s=async(e,t)=>{const n=i?.[e]??o?.[e]??r[e];return t?await t(n):n},a=[["remoteDNS"],["remoteDnsHost","remoteDNS",Zu],["localDNS"],["antiSanctionDNS"],["enableIPv6"],["fakeDNS"],["logLevel"],["allowLANConnection"],["proxyIPMode"],["proxyIPs"],["prefixes"],["upstreamProxy"],["upstreamParams","upstreamProxy",qu],["outProxy"],["outProxyParams","outProxy",Gu],["cleanIPs"],["customCdnAddrs"],["customCdnHost"],["customCdnSni"],["bestVLTRInterval"],["VLConfigs"],["TRConfigs"],["ports"],["fingerprint"],["enableTFO"],["fragmentMode"],["fragmentLengthMin"],["fragmentLengthMax"],["fragmentIntervalMin"],["fragmentIntervalMax"],["fragmentMaxSplitMin"],["fragmentMaxSplitMax"],["fragmentPackets"],["enableECH"],["echServerName"],["bypassIran"],["bypassChina"],["bypassRussia"],["bypassOpenAi"],["bypassGoogleAi"],["bypassMicrosoft"],["bypassOracle"],["bypassDocker"],["bypassAdobe"],["bypassEpicGames"],["bypassIntel"],["bypassAmd"],["bypassNvidia"],["bypassAsus"],["bypassHp"],["bypassLenovo"],["blockAds"],["blockPorn"],["blockUDP443"],["blockMalware"],["blockPhishing"],["blockCryptominers"],["customBypassRules"],["customBlockRules"],["customBypassSanctionRules"],["warpRemoteDNS"],["warpEndpoints"],["bestWarpInterval"],["xrayUdpNoises"],["knockerNoiseMode"],["noiseCountMin"],["noiseCountMax"],["noiseSizeMin"],["noiseSizeMax"],["noiseDelayMin"],["noiseDelayMax"],["amneziaNoiseCount"],["amneziaNoiseSizeMin"],["amneziaNoiseSizeMax"],["customSubs"],["customConfigs"]],c=await Promise.all(a.map(async([e,t,r])=>[e,await s(t??e,r)])),u={...Object.fromEntries(c),panelVersion:n};try{return await t.kv.put("proxySettings",JSON.stringify(u)),u}catch(e){throw console.log(e),new Error(`An error occurred while updating KV: ${xu(e)}`)}}async function Zu(e){const{host:t,isHostDomain:r}=Lu(e),n={host:t,isDomain:r,ipv4:[],ipv6:[]};if(r){const{ipv4:e,ipv6:r}=await _u(t);n.ipv4=e,n.ipv6=r}return n}function Gu(e){if(!e)return{};const{_SS_:t,_TR_:r,_VL_:n,_VM_:i}=globalThis.dict;let o=new URL(e);const s=o.protocol.slice(0,-1),a="ss"===s?t:s.replace("socks5","socks");if(a===i){const e=JSON.parse(vu(o.host));return{protocol:a,uuid:e.id,server:e.add,port:+e.port,aid:+e.aid,type:e.net,headerType:e.type,serviceName:e.path,authority:e.authority,path:e.path||void 0,host:e.host||void 0,security:e.tls,sni:e.sni,fp:e.fp,alpn:e.alpn||void 0}}const c={protocol:a,server:o.hostname,port:+o.port},u=(e,t)=>{if(e)for(const[e,t]of o.searchParams)c[e]=t||void 0;return{...c,...t}};switch(a){case n:return u(!0,{uuid:o.username});case r:return u(!0,{password:o.username});case t:const e=vu(o.username),[i,...s]=e.split(":");return u(!0,{method:i,password:s.join(":")});case"socks":case"http":let a,c;try{const e=vu(o.username);e.includes(":")&&([a,c]=e.split(":"))}catch(e){a=o.username,c=o.password}return u(!1,{user:a||void 0,pass:c||void 0});default:return{}}}function qu(e){let t,r;return e&&({host:t,port:r}=Mu(e,!0)),{upstreamServer:t,upstreamPort:r}}async function Qu(e,t){const r=await Ju(e,t);globalThis.settings=r.settings}function Yu(e,t){const{pathname:r}=new URL(e.url),{UUID:n,TR_PASS:i,FALLBACK:o,DOH_URL:s}=t;globalThis.globalConfig={userID:n,TrPass:i,pathName:decodeURIComponent(r),fallbackDomain:o||"www.hcaptcha.com",dohURL:s||"https://cloudflare-dns.com/dns-query"}}function Xu(e){const{_public_proxy_ip_:t}=globalThis.dict;globalThis.wsConfig={envProxyIPs:e.PROXY_IP,envPrefixes:e.PREFIX,defaultProxyIPs:[t],defaultPrefixes:["[2a02:898:146:64::]","[2602:fc59:b0:64::]","[2602:fc59:11:64::]"]}}function $u(e,t){const{_VL_CAP_:r,_TR_CAP_:n,_website_:i}=globalThis.dict,{UUID:o,TR_PASS:s,SUB_PATH:a,kv:c}=t,{pathname:u,origin:l,searchParams:d,hostname:f}=new URL(e.url);if(!["/secrets","/favicon.ico"].includes(decodeURIComponent(u))){if(!o||!s)throw new Error(`Please set ${r} UUID and ${n} password first. Visit <a href="${l}/secrets" target="_blank">here</a> to generate them.`,{cause:"init"});if(!ku(o))throw new Error(`Invalid UUID: ${o}`,{cause:"init"});if("object"!=typeof c)throw new Error(`KV Dataset is not properly set! Please refer to <a href="${i}" target="_blank">tutorials</a>.`,{cause:"init"})}globalThis.httpConfig={panelVersion:"4.2.3",defaultHttpPorts:[80,8080,2052,2082,2086,2095,8880],defaultHttpsPorts:[443,8443,2053,2083,2087,2096],hostName:f,client:decodeURIComponent(d.get("app")??""),urlOrigin:l,subPath:a||o}}Array.prototype.concatIf=function(e,t){return e?Array.isArray(t)?[...this,...t]:[...this,t]:this},Object.prototype.omitEmpty=function(){if(0!==Object.keys(this).length)return this},globalThis.dict={_VL_:atob("dmxlc3M="),_VL_CAP_:atob("VkxFU1M="),_VM_:atob("dm1lc3M="),_TR_:atob("dHJvamFu"),_TR_CAP_:atob("VHJvamFu"),_SS_:atob("c2hhZG93c29ja3M="),_V2_:atob("djJyYXk="),_project_:atob("bXJ2cG4yOTQ="),_website_:atob("aHR0cHM6Ly9naXRodWIuY29tL2FtaXJwb2NvbTYzLWRlbC9tcnZwbnBhbmVs"),_public_proxy_ip_:atob("YnBiLnlvdXNlZi5pc2VnYXJvLmNvbQ==")},globalThis.settings={localDNS:"8.8.8.8",antiSanctionDNS:"178.22.122.100",fakeDNS:!1,enableIPv6:!0,allowLANConnection:!1,logLevel:"warning",remoteDNS:"https://8.8.8.8/dns-query",remoteDnsHost:{host:"8.8.8.8",isDomain:!1,ipv4:[],ipv6:[]},proxyIPMode:"proxyip",proxyIPs:[],prefixes:[],upstreamProxy:"",upstreamParams:{upstreamServer:void 0,upstreamPort:void 0},outProxy:"",outProxyParams:{},cleanIPs:[],customCdnAddrs:[],customCdnHost:"",customCdnSni:"",bestVLTRInterval:30,VLConfigs:!0,TRConfigs:!0,ports:[443],fingerprint:"chrome",enableTFO:!1,fragmentMode:"custom",fragmentLengthMin:100,fragmentLengthMax:200,fragmentIntervalMin:1,fragmentIntervalMax:1,fragmentMaxSplitMin:void 0,fragmentMaxSplitMax:void 0,fragmentPackets:"tlshello",enableECH:!1,echServerName:"",bypassIran:!1,bypassChina:!1,bypassRussia:!1,bypassOpenAi:!1,bypassGoogleAi:!1,bypassMicrosoft:!1,bypassOracle:!1,bypassDocker:!1,bypassAdobe:!1,bypassEpicGames:!1,bypassIntel:!1,bypassAmd:!1,bypassNvidia:!1,bypassAsus:!1,bypassHp:!1,bypassLenovo:!1,blockAds:!1,blockPorn:!1,blockUDP443:!1,blockMalware:!1,blockPhishing:!1,blockCryptominers:!1,customBypassRules:[],customBlockRules:[],customBypassSanctionRules:[],warpRemoteDNS:"1.1.1.1",warpEndpoints:["engage.cloudflareclient.com:2408"],bestWarpInterval:30,xrayUdpNoises:[{type:"rand",packet:"50-100",delay:"1-1",count:5}],knockerNoiseMode:"quic",noiseCountMin:10,noiseCountMax:15,noiseSizeMin:5,noiseSizeMax:10,noiseDelayMin:1,noiseDelayMax:1,amneziaNoiseCount:5,amneziaNoiseSizeMin:50,amneziaNoiseSizeMax:100,customSubs:[],customConfigs:[],panelVersion:"4.2.3"};var el=new TextEncoder,tl=new TextDecoder,rl=2**32;function nl(...e){const t=e.reduce((e,{length:t})=>e+t,0),r=new Uint8Array(t);let n=0;for(const t of e)r.set(t,n),n+=t.length;return r}function il(e){const t=new Uint8Array(e.length);for(let r=0;r<e.length;r++){const n=e.charCodeAt(r);if(n>127)throw new TypeError("non-ASCII string encountered in encode()");t[r]=n}return t}function ol(e){if(Uint8Array.prototype.toBase64)return e.toBase64();const t=32768,r=[];for(let n=0;n<e.length;n+=t)r.push(String.fromCharCode.apply(null,e.subarray(n,n+t)));return btoa(r.join(""))}function sl(e){if(Uint8Array.fromBase64)return Uint8Array.fromBase64(e);const t=atob(e),r=new Uint8Array(t.length);for(let e=0;e<t.length;e++)r[e]=t.charCodeAt(e);return r}function al(e){if(Uint8Array.fromBase64)return Uint8Array.fromBase64("string"==typeof e?e:tl.decode(e),{alphabet:"base64url"});let t=e;t instanceof Uint8Array&&(t=tl.decode(t)),t=t.replace(/-/g,"+").replace(/_/g,"/");try{return sl(t)}catch{throw new TypeError("The input to be decoded is not correctly encoded.")}}function cl(e){let t=e;return"string"==typeof t&&(t=el.encode(t)),Uint8Array.prototype.toBase64?t.toBase64({alphabet:"base64url",omitPadding:!0}):ol(t).replace(/=/g,"").replace(/\+/g,"-").replace(/\//g,"_")}var ul=(e,t="algorithm.name")=>new TypeError(`CryptoKey does not support this operation, its ${t} must be ${e}`),ll=(e,t)=>e.name===t;function dl(e){return parseInt(e.name.slice(4),10)}function fl(e,t){const r=void 0;if(dl(e.hash)!==t)throw ul(`SHA-${t}`,"algorithm.hash")}function hl(e){switch(e){case"ES256":return"P-256";case"ES384":return"P-384";case"ES512":return"P-521";default:throw new Error("unreachable")}}function pl(e,t){if(t&&!e.usages.includes(t))throw new TypeError(`CryptoKey does not support this operation, its usages must include ${t}.`)}function ml(e,t,r){switch(t){case"HS256":case"HS384":case"HS512":if(!ll(e.algorithm,"HMAC"))throw ul("HMAC");fl(e.algorithm,parseInt(t.slice(2),10));break;case"RS256":case"RS384":case"RS512":if(!ll(e.algorithm,"RSASSA-PKCS1-v1_5"))throw ul("RSASSA-PKCS1-v1_5");fl(e.algorithm,parseInt(t.slice(2),10));break;case"PS256":case"PS384":case"PS512":if(!ll(e.algorithm,"RSA-PSS"))throw ul("RSA-PSS");fl(e.algorithm,parseInt(t.slice(2),10));break;case"Ed25519":case"EdDSA":if(!ll(e.algorithm,"Ed25519"))throw ul("Ed25519");break;case"ML-DSA-44":case"ML-DSA-65":case"ML-DSA-87":if(!ll(e.algorithm,t))throw ul(t);break;case"ES256":case"ES384":case"ES512":{if(!ll(e.algorithm,"ECDSA"))throw ul("ECDSA");const r=hl(t),n=void 0;if(e.algorithm.namedCurve!==r)throw ul(r,"algorithm.namedCurve");break}default:throw new TypeError("CryptoKey does not support this operation")}pl(e,r)}function gl(e,t,...r){if((r=r.filter(Boolean)).length>2){const t=r.pop();e+=`one of type ${r.join(", ")}, or ${t}.`}else 2===r.length?e+=`one of type ${r[0]} or ${r[1]}.`:e+=`of type ${r[0]}.`;return null==t?e+=` Received ${t}`:"function"==typeof t&&t.name?e+=` Received function ${t.name}`:"object"==typeof t&&null!=t&&t.constructor?.name&&(e+=` Received an instance of ${t.constructor.name}`),e}var yl=(e,...t)=>gl("Key must be ",e,...t),bl=(e,t,...r)=>gl(`Key for the ${e} algorithm must be `,t,...r),wl=class extends Error{static code="ERR_JOSE_GENERIC";code="ERR_JOSE_GENERIC";constructor(e,t){super(e,t),this.name=this.constructor.name,Error.captureStackTrace?.(this,this.constructor)}},vl=class extends wl{static code="ERR_JWT_CLAIM_VALIDATION_FAILED";code="ERR_JWT_CLAIM_VALIDATION_FAILED";claim;reason;payload;constructor(e,t,r="unspecified",n="unspecified"){super(e,{cause:{claim:r,reason:n,payload:t}}),this.claim=r,this.reason=n,this.payload=t}},kl=class extends wl{static code="ERR_JWT_EXPIRED";code="ERR_JWT_EXPIRED";claim;reason;payload;constructor(e,t,r="unspecified",n="unspecified"){super(e,{cause:{claim:r,reason:n,payload:t}}),this.claim=r,this.reason=n,this.payload=t}},Sl=class extends wl{static code="ERR_JOSE_ALG_NOT_ALLOWED";code="ERR_JOSE_ALG_NOT_ALLOWED"},xl=class extends wl{static code="ERR_JOSE_NOT_SUPPORTED";code="ERR_JOSE_NOT_SUPPORTED"},Al=class extends wl{static code="ERR_JWS_INVALID";code="ERR_JWS_INVALID"},_l=class extends wl{static code="ERR_JWT_INVALID";code="ERR_JWT_INVALID"},Cl=class extends wl{static code="ERR_JWS_SIGNATURE_VERIFICATION_FAILED";code="ERR_JWS_SIGNATURE_VERIFICATION_FAILED";constructor(e="signature verification failed",t){super(e,t)}},Tl=e=>{if("CryptoKey"===e?.[Symbol.toStringTag])return!0;try{return e instanceof CryptoKey}catch{return!1}},Pl=e=>"KeyObject"===e?.[Symbol.toStringTag],El=e=>Tl(e)||Pl(e);function Il(e,t){if(e)throw new TypeError(`${t} can only be called once`)}function Rl(e,t,r){try{return al(e)}catch{throw new r(`Failed to base64url decode the ${t}`)}}var zl=e=>"object"==typeof e&&null!==e;function Dl(e){if(!zl(e)||"[object Object]"!==Object.prototype.toString.call(e))return!1;if(null===Object.getPrototypeOf(e))return!0;let t=e;for(;null!==Object.getPrototypeOf(t);)t=Object.getPrototypeOf(t);return Object.getPrototypeOf(e)===t}function Ol(...e){const t=e.filter(Boolean);if(0===t.length||1===t.length)return!0;let r;for(const e of t){const t=Object.keys(e);if(r&&0!==r.size)for(const e of t){if(r.has(e))return!1;r.add(e)}else r=new Set(t)}return!0}var Ul=e=>Dl(e)&&"string"==typeof e.kty,Ll=e=>"oct"!==e.kty&&("AKP"===e.kty&&"string"==typeof e.priv||"string"==typeof e.d),Nl=e=>"oct"!==e.kty&&void 0===e.d&&void 0===e.priv,Ml=e=>"oct"===e.kty&&"string"==typeof e.k;function Bl(e,t){if(e.startsWith("RS")||e.startsWith("PS")){const{modulusLength:r}=t.algorithm;if("number"!=typeof r||r<2048)throw new TypeError(`${e} requires key modulusLength to be 2048 bits or larger`)}}function Wl(e,t){const r=`SHA-${e.slice(-3)}`;switch(e){case"HS256":case"HS384":case"HS512":return{hash:r,name:"HMAC"};case"PS256":case"PS384":case"PS512":return{hash:r,name:"RSA-PSS",saltLength:parseInt(e.slice(-3),10)>>3};case"RS256":case"RS384":case"RS512":return{hash:r,name:"RSASSA-PKCS1-v1_5"};case"ES256":case"ES384":case"ES512":return{hash:r,name:"ECDSA",namedCurve:t.namedCurve};case"Ed25519":case"EdDSA":return{name:"Ed25519"};case"ML-DSA-44":case"ML-DSA-65":case"ML-DSA-87":return{name:e};default:throw new xl(`alg ${e} is not supported either by JOSE or your javascript runtime`)}}async function jl(e,t,r){if(t instanceof Uint8Array){if(!e.startsWith("HS"))throw new TypeError(yl(t,"CryptoKey","KeyObject","JSON Web Key"));return crypto.subtle.importKey("raw",t,{hash:`SHA-${e.slice(-3)}`,name:"HMAC"},!1,[r])}return ml(t,e,r),t}async function Hl(e,t,r){const n=await jl(e,t,"sign");Bl(e,n);const i=await crypto.subtle.sign(Wl(e,n.algorithm),n,r);return new Uint8Array(i)}async function Fl(e,t,r,n){const i=await jl(e,t,"verify");Bl(e,i);const o=Wl(e,i.algorithm);try{return await crypto.subtle.verify(o,i,r,n)}catch{return!1}}var Kl='Invalid or unsupported JWK "alg" (Algorithm) Parameter value';function Jl(e){let t,r;switch(e.kty){case"AKP":switch(e.alg){case"ML-DSA-44":case"ML-DSA-65":case"ML-DSA-87":t={name:e.alg},r=e.priv?["sign"]:["verify"];break;default:throw new xl(Kl)}break;case"RSA":switch(e.alg){case"PS256":case"PS384":case"PS512":t={name:"RSA-PSS",hash:`SHA-${e.alg.slice(-3)}`},r=e.d?["sign"]:["verify"];break;case"RS256":case"RS384":case"RS512":t={name:"RSASSA-PKCS1-v1_5",hash:`SHA-${e.alg.slice(-3)}`},r=e.d?["sign"]:["verify"];break;case"RSA-OAEP":case"RSA-OAEP-256":case"RSA-OAEP-384":case"RSA-OAEP-512":t={name:"RSA-OAEP",hash:`SHA-${parseInt(e.alg.slice(-3),10)||1}`},r=e.d?["decrypt","unwrapKey"]:["encrypt","wrapKey"];break;default:throw new xl(Kl)}break;case"EC":switch(e.alg){case"ES256":case"ES384":case"ES512":t={name:"ECDSA",namedCurve:{ES256:"P-256",ES384:"P-384",ES512:"P-521"}[e.alg]},r=e.d?["sign"]:["verify"];break;case"ECDH-ES":case"ECDH-ES+A128KW":case"ECDH-ES+A192KW":case"ECDH-ES+A256KW":t={name:"ECDH",namedCurve:e.crv},r=e.d?["deriveBits"]:[];break;default:throw new xl(Kl)}break;case"OKP":switch(e.alg){case"Ed25519":case"EdDSA":t={name:"Ed25519"},r=e.d?["sign"]:["verify"];break;case"ECDH-ES":case"ECDH-ES+A128KW":case"ECDH-ES+A192KW":case"ECDH-ES+A256KW":t={name:e.crv},r=e.d?["deriveBits"]:[];break;default:throw new xl(Kl)}break;default:throw new xl('Invalid or unsupported JWK "kty" (Key Type) Parameter value')}return{algorithm:t,keyUsages:r}}async function Vl(e){if(!e.alg)throw new TypeError('"alg" argument is required when "jwk.alg" is not present');const{algorithm:t,keyUsages:r}=Jl(e),n={...e};return"AKP"!==n.kty&&delete n.alg,delete n.use,crypto.subtle.importKey("jwk",n,t,e.ext??(!e.d&&!e.priv),e.key_ops??r)}var Zl="given KeyObject instance cannot be used for this algorithm",Gl,ql=async(e,t,r,n=!1)=>{Gl||=new WeakMap;let i=Gl.get(e);if(i?.[r])return i[r];const o=await Vl({...t,alg:r});return n&&Object.freeze(e),i?i[r]=o:Gl.set(e,{[r]:o}),o},Ql=(e,t)=>{Gl||=new WeakMap;let r=Gl.get(e);if(r?.[t])return r[t];const n="public"===e.type,i=!!n;let o;if("x25519"===e.asymmetricKeyType){switch(t){case"ECDH-ES":case"ECDH-ES+A128KW":case"ECDH-ES+A192KW":case"ECDH-ES+A256KW":break;default:throw new TypeError(Zl)}o=e.toCryptoKey(e.asymmetricKeyType,i,n?[]:["deriveBits"])}if("ed25519"===e.asymmetricKeyType){if("EdDSA"!==t&&"Ed25519"!==t)throw new TypeError(Zl);o=e.toCryptoKey(e.asymmetricKeyType,i,[n?"verify":"sign"])}switch(e.asymmetricKeyType){case"ml-dsa-44":case"ml-dsa-65":case"ml-dsa-87":if(t!==e.asymmetricKeyType.toUpperCase())throw new TypeError(Zl);o=e.toCryptoKey(e.asymmetricKeyType,i,[n?"verify":"sign"])}if("rsa"===e.asymmetricKeyType){let r;switch(t){case"RSA-OAEP":r="SHA-1";break;case"RS256":case"PS256":case"RSA-OAEP-256":r="SHA-256";break;case"RS384":case"PS384":case"RSA-OAEP-384":r="SHA-384";break;case"RS512":case"PS512":case"RSA-OAEP-512":r="SHA-512";break;default:throw new TypeError(Zl)}if(t.startsWith("RSA-OAEP"))return e.toCryptoKey({name:"RSA-OAEP",hash:r},i,n?["encrypt"]:["decrypt"]);o=e.toCryptoKey({name:t.startsWith("PS")?"RSA-PSS":"RSASSA-PKCS1-v1_5",hash:r},i,[n?"verify":"sign"])}if("ec"===e.asymmetricKeyType){const r=void 0,s=new Map([["prime256v1","P-256"],["secp384r1","P-384"],["secp521r1","P-521"]]).get(e.asymmetricKeyDetails?.namedCurve);if(!s)throw new TypeError(Zl);const a={ES256:"P-256",ES384:"P-384",ES512:"P-521"};a[t]&&s===a[t]&&(o=e.toCryptoKey({name:"ECDSA",namedCurve:s},i,[n?"verify":"sign"])),t.startsWith("ECDH-ES")&&(o=e.toCryptoKey({name:"ECDH",namedCurve:s},i,n?[]:["deriveBits"]))}if(!o)throw new TypeError(Zl);return r?r[t]=o:Gl.set(e,{[t]:o}),o};async function Yl(e,t){if(e instanceof Uint8Array)return e;if(Tl(e))return e;if(Pl(e)){if("secret"===e.type)return e.export();if("toCryptoKey"in e&&"function"==typeof e.toCryptoKey)try{return Ql(e,t)}catch(e){if(e instanceof TypeError)throw e}let r=e.export({format:"jwk"});return ql(e,r,t)}if(Ul(e))return e.k?al(e.k):ql(e,e,t,!0);throw new Error("unreachable")}function Xl(e,t,r,n,i){if(void 0!==i.crit&&void 0===n?.crit)throw new e('"crit" (Critical) Header Parameter MUST be integrity protected');if(!n||void 0===n.crit)return new Set;if(!Array.isArray(n.crit)||0===n.crit.length||n.crit.some(e=>"string"!=typeof e||0===e.length))throw new e('"crit" (Critical) Header Parameter MUST be an array of non-empty strings when present');let o;o=void 0!==r?new Map([...Object.entries(r),...t.entries()]):t;for(const t of n.crit){if(!o.has(t))throw new xl(`Extension Header Parameter "${t}" is not recognized`);if(void 0===i[t])throw new e(`Extension Header Parameter "${t}" is missing`);if(o.get(t)&&void 0===n[t])throw new e(`Extension Header Parameter "${t}" MUST be integrity protected`)}return new Set(n.crit)}function $l(e,t){if(void 0!==t&&(!Array.isArray(t)||t.some(e=>"string"!=typeof e)))throw new TypeError(`"${e}" option must be an array of strings`);if(t)return new Set(t)}var ed=e=>e?.[Symbol.toStringTag],td=(e,t,r)=>{if(void 0!==t.use){let e;switch(r){case"sign":case"verify":e="sig";break;case"encrypt":case"decrypt":e="enc";break}if(t.use!==e)throw new TypeError(`Invalid key for this operation, its "use" must be "${e}" when present`)}if(void 0!==t.alg&&t.alg!==e)throw new TypeError(`Invalid key for this operation, its "alg" must be "${e}" when present`);if(Array.isArray(t.key_ops)){let n;switch(!0){case"sign"===r||"verify"===r:case"dir"===e:case e.includes("CBC-HS"):n=r;break;case e.startsWith("PBES2"):n="deriveBits";break;case/^A\d{3}(?:GCM)?(?:KW)?$/.test(e):n=!e.includes("GCM")&&e.endsWith("KW")?"encrypt"===r?"wrapKey":"unwrapKey":r;break;case"encrypt"===r&&e.startsWith("RSA"):n="wrapKey";break;case"decrypt"===r:n=e.startsWith("RSA")?"unwrapKey":"deriveBits";break}if(n&&!1===t.key_ops?.includes?.(n))throw new TypeError(`Invalid key for this operation, its "key_ops" must include "${n}" when present`)}return!0},rd=(e,t,r)=>{if(!(t instanceof Uint8Array)){if(Ul(t)){if(Ml(t)&&td(e,t,r))return;throw new TypeError('JSON Web Key for symmetric algorithms must have JWK "kty" (Key Type) equal to "oct" and the JWK "k" (Key Value) present')}if(!El(t))throw new TypeError(bl(e,t,"CryptoKey","KeyObject","JSON Web Key","Uint8Array"));if("secret"!==t.type)throw new TypeError(`${ed(t)} instances for symmetric algorithms must be of type "secret"`)}},nd=(e,t,r)=>{if(Ul(t))switch(r){case"decrypt":case"sign":if(Ll(t)&&td(e,t,r))return;throw new TypeError("JSON Web Key for this operation must be a private JWK");case"encrypt":case"verify":if(Nl(t)&&td(e,t,r))return;throw new TypeError("JSON Web Key for this operation must be a public JWK")}if(!El(t))throw new TypeError(bl(e,t,"CryptoKey","KeyObject","JSON Web Key"));if("secret"===t.type)throw new TypeError(`${ed(t)} instances for asymmetric algorithms must not be of type "secret"`);if("public"===t.type)switch(r){case"sign":throw new TypeError(`${ed(t)} instances for asymmetric algorithm signing must be of type "private"`);case"decrypt":throw new TypeError(`${ed(t)} instances for asymmetric algorithm decryption must be of type "private"`)}if("private"===t.type)switch(r){case"verify":throw new TypeError(`${ed(t)} instances for asymmetric algorithm verifying must be of type "public"`);case"encrypt":throw new TypeError(`${ed(t)} instances for asymmetric algorithm encryption must be of type "public"`)}};function id(e,t,r){switch(e.substring(0,2)){case"A1":case"A2":case"di":case"HS":case"PB":rd(e,t,r);break;default:nd(e,t,r)}}async function od(e,t,r){if(!Dl(e))throw new Al("Flattened JWS must be an object");if(void 0===e.protected&&void 0===e.header)throw new Al('Flattened JWS must have either of the "protected" or "header" members');if(void 0!==e.protected&&"string"!=typeof e.protected)throw new Al("JWS Protected Header incorrect type");if(void 0===e.payload)throw new Al("JWS Payload missing");if("string"!=typeof e.signature)throw new Al("JWS Signature missing or incorrect type");if(void 0!==e.header&&!Dl(e.header))throw new Al("JWS Unprotected Header incorrect type");let n={};if(e.protected)try{const t=al(e.protected);n=JSON.parse(tl.decode(t))}catch{throw new Al("JWS Protected Header is invalid")}if(!Ol(n,e.header))throw new Al("JWS Protected and JWS Unprotected Header Parameter names must be disjoint");const i={...n,...e.header},o=void 0;let s=!0;if(Xl(Al,new Map([["b64",!0]]),r?.crit,n,i).has("b64")&&(s=n.b64,"boolean"!=typeof s))throw new Al('The "b64" (base64url-encode payload) Header Parameter must be a boolean');const{alg:a}=i;if("string"!=typeof a||!a)throw new Al('JWS "alg" (Algorithm) Header Parameter missing or invalid');const c=r&&$l("algorithms",r.algorithms);if(c&&!c.has(a))throw new Sl('"alg" (Algorithm) Header Parameter value not allowed');if(s){if("string"!=typeof e.payload)throw new Al("JWS Payload must be a string")}else if("string"!=typeof e.payload&&!(e.payload instanceof Uint8Array))throw new Al("JWS Payload must be a string or an Uint8Array instance");let u=!1;"function"==typeof t&&(t=await t(n,e),u=!0),id(a,t,"verify");const l=nl(void 0!==e.protected?il(e.protected):new Uint8Array,il("."),"string"==typeof e.payload?s?il(e.payload):el.encode(e.payload):e.payload),d=Rl(e.signature,"signature",Al),f=await Yl(t,a),h=void 0;if(!await Fl(a,f,d,l))throw new Cl;let p;p=s?Rl(e.payload,"payload",Al):"string"==typeof e.payload?el.encode(e.payload):e.payload;const m={payload:p};return void 0!==e.protected&&(m.protectedHeader=n),void 0!==e.header&&(m.unprotectedHeader=e.header),u?{...m,key:f}:m}async function sd(e,t,r){if(e instanceof Uint8Array&&(e=tl.decode(e)),"string"!=typeof e)throw new Al("Compact JWS must be a string or Uint8Array");const{0:n,1:i,2:o,length:s}=e.split(".");if(3!==s)throw new Al("Invalid Compact JWS");const a=await od({payload:i,protected:n,signature:o},t,r),c={payload:a.payload,protectedHeader:a.protectedHeader};return"function"==typeof t?{...c,key:a.key}:c}var ad=e=>Math.floor(e.getTime()/1e3),cd=60,ud=3600,ld=86400,dd=7*ld,fd=31557600,hd=/^(\+|\-)? ?(\d+|\d+\.\d+) ?(seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)(?: (ago|from now))?$/i;function pd(e){const t=hd.exec(e);if(!t||t[4]&&t[1])throw new TypeError("Invalid time period format");const r=parseFloat(t[2]),n=void 0;let i;switch(t[3].toLowerCase()){case"sec":case"secs":case"second":case"seconds":case"s":i=Math.round(r);break;case"minute":case"minutes":case"min":case"mins":case"m":i=Math.round(r*cd);break;case"hour":case"hours":case"hr":case"hrs":case"h":i=Math.round(r*ud);break;case"day":case"days":case"d":i=Math.round(r*ld);break;case"week":case"weeks":case"w":i=Math.round(r*dd);break;default:i=Math.round(r*fd);break}return"-"===t[1]||"ago"===t[4]?-i:i}function md(e,t){if(!Number.isFinite(t))throw new TypeError(`Invalid ${e} input`);return t}var gd=e=>e.includes("/")?e.toLowerCase():`application/${e.toLowerCase()}`,yd=(e,t)=>"string"==typeof e?t.includes(e):!!Array.isArray(e)&&t.some(Set.prototype.has.bind(new Set(e)));function bd(e,t,r={}){let n;try{n=JSON.parse(tl.decode(t))}catch{}if(!Dl(n))throw new _l("JWT Claims Set must be a top-level JSON object");const{typ:i}=r;if(i&&("string"!=typeof e.typ||gd(e.typ)!==gd(i)))throw new vl('unexpected "typ" JWT header value',n,"typ","check_failed");const{requiredClaims:o=[],issuer:s,subject:a,audience:c,maxTokenAge:u}=r,l=[...o];void 0!==u&&l.push("iat"),void 0!==c&&l.push("aud"),void 0!==a&&l.push("sub"),void 0!==s&&l.push("iss");for(const e of new Set(l.reverse()))if(!(e in n))throw new vl(`missing required "${e}" claim`,n,e,"missing");if(s&&!(Array.isArray(s)?s:[s]).includes(n.iss))throw new vl('unexpected "iss" claim value',n,"iss","check_failed");if(a&&n.sub!==a)throw new vl('unexpected "sub" claim value',n,"sub","check_failed");if(c&&!yd(n.aud,"string"==typeof c?[c]:c))throw new vl('unexpected "aud" claim value',n,"aud","check_failed");let d;switch(typeof r.clockTolerance){case"string":d=pd(r.clockTolerance);break;case"number":d=r.clockTolerance;break;case"undefined":d=0;break;default:throw new TypeError("Invalid clockTolerance option type")}const{currentDate:f}=r,h=ad(f||new Date);if((void 0!==n.iat||u)&&"number"!=typeof n.iat)throw new vl('"iat" claim must be a number',n,"iat","invalid");if(void 0!==n.nbf){if("number"!=typeof n.nbf)throw new vl('"nbf" claim must be a number',n,"nbf","invalid");if(n.nbf>h+d)throw new vl('"nbf" claim timestamp check failed',n,"nbf","check_failed")}if(void 0!==n.exp){if("number"!=typeof n.exp)throw new vl('"exp" claim must be a number',n,"exp","invalid");if(n.exp<=h-d)throw new kl('"exp" claim timestamp check failed',n,"exp","check_failed")}if(u){const e=h-n.iat,t=void 0;if(e-d>("number"==typeof u?u:pd(u)))throw new kl('"iat" claim timestamp check failed (too far in the past)',n,"iat","check_failed");if(e<0-d)throw new vl('"iat" claim timestamp check failed (it should be in the past)',n,"iat","check_failed")}return n}var wd=class{#e;constructor(e){if(!Dl(e))throw new TypeError("JWT Claims Set MUST be an object");this.#e=structuredClone(e)}data(){return el.encode(JSON.stringify(this.#e))}get iss(){return this.#e.iss}set iss(e){this.#e.iss=e}get sub(){return this.#e.sub}set sub(e){this.#e.sub=e}get aud(){return this.#e.aud}set aud(e){this.#e.aud=e}set jti(e){this.#e.jti=e}set nbf(e){"number"==typeof e?this.#e.nbf=md("setNotBefore",e):e instanceof Date?this.#e.nbf=md("setNotBefore",ad(e)):this.#e.nbf=ad(new Date)+pd(e)}set exp(e){"number"==typeof e?this.#e.exp=md("setExpirationTime",e):e instanceof Date?this.#e.exp=md("setExpirationTime",ad(e)):this.#e.exp=ad(new Date)+pd(e)}set iat(e){void 0===e?this.#e.iat=ad(new Date):e instanceof Date?this.#e.iat=md("setIssuedAt",ad(e)):this.#e.iat=md("setIssuedAt","string"==typeof e?ad(new Date)+pd(e):e)}};async function vd(e,t,r){const n=await sd(e,t,r);if(n.protectedHeader.crit?.includes("b64")&&!1===n.protectedHeader.b64)throw new _l("JWTs MUST NOT use unencoded payload");const i=void 0,o={payload:bd(n.protectedHeader,n.payload,r),protectedHeader:n.protectedHeader};return"function"==typeof t?{...o,key:n.key}:o}var kd=class{#e;#t;#r;constructor(e){if(!(e instanceof Uint8Array))throw new TypeError("payload must be an instance of Uint8Array");this.#e=e}setProtectedHeader(e){return Il(this.#t,"setProtectedHeader"),this.#t=e,this}setUnprotectedHeader(e){return Il(this.#r,"setUnprotectedHeader"),this.#r=e,this}async sign(e,t){if(!this.#t&&!this.#r)throw new Al("either setProtectedHeader or setUnprotectedHeader must be called before #sign()");if(!Ol(this.#t,this.#r))throw new Al("JWS Protected and JWS Unprotected Header Parameter names must be disjoint");const r={...this.#t,...this.#r},n=void 0;let i=!0;if(Xl(Al,new Map([["b64",!0]]),t?.crit,this.#t,r).has("b64")&&(i=this.#t.b64,"boolean"!=typeof i))throw new Al('The "b64" (base64url-encode payload) Header Parameter must be a boolean');const{alg:o}=r;if("string"!=typeof o||!o)throw new Al('JWS "alg" (Algorithm) Header Parameter missing or invalid');let s,a,c,u;id(o,e,"sign"),i?(s=cl(this.#e),a=il(s)):(a=this.#e,s=""),this.#t?(c=cl(JSON.stringify(this.#t)),u=il(c)):(c="",u=new Uint8Array);const l=nl(u,il("."),a),d=await Yl(e,o),f=void 0,h={signature:cl(await Hl(o,d,l)),payload:s};return this.#r&&(h.header=this.#r),this.#t&&(h.protected=c),h}},Sd=class{#n;constructor(e){this.#n=new kd(e)}setProtectedHeader(e){return this.#n.setProtectedHeader(e),this}async sign(e,t){const r=await this.#n.sign(e,t);if(void 0===r.payload)throw new TypeError("use the flattened module for creating JWS with b64: false");return`${r.protected}.${r.payload}.${r.signature}`}},xd=class{#t;#i;constructor(e={}){this.#i=new wd(e)}setIssuer(e){return this.#i.iss=e,this}setSubject(e){return this.#i.sub=e,this}setAudience(e){return this.#i.aud=e,this}setJti(e){return this.#i.jti=e,this}setNotBefore(e){return this.#i.nbf=e,this}setExpirationTime(e){return this.#i.exp=e,this}setIssuedAt(e){return this.#i.iat=e,this}setProtectedHeader(e){return this.#t=e,this}async sign(e,t){const r=new Sd(this.#i.data());if(r.setProtectedHeader(this.#t),Array.isArray(this.#t?.crit)&&this.#t.crit.includes("b64")&&!1===this.#t.b64)throw new _l("JWTs MUST NOT use unencoded payload");return r.sign(e,t)}};async function Ad(e,t){if("POST"!==e.method)return Su(!1,405,"Method not allowed.");const r=void 0,n=void 0;if(await e.text()!==await t.kv.get("pwd"))return Su(!1,401,"Wrong password.");let i=await t.kv.get("secretKey");i||(i=_d(),await t.kv.put("secretKey",i));const o=(new TextEncoder).encode(i),{userID:s}=globalThis.globalConfig,a=void 0;return Su(!0,200,"Successfully generated Auth token",null,{"Set-Cookie":`jwtToken=${await new xd({userID:s}).setProtectedHeader({alg:"HS256"}).setIssuedAt().setExpirationTime("24h").sign(o)}; HttpOnly; Secure; Max-Age=604800; Path=/; SameSite=Strict`,"Content-Type":"text/plain"})}function _d(){const e=new Uint8Array(32);return crypto.getRandomValues(e),Array.from(e,e=>e.toString(16).padStart(2,"0")).join("")}async function Cd(e,t){try{const r=await t.kv.get("secretKey");if(null===r)return console.log("Secret key not found in KV."),!1;const n=(new TextEncoder).encode(r),i=e.headers.get("Cookie")?.match(/(^|;\s*)jwtToken=([^;]*)/),o=i?i[2]:null;if(!o)return console.log("Unauthorized: Token not available!"),!1;const{payload:s}=await vd(o,n);return console.log(`Successfully authenticated, User ID: ${s.userID}`),!0}catch(e){return console.log(e),!1}}async function Td(e,t){let r=await Cd(e,t);const n=await t.kv.get("pwd");if(n&&!r)return Su(!1,401,"Unauthorized.");const i=await e.text();return i===n?Su(!1,400,"Please enter a new Password."):(await t.kv.put("pwd",i),Su(!0,200,"Successfully logged in!",null,{"Set-Cookie":"jwtToken=; Path=/; Secure; SameSite=None; Expires=Thu, 01 Jan 1970 00:00:00 GMT","Content-Type":"text/plain"}))}function Pd(){const{localDNS:e,antiSanctionDNS:t,blockMalware:r,blockPhishing:n,blockCryptominers:i,blockAds:o,blockPorn:s,bypassIran:a,bypassChina:c,bypassRussia:u,bypassOpenAi:l,bypassGoogleAi:d,bypassMicrosoft:f,bypassOracle:h,bypassDocker:p,bypassAdobe:m,bypassEpicGames:g,bypassIntel:y,bypassAmd:b,bypassNvidia:w,bypassAsus:v,bypassHp:k,bypassLenovo:S}=globalThis.settings;return[{rule:r,type:"block",format:"text",geosite:"malware",geositeURL:"https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/malware.txt",geoip:"malware-cidr",geoipURL:"https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/malware-ip.txt"},{rule:n,type:"block",format:"text",geosite:"phishing",geositeURL:"https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/phishing.txt",geoip:"phishing-cidr",geoipURL:"https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/phishing-ip.txt"},{rule:i,type:"block",format:"text",geosite:"cryptominers",geositeURL:"https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/cryptominers.txt"},{rule:o,type:"block",format:"text",geosite:"category-ads-all",geositeURL:"https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/category-ads-all.txt"},{rule:s,type:"block",format:"text",geosite:"nsfw",geositeURL:"https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/nsfw.txt"},{rule:a,type:"direct",dns:e,format:"text",geosite:"ir",geoip:"ir-cidr",geositeURL:"https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/ir.txt",geoipURL:"https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/ircidr.txt"},{rule:c,type:"direct",dns:e,format:"yaml",geosite:"cn",geoip:"cn-cidr",geositeURL:"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.yaml",geoipURL:"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.yaml"},{rule:u,type:"direct",dns:e,format:"yaml",geosite:"ru",geoip:"ru-cidr",geositeURL:"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ru.yaml",geoipURL:"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/ru.yaml"},{rule:l,type:"direct",dns:t,format:"yaml",geosite:"openai",geositeURL:"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/openai.yaml"},{rule:d,type:"direct",dns:t,format:"yaml",geosite:"googleai",geositeURL:"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google-deepmind.yaml"},{rule:f,type:"direct",dns:t,format:"yaml",geosite:"microsoft",geositeURL:"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft.yaml"},{rule:h,type:"direct",dns:t,format:"yaml",geosite:"oracle",geositeURL:"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/oracle.yaml"},{rule:p,type:"direct",dns:t,format:"yaml",geosite:"docker",geositeURL:"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/docker.yaml"},{rule:m,type:"direct",dns:t,format:"yaml",geosite:"adobe",geositeURL:"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/adobe.yaml"},{rule:g,type:"direct",dns:t,format:"yaml",geosite:"epicgames",geositeURL:"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/epicgames.yaml"},{rule:y,type:"direct",dns:t,format:"yaml",geosite:"intel",geositeURL:"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/intel.yaml"},{rule:b,type:"direct",dns:t,format:"yaml",geosite:"amd",geositeURL:"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/amd.yaml"},{rule:w,type:"direct",dns:t,format:"yaml",geosite:"nvidia",geositeURL:"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/nvidia.yaml"},{rule:v,type:"direct",dns:t,format:"yaml",geosite:"asus",geositeURL:"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/asus.yaml"},{rule:k,type:"direct",dns:t,format:"yaml",geosite:"hp",geositeURL:"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/hp.yaml"},{rule:S,type:"direct",dns:t,format:"yaml",geosite:"lenovo",geositeURL:"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/lenovo.yaml"}].filter(({rule:e})=>e)}async function Ed(e,t,r){const{localDNS:n,remoteDNS:i,warpRemoteDNS:o,antiSanctionDNS:s,outProxyParams:a,remoteDnsHost:c,enableIPv6:u,fakeDNS:l,allowLANConnection:d}=globalThis.settings,f="localhost"===n?"system":`${n}#DIRECT`,h=void 0,p=void 0,m=`${t?o:i}#${t?`Warp ${r?"Pro ":""}- Best Ping 🚀`:e?"Best Ping 🚀":" Selector"}`,g={},y={};if(e&&!t){const{server:e}=a;Au(e)&&(y[e]=m)}if(c.isDomain&&!t){const{ipv4:e,ipv6:t,host:r}=c;g[r]=e.concatIf(u,t)}const b=void 0,w=Fu(Pd()),v=void 0;[...w.block.geosites.map(e=>`rule-set:${e}`),...w.block.domains.map(e=>`+.${e}`)].forEach(e=>g[e]="rcode://refused");const k=[...w.bypass.antiSanctionDNS.geosites.map(e=>`rule-set:${e}`),...w.bypass.antiSanctionDNS.domains.map(e=>`+.${e}`)],S=[...w.bypass.localDNS.geositeGeoips.map(({geosite:e})=>`rule-set:${e}`),...w.bypass.localDNS.geosites.map(e=>`rule-set:${e}`),...w.bypass.localDNS.domains.map(e=>`+.${e}`)];if(k.length){k.forEach(e=>y[e]=`${s}#DIRECT`);const{host:e,isHostDomain:t}=Lu(s);t&&S.push(e)}S.forEach(e=>y[e]=f);const x=void 0;let A="redir-host",_={};l&&(A="fake-ip",_={"fake-ip-range":"198.18.0.1/16","fake-ip-filter-mode":"blacklist","fake-ip-filter":["+.lan","+.local"]});const C=void 0;return{enable:!0,"respect-rules":!0,"use-system-hosts":!1,listen:(d?"0.0.0.0":"127.0.0.1")+":1053",ipv6:u,hosts:g.omitEmpty(),nameserver:[m],"proxy-server-nameserver":[f],"direct-nameserver":[f],"direct-nameserver-follow-policy":!0,"nameserver-policy":y.omitEmpty(),"enhanced-mode":A,..._}}function Id(e){const{blockUDP443:t}=globalThis.settings,r=void 0,n=Hu(Pd()),i=["GEOIP,lan,DIRECT,no-resolve"];return e?t&&i.push("AND,((NETWORK,udp),(DST-PORT,443)),REJECT"):i.push("NETWORK,udp,REJECT"),[...i,...n.block.geosites.map(e=>`RULE-SET,${e},REJECT`),...n.block.domains.map(e=>`DOMAIN-SUFFIX,${e},REJECT`),...n.block.geoips.map(e=>`RULE-SET,${e},REJECT`),...n.block.ips.map(e=>Dd(e,"REJECT")),...n.bypass.geosites.map(e=>`RULE-SET,${e},DIRECT`),...n.bypass.domains.map(e=>`DOMAIN-SUFFIX,${e},DIRECT`),...n.bypass.geoips.map(e=>`RULE-SET,${e},DIRECT`),...n.bypass.ips.map(e=>Dd(e,"DIRECT")),"MATCH,✅ Selector"]}function Rd(){const e=void 0;return Pd().reduce((e,t)=>(zd(e,t),e),{}).omitEmpty()}function zd(e,t){const{geosite:r,geoip:n,geositeURL:i,geoipURL:o,format:s}=t,a="text"===s?"txt":s,c=(t,r,n)=>{e[t]={type:"http",format:s,behavior:r,path:`./ruleset/${t}.${a}`,interval:86400,url:n}};r&&i&&c(r,"domain",i),n&&o&&c(n,"ipcidr",o)}function Dd(e,t){const r=(e=Uu(e)?e.replace(/\[|\]/g,""):e).includes("/")?"":Ou(e)?"/32":"/128";return`IP-CIDR,${e}${r},${t}`}function Od(e,t,r,n,i,o,s,a,c){return{name:e,type:t,server:r.replace(/\[|\]/g,""),port:n,"ip-version":i?"ipv4-prefer":"ipv4",tfo:o,udp:!1,...c,...s,...a}}function Ud(e,t,r,n){const{dict:{_VL_:i,_TR_:o},globalConfig:{userID:s,TrPass:a},settings:{fingerprint:c,enableTFO:u,enableIPv6:l,enableECH:d,echServerName:f,upstreamParams:{upstreamServer:h}}}=globalThis,p=Bu(n)||r===h;if(e===o&&!p)return null;const{host:m,sni:g,allowInsecure:y}=Nu(r),b=p?Bd(e,"tls",y,g,d,f||void 0,"http/1.1",c):{},w=Wd("ws",void 0,zu(e),m,void 0,2560);return Od(t,e,r,n,l,u,b,w,e===i?{uuid:s,"packet-encoding":""}:{password:a})}function Ld(e,t,r,n,i){const{amneziaNoiseCount:o,amneziaNoiseSizeMin:s,amneziaNoiseSizeMax:a,enableIPv6:c}=globalThis.settings,{host:u,port:l}=Mu(r,!1),d=c?"ipv4-prefer":"ipv4",{warpIPv6:f,reserved:h,publicKey:p,privateKey:m}=e;return{name:t,type:"wireguard",ip:"172.16.0.2/32",ipv6:f,"ip-version":d,"private-key":m,server:n?"162.159.192.1":u,port:n?2408:l,"public-key":p,"allowed-ips":["0.0.0.0/0","::/0"],reserved:h,udp:!0,mtu:1280,"dialer-proxy":n||void 0,"amnezia-wg-option":i?{jc:o,jmin:s,jmax:a}:void 0}}function Nd(){const{dict:{_SS_:e,_VL_:t,_TR_:r,_VM_:n},settings:{outProxy:i,outProxyParams:{protocol:o,server:s,port:a,user:c,pass:u,password:l,method:d,uuid:f,flow:h,security:p,type:m,sni:g,fp:y,host:b,path:w,alpn:v,pbk:k,sid:S,headerType:x,serviceName:A,aid:_}}}=globalThis,{searchParams:C}=new URL(i),T=C.get("ed"),P=T?+T:void 0,E=Bd(o,p,!1,g||s,!1,void 0,v,y,k,S),I=Wd(m,x,w,b,A,P);switch(o){case"http":return Od("","http",s,a,!1,!1,{},{},{username:c,password:u});case"socks":return Od("","socks5",s,a,!1,!1,{},{},{username:c,password:u});case e:return Od("","ss",s,a,!1,!1,{},{},{cipher:d,password:l});case t:return Od("",t,s,a,!1,!1,E,I,{uuid:f,flow:h});case n:return Od("",n,s,a,!1,!1,E,I,{uuid:f,cipher:"auto",alterId:_});case r:if("none"===p)return;return Od("",r,s,a,!1,!1,E,I,{password:l});default:return}}function Md(e,t,r){const{bestWarpInterval:n,bestVLTRInterval:i}=globalThis.settings;return{name:e,type:"url-test",proxies:t,url:"https://www.gstatic.com/generate_204",interval:r?n:i,tolerance:50}}function Bd(e,t,r,n,i,o,s,a,c,u){if(!["tls","reality"].includes(t))return{};const{_TR_:l}=globalThis.dict,d={tls:!0,[e===l?"sni":"servername"]:n,"client-fingerprint":"randomized"===a?"random":a,"skip-cert-verify":r};return"tls"===t?{...d,alpn:s?.split(","),"ech-opts":i?{enable:!0,"query-server-name":o}:void 0}:"reality"===t&&c&&u?{...d,"reality-opts":{"public-key":c,"short-id":u}}:{}}function Wd(e,t,r="/",n,i,o){switch(r=r?.split("?")[0],e){case"tcp":return"http"===t?{network:"http","http-opts":{method:"GET",path:r.split(","),headers:{Host:n?.split(","),Connection:["keep-alive"],"Content-Type":["application/octet-stream"]}}}:{network:"tcp"};case"ws":return{network:"ws","ws-opts":{path:r,"max-early-data":o,"early-data-header-name":o?"Sec-WebSocket-Protocol":void 0,headers:{Host:n}}};case"httpupgrade":const{_V2_:e}=globalThis.dict;return{network:"ws","ws-opts":{[`${e}-http-upgrade`]:!0,[`${e}-http-upgrade-fast-open`]:!0,path:r,headers:{Host:n}}};case"grpc":return{network:"grpc","grpc-opts":{"grpc-service-name":i}};default:return{}}}var jd={enable:!0,stack:"mixed","auto-route":!0,"strict-route":!0,"auto-detect-interface":!0,"dns-hijack":["any:53","tcp://any:53"],mtu:9e3},Hd={enable:!0,"force-dns-mapping":!0,"parse-pure-ip":!0,"override-destination":!0,sniff:{HTTP:{ports:[80,8080,8880,2052,2082,2086,2095]},TLS:{ports:[443,8443,2053,2083,2087,2096]}}};async function Fd(e,t,r,n,i,o,s){const{logLevel:a,allowLANConnection:c}=globalThis.settings,u=o?{}:{"disable-keep-alive":!1,"keep-alive-idle":10,"keep-alive-interval":15,"tcp-concurrent":!0},l={"mixed-port":7890,ipv6:!0,"allow-lan":c,"unified-delay":!1,"log-level":a.replace("none","silent"),mode:"rule",...u,"geo-auto-update":!0,"geo-update-interval":168,"external-controller":"127.0.0.1:9090","external-controller-cors":{"allow-origins":["*"],"allow-private-network":!0},"external-ui":"ui","external-ui-url":"https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip",profile:{"store-selected":!0,"store-fake-ip":!0},dns:await Ed(i,o,s),tun:jd,sniffer:Hd,proxies:e,"proxy-groups":[{name:" Selector",type:"select",proxies:t}],"rule-providers":Rd(),rules:Id(o),ntp:{enable:!0,server:"time.cloudflare.com",port:123,interval:30}},d=void 0,f=Md(o?`Warp ${s?"Pro ":""}- Best Ping 🚀`:"Best Ping 🚀",r,o);return l["proxy-groups"].push(f),o&&l["proxy-groups"].push(Md(`WoW ${s?"Pro ":""}- Best Ping 🚀`,n,o)),i&&l["proxy-groups"].push(Md("🔗 Best Ping 🚀",n,o)),l}async function Kd(){const{outProxy:e,ports:t,upstreamParams:{upstreamServer:r,upstreamPort:n}}=globalThis.settings,i=e?Nd():void 0,o=!!i,s=await Pu(!1),a=Tu();r&&n&&(t.unshift(n),s.unshift(r));const c=[],u=[],l=[],d=["Best Ping 🚀"].concatIf(o,"🔗 Best Ping 🚀");for(const e of a){let a=1;for(const f of t)for(const t of s){if(f===n!=(t===r))continue;const s=Eu(a,f,t,e,!1,!1),h=Ud(e,s,t,f);if(h){if(c.push(s),d.push(s),l.push(h),o){const r=Eu(a,f,t,e,!1,!0);let n=structuredClone(i);n.name=r,n["dialer-proxy"]=s,l.push(n),u.push(r),d.push(r)}a++}}}const f=await Fd(l,d,c,u,o,!1,!1);return new Response(JSON.stringify(f,null,4),{status:200,headers:{"Content-Type":"text/plain;charset=utf-8","Cache-Control":"no-store","CDN-Cache-Control":"no-store"}})}async function Jd(e,t,r){const{warpEndpoints:n}=globalThis.settings,{warpAccounts:i}=await Ju(e,t),o=[],s=[],a=[],c=r?"Pro ":"",u=[`Warp ${c}- Best Ping 🚀`,`WoW ${c}- Best Ping 🚀`];n.forEach((e,t)=>{const n=`${t+1} - Warp ${c}🇮🇷`;o.push(n);const l=`${t+1} - WoW ${c}🌍`;s.push(l),u.push(n,l);const d=Ld(i[0],n,e,"",r),f=Ld(i[1],l,e,n,!1);a.push(d,f)});const l=await Fd(a,u,o,s,!1,!0,r);return new Response(JSON.stringify(l,null,4),{status:200,headers:{"Content-Type":"text/plain;charset=utf-8","Cache-Control":"no-store","CDN-Cache-Control":"no-store"}})}function Vd(){const{localDNS:e,antiSanctionDNS:t,blockMalware:r,blockPhishing:n,blockCryptominers:i,blockAds:o,blockPorn:s,bypassIran:a,bypassChina:c,bypassRussia:u,bypassOpenAi:l,bypassGoogleAi:d,bypassMicrosoft:f,bypassOracle:h,bypassDocker:p,bypassAdobe:m,bypassEpicGames:g,bypassIntel:y,bypassAmd:b,bypassNvidia:w,bypassAsus:v,bypassHp:k,bypassLenovo:S}=globalThis.settings;return[{rule:r,type:"block",geosite:"geosite-malware",geoip:"geoip-malware",geositeURL:"https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-malware.srs",geoipURL:"https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geoip-malware.srs"},{rule:n,type:"block",geosite:"geosite-phishing",geoip:"geoip-phishing",geositeURL:"https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-phishing.srs",geoipURL:"https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geoip-phishing.srs"},{rule:i,type:"block",geosite:"geosite-cryptominers",geositeURL:"https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-cryptominers.srs"},{rule:o,type:"block",geosite:"geosite-category-ads-all",geositeURL:"https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-category-ads-all.srs"},{rule:s,type:"block",geosite:"geosite-nsfw",geositeURL:"https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-nsfw.srs"},{rule:a,type:"direct",dns:e,geosite:"geosite-ir",geoip:"geoip-ir",geositeURL:"https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-ir.srs",geoipURL:"https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geoip-ir.srs"},{rule:c,type:"direct",dns:e,geosite:"geosite-cn",geoip:"geoip-cn",geositeURL:"https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-cn.srs",geoipURL:"https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geoip-cn.srs"},{rule:u,type:"direct",dns:e,geosite:"geosite-category-ru",geoip:"geoip-ru",geositeURL:"https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-category-ru.srs",geoipURL:"https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geoip-ru.srs"},{rule:l,type:"direct",dns:t,geosite:"geosite-openai",geositeURL:"https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-openai.srs"},{rule:d,type:"direct",dns:t,geosite:"geosite-google-deepmind",geositeURL:"https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-google-deepmind.srs"},{rule:f,type:"direct",dns:t,geosite:"geosite-microsoft",geositeURL:"https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-microsoft.srs"},{rule:h,type:"direct",dns:t,geosite:"geosite-oracle",geositeURL:"https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-oracle.srs"},{rule:p,type:"direct",dns:t,geosite:"geosite-docker",geositeURL:"https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-docker.srs"},{rule:m,type:"direct",dns:t,geosite:"geosite-adobe",geositeURL:"https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-adobe.srs"},{rule:g,type:"direct",dns:t,geosite:"geosite-epicgames",geositeURL:"https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-epicgames.srs"},{rule:y,type:"direct",dns:t,geosite:"geosite-intel",geositeURL:"https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-intel.srs"},{rule:b,type:"direct",dns:t,geosite:"geosite-amd",geositeURL:"https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-amd.srs"},{rule:w,type:"direct",dns:t,geosite:"geosite-nvidia",geositeURL:"https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-nvidia.srs"},{rule:v,type:"direct",dns:t,geosite:"geosite-asus",geositeURL:"https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-asus.srs"},{rule:k,type:"direct",dns:t,geosite:"geosite-hp",geositeURL:"https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-hp.srs"},{rule:S,type:"direct",dns:t,geosite:"geosite-lenovo",geositeURL:"https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-lenovo.srs"}].filter(({rule:e})=>e)}async function Zd(e,t){const{localDNS:r,remoteDNS:n,warpRemoteDNS:i,antiSanctionDNS:o,remoteDnsHost:s,enableIPv6:a,fakeDNS:c,enableECH:u,echServerName:l}=globalThis.settings,d=void 0,f=new URL(n).protocol.replace(":",""),h=[{type:e?"udp":f,server:e?i:s.host,detour:e?"Warp - Best Ping 🚀":t?"Best Ping 🚀":" Selector",tag:"dns-remote"}];"localhost"===r?Gd(h,"local","dns-direct",void 0,void 0,void 0):Gd(h,"udp","dns-direct",r,void 0,void 0);const p=[{clash_mode:"Direct",server:"dns-direct"},{clash_mode:"Global",server:"dns-remote"}];if(u){const{hostName:e}=globalThis.httpConfig;qd(p,"dns-direct",void 0,void 0,void 0,[l||e],["HTTPS"])}if(s.isDomain&&!e){const{ipv4:e,ipv6:t,host:r}=s,n=void 0;Gd(h,"hosts","hosts",void 0,void 0,void 0,r,e.concatIf(a,t)),p.unshift({ip_accept_any:!0,server:"hosts"})}const m=void 0,g=Fu(Vd()),y=void 0;[...g.block.geosites,...g.block.domains].length&&qd(p,"reject",void 0,g.block.geosites,void 0,g.block.domains),g.bypass.localDNS.geositeGeoips.forEach(({geosite:e,geoip:t})=>{qd(p,"dns-direct",void 0,[e],t,void 0)});const b=void 0;[...g.bypass.localDNS.geosites,...g.bypass.localDNS.domains].length&&qd(p,"dns-direct",void 0,g.bypass.localDNS.geosites,void 0,g.bypass.localDNS.domains);const w=void 0;if([...g.bypass.antiSanctionDNS.geosites,...g.bypass.antiSanctionDNS.domains].length){const e=Lu(o);qd(p,"dns-anti-sanction",void 0,g.bypass.antiSanctionDNS.geosites,void 0,g.bypass.antiSanctionDNS.domains),e.isHostDomain?Gd(h,"https","dns-anti-sanction",e.host,void 0,"dns-direct"):Gd(h,"udp","dns-anti-sanction",o,void 0,void 0)}return c&&(Gd(h,"fakeip","dns-fake",void 0,void 0,void 0,void 0,void 0,"198.18.0.0/15",a?"fc00::/18":void 0),qd(p,"dns-fake","tun-in",void 0,void 0,void 0,["A","AAAA"])),{servers:h,rules:p,strategy:a?"prefer_ipv4":"ipv4_only",independent_cache:!0}}function Gd(e,t,r,n,i,o,s,a,c,u){e.push({type:t,server:n,detour:i,domain_resolver:o?{server:o,strategy:"ipv4_only"}:void 0,predefined:s?{[s]:a}:void 0,inet4_range:c,inet6_range:u,tag:r})}function qd(e,t,r,n,i,o,s){const a=n&&i;e.push({inbound:r,type:a?"logical":void 0,mode:a?"and":void 0,rules:a?[{rule_set:n},{rule_set:i}]:void 0,rule_set:n?.length&&!i?n:void 0,domain_suffix:o?.omitEmpty(),query_type:s,action:"reject"===t?"reject":"route",server:"reject"===t?void 0:t})}function Qd(e){const{blockUDP443:t}=globalThis.settings,r=[{ip_cidr:"172.19.0.2",action:"hijack-dns"},{clash_mode:"Direct",outbound:"direct"},{clash_mode:"Global",outbound:"✅ Selector"},{action:"sniff"},{protocol:"dns",action:"hijack-dns"},{ip_is_private:!0,outbound:"direct"}];e?t&&Yd(r,"reject",void 0,void 0,void 0,void 0,"udp","quic",443):Yd(r,"reject",void 0,void 0,void 0,void 0,"udp");const n=Vd(),i=Hu(n),o=void 0;[...i.block.geosites,...i.block.domains].length&&Yd(r,"reject",i.block.domains,void 0,i.block.geosites);const s=void 0;[...i.block.geoips,...i.block.ips].length&&Yd(r,"reject",void 0,i.block.ips,void 0,i.block.geoips);const a=void 0;[...i.bypass.geosites,...i.bypass.domains].length&&Yd(r,"direct",i.bypass.domains,void 0,i.bypass.geosites);const c=void 0;[...i.bypass.geoips,...i.bypass.ips].length&&Yd(r,"direct",void 0,i.bypass.ips,void 0,i.bypass.geoips);const u=void 0;return{rules:r,rule_set:n.reduce((e,t)=>(Xd(e,t),e),[]).omitEmpty(),auto_detect_interface:!0,final:"✅ Selector"}}function Yd(e,t,r,n,i,o,s,a,c){e.push({rule_set:i||o,domain_suffix:r?.length?r:void 0,ip_cidr:n?.length?n:void 0,network:s,protocol:a,port:c,action:"reject"===t?"reject":"route",outbound:"direct"===t?"direct":void 0})}function Xd(e,t){const{geosite:r,geositeURL:n,geoip:i,geoipURL:o}=t,s=(t,r)=>e.push({type:"remote",tag:t,format:"binary",url:r,download_detour:"direct"});r&&n&&s(r,n),i&&o&&s(i,o)}function $d(e,t,r,n,i,o,s,a,c){return{tag:e,type:t,server:r,server_port:n,tcp_fast_open:i,...o,tls:s,transport:a,domain_resolver:Au(r)?c?"dns-remote":"dns-direct":void 0}}function ef(e,t,r,n,i){const{dict:{_VL_:o},globalConfig:{userID:s,TrPass:a},settings:{fingerprint:c,enableTFO:u,enableECH:l,echServerName:d,upstreamParams:{upstreamServer:f}}}=globalThis,{host:h,sni:p,allowInsecure:m}=Nu(r),g=sf("ws","none",zu(e),h,void 0,2560),y=Bu(n)||r===f?of("tls",i,m,p,l&&!i,d||void 0,"http/1.1",c):void 0;return $d(t,e,r,n,u,e===o?{uuid:s,packet_encoding:"",network:"tcp"}:{password:a,network:"tcp"},y,g)}function tf(e,t,r,n){const{host:i,port:o}=Mu(r,!1),{warpIPv6:s,reserved:a,publicKey:c,privateKey:u}=e,l=n?"162.159.192.1":i;return{tag:t,detour:n||void 0,type:"wireguard",address:["172.16.0.2/32",s],mtu:1280,peers:[{address:l,port:n?2408:o,public_key:c,reserved:Du(a),allowed_ips:["0.0.0.0/0","::/0"],persistent_keepalive_interval:5}],private_key:u,domain_resolver:Au(l)?"dns-direct":void 0}}function rf(){const{dict:{_VL_:e,_TR_:t,_SS_:r,_VM_:n},settings:{outProxy:i,outProxyParams:{protocol:o,server:s,port:a,user:c,pass:u,password:l,method:d,uuid:f,flow:h,security:p,type:m,sni:g,fp:y,host:b,path:w,alpn:v,pbk:k,sid:S,headerType:x,serviceName:A,aid:_}}}=globalThis,{searchParams:C}=new URL(i),T=C.get("ed"),P=T?+T:void 0,E=of(p,!1,!1,g||s,!1,void 0,v,y,k,S),I=sf(m,x,w,b,A,P);switch(o){case"http":return $d("",o,s,a,!1,{username:c,password:u},void 0,void 0,!0);case"socks":return $d("",o,s,a,!1,{username:c,password:u,version:"5",network:"tcp"},void 0,void 0,!0);case r:return $d("",o,s,a,!1,{method:d,password:l,network:"tcp"},void 0,void 0,!0);case e:return $d("",o,s,a,!1,{uuid:f,flow:h,network:"tcp"},E,I,!0);case n:return $d("",o,s,a,!1,{uuid:f,security:"auto",alter_id:_,network:"tcp"},E,I,!0);case t:return $d("",o,s,a,!1,{password:l,network:"tcp"},E,I,!0);default:return}}function nf(e,t,r){const{bestWarpInterval:n,bestVLTRInterval:i}=globalThis.settings;return{type:"urltest",tag:e,outbounds:t,url:"https://www.gstatic.com/generate_204",interrupt_exist_connections:!1,interval:r?`${n}s`:`${i}s`}}function of(e,t,r,n,i,o,s,a,c,u){if(!["tls","reality"].includes(e))return;const l=s?.split(",").filter(e=>"h2"!==e),d={enabled:!0,server_name:n,record_fragment:t,insecure:r,alpn:l,utls:{enabled:!!a,fingerprint:a},ech:i?{enabled:!0,query_server_name:o}:void 0};return"tls"===e?d:"reality"===e&&c&&u?{...d,reality:{enabled:!0,public_key:c,short_id:u}}:void 0}function sf(e,t,r="/",n,i,o){switch(r=r?.split("?")[0],e){case"tcp":return"http"===t?{type:"http",host:n?.split(","),path:r,method:"GET",headers:{Connection:["keep-alive"],"Content-Type":["application/octet-stream"]}}:void 0;case"ws":return{type:"ws",path:r?.split("?ed=")[0],max_early_data:o,early_data_header_name:o?"Sec-WebSocket-Protocol":void 0,headers:{Host:n}};case"httpupgrade":return{type:"httpupgrade",host:n,path:r?.split("?ed=")[0]};case"grpc":return{type:"grpc",service_name:i};default:return}}var af={type:"tun",tag:"tun-in",address:["172.19.0.1/28"],mtu:9e3,auto_route:!0,strict_route:!0,stack:"mixed"};function cf(){const{allowLANConnection:e}=globalThis.settings;return{type:"mixed",tag:"mixed-in",listen:e?"0.0.0.0":"127.0.0.1",listen_port:2080}}async function uf(e,t,r,n,i,o,s){const{logLevel:a}=globalThis.settings,c={log:{disabled:"none"===a,level:"none"===a?void 0:"warning"===a?"warn":a,timestamp:!0},dns:await Zd(o,s),inbounds:[af,cf()],outbounds:[...e,{type:"selector",tag:" Selector",outbounds:r,interrupt_exist_connections:!1},{type:"direct",tag:"direct",domain_resolver:"dns-direct"}],endpoints:t.omitEmpty(),route:Qd(o),ntp:{enabled:!0,server:"time.cloudflare.com",server_port:123,domain_resolver:"dns-direct",interval:"30m",write_to_system:!1},experimental:{cache_file:{enabled:!0,store_fakeip:!0},clash_api:{external_controller:"127.0.0.1:9090",external_ui:"ui",default_mode:"Rule",external_ui_download_url:"https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip",external_ui_download_detour:"direct"}}},u=void 0,l=nf(o?"Warp - Best Ping 🚀":"Best Ping 🚀",n,o);return c.outbounds.push(l),o&&c.outbounds.push(nf("WoW - Best Ping 🚀",i,o)),s&&c.outbounds.push(nf("🔗 Best Ping 🚀",i,o)),c}async function lf(e){const{outProxy:t,ports:r,upstreamParams:{upstreamServer:n,upstreamPort:i}}=globalThis.settings,o=t?rf():void 0,s=!!o,a=Tu(),c=await Pu(e),u=r.filter(t=>!e||Bu(t));n&&i&&!e&&(u.unshift(i),c.unshift(n));const l=[],d=[],f=[],h=["Best Ping 🚀"].concatIf(s,"🔗 Best Ping 🚀");for(const t of a){let r=1;for(const a of u)for(const u of c){if(a===i!=(u===n))continue;const c=Eu(r,a,u,t,e,!1),p=ef(t,c,u,a,e);if(f.push(p),l.push(c),h.push(c),s){const n=Eu(r,a,u,t,e,!0),i=structuredClone(o);i.tag=n,i.detour=c,f.push(i),d.push(n),h.push(n)}r++}}const p=await uf(f,[],h,l,d,!1,s);return new Response(JSON.stringify(p,null,4),{status:200,headers:{"Content-Type":"text/plain;charset=utf-8","Cache-Control":"no-store","CDN-Cache-Control":"no-store"}})}async function df(e,t){const{warpEndpoints:r}=globalThis.settings,{warpAccounts:n}=await Ju(e,t),i=[],o=[],s=[],a=["Warp - Best Ping 🚀","WoW - Best Ping 🚀"];r.forEach((e,t)=>{const r=`${t+1} - Warp 🇮🇷`;i.push(r);const c=`${t+1} - WoW 🌍`;o.push(c),a.push(r,c);const u=tf(n[0],r,e),l=tf(n[1],c,e,r);s.push(u,l)});const c=await uf([],s,a,i,o,!0,!1);return new Response(JSON.stringify(c,null,4),{status:200,headers:{"Content-Type":"text/plain;charset=utf-8","Cache-Control":"no-store","CDN-Cache-Control":"no-store"}})}function ff(){const{localDNS:e,antiSanctionDNS:t,blockMalware:r,blockPhishing:n,blockCryptominers:i,blockAds:o,blockPorn:s,bypassIran:a,bypassChina:c,bypassRussia:u,bypassOpenAi:l,bypassGoogleAi:d,bypassMicrosoft:f,bypassOracle:h,bypassDocker:p,bypassAdobe:m,bypassEpicGames:g,bypassIntel:y,bypassAmd:b,bypassNvidia:w,bypassAsus:v,bypassHp:k,bypassLenovo:S}=globalThis.settings;return[{rule:o,type:"block",geosite:"geosite:category-ads-all"},{rule:o,type:"block",geosite:"geosite:category-ads-ir"},{rule:s,type:"block",geosite:"geosite:category-porn"},{rule:r,type:"block",geosite:"geosite:malware",geoip:"geoip:malware"},{rule:n,type:"block",geosite:"geosite:phishing",geoip:"geoip:phishing"},{rule:i,type:"block",geosite:"geosite:cryptominers"},{rule:a,type:"direct",geosite:"geosite:category-ir",geoip:"geoip:ir",dns:e},{rule:c,type:"direct",geosite:"geosite:cn",geoip:"geoip:cn",dns:e},{rule:u,type:"direct",geosite:"geosite:category-ru",geoip:"geoip:ru",dns:e},{rule:l,type:"direct",geosite:"geosite:openai",dns:t},{rule:d,type:"direct",geosite:"geosite:google-deepmind",dns:t},{rule:f,type:"direct",geosite:"geosite:microsoft",dns:t},{rule:h,type:"direct",geosite:"geosite:oracle",dns:t},{rule:p,type:"direct",geosite:"geosite:docker",dns:t},{rule:m,type:"direct",geosite:"geosite:adobe",dns:t},{rule:g,type:"direct",geosite:"geosite:epicgames",dns:t},{rule:y,type:"direct",geosite:"geosite:intel",dns:t},{rule:b,type:"direct",geosite:"geosite:amd",dns:t},{rule:w,type:"direct",geosite:"geosite:nvidia",dns:t},{rule:v,type:"direct",geosite:"geosite:asus",dns:t},{rule:k,type:"direct",geosite:"geosite:hp",dns:t},{rule:S,type:"direct",geosite:"geosite:lenovo",dns:t}].filter(({rule:e})=>e)}async function hf(e,t,r,n,i,o){const{localDNS:s,remoteDNS:a,warpRemoteDNS:c,antiSanctionDNS:u,remoteDnsHost:l,enableIPv6:d,fakeDNS:f}=globalThis.settings,h={},p=[],m=[];if(l.isDomain&&!t&&!r){const{ipv4:e,ipv6:t,host:r}=l;h[r]=e.concatIf(d,t)}if(n){const{ipv4:e,ipv6:t}=await _u(n,d);h[n]=[...e,...t]}let g=!0,y=r?c:a;t&&(y=`https://${i}/dns-query`,i&&o&&(h[i]=o),g=!1);const b=pf(y,void 0,void 0,void 0,void 0,"remote-dns");p.push(b);const w=void 0,v=Fu(ff()),k=void 0;[...v.block.geosites,...v.block.domains.map(e=>`domain:${e}`)].forEach(e=>h[e]="#3"),v.bypass.localDNS.geositeGeoips.forEach(({geosite:e,geoip:t})=>{const r=pf(s,[e],[t],g);p.push(r),m.push(e)});const S=[...v.bypass.antiSanctionDNS.geosites,...v.bypass.antiSanctionDNS.domains.map(e=>`domain:${e}`)],x=[...v.bypass.localDNS.geosites,...v.bypass.localDNS.domains.map(e=>`domain:${e}`),...e.filter(Au).map(e=>`full:${e}`)];if(S.length){const e=pf(u,S,void 0,g,!0);p.push(e);const{host:t,isHostDomain:r}=Lu(u);r&&x.push(`full:${t}`)}if(o?.filter(Au).forEach(e=>x.push(`full:${e}`)),x.length){const e=pf(s,x,void 0,g);p.push(e),m.push(...x)}if(f||t){const e=m.length?pf("fakedns",m,void 0,!1,void 0):"fakedns";p.unshift(e)}return{hosts:h.omitEmpty(),servers:p,queryStrategy:r&&!d?"UseIPv4":"UseIP",tag:"dns"}}function pf(e,t,r,n,i,o){return{address:e,domains:t,expectIPs:r,skipFallback:n,finalQuery:i,tag:o}}function mf(e,t,r,n){const{blockUDP443:i}=globalThis.settings,o=[{inboundTag:["mixed-in"],port:53,outboundTag:"dns-out",type:"field"},{inboundTag:["dns-in"],outboundTag:"dns-out",type:"field"}],s=void 0,a=t?e?"all-chains":"all-proxies":e?"chain":r?"direct":"proxy",c=void 0;gf(o,["remote-dns"],void 0,void 0,void 0,void 0,void 0,t?"all-proxies":"proxy",t),gf(o,["dns"],void 0,void 0,void 0,void 0,void 0,"direct",!1),gf(o,void 0,["geosite:private"],void 0,void 0,void 0,void 0,"direct",!1),gf(o,void 0,void 0,["geoip:private"],void 0,void 0,void 0,"direct",!1),n||r?i&&gf(o,void 0,void 0,void 0,443,"udp",void 0,"block",!1):gf(o,void 0,void 0,void 0,void 0,"udp",void 0,"block",!1);const u=void 0,l=Hu(ff()),d=[...l.block.geosites,...l.block.domains.map(e=>`domain:${e}`)];d.length&&gf(o,void 0,d,void 0,void 0,void 0,void 0,"block");const f=[...l.block.geoips,...l.block.ips];f.length&&gf(o,void 0,void 0,f,void 0,void 0,void 0,"block");const h=[...l.bypass.geosites,...l.bypass.domains.map(e=>`domain:${e}`)];h.length&&gf(o,void 0,h,void 0,void 0,void 0,void 0,"direct");const p=[...l.bypass.geoips,...l.bypass.ips];p.length&&gf(o,void 0,void 0,p,void 0,void 0,void 0,"direct"),r&&(gf(o,void 0,void 0,void 0,void 0,"tcp",["tls"],"proxy",!1),gf(o,void 0,void 0,void 0,void 0,"tcp",["http"],"http-fragment",!1),gf(o,void 0,void 0,void 0,void 0,"udp",["quic"],"udp-noise",!1),gf(o,void 0,void 0,void 0,"443,2053,2083,2087,2096,8443","udp",void 0,"udp-noise",!1));const m=void 0;return gf(o,void 0,void 0,void 0,void 0,n||r?"tcp,udp":"tcp",void 0,a,t),o}var gf=(e,t,r,n,i,o,s,a,c)=>e.push({inboundTag:t,domain:r,ip:n,port:i,network:o,protocol:s,balancerTag:c?a:void 0,outboundTag:c?void 0:a,type:"field"});function yf(e,t,r){const n=void 0;return{listen:e?"0.0.0.0":"127.0.0.1",port:10808,protocol:"mixed",settings:{auth:"noauth",udp:!0},sniffing:{destOverride:["http","tls"].concatIf(t,"quic").concatIf(r,"fakedns"),enabled:!0,routeOnly:!0},tag:"mixed-in"}}function bf(e){return{listen:e?"0.0.0.0":"127.0.0.1",port:10853,protocol:"dokodemo-door",settings:{address:"1.1.1.1",network:"tcp,udp",port:53},tag:"dns-in"}}function wf(e,t,r,n,i){return{protocol:e,mux:r?{enabled:!0,concurrency:8,xudpConcurrency:16,xudpProxyUDP443:"reject"}:void 0,settings:n,streamSettings:i,tag:t}}function vf(e,t,r,n,i,o){const{enableTFO:s,enableIPv6:a}=globalThis.settings,c=void 0,u=void 0;return{protocol:"freedom",settings:{domainStrategy:e?void 0:a?"UseIPv4v6":"UseIPv4"},streamSettings:{sockopt:e?_f(!0,s,"UseIP"):void 0,finalmask:Ef(e,t,n,i,o)},tag:r}}function kf(e,t,r,n,i,o,s){const{settings:{fingerprint:a,enableTFO:c,enableECH:u,echServerName:l,upstreamParams:{upstreamServer:d}},globalConfig:{userID:f,TrPass:h},dict:{_VL_:p}}=globalThis,m=Bu(n)||r===d,{host:g,sni:y}=Nu(r),b=m?Cf(y,a,"http/1.1",u&&!i,l||void 0):void 0,w={network:"ws",...Af("ws","none",`${zu(t)}?ed=2560`,g),security:m?"tls":"none",tlsSettings:b,sockopt:_f(!0,c,"UseIP"),finalmask:Ef(i,!1,o,s)};return wf(t,e,!1,t===p?{vnext:[{address:r,port:n,users:[{id:f,encryption:"none"}]}]}:{servers:[{address:r,port:n,password:h}]},w)}function Sf(e,t,r,n,i){const{warpIPv6:o,reserved:s,publicKey:a,privateKey:c}=e;let u={address:["172.16.0.2/32",o],mtu:1280,peers:[{endpoint:r?"162.159.192.1:2408":t,publicKey:a,keepAlive:5}],reserved:Du(s),secretKey:c};const l={};if(r)l.sockopt=_f(!1,!1,void 0,"proxy");else if(n)if(i){const{knockerNoiseMode:e,noiseCountMin:t,noiseCountMax:r,noiseSizeMin:n,noiseSizeMax:i,noiseDelayMin:o,noiseDelayMax:s}=globalThis.settings;u={...u,wnoise:e,wnoisecount:Ku(t,r),wpayloadsize:Ku(n,i),wnoisedelay:Ku(o,s)}}else l.finalmask=Ef(!1,n);return{protocol:"wireguard",settings:u,streamSettings:l.omitEmpty(),tag:r?"chain":"proxy"}}function xf(){const{dict:{_VL_:e,_TR_:t,_SS_:r,_VM_:n},settings:{outProxyParams:{protocol:i,server:o,port:s,user:a,pass:c,password:u,method:l,uuid:d,flow:f,security:h,type:p,sni:m,fp:g,host:y,path:b,alpn:w,pbk:v,sid:k,spx:S,headerType:x,serviceName:A,mode:_,authority:C}}}=globalThis,T={network:p||"raw",...Af(p,x,b,y,A,_,C),security:h,tlsSettings:"tls"===h?Cf(m||o,g,w,!1,void 0):void 0,realitySettings:"reality"===h?Tf(m,g,v,k,S):void 0,sockopt:_f(!1,!1,"UseIPv4","proxy")},P=!("reality"===h||"grpc"===p);switch(i){case"http":case"socks":return wf(i,"chain",P,{servers:[{address:o,port:s,users:[{user:a,pass:c}]}]},T);case r:return wf(i,"chain",P,{servers:[{address:o,port:s,method:l,password:u}]},T);case e:return wf(i,"chain",P,{vnext:[{address:o,port:s,users:[{id:d,flow:f,encryption:"none"}]}]},T);case n:return wf(i,"chain",P,{vnext:[{address:o,port:s,users:[{id:d,security:"auto"}]}]},T);case t:return wf(i,"chain",P,{servers:[{address:o,port:s,password:u}]},T);default:return}}function Af(e,t,r="/",n,i,o,s){switch(e){case"tcp":case"raw":return{rawSettings:{header:"http"===t?{type:"http",request:{headers:{Host:n?.split(","),"Accept-Encoding":["gzip, deflate"],Connection:["keep-alive"],Pragma:"no-cache"},path:r.split(","),method:"GET",version:"1.1"}}:{type:"none"}}};case"ws":return{wsSettings:{host:n,path:r}};case"httpupgrade":return{httpupgradeSettings:{host:n,path:r}};case"grpc":return{grpcSettings:{authority:s,multiMode:"multi"===o,serviceName:i}};default:return{}}}function _f(e,t,r,n){return{domainStrategy:r,dialerProxy:n,tcpFastOpen:t||void 0,happyEyeballs:e?{tryDelayMs:250,prioritizeIPv6:!1,interleave:2,maxConcurrentTry:4}:void 0}}function Cf(e,t,r,n,i){const{localDNS:o}=globalThis.settings,s="localhost"===o?"8.8.8.8":o;return{serverName:e,fingerprint:t,alpn:r?.split(","),echConfigList:n?i?`${i}+udp://${s}`:`udp://${s}`:void 0}}function Tf(e,t,r,n,i){return{serverName:e,fingerprint:t,publicKey:r,shortId:n,spiderX:i,show:!1,allowInsecure:!1}}function Pf(e){return e.flatMap(({type:e,packet:t,delay:r,count:n})=>{const i="rand"===e?{rand:t,randRange:"0-255",delay:r}:{type:e,packet:"array"===e?t.split(",").map(Number):t,delay:r};return Array.from({length:n},()=>i)})}function Ef(e,t,r,n,i){if(!e&&!t)return;const{settings:{fragmentPackets:o,fragmentLengthMin:s,fragmentLengthMax:a,fragmentIntervalMin:c,fragmentIntervalMax:u,fragmentMaxSplitMin:l,fragmentMaxSplitMax:d,xrayUdpNoises:f}}=globalThis;return{tcp:e?[{type:"fragment",settings:{packets:i||o,length:r||Ku(s,a),delay:n||Ku(c,u),maxSplit:Ku(l,d)}}]:void 0,udp:t?[{type:"noise",settings:{reset:"30-60",noise:Pf(f)}}]:void 0}}function If(e,t,r){return{tag:e,selector:[t],strategy:{type:"leastPing"},fallbackTag:r?"proxy-2":void 0}}async function Rf(e,t,r,n,i,o,s,a,c,u,l){const{fakeDNS:d,bestWarpInterval:f,bestVLTRInterval:h,logLevel:p,allowLANConnection:m}=globalThis.settings;let g,y;r&&(g=[If("all-proxies","proxy",i)].concatIf(n,If("all-chains","chain",!1)),y={subjectSelector:n?["chain","proxy"]:["proxy"],probeUrl:"https://www.gstatic.com/generate_204",probeInterval:`${o?f:h}s`,enableConcurrency:!0});const b=void 0;return{remarks:e,version:{min:"26.2.6"},log:{loglevel:p},dns:await hf(a,s,o,c,u,l),inbounds:[yf(m,s,s||d),bf(m)],outbounds:[...t,{protocol:"dns",settings:{rules:[{action:"hijack"}]},tag:"dns-out"},{protocol:"freedom",settings:{domainStrategy:"UseIP"},tag:"direct"},{protocol:"blackhole",settings:{response:{type:"http"}},tag:"block"}],routing:{domainStrategy:"IPIfNonMatch",rules:mf(n,r,s,o),balancers:g},observatory:y,policy:{levels:{0:{connIdle:300,handshake:4,uplinkOnly:1,downlinkOnly:1}},system:{statsOutboundUplink:!0,statsOutboundDownlink:!0}},stats:{}}}async function zf(e,t,r,n,i){const o=!!n.length,s=void 0,a=void 0,c=`${o?"🔗 ":""}Best Ping${i?" F":""} 🚀`,u=[...n,...r],l=await Rf(c,u,!0,o,!0,!1,!1,t);o&&await zf(e,t,r,[],i),e.push(l)}async function Df(e,t){const{httpConfig:{hostName:r},settings:{fragmentIntervalMin:n,fragmentIntervalMax:i},dict:{_VL_:o}}=globalThis,s=!!t,a=[],c=void 0;["1-5","1-10","10-20","20-30","30-40","40-50","50-60","60-70","70-80","80-90","90-100","10-30","20-40","30-50","40-60","50-70","60-80","70-90","80-100","100-200"].forEach((e,c)=>{if(s){const e=Nf(t,`chain-${c+1}`,`proxy-${c+1}`);a.push(e)}const u=kf(`proxy-${c+1}`,o,r,443,!0,e,`${n}-${i}`);a.push(u)});const u=s?"🔗 ":"",l=await Rf(`${u}Best Fragment 😎`,a,!0,s,!1,!1,!1,[],r);t&&await Df(e),e.push(l)}async function Of(e){const t=vf(!0,!1,"proxy"),r=vf(!1,!0,"udp-noise"),n=void 0,i=[t,vf(!0,!1,"http-fragment",void 0,void 0,"1-1"),r],o=await Rf("1 - Workerless ",i,!1,!1,!1,!1,!0,[],void 0,"cloudflare-dns.com",["cloudflare.com"]),s=await Rf("2 - Workerless ",i,!1,!1,!1,!1,!0,[],void 0,"dns.google",["8.8.8.8","8.8.4.4"]);e.push(o,s)}async function Uf(e){const{outProxy:t,ports:r,upstreamParams:{upstreamServer:n,upstreamPort:i}}=globalThis.settings,o=t?xf():void 0,s=await Pu(e),a=r.filter(t=>!e||Bu(t)),c=Tu();n&&i&&!e&&(a.unshift(i),s.unshift(n));const u=[],l=[],d=[];let f=1;for(const t of c){let r=1;for(const c of a)for(const a of s){if(c===i!=(a===n))continue;const s=kf("proxy",t,a,c,e),h=Nf(s,`proxy-${f}`);l.push(h);const p=Eu(r,c,a,t,e,!1),m=await Rf(p,[s],!1,!1,!1,!1,!1,[a]);if(u.push(m),o){const n=Eu(r,c,a,t,e,!0),i=await Rf(n,[o,s],!1,!0,!1,!1,!1,[a]);u.push(i);const l=Nf(o,`chain-${f}`,`proxy-${f}`);d.push(l)}r++,f++}}return await zf(u,s,l,d,e),e&&(await Df(u,o),await Of(u)),new Response(JSON.stringify(u,null,4),{status:200,headers:{"Content-Type":"text/plain;charset=utf-8","Cache-Control":"no-store","CDN-Cache-Control":"no-store"}})}async function Lf(e,t,r,n){const{warpEndpoints:i}=globalThis.settings,{warpAccounts:o}=await Ju(e,t),s=r?" Pro ":" ",a=[],c=[],u=[],l=[];for(const[e,t]of i.entries()){const{host:i}=Mu(t);Au(i)&&l.push(i);const d=Sf(o[0],t,!1,r,n),f=Sf(o[1],t,!0,r,n),h=await Rf(`${e+1} - Warp${s}🇮🇷`,[d],!1,!1,!1,!0,!1,[i]),p=await Rf(`${e+1} - WoW${s}🌍`,[f,d],!1,!0,!1,!0,!1,[i]);a.push(h,p);const m=Nf(d,`proxy-${e+1}`);c.push(m);const g=Nf(f,`chain-${e+1}`,`proxy-${e+1}`);u.push(g)}const d=await Rf(`Warp${s}- Best Ping 🚀`,[...c],!0,!1,!1,!0,!1,l),f=await Rf(`WoW${s}- Best Ping 🚀`,[...u,...c],!0,!0,!1,!0,!1,l);return a.push(d,f),new Response(JSON.stringify(a,null,4),{status:200,headers:{"Content-Type":"text/plain;charset=utf-8","Cache-Control":"no-store","CDN-Cache-Control":"no-store"}})}function Nf(e,t,r){const n=structuredClone(e);return n.tag=t,r&&n.streamSettings?.sockopt&&(n.streamSettings.sockopt.dialerProxy=r),n}import{connect as Mf}from"cloudflare:sockets";var Bf=1,Wf=2;async function jf(e,t,r,n,i,o,s){async function a(t,r){const i=Mf({hostname:t,port:r});e.value=i,s(`connected to ${t}:${r}`);const o=i.writable.getWriter();return await o.write(n),o.releaseLock(),i}async function c(){const{proxyMode:e,panelIPs:n,envProxyIPs:c,defaultProxyIPs:u,envPrefixes:l,defaultPrefixes:d}=globalThis.wsConfig,f=e=>e[Math.floor(Math.random()*e.length)],h=e=>e?e.split(",").map(e=>e.trim()).filter(Boolean):void 0;if("proxyip"===e){s(`direct connection failed, trying to use Proxy IP for ${t}`);const e=void 0,i=f(n?.length?n:h(c)??u),{host:o,port:a}=Mu(i,!0);t=o||t,r=a||r}else if("prefix"===e){s(`direct connection failed, trying to generate dynamic prefix for ${t}`);const e=void 0,r=f(n?.length?n:h(l)??d),o=await Zf(t,r);o?t=o:i.close(1011,"Retry connection failed: Invalid Prefix")}try{const e=await a(t,r);e.closed.catch(e=>console.log("retry TCP socket closed error",e)).finally(()=>Vf(i)),Hf(e,i,o,null,s)}catch(e){console.error("Retry connection failed:",e),i.close(1011,`Retry connection failed: ${xu(e)}`)}}try{const e=void 0;Hf(await a(t,r),i,o,c,s)}catch(e){console.error(`Connection failed: ${e}`),i.close(1011,`Connection failed: ${xu(e)}`)}}async function Hf(e,t,r,n,i){let o=r,s=!1;const a=new WritableStream({start(){},async write(e,r){s=!0,1!==t.readyState&&r.error("webSocket.readyState is not open, maybe close"),o?(t.send(await new Blob([o,e]).arrayBuffer()),o=null):t.send(e)},close(){i(`remoteConnection.readable is close with hasIncomingData is ${s}`)},abort(t){console.error("remoteConnection.readable abort",t),Jf(e)}});try{await e.readable.pipeTo(a)}catch(r){console.error("VLRemoteSocketToWS has exception.",r),Jf(e),Vf(t)}!1===s&&n&&(i("retry"),n())}function Ff(e,t,r){let n=!1;const i=void 0;return new ReadableStream({start(i){e.addEventListener("message",e=>{n||i.enqueue(e.data)}),e.addEventListener("close",()=>{Vf(e),n||i.close()}),e.addEventListener("error",e=>{r("webSocketServer has error"),i.error(e)});const{earlyData:o,error:s}=Kf(t);s?i.error(s):o&&i.enqueue(o)},pull(e){},cancel(t){n||(r(`ReadableStream was canceled, due to ${t}`),n=!0,Vf(e))}})}function Kf(e){if(!e)return{earlyData:null,error:null};try{e=e.replace(/-/g,"+").replace(/_/g,"/");const t=atob(e),r=void 0;return{earlyData:Uint8Array.from(t,e=>e.charCodeAt(0)).buffer,error:null}}catch(e){return{earlyData:null,error:e}}}function Jf(e){if(e)try{e.close()}catch(e){console.error("Failed to close TCP socket:",e)}}function Vf(e){try{1!==e.readyState&&2!==e.readyState||e.close()}catch(e){console.error("safeCloseWebSocket error",e)}}async function Zf(e,t){let r=e;if(!Ou(e)){const{ipv4:t}=await _u(e,!0);if(!t.length)throw new Error("Unable to find IPv4 in DNS records");r=t[0]}return Gf(r,t)}function Gf(e,t){const r=e.split(".");if(4!==r.length)throw new Error("Invalid IPv4 address");const n=r.map(e=>{const t=parseInt(e,10);if(t<0||t>255)throw new Error("Invalid IPv4 address");return t.toString(16).padStart(2,"0")}),i=t.match(/^\[([0-9A-Fa-f:]+)\]$/);if(i)return`[${i[1]}${n[0]}${n[1]}:${n[2]}${n[3]}]`}async function qf(e){const t=new WebSocketPair,[r,n]=Object.values(t);n.accept(),n.binaryType="arraybuffer";let i="",o="";const s=(e,t)=>{console.log(`[${i}:${o}] ${e}`,t||"")},a=e.headers.get("sec-websocket-protocol")||"",c=Ff(n,a,s);let u={value:null},l=null,d=!1;const f=new WritableStream({async write(e){if(d&&l)return l(e);if(u.value){const t=u.value.writable.getWriter();return await t.write(e),void t.releaseLock()}const{userID:t}=globalThis.globalConfig,{hasError:r,message:a,portRemote:c=443,addressRemote:f="",rawDataIndex:h,VLVersion:p=new Uint8Array([0,0]),isUDP:m}=Qf(e,t);if(i=f,o=`${c}--${Math.random()} ${m?"udp ":"tcp "} `,r)throw new Error(a);const g=new Uint8Array([p[0],0]),y=e.slice(h);if(m){if(53===c){d=!0;const{write:e}=await $f(n,g,s);return l=e,void await l(y)}throw new Error("UDP proxy only enable for DNS which is port 53")}await jf(u,f,c,y,n,g,s)},close(){Jf(u.value)},abort(e){s("readableWebSocketStream is abort",JSON.stringify(e))}});return c.pipeTo(f).catch(e=>{s("readableWebSocketStream pipeTo error",e),Jf(u.value)}),new Response(null,{status:101,webSocket:r})}function Qf(e,t){if(e.byteLength<24)return{hasError:!0,message:"invalid data"};const r=new Uint8Array(e.slice(0,1)),n=void 0,i=void 0,o=void 0;if(!(Xf(new Uint8Array(e.slice(1,17)))===t))return{hasError:!0,message:"invalid user"};const s=new Uint8Array(e.slice(17,18))[0],a=new Uint8Array(e.slice(18+s,18+s+1))[0];let c=!1;if(1===a);else{if(2!==a)return{hasError:!0,message:`command ${a} is not supported, command 01-tcp,02-udp,03-mux`};c=!0}const u=18+s+1,l=e.slice(u,u+2),d=new DataView(l).getUint16(0);let f=u+2;const h=void 0,p=new Uint8Array(e.slice(f,f+1))[0];let m=0,g=f+1,y="";switch(p){case 1:m=4,y=new Uint8Array(e.slice(g,g+m)).join(".");break;case 2:m=new Uint8Array(e.slice(g,g+1))[0],g+=1,y=(new TextDecoder).decode(e.slice(g,g+m));break;case 3:{m=16;const t=new DataView(e.slice(g,g+m)),r=[];for(let e=0;e<8;e++)r.push(t.getUint16(2*e).toString(16));y=r.join(":");break}default:return{hasError:!0,message:`invalid addressType is ${p}`}}return y?{hasError:!1,addressRemote:y,addressType:p,portRemote:d,rawDataIndex:g+m,VLVersion:r,isUDP:c}:{hasError:!0,message:`addressValue is empty, addressType is ${p}`}}function Yf(e,t=0){const r=[];for(let e=0;e<256;++e)r.push((e+256).toString(16).slice(1));return(r[e[t+0]]+r[e[t+1]]+r[e[t+2]]+r[e[t+3]]+"-"+r[e[t+4]]+r[e[t+5]]+"-"+r[e[t+6]]+r[e[t+7]]+"-"+r[e[t+8]]+r[e[t+9]]+"-"+r[e[t+10]]+r[e[t+11]]+r[e[t+12]]+r[e[t+13]]+r[e[t+14]]+r[e[t+15]]).toLowerCase()}function Xf(e,t=0){const r=Yf(e,t);if(!ku(r))throw TypeError("Stringified UUID is invalid");return r}async function $f(e,t,r){let n=!1;const i=new TransformStream({start(e){},transform(e,t){for(let r=0;r<e.byteLength;){const n=e.slice(r,r+2),i=new DataView(n).getUint16(0),o=new Uint8Array(e.slice(r+2,r+2+i));r=r+2+i,t.enqueue(o)}},flush(e){}});i.readable.pipeTo(new WritableStream({async write(i){const o=await fetch("https://cloudflare-dns.com/dns-query",{method:"POST",headers:{"content-type":"application/dns-message"},body:i}),s=await o.arrayBuffer(),a=s.byteLength,c=new Uint8Array([a>>8&255,255&a]);1===e.readyState&&(r(`doh success and dns message length is ${a}`),n?e.send(await new Blob([c,s]).arrayBuffer()):(e.send(await new Blob([t,c,s]).arrayBuffer()),n=!0))}})).catch(e=>{r("dns udp has error"+e)});const o=i.writable.getWriter();return{async write(e){await o.write(e)}}}async function eh(e){const t=new WebSocketPair,[r,n]=Object.values(t);n.accept(),n.binaryType="arraybuffer";let i="",o="";const s=(e,t)=>{console.log(`[${i}:${o}] ${e}`,t||"")},a=e.headers.get("sec-websocket-protocol")||"",c=Ff(n,a,s);let u={value:null},l=null;const d=new WritableStream({async write(e,t){if(null)return l(e);if(u.value){const t=u.value.writable.getWriter();return await t.write(e),void t.releaseLock()}const{hasError:r,message:a,portRemote:c=443,addressRemote:d="",rawClientData:f}=th(e);if(i=d,o=`${c}--${Math.random()} tcp`,r)throw new Error(a);await jf(u,d,c,f,n,null,s)},close(){Jf(u.value)},abort(e){s("readableWebSocketStream is aborted",JSON.stringify(e))}});return c.pipeTo(d).catch(e=>{s("readableWebSocketStream pipeTo error",e),Jf(u.value)}),new Response(null,{status:101,webSocket:r})}function th(e){if(e.byteLength<56)return{hasError:!0,message:"invalid data"};let t=56;const r=new Uint8Array(e.slice(t,57))[0],n=new Uint8Array(e.slice(57,58))[0];if(13!==r||10!==n)return{hasError:!0,message:"invalid header format (missing CR LF)"};const i=(new TextDecoder).decode(e.slice(0,t)),{TrPass:o}=globalThis.globalConfig;if(i!==rh(o))return{hasError:!0,message:"invalid password"};const s=e.slice(58);if(s.byteLength<6)return{hasError:!0,message:"invalid SOCKS5 request data"};const a=new DataView(s),c=void 0;if(1!==a.getUint8(0))return{hasError:!0,message:"unsupported command, only TCP (CONNECT) is allowed"};const u=a.getUint8(1);let l=0,d=2,f="";switch(u){case 1:l=4,f=new Uint8Array(s.slice(d,d+l)).join(".");break;case 3:l=new Uint8Array(s.slice(d,d+1))[0],d+=1,f=(new TextDecoder).decode(s.slice(d,d+l));break;case 4:{l=16;const e=new DataView(s.slice(d,d+l)),t=[];for(let r=0;r<8;r++)t.push(e.getUint16(2*r).toString(16));f=t.join(":");break}default:return{hasError:!0,message:`invalid addressType is ${u}`}}if(!f)return{hasError:!0,message:`address is empty, addressType is ${u}`};const h=d+l,p=s.slice(h,h+2),m=void 0;return{hasError:!1,addressRemote:f,portRemote:new DataView(p).getUint16(0),rawClientData:s.slice(h+4)}}function rh(e){const t=(e,t)=>e>>>t|e<<32-t,r=[3238371032,914150663,812702999,4144912697,4290775857,1750603025,1694076839,3204075428],n=[1116352408,1899447441,3049323471,3921009573,961987163,1508970993,2453635748,2870763221,3624381080,310598401,607225278,1426881987,1925078388,2162078206,2614888103,3248222580,3835390401,4022224774,264347078,604807628,770255983,1249150122,1555081692,1996064986,2554220882,2821834349,2952996808,3210313671,3336571891,3584528711,113926993,338241895,666307205,773529912,1294757372,1396182291,1695183700,1986661051,2177026350,2456956037,2730485921,2820302411,3259730800,3345764771,3516065817,3600352804,4094571909,275423344,430227734,506948616,659060556,883997877,958139571,1322822218,1537002063,1747873779,1955562222,2024104815,2227730452,2361852424,2428436474,2756734187,3204031479,3329325298],i=void 0,o=(e=>{const t=[];for(let r=0;r<e.length;r++){let n=e.charCodeAt(r);n<128?t.push(n):n<2048?t.push(192|n>>6,128|63&n):n<55296||n>=57344?t.push(224|n>>12,128|n>>6&63,128|63&n):(r++,n=65536+((1023&n)<<10|1023&e.charCodeAt(r)),t.push(240|n>>18,128|n>>12&63,128|n>>6&63,128|63&n))}return t})(e),s=8*o.length;for(o.push(128);o.length%64!=56;)o.push(0);const a=Math.floor(s/4294967296),c=4294967295&s;for(let e=3;e>=0;e--)o.push(a>>8*e&255);for(let e=3;e>=0;e--)o.push(c>>8*e&255);for(let e=0;e<o.length;e+=64){const i=new Array(64).fill(0);for(let t=0;t<16;t++)i[t]=o[e+4*t]<<24|o[e+4*t+1]<<16|o[e+4*t+2]<<8|o[e+4*t+3];for(let e=16;e<64;e++){const r=t(i[e-15],7)^t(i[e-15],18)^i[e-15]>>>3,n=t(i[e-2],17)^t(i[e-2],19)^i[e-2]>>>10;i[e]=i[e-16]+r+i[e-7]+n|0}let[s,a,c,u,l,d,f,h]=r;for(let e=0;e<64;e++){const r=void 0,o=void 0,p=h+(t(l,6)^t(l,11)^t(l,25))+(l&d^~l&f)+n[e]+i[e]|0,m=void 0,g=s&a^s&c^a&c,y=void 0;h=f,f=d,d=l,l=u+p|0,u=c,c=a,a=s,s=p+((t(s,2)^t(s,13)^t(s,22))+g|0)|0}r[0]=r[0]+s|0,r[1]=r[1]+a|0,r[2]=r[2]+c|0,r[3]=r[3]+u|0,r[4]=r[4]+l|0,r[5]=r[5]+d|0,r[6]=r[6]+f|0,r[7]=r[7]+h|0}return r.slice(0,7).map(e=>("00000000"+(e>>>0).toString(16)).slice(-8)).join("")}var nh=hu(pu(),1);async function ih(e){const{pathName:t}=globalThis.globalConfig,r=t.replace("/","");try{const{protocol:t,mode:n,panelIPs:i}=JSON.parse(atob(r));switch(globalThis.wsConfig={...globalThis.wsConfig,wsProtocol:t,proxyMode:n,panelIPs:i},t){case"vl":return await qf(e);case"tr":return await eh(e);default:return await mh(e)}}catch(e){return new Response("Failed to parse WebSocket path config",{status:400})}}async function oh(e,t){const{pathName:r}=globalThis.globalConfig;switch(r){case"/panel":return await vh(e,t);case"/panel/settings":return await ph(e,t);case"/panel/update-settings":return await fh(e,t);case"/panel/reset-settings":return await hh(e,t);case"/panel/reset-password":return await Td(e,t);case"/panel/my-ip":return await gh(e);case"/panel/update-warp":return await xh(e,t);case"/panel/get-warp-configs":return await yh(e,t);default:return await mh(e)}}async function sh(e,t){const r=void 0;if(!await Cd(e,t)){const{urlOrigin:e}=globalThis.httpConfig;return Response.redirect(`${e}/login`,302)}const{pathName:n}=globalThis.globalConfig;switch(n){case"/proxy-ip":return await ch();case"/proxy-ip/get":return await bh();default:return await mh(e)}}async function ah(e){const t=void 0,r=(await Ah("H4sIAAAAAAAACpVW3W7bNhR+FdaFmxjTDyXHP5UobdmWDQVWdGi6AbvKaPFY4kKRAsladoNcDthFX2HX266GvU263e1JBkqK4wxph8GwTB2ec3jOp/N9Mnn0+YvPXn339RmqbC1y4q5IUFlmIHNSAWU5qcFSVFRUG7DZN6++8JeDTdIasg2HtlHaokJJC9Jmo5YzW2UMNrwAv7vxuOSWU+GbggrIolFOLLcC8ptf3v3419ubP9C7n25+RX/+dvM7CfsdIri8RJWGdTaqrG1MEoZrJa0JSqVKAbThJihUHRbGxB+vac3FLnsmLeikLSv7yQnG6QzjdI5xusA4XWKcPsX4yeD5LX3DdU2t7L2nGKfvi2DcNILuMtPSZoQ0iMzYnQBTAdj8e9kX6sy8UHKomFFLE17TEkKzKT/a1sIjZlOibS2kycbxwrWUhGHbtkE7DZQuwxhj7JzH8QI5TD9VW+eIEUYR7r7jeJETDYVFPcLjeNFbUQW8rOyBQXexcbdecyHc3Tiezqfz+Toax4swJxa2FnVus85t55bzZRehpPUNfwOdCe9N7f6YlRLsMHdbcQvO4LL6VBaV0s5ec8YE7BMM4I/jxanmVLiGTknoYnLies9HOenAzROtlL3y/UIJpZPHgN0n9X03kaBvzctoWayXqe+vaHFZavVaststzKIoWrgtpe8idLmix0+feijCsYfik8hDOIgnd4lNRZlqE4xOmi2K3eXhkNnkeqXYznN8uerhTxz2afdo+mVNdcllgtNhgpK1gG36w2tj+XrnD3RJCnBDm1LBS+lzC7W5NR1AlnST7e2n1jNUGt+A5uu072xD9fEA1yS9g2MPxAFC3VwmmjLHyNL9grTHIARvDCBqUYzHaIbH3m3rrnPXeICXE4Q9q6k0DdUgrXObeB9ItcRjl65PNYu9OIq8aDb1Ajx7KNVhmdRaWlS1w2jNt8DSfrYcTgNC3SMIGNWXfq0Y/Oe40NnqZF18eFz+3xxMJ9dVdHX4BA5PnPQlD7nu7fe2SbqnWhIFSw11KsBat9/QgssyiZptesC9ZInxNX3/gdeBE6GrDWjLCyoGtHoWpsOYxv1Bay6cWDKtmqGaY6c1y4dbDU4mk2sS9uQkYf9icPDnhPEN4iwDrZXupppyCTonVZR3mtfFZLcc4FJwCf5KqOIyfbjOnje+7htutoPcTee3Ojed7xVydKCPo3vq6IyDv1vqbRbjXq8e9zKI7kRwhtEumy8PhG+O70me07s+uFO6ezLXV31P4Dp1+5e0oYfedQ4jxjc5qeL875/fonNVg624LFHrKNFqJctHJKzinDQ5WeUXF2cvX754efH87Pz89MuziwsSrnISNjkJuzT91RSaNzYXqqDi3CpNSwhKsM8s1MdHji7PFYOjCcqyDB2BpCsB7Ag9eYKYKl47wgUdsQpBjfmKGxtQxvrAjmdHk5SEwxkk7Icg7P4+/AOIT4ajTggAAA==",!0)).replace("__ERROR_MESSAGE__",xu(e));return new Response(r,{status:200,headers:{"Content-Type":"text/html; charset=utf-8"}})}async function ch(){const e=await Ah("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",!1);return new Response(e,{headers:{"Content-Type":"text/html; charset=utf-8"}})}async function uh(e,t){const{pathName:r}=globalThis.globalConfig;return"/login"===r?await kh(e,t):"/login/authenticate"===r?await Ad(e,t):await mh(e)}function lh(){return Su(!0,200,"Successfully logged out!",null,{"Set-Cookie":"jwtToken=; Secure; SameSite=None; Expires=Thu, 01 Jan 1970 00:00:00 GMT","Content-Type":"text/plain"})}async function dh(e,t){await Qu(e,t);const{globalConfig:{pathName:r},httpConfig:{client:n,subPath:i}}=globalThis;switch(r){case`/sub/normal/${i}`:switch(n){case"xray":return await Uf(!1);case"sing-box":return await lf(!1);case"clash":return await Kd();default:break}case`/sub/raw/${i}`:switch(n){case"xray":case"sing-box":return await Ph();default:break}case`/sub/fragment/${i}`:switch(n){case"xray":return await Uf(!0);case"sing-box":return await lf(!0);default:break}case`/sub/warp/${i}`:switch(n){case"xray":return await Lf(e,t,!1,!1);case"sing-box":return await df(e,t);case"clash":return await Jd(e,t,!1);default:break}case`/sub/warp-pro/${i}`:switch(n){case"xray":return await Lf(e,t,!0,!1);case"xray-knocker":return await Lf(e,t,!0,!0);case"clash":return await Jd(e,t,!0);default:break}default:return await mh(e)}}async function fh(e,t){if("PUT"!==e.method)return Su(!1,405,"Method not allowed.");const r=void 0;if(!await Cd(e,t))return Su(!1,401,"Unauthorized or expired session.");try{const r=void 0;return Su(!0,200,"",await Vu(e,t))}catch(e){return console.log(e),Su(!1,500,`Error occurred while updating settings: ${xu(e)}`)}}async function hh(e,t){if("POST"!==e.method)return Su(!1,405,"Method not allowed!");const r=void 0;if(!await Cd(e,t))return Su(!1,401,"Unauthorized or expired session.");try{const{settings:e}=globalThis;return await t.kv.put("proxySettings",JSON.stringify(e)),Su(!0,200,"",e)}catch(e){return console.log(e),Su(!1,500,`Error occurred while resetting settings: ${xu(e)}`)}}async function ph(e,t){const r=Boolean(await t.kv.get("pwd")),n=void 0;if(!await Cd(e,t))return Su(!1,401,"Unauthorized or expired session.",{isPassSet:r});try{const n=await Ju(e,t),{subPath:i}=globalThis.httpConfig,o=void 0;return Su(!0,200,void 0,{proxySettings:n.settings,isPassSet:r,subPath:i})}catch(e){return console.log(e),Su(!1,500,`Error occurred while fetching settings: ${xu(e)}`)}}async function mh(e){const{fallbackDomain:t}=globalThis.globalConfig,{url:r,method:n,headers:i,body:o}=e,s=new URL(r);s.hostname=t,s.protocol="https:";const a=new Request(s.toString(),{method:n,headers:i,body:o,redirect:"manual"});return await fetch(a)}async function gh(e){const t=await e.text();try{const e=await fetch(`http://ip-api.com/json/${t}?nocache=${Date.now()}`),r=void 0;return Su(!0,200,"",await e.json())}catch(e){return console.error("Error fetching IP address:",e),Su(!1,500,`Error fetching IP address: ${xu(e)}`)}}async function yh(e,t){const{httpConfig:{client:r},dict:{_project_:n}}=globalThis,i="amnezia"===r,o=void 0;if(!await Cd(e,t))return new Response("Unauthorized or expired session.",{status:401});try{const{warpAccounts:r,settings:o}=await Ju(e,t),{warpIPv6:s,publicKey:a,privateKey:c}=r[0],{warpEndpoints:u,warpRemoteDNS:l,amneziaNoiseCount:d,amneziaNoiseSizeMin:f,amneziaNoiseSizeMax:h}=o,p=new nh.default,m=e=>e.split("\n").map(e=>e.trim()).join("\n");u?.forEach((e,t)=>{const r=`[Interface]\n                PrivateKey = ${c}\n                Address = 172.16.0.2/32, ${s}\n                DNS = ${l}\n                MTU = 1280\n                ${i?`Jc = ${d}\n                    Jmin = ${f}\n                    Jmax = ${h}\n                    S1 = 0\n                    S2 = 0\n                    H1 = 0\n                    H2 = 0\n                    H3 = 0\n                    H4 = 0`:""}\n                [Peer]\n                PublicKey = ${a}\n                AllowedIPs = 0.0.0.0/0, ::/0\n                Endpoint = ${e}\n                PersistentKeepalive = 25`;p.file(`${n}-Warp-${t+1}.conf`,m(r))});const g=await p.generateAsync({type:"blob"}),y=await g.arrayBuffer();return new Response(y,{headers:{"Content-Type":"application/zip","Content-Disposition":`attachment; filename="${n}-Warp-${i?"Pro-":""}configs.zip"`}})}catch(e){return Su(!1,500,`Error generating ZIP file: ${xu(e)}`)}}async function bh(){const e=await _u(globalThis.dict._public_proxy_ip_,!0),t=void 0;return Su(!0,200,void 0,await Th(e.ipv4))}async function wh(){const e="AAABAAEAEBAAAAEAIAAoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAADtOnz/7Tp8/+06fP/tOnz/7Tp8/+06fP/tOnz/7Tp8/+06fP/tOnz/7Tp8/+06fP/tOnz/7Tp8/+06fP/tOnz/7Tp8/+06fP/tOnz/7Tp8/+06fP/tOnz/7Tp8/+06fP/tOnz/7Tp8/+06fP/tOnz/7Tp8/+06fP/tOnz/7Tp8/+06fP/tOnz/7Tp8/+06fP/tOnz/////////////////////////////////7Tp8/+06fP/tOnz/7Tp8/+06fP/tOnz/7Tp8/+06fP/tOnz/7Tp8/////////////////////////////////+06fP/tOnz/7Tp8/+06fP/tOnz/7Tp8/+06fP/tOnz/7Tp8////////////7Tp8/+06fP/tOnz/7Tp8////////////7Tp8/+06fP/tOnz/7Tp8/+06fP/tOnz/7Tp8/+06fP///////////+06fP/tOnz/7Tp8/+06fP///////////+06fP/tOnz/7Tp8/+06fP/tOnz/7Tp8/+06fP///////////+06fP/tOnz/7Tp8/+06fP/tOnz/7Tp8////////////7Tp8/+06fP/tOnz/7Tp8/+06fP/tOnz////////////tOnz/7Tp8/+06fP/tOnz/7Tp8/+06fP///////////+06fP/tOnz/7Tp8/+06fP/tOnz////////////tOnz/7Tp8/+06fP/tOnz/7Tp8/+06fP/tOnz/7Tp8////////////7Tp8/+06fP/tOnz/7Tp8////////////7Tp8/+06fP/tOnz/7Tp8/+06fP/tOnz/7Tp8/+06fP///////////+06fP/tOnz/7Tp8/+06fP/////////////////////////////////////////////////////////////////tOnz/7Tp8/+06fP/tOnz/////////////////////////////////////////////////////////////////7Tp8/+06fP/tOnz/7Tp8////////////7Tp8/+06fP/tOnz/7Tp8/+06fP/tOnz/7Tp8/+06fP///////////+06fP/tOnz/7Tp8/+06fP///////////+06fP/tOnz/7Tp8/+06fP/tOnz/7Tp8/+06fP/tOnz////////////tOnz/7Tp8/+06fP/tOnz/7Tp8/+06fP/tOnz/7Tp8/+06fP/tOnz/7Tp8/+06fP/tOnz/7Tp8/+06fP/tOnz/7Tp8/+06fP/tOnz/7Tp8/+06fP/tOnz/7Tp8/+06fP/tOnz/7Tp8/+06fP/tOnz/7Tp8/+06fP/tOnz/7Tp8/+06fP/tOnz/",t=Uint8Array.from(atob(e),e=>e.charCodeAt(0));return new Response(t,{headers:{"Content-Type":"image/x-icon","Cache-Control":"public, max-age=86400"}})}async function vh(e,t){const r=void 0;if(await t.kv.get("pwd")){const r=void 0;if(!await Cd(e,t)){const{urlOrigin:e}=globalThis.httpConfig;return Response.redirect(`${e}/login`,302)}}const n=await Ah("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",!1);return new Response(n,{headers:{"Content-Type":"text/html; charset=utf-8"}})}async function kh(e,t){const r=void 0;if(await Cd(e,t)){const{urlOrigin:e}=globalThis.httpConfig;return Response.redirect(`${e}/panel`,302)}const n=await Ah("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",!1);return new Response(n,{headers:{"Content-Type":"text/html; charset=utf-8"}})}async function Sh(){const e=await Ah("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",!1);return new Response(e,{headers:{"Content-Type":"text/html; charset=utf-8"}})}async function xh(e,t){if("POST"!==e.method)return Su(!1,405,"Method not allowed.");const r=void 0;if(!await Cd(e,t))return Su(!1,401,"Unauthorized.");try{return await gu(t),Su(!0,200,"Warp configs updated successfully!")}catch(e){return console.log(e),Su(!1,500,`An error occurred while updating Warp configs: ${xu(e)}`)}}async function Ah(e,t){const r=Uint8Array.from(atob(e),e=>e.charCodeAt(0)),n=new Blob([r]).stream().pipeThrough(new DecompressionStream("gzip"));if(t){const e=await new Response(n).arrayBuffer(),t=void 0;return(new TextDecoder).decode(e)}return n}async function _h(e){const t=new URL(e.url),{subPath:r}=globalThis.httpConfig,{dohURL:n}=globalThis.globalConfig;if(t.pathname!==`/dns-query/${r}`)return mh(e);const i=new URL(n);t.searchParams.forEach((e,t)=>{i.searchParams.set(t,e)});const o=new Request(i.toString(),e);return fetch(o)}function Ch(e,t){const r=[];for(let n=0;n<e.length;n+=t)r.push(e.slice(n,n+t));return r}async function Th(e){const t=Ch(e,100),r=[];for(const e of t){const t=await fetch("http://ip-api.com/batch?fields=query,city,country,countryCode,isp,status",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(e)});if(!t.ok)throw new Error(`ip-api request failed: ${t.status}`);const n=await t.json();for(const e of n)"success"===e.status&&r.push({ip:e.query,city:e.city,country:e.country,countryCode:e.countryCode,isp:e.isp})}return r}async function Ph(){const{globalConfig:{userID:e,TrPass:t},httpConfig:{defaultHttpsPorts:r,client:n,hostName:i},dict:{_VL_:o,_TR_:s,_project_:a},settings:{fingerprint:c,ports:u,customCdnAddrs:l,customCdnHost:d,customCdnSni:f,VLConfigs:h,TRConfigs:p,outProxy:m,remoteDNS:g,customConfigs:y,customSubs:b,upstreamParams:{upstreamServer:w,upstreamPort:v}}}=globalThis,k=(i,s,a,u,l,d)=>{const f=r.includes(a)||s===w,h=f?"tls":"none",p=new URL(`${i}://config`);i===o?(p.username=e,p.searchParams.append("encryption","none")):p.username=t;const m=zu(i);return p.hostname=s,p.port=a.toString(),p.searchParams.append("host",u),p.searchParams.append("type","ws"),p.searchParams.append("security",h),p.hash=d,"sing-box"===n?(p.searchParams.append("eh","Sec-WebSocket-Protocol"),p.searchParams.append("ed","2560"),p.searchParams.append("path",m)):p.searchParams.append("path",`${m}?ed=2560`),f&&(p.searchParams.append("sni",l),p.searchParams.append("fp",c),p.searchParams.append("alpn","http/1.1")),p.href};let S="",x="",A="",_=1;const C=await Pu(!1);w&&v&&(u.unshift(v),C.unshift(w));for(const e of u)for(const t of C){const r=l.includes(t),n=r?f:Iu(i),a=r?d:i;if(e===v==(t===w)){if(h){const r=Eu(_,e,t,o,!1,!1),i=void 0;S+=`${k(atob("dmxlc3M="),t,e,a,n,r)}\n`}if(p){const r=Eu(_,e,t,s,!1,!1),i=void 0;x+=`${k(atob("dHJvamFu"),t,e,a,n,r)}\n`}_++}}if(m){let e=`#${encodeURIComponent("Chain proxy 🔗")}`;if(m.startsWith("socks")||m.startsWith("http")){const t=/^(?:socks|http):\/\/([^@]+)@/,r=m.match(t),n=!!r&&r[1];A=n?m.replace(n,btoa(n))+e:m+e}else A=m.split("#")[0]+e}const T=void 0,P=wu(S+x+A+(y.join("\n")+await Eh(b)));return new Response(P,{status:200,headers:{"Content-Type":"text/plain;charset=utf-8","Cache-Control":"no-store, no-cache, must-revalidate, proxy-revalidate","CDN-Cache-Control":"no-store","Profile-Title":`base64:${wu(`${a} Raw`)}`,DNS:g}})}async function Eh(e){const t=void 0;return(await Promise.all(e.map(async e=>{try{const t=await fetch(e);if(!t.ok)return"";const r=(await t.text()).trim();if(!r)return"";if(Ih(r))try{return vu(r)}catch{return r}return r}catch{return""}}))).filter(Boolean).join("\n")}function Ih(e){return!(!e||e.length%4!=0)&&/^[A-Za-z0-9+/=\r\n]+$/.test(e)}var Rh={async fetch(e,t){try{const r=e.headers.get("Upgrade");if(Yu(e,t),"websocket"===r)return Xu(t),await ih(e);{$u(e,t);const{pathName:r}=globalThis.globalConfig,n=void 0;switch(r.split("/")[1]){case"panel":return await oh(e,t);case"sub":return await dh(e,t);case"login":return await uh(e,t);case"logout":return lh();case"secrets":return await Sh();case"favicon.ico":return await wh();case"dns-query":return await _h(e);case"proxy-ip":return await sh(e,t);default:return await mh(e)}}}catch(e){return await ah(e)}}};export{Rh as default};
+// mrvpn-panel.js - Complete Panel with All Features
+import { connect } from "cloudflare:sockets";
+
+// ============================================
+// BACKEND CONSTANTS & VARIABLES
+// ============================================
+var GLOBAL_TRAFFIC_CACHE = /* @__PURE__ */ new Map();
+var ACTIVE_CONNECTIONS_COUNT = /* @__PURE__ */ new Map();
+var GLOBAL_LAST_ACTIVE_WRITE = /* @__PURE__ */ new Map();
+var DNS_CACHE = /* @__PURE__ */ new Map();
+var DNS_CACHE_TTL = 5 * 60 * 1e3;
+var DOH_RESOLVER = "https://cloudflare-dns.com/dns-query";
+var UPSTREAM_BUNDLE_TARGET_BYTES = 16 * 1024;
+var UPSTREAM_QUEUE_MAX_BYTES = 16 * 1024 * 1024;
+var UPSTREAM_QUEUE_MAX_ITEMS = 4096;
+var DOWNSTREAM_GRAIN_BYTES = 32 * 1024;
+var DOWNSTREAM_GRAIN_TAIL_THRESHOLD = 512;
+var DOWNSTREAM_GRAIN_SILENT_MS = 1;
+var TCP_CONCURRENCY = 2;
+var PRELOAD_RACE_DIAL = true;
+var xrayStatus = { running: true, uptime: 0, startTime: Date.now() };
+var SYSTEM_STATS = {
+  cpu: { cores: 48, load: [12.5, 11.4, 11.6] },
+  ram: { used: 159.30, total: 322.69 },
+  swap: { used: 1.39, total: 223.56 },
+  storage: { used: 818.93, total: 2867.20 }
+};
+var ADMINS = [];
+var PANEL_VERSION = "3.0.0";
+var THEME = "dark";
+
+// ============================================
+// MAIN APPLICATION
+// ============================================
+var mrvpn_panel_default = {
+  async fetch(request, env, ctx) {
+    await DbService.ensureSchema(env.AM_DB);
+    await loadAdmins(env);
+    const url = new URL(request.url);
+    
+    if (Router.isWebSocketUpgrade(request) && url.pathname === "/") {
+      return await Router.handleWebSocket(request, env, ctx);
+    }
+    
+    if (Router.isSubscriptionPath(url.pathname)) {
+      return await Router.handleSubscription(url, env);
+    }
+    
+    if (url.pathname.startsWith("/api/") || url.pathname === "/locations") {
+      return await Router.handleApi(request, url, env, ctx);
+    }
+    
+    if (url.pathname === "/panel" || url.pathname === "/login") {
+      return await Router.handlePanel(request, env);
+    }
+    
+    if (url.pathname.startsWith("/status/")) {
+      return await Router.handleUserStatus(url, env);
+    }
+    
+    return new Response(HTML_TEMPLATES.nginx, {
+      headers: { "Content-Type": "text/html; charset=utf-8" }
+    });
+  }
+};
+
+// ============================================
+// ADMIN MANAGEMENT
+// ============================================
+async function loadAdmins(env) {
+  try {
+    const result = await env.AM_DB.prepare("SELECT * FROM admins").all();
+    ADMINS = result.results || [];
+  } catch (e) {
+    await env.AM_DB.prepare(`
+      CREATE TABLE IF NOT EXISTS admins (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT UNIQUE,
+        password_hash TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `).run();
+    ADMINS = [];
+  }
+}
+
+// ============================================
+// ROUTER
+// ============================================
+var Router = {
+  isWebSocketUpgrade(request) {
+    const upgradeHeader = (request.headers.get("Upgrade") || "").toLowerCase();
+    return upgradeHeader === "websocket";
+  },
+  isSubscriptionPath(pathname) {
+    return pathname.startsWith("/sub/") || pathname.startsWith("/feed/");
+  },
+  async handleWebSocket(request, env, ctx) {
+    try {
+      let proxyIP = "proxyip.cmliussss.net";
+      try {
+        const proxyRow = await env.AM_DB.prepare("SELECT value FROM settings WHERE key = 'proxy_ip'").first();
+        if (proxyRow && proxyRow.value) {
+          proxyIP = proxyRow.value;
+        }
+      } catch (e) {}
+      const mockStoredData = { proxy_ip: proxyIP };
+      return handleVLESS(env, mockStoredData, ctx);
+    } catch (e) {
+      return new Response("Internal Server Error", { status: 500 });
+    }
+  },
+  async handleSubscription(url, env) {
+    const isSubPath = url.pathname.startsWith("/sub/");
+    const offset = isSubPath ? 5 : 6;
+    let subUser = decodeURIComponent(url.pathname.slice(offset));
+    const host = url.hostname;
+    const isJson = !isSubPath && subUser.startsWith("json/");
+    if (isJson) {
+      subUser = subUser.slice(5);
+    }
+    try {
+      const user = await env.AM_DB.prepare("SELECT * FROM users WHERE username = ? OR uuid = ?").bind(subUser, subUser).first();
+      if (!user || user.connection_type !== atob("dmxlc3M=")) {
+        return new Response("Not Found", { status: 404 });
+      }
+      if (isJson) {
+        return await SubscriptionService.generateJson(user, host, env);
+      } else {
+        return await SubscriptionService.generateText(user, host);
+      }
+    } catch (err) {
+      return new Response("Error building config: " + err.message, { status: 500 });
+    }
+  },
+  async handlePanel(request, env) {
+    const hasPassword = await DbService.getPanelPassword(env.AM_DB);
+    if (!hasPassword) {
+      return new Response(HTML_TEMPLATES.setup, {
+        headers: { "Content-Type": "text/html; charset=utf-8" }
+      });
+    }
+    const authorized = await DbService.verifyApiAuth(request, env);
+    if (!authorized) {
+      return new Response(HTML_TEMPLATES.login, {
+        headers: { "Content-Type": "text/html; charset=utf-8" }
+      });
+    }
+    return new Response(HTML_TEMPLATES.panel, {
+      headers: { "Content-Type": "text/html; charset=utf-8" }
+    });
+  },
+  async handleUserStatus(url, env) {
+    const username = decodeURIComponent(url.pathname.slice(8));
+    if (!username) {
+      return new Response("Username is required", { status: 400 });
+    }
+    try {
+      const user = await env.AM_DB.prepare("SELECT * FROM users WHERE username = ? OR uuid = ?").bind(username, username).first();
+      if (!user) {
+        return new Response("User not found", { status: 404 });
+      }
+      const userJson = JSON.stringify({
+        username: user.username,
+        uuid: user.uuid,
+        limit_gb: user.limit_gb,
+        expiry_days: user.expiry_days,
+        used_gb: user.used_gb,
+        is_active: user.is_active,
+        created_at: user.created_at,
+        tls: user.tls,
+        port: user.port,
+        ips: user.ips,
+        fingerprint: user.fingerprint || "chrome",
+        config_name: user.config_name || user.username
+      });
+      const html = HTML_TEMPLATES.status.replace(
+        "/* {{USER_DATA_PLACEHOLDER}} */",
+        "window.statusUser = " + userJson + ";"
+      );
+      return new Response(html, {
+        headers: { "Content-Type": "text/html; charset=utf-8" }
+      });
+    } catch (err) {
+      return new Response("Error: " + err.message, { status: 500 });
+    }
+  },
+  async handleApi(request, url, env, ctx) {
+    const hasPassword = await DbService.getPanelPassword(env.AM_DB);
+    const authorized = await DbService.verifyApiAuth(request, env);
+    
+    // ============================================
+    // SETUP PASSWORD - First time setup
+    // ============================================
+    if (url.pathname === "/api/setup-password" && request.method === "POST") {
+      if (hasPassword) {
+        return new Response(JSON.stringify({ error: "Password already set" }), {
+          status: 400,
+          headers: { "Content-Type": "application/json; charset=utf-8" }
+        });
+      }
+      const { password } = await request.json();
+      if (!password || password.length < 4) {
+        return new Response(JSON.stringify({ error: "Password must be at least 4 characters" }), {
+          status: 400,
+          headers: { "Content-Type": "application/json; charset=utf-8" }
+        });
+      }
+      const hashed = await DbService.sha256(password);
+      await DbService.setPanelPassword(env.AM_DB, hashed);
+      return new Response(JSON.stringify({ success: true }), {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          "Set-Cookie": "panel_session=" + hashed + "; Path=/; HttpOnly; Secure; SameSite=Lax"
+        }
+      });
+    }
+    
+    // ============================================
+    // LOGIN - Admin login with username + password
+    // ============================================
+    if (url.pathname === "/api/login" && request.method === "POST") {
+      const { username, password } = await request.json();
+      
+      // First check: Is this a panel admin with username?
+      if (username && password) {
+        await loadAdmins(env);
+        const admin = ADMINS.find(a => a.username === username);
+        if (admin) {
+          const hashed = await DbService.sha256(password);
+          if (admin.password_hash === hashed) {
+            return new Response(JSON.stringify({ success: true, role: "admin", username: username }), {
+              headers: {
+                "Content-Type": "application/json; charset=utf-8",
+                "Set-Cookie": "panel_session=" + admin.id + "; Path=/; HttpOnly; Secure; SameSite=Lax"
+              }
+            });
+          }
+        }
+      }
+      
+      // Second check: Is this the panel password (backward compatibility)
+      if (password) {
+        const hashedInput = await DbService.sha256(password);
+        const storedHash = await DbService.getPanelPassword(env.AM_DB);
+        if (storedHash === hashedInput) {
+          return new Response(JSON.stringify({ success: true, role: "admin" }), {
+            headers: {
+              "Content-Type": "application/json; charset=utf-8",
+              "Set-Cookie": "panel_session=" + storedHash + "; Path=/; HttpOnly; Secure; SameSite=Lax"
+            }
+          });
+        }
+      }
+      
+      return new Response(JSON.stringify({ error: "Invalid credentials" }), {
+        status: 401,
+        headers: { "Content-Type": "application/json; charset=utf-8" }
+      });
+    }
+    
+    // ============================================
+    // ADMIN CREATE - Create first admin
+    // ============================================
+    if (url.pathname === "/api/admin/create" && request.method === "POST") {
+      // Only allow if no admin exists or if panel password is set
+      await loadAdmins(env);
+      if (ADMINS.length > 0 && !authorized) {
+        return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+      }
+      const { username, password } = await request.json();
+      if (!username || !password || password.length < 4) {
+        return new Response(JSON.stringify({ error: "Invalid username or password" }), { status: 400 });
+      }
+      const hashed = await DbService.sha256(password);
+      try {
+        await env.AM_DB.prepare("INSERT INTO admins (username, password_hash) VALUES (?, ?)").bind(username, hashed).run();
+        await loadAdmins(env);
+        return new Response(JSON.stringify({ success: true }), {
+          headers: { "Content-Type": "application/json; charset=utf-8" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: "Username already exists" }), { status: 400 });
+      }
+    }
+    
+    // ============================================
+    // LOGOUT
+    // ============================================
+    if (url.pathname === "/api/logout" && request.method === "POST") {
+      return new Response(JSON.stringify({ success: true }), {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          "Set-Cookie": "panel_session=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly; Secure; SameSite=Lax"
+        }
+      });
+    }
+    
+    // ============================================
+    // AUTH VERIFICATION - Check if user is logged in
+    // ============================================
+    if (url.pathname === "/api/auth/verify" && request.method === "GET") {
+      const cookies = request.headers.get("Cookie") || "";
+      const sessionCookie = cookies.split(";").find((c) => c.trim().startsWith("panel_session="));
+      if (!sessionCookie) {
+        return new Response(JSON.stringify({ authenticated: false }), {
+          headers: { "Content-Type": "application/json" }
+        });
+      }
+      const sessionToken = sessionCookie.split("=")[1].trim();
+      
+      // Check if it's an admin ID
+      await loadAdmins(env);
+      const admin = ADMINS.find(a => String(a.id) === sessionToken);
+      if (admin) {
+        return new Response(JSON.stringify({ authenticated: true, role: "admin", username: admin.username }), {
+          headers: { "Content-Type": "application/json" }
+        });
+      }
+      
+      // Check if it's the panel password
+      const storedHash = await DbService.getPanelPassword(env.AM_DB);
+      if (storedHash && sessionToken === storedHash) {
+        return new Response(JSON.stringify({ authenticated: true, role: "admin" }), {
+          headers: { "Content-Type": "application/json" }
+        });
+      }
+      
+      return new Response(JSON.stringify({ authenticated: false }), {
+        headers: { "Content-Type": "application/json" }
+      });
+    }
+    
+    // ============================================
+    // CHANGE PASSWORD - Panel password
+    // ============================================
+    if (url.pathname === "/api/change-password" && request.method === "POST") {
+      if (!authorized) {
+        return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+      }
+      const { current_password, new_password } = await request.json();
+      if (!current_password || !new_password) {
+        return new Response(JSON.stringify({ error: "Current and new password required" }), {
+          status: 400,
+          headers: { "Content-Type": "application/json; charset=utf-8" }
+        });
+      }
+      const currentHash = await DbService.sha256(current_password);
+      const storedHash = await DbService.getPanelPassword(env.AM_DB);
+      if (storedHash && storedHash !== currentHash) {
+        return new Response(JSON.stringify({ error: "Current password is incorrect" }), {
+          status: 401,
+          headers: { "Content-Type": "application/json; charset=utf-8" }
+        });
+      }
+      if (new_password.length < 4) {
+        return new Response(JSON.stringify({ error: "New password must be at least 4 characters" }), {
+          status: 400,
+          headers: { "Content-Type": "application/json; charset=utf-8" }
+        });
+      }
+      const newHash = await DbService.sha256(new_password);
+      await DbService.setPanelPassword(env.AM_DB, newHash);
+      return new Response(JSON.stringify({ success: true }), {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          "Set-Cookie": "panel_session=" + newHash + "; Path=/; HttpOnly; Secure; SameSite=Lax"
+        }
+      });
+    }
+    
+    // ============================================
+    // CHANGE ADMIN PASSWORD - Admin user password
+    // ============================================
+    if (url.pathname === "/api/admin/change-password" && request.method === "POST") {
+      if (!authorized) {
+        return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+      }
+      const { username, current_password, new_password } = await request.json();
+      if (!username || !current_password || !new_password) {
+        return new Response(JSON.stringify({ error: "Username, current and new password required" }), {
+          status: 400,
+          headers: { "Content-Type": "application/json; charset=utf-8" }
+        });
+      }
+      await loadAdmins(env);
+      const admin = ADMINS.find(a => a.username === username);
+      if (!admin) {
+        return new Response(JSON.stringify({ error: "Admin not found" }), { status: 404 });
+      }
+      const currentHash = await DbService.sha256(current_password);
+      if (admin.password_hash !== currentHash) {
+        return new Response(JSON.stringify({ error: "Current password is incorrect" }), {
+          status: 401,
+          headers: { "Content-Type": "application/json; charset=utf-8" }
+        });
+      }
+      if (new_password.length < 4) {
+        return new Response(JSON.stringify({ error: "New password must be at least 4 characters" }), {
+          status: 400,
+          headers: { "Content-Type": "application/json; charset=utf-8" }
+        });
+      }
+      const newHash = await DbService.sha256(new_password);
+      await env.AM_DB.prepare("UPDATE admins SET password_hash = ? WHERE username = ?").bind(newHash, username).run();
+      return new Response(JSON.stringify({ success: true }), {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8"
+        }
+      });
+    }
+    
+    // ============================================
+    // XRAY CONTROL
+    // ============================================
+    if (url.pathname === "/api/xray" && request.method === "POST") {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+      const { action } = await request.json();
+      if (action === "stop") {
+        xrayStatus.running = false;
+        return new Response(JSON.stringify({ success: true, status: "stopped" }));
+      } else if (action === "start") {
+        xrayStatus.running = true;
+        xrayStatus.startTime = Date.now();
+        return new Response(JSON.stringify({ success: true, status: "started" }));
+      } else if (action === "restart") {
+        xrayStatus.running = true;
+        xrayStatus.startTime = Date.now();
+        return new Response(JSON.stringify({ success: true, status: "restarted" }));
+      }
+      return new Response(JSON.stringify({ error: "Invalid action" }), { status: 400 });
+    }
+    
+    if (url.pathname === "/api/xray/status") {
+      const uptime = xrayStatus.running ? Math.floor((Date.now() - xrayStatus.startTime) / 1000) : 0;
+      return new Response(JSON.stringify({
+        running: xrayStatus.running,
+        uptime: uptime,
+        version: "v26.4.25",
+        memory: "50.98 MB",
+        threads: 14
+      }));
+    }
+    
+    // ============================================
+    // LOCATIONS
+    // ============================================
+    if (url.pathname === "/locations") {
+      try {
+        const response = await fetch("https://speed.cloudflare.com/locations", {
+          headers: { "Referer": "https://speed.cloudflare.com/" }
+        });
+        const data = await response.json();
+        return new Response(JSON.stringify(data), {
+          headers: { "Content-Type": "application/json; charset=utf-8", "Access-Control-Allow-Origin": "*" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: { "Content-Type": "application/json" } });
+      }
+    }
+    
+    // ============================================
+    // SYSTEM STATS
+    // ============================================
+    if (url.pathname === "/api/system/stats") {
+      const now = Date.now();
+      const uptime = xrayStatus.running ? Math.floor((now - xrayStatus.startTime) / 1000) : 0;
+      return new Response(JSON.stringify({
+        cpu: SYSTEM_STATS.cpu,
+        ram: SYSTEM_STATS.ram,
+        swap: SYSTEM_STATS.swap,
+        storage: SYSTEM_STATS.storage,
+        uptime: "26d 3h",
+        xray_uptime: uptime,
+        version: PANEL_VERSION,
+        theme: THEME
+      }), {
+        headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+      });
+    }
+    
+    // ============================================
+    // THEME SETTINGS
+    // ============================================
+    if (url.pathname === "/api/theme" && request.method === "POST") {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+      const { theme } = await request.json();
+      if (theme === "dark" || theme === "light") {
+        THEME = theme;
+        await env.AM_DB.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES ('theme', ?)").bind(theme).run();
+        return new Response(JSON.stringify({ success: true, theme: THEME }), {
+          headers: { "Content-Type": "application/json" }
+        });
+      }
+      return new Response(JSON.stringify({ error: "Invalid theme" }), { status: 400 });
+    }
+    
+    if (url.pathname === "/api/theme" && request.method === "GET") {
+      try {
+        const row = await env.AM_DB.prepare("SELECT value FROM settings WHERE key = 'theme'").first();
+        if (row && row.value) {
+          THEME = row.value;
+        }
+      } catch (e) {}
+      return new Response(JSON.stringify({ theme: THEME }), {
+        headers: { "Content-Type": "application/json" }
+      });
+    }
+    
+    // ============================================
+    // PROXY IP SETTINGS
+    // ============================================
+    if (url.pathname === "/api/proxy-ip") {
+      if (request.method === "POST") {
+        if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+        const { proxy_ip, iata, frag_len, frag_int } = await request.json();
+        if (proxy_ip) await env.AM_DB.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES ('proxy_ip', ?)").bind(proxy_ip).run();
+        if (iata !== void 0) await env.AM_DB.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES ('proxy_location_iata', ?)").bind(iata).run();
+        if (frag_len !== void 0) await env.AM_DB.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES ('frag_len', ?)").bind(frag_len).run();
+        if (frag_int !== void 0) await env.AM_DB.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES ('frag_int', ?)").bind(frag_int).run();
+        return new Response(JSON.stringify({ success: true }), { headers: { "Content-Type": "application/json" } });
+      }
+      if (request.method === "GET") {
+        const rowIp = await env.AM_DB.prepare("SELECT value FROM settings WHERE key = 'proxy_ip'").first();
+        const rowIata = await env.AM_DB.prepare("SELECT value FROM settings WHERE key = 'proxy_location_iata'").first();
+        const rowLen = await env.AM_DB.prepare("SELECT value FROM settings WHERE key = 'frag_len'").first();
+        const rowInt = await env.AM_DB.prepare("SELECT value FROM settings WHERE key = 'frag_int'").first();
+        return new Response(JSON.stringify({
+          proxy_ip: rowIp ? rowIp.value : "proxyip.cmliussss.net",
+          iata: rowIata ? rowIata.value : "",
+          frag_len: rowLen ? rowLen.value : "20-30",
+          frag_int: rowInt ? rowInt.value : "1-2"
+        }), { headers: { "Content-Type": "application/json" } });
+      }
+    }
+    
+    // ============================================
+    // ADMINS - CRUD (Requires authentication)
+    // ============================================
+    if (url.pathname === "/api/admins") {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+      await loadAdmins(env);
+      if (request.method === "GET") {
+        return new Response(JSON.stringify({ admins: ADMINS.map(a => ({ id: a.id, username: a.username, created_at: a.created_at })) }));
+      }
+      if (request.method === "POST") {
+        const { username, password } = await request.json();
+        if (!username || !password || password.length < 4) {
+          return new Response(JSON.stringify({ error: "Invalid username or password" }), { status: 400 });
+        }
+        const hashed = await DbService.sha256(password);
+        try {
+          await env.AM_DB.prepare("INSERT INTO admins (username, password_hash) VALUES (?, ?)").bind(username, hashed).run();
+          await loadAdmins(env);
+          return new Response(JSON.stringify({ success: true }));
+        } catch (e) {
+          return new Response(JSON.stringify({ error: "Username already exists" }), { status: 400 });
+        }
+      }
+      if (request.method === "DELETE") {
+        const { id } = await request.json();
+        await env.AM_DB.prepare("DELETE FROM admins WHERE id = ?").bind(id).run();
+        await loadAdmins(env);
+        return new Response(JSON.stringify({ success: true }));
+      }
+    }
+    
+    // ============================================
+    // USERS - CRUD (Requires authentication)
+    // ============================================
+    if (url.pathname.startsWith("/api/users")) {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+      const pathParts = url.pathname.split("/");
+      const isUserAction = pathParts.length > 3;
+      
+      if (isUserAction) {
+        const username = decodeURIComponent(pathParts.pop());
+        
+        if (request.method === "PUT") {
+          const body = await request.json();
+          if (body.toggle_only !== void 0) {
+            await env.AM_DB.prepare(
+              "UPDATE users SET is_active = CASE WHEN is_active = 1 THEN 0 ELSE 1 END WHERE username = ?"
+            ).bind(username).run();
+            return new Response(JSON.stringify({ success: true }), { headers: { "Content-Type": "application/json" } });
+          } else {
+            const { limit_gb, expiry_days, ips, tls, port, fingerprint, config_name } = body;
+            await env.AM_DB.prepare(
+              "UPDATE users SET limit_gb = ?, expiry_days = ?, ips = ?, tls = ?, port = ?, fingerprint = ?, config_name = ? WHERE username = ?"
+            ).bind(
+              limit_gb ? parseFloat(limit_gb) : null,
+              expiry_days ? parseInt(expiry_days) : null,
+              ips || null,
+              tls,
+              port,
+              fingerprint || "chrome",
+              config_name || username,
+              username
+            ).run();
+            return new Response(JSON.stringify({ success: true }), { headers: { "Content-Type": "application/json" } });
+          }
+        }
+        
+        if (request.method === "DELETE") {
+          await env.AM_DB.prepare("DELETE FROM users WHERE username = ?").bind(username).run();
+          GLOBAL_TRAFFIC_CACHE.delete(username);
+          ACTIVE_CONNECTIONS_COUNT.delete(username);
+          return new Response(JSON.stringify({ success: true }), { headers: { "Content-Type": "application/json" } });
+        }
+        
+        if (request.method === "GET") {
+          const user = await env.AM_DB.prepare("SELECT * FROM users WHERE username = ?").bind(username).first();
+          if (!user) {
+            return new Response(JSON.stringify({ error: "User not found" }), { status: 404 });
+          }
+          return new Response(JSON.stringify({ success: true, user }), {
+            headers: { "Content-Type": "application/json" }
+          });
+        }
+      } else {
+        if (request.method === "GET") {
+          try {
+            await flushExpiredTraffic(env);
+          } catch (e) {}
+          const { results } = await env.AM_DB.prepare("SELECT * FROM users ORDER BY id DESC").all();
+          const now = Date.now();
+          const enrichedUsers = (results || []).map((user) => ({
+            ...user,
+            is_online: user.last_active && now - user.last_active < 65e3 ? 1 : 0,
+            used_gb: user.used_gb || 0,
+            config_name: user.config_name || user.username
+          }));
+          return new Response(JSON.stringify({ users: enrichedUsers, serverTime: now }), {
+            headers: {
+              "Content-Type": "application/json",
+              "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0"
+            }
+          });
+        }
+        
+        if (request.method === "POST") {
+          const { username, limit_gb, expiry_days, ips, tls, port, fingerprint, config_name } = await request.json();
+          if (!username) {
+            return new Response(JSON.stringify({ error: "Username is required" }), { status: 400, headers: { "Content-Type": "application/json" } });
+          }
+          const uuid = crypto.randomUUID();
+          try {
+            await env.AM_DB.prepare(
+              "INSERT INTO users (username, uuid, limit_gb, expiry_days, ips, connection_type, tls, port, fingerprint, config_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            ).bind(
+              username,
+              uuid,
+              limit_gb ? parseFloat(limit_gb) : null,
+              expiry_days ? parseInt(expiry_days) : null,
+              ips || null,
+              atob("dmxlc3M="),
+              tls,
+              port,
+              fingerprint || "chrome",
+              config_name || username
+            ).run();
+            return new Response(JSON.stringify({ success: true }), { headers: { "Content-Type": "application/json" } });
+          } catch (err) {
+            let errorMsg = err.message;
+            if (errorMsg.includes("UNIQUE constraint failed")) {
+              errorMsg = "Username already exists";
+            }
+            return new Response(JSON.stringify({ error: errorMsg }), { status: 500, headers: { "Content-Type": "application/json" } });
+          }
+        }
+      }
+    }
+    
+    // ============================================
+    // USER STATS - Get real traffic usage
+    // ============================================
+    if (url.pathname.startsWith("/api/users/stats/")) {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+      const username = decodeURIComponent(url.pathname.split("/").pop());
+      if (!username) {
+        return new Response(JSON.stringify({ error: "Username required" }), { status: 400 });
+      }
+      try {
+        const user = await env.AM_DB.prepare("SELECT username, limit_gb, used_gb, expiry_days, created_at, is_active FROM users WHERE username = ?").bind(username).first();
+        if (!user) {
+          return new Response(JSON.stringify({ error: "User not found" }), { status: 404 });
+        }
+        const now = new Date();
+        const created = new Date(user.created_at);
+        const expiryDate = new Date(created.getTime() + (user.expiry_days || 30) * 24 * 60 * 60 * 1000);
+        const daysLeft = Math.ceil((expiryDate - now) / (1000 * 60 * 60 * 24));
+        const totalGB = user.limit_gb || 0;
+        const usedGB = user.used_gb || 0;
+        const leftGB = Math.max(0, totalGB - usedGB);
+        const usedPercent = totalGB > 0 ? Math.min((usedGB / totalGB) * 100, 100) : 0;
+        
+        return new Response(JSON.stringify({
+          success: true,
+          username: user.username,
+          is_active: user.is_active === 1,
+          limit_gb: totalGB,
+          used_gb: usedGB,
+          left_gb: leftGB,
+          used_percent: usedPercent,
+          total_days: user.expiry_days || 30,
+          days_left: daysLeft,
+          created_at: user.created_at,
+          expiry_date: expiryDate.toISOString().split('T')[0],
+          is_expired: daysLeft <= 0 || (user.is_active === 0)
+        }), {
+          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+      }
+    }
+    
+    // ============================================
+    // USER TRAFFIC - Get traffic data
+    // ============================================
+    if (url.pathname.startsWith("/api/users/traffic/")) {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+      const username = decodeURIComponent(url.pathname.split("/").pop());
+      if (!username) {
+        return new Response(JSON.stringify({ error: "Username required" }), { status: 400 });
+      }
+      try {
+        const user = await env.AM_DB.prepare("SELECT username, used_gb, limit_gb FROM users WHERE username = ?").bind(username).first();
+        if (!user) {
+          return new Response(JSON.stringify({ error: "User not found" }), { status: 404 });
+        }
+        const usedBytes = user.used_gb * 1024 * 1024 * 1024;
+        const limitBytes = user.limit_gb ? user.limit_gb * 1024 * 1024 * 1024 : null;
+        const percent = limitBytes ? Math.min((usedBytes / limitBytes) * 100, 100) : 0;
+        return new Response(JSON.stringify({
+          success: true,
+          username: user.username,
+          used_gb: user.used_gb,
+          used_bytes: usedBytes,
+          limit_gb: user.limit_gb,
+          limit_bytes: limitBytes,
+          percent: percent,
+          remaining_gb: user.limit_gb ? Math.max(0, user.limit_gb - user.used_gb) : null
+        }), {
+          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+      }
+    }
+    
+    // ============================================
+    // USER CHECK - Check if user exists and is active
+    // ============================================
+    if (url.pathname.startsWith("/api/users/check/")) {
+      const username = decodeURIComponent(url.pathname.split("/").pop());
+      if (!username) {
+        return new Response(JSON.stringify({ error: "Username required" }), { status: 400 });
+      }
+      try {
+        const user = await env.AM_DB.prepare("SELECT username, is_active, limit_gb, used_gb, expiry_days, created_at FROM users WHERE username = ?").bind(username).first();
+        if (!user) {
+          return new Response(JSON.stringify({ exists: false }), {
+            headers: { "Content-Type": "application/json" }
+          });
+        }
+        const now = new Date();
+        const created = new Date(user.created_at);
+        const expiryDate = new Date(created.getTime() + (user.expiry_days || 30) * 24 * 60 * 60 * 1000);
+        const isExpired = now > expiryDate || (user.limit_gb && user.used_gb >= user.limit_gb);
+        return new Response(JSON.stringify({
+          exists: true,
+          username: user.username,
+          is_active: user.is_active === 1 && !isExpired,
+          is_expired: isExpired,
+          limit_gb: user.limit_gb,
+          used_gb: user.used_gb
+        }), {
+          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+      }
+    }
+    
+    // ============================================
+    // USER CONFIG - Get single user's config
+    // ============================================
+    if (url.pathname.startsWith("/api/users/config/")) {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+      const username = decodeURIComponent(url.pathname.split("/").pop());
+      if (!username) {
+        return new Response(JSON.stringify({ error: "Username required" }), { status: 400 });
+      }
+      try {
+        const user = await env.AM_DB.prepare("SELECT * FROM users WHERE username = ?").bind(username).first();
+        if (!user) {
+          return new Response(JSON.stringify({ error: "User not found" }), { status: 404 });
+        }
+        const host = url.hostname;
+        const config = await SubscriptionService.generateText(user, host);
+        return new Response(JSON.stringify({
+          success: true,
+          username: user.username,
+          config: config,
+          links: {
+            text: `${url.origin}/feed/${encodeURIComponent(username)}`,
+            json: `${url.origin}/feed/json/${encodeURIComponent(username)}`,
+            status: `${url.origin}/status/${encodeURIComponent(username)}`
+          }
+        }), {
+          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+      }
+    }
+    
+    // ============================================
+    // USER RESET - Reset user traffic
+    // ============================================
+    if (url.pathname.startsWith("/api/users/reset/")) {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+      const username = decodeURIComponent(url.pathname.split("/").pop());
+      if (!username) {
+        return new Response(JSON.stringify({ error: "Username required" }), { status: 400 });
+      }
+      try {
+        await env.AM_DB.prepare("UPDATE users SET used_gb = 0 WHERE username = ?").bind(username).run();
+        GLOBAL_TRAFFIC_CACHE.delete(username);
+        return new Response(JSON.stringify({ success: true }), {
+          headers: { "Content-Type": "application/json" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+      }
+    }
+    
+    // ============================================
+    // USER RESET ALL - Reset all users traffic
+    // ============================================
+    if (url.pathname === "/api/users/reset-all" && request.method === "POST") {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+      try {
+        await env.AM_DB.prepare("UPDATE users SET used_gb = 0").run();
+        GLOBAL_TRAFFIC_CACHE.clear();
+        return new Response(JSON.stringify({ success: true }), {
+          headers: { "Content-Type": "application/json" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+      }
+    }
+    
+    // ============================================
+    // BULK USER OPERATIONS
+    // ============================================
+    if (url.pathname === "/api/users/bulk" && request.method === "POST") {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+      const { users } = await request.json();
+      if (!users || !Array.isArray(users)) {
+        return new Response(JSON.stringify({ error: "Invalid users array" }), { status: 400 });
+      }
+      const results = [];
+      for (const userData of users) {
+        try {
+          const { username, limit_gb, expiry_days, ips, tls, port, fingerprint } = userData;
+          if (!username) continue;
+          const uuid = crypto.randomUUID();
+          await env.AM_DB.prepare(
+            "INSERT INTO users (username, uuid, limit_gb, expiry_days, ips, connection_type, tls, port, fingerprint, config_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+          ).bind(
+            username,
+            uuid,
+            limit_gb ? parseFloat(limit_gb) : null,
+            expiry_days ? parseInt(expiry_days) : null,
+            ips || null,
+            atob("dmxlc3M="),
+            tls,
+            port,
+            fingerprint || "chrome",
+            username
+          ).run();
+          results.push({ username, success: true });
+        } catch (e) {
+          results.push({ username: userData.username, success: false, error: e.message });
+        }
+      }
+      return new Response(JSON.stringify({ success: true, results }), {
+        headers: { "Content-Type": "application/json" }
+      });
+    }
+    
+    // ============================================
+    // UPDATE CHECK
+    // ============================================
+    if (url.pathname === "/api/update-check") {
+      try {
+        const response = await fetch("https://api.github.com/repos/MrVpnPanel/panel/releases/latest");
+        if (!response.ok) throw new Error("Failed to fetch");
+        const data = await response.json();
+        const latestVersion = data.tag_name || data.name || "v3.0.0";
+        const currentVersion = "v" + PANEL_VERSION;
+        return new Response(JSON.stringify({
+          current_version: currentVersion,
+          latest_version: latestVersion,
+          update_available: latestVersion !== currentVersion && latestVersion !== PANEL_VERSION,
+          url: data.html_url,
+          body: data.body,
+          published_at: data.published_at
+        }), {
+          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ 
+          error: "Could not check for updates",
+          current_version: "v" + PANEL_VERSION,
+          update_available: false
+        }), {
+          status: 500,
+          headers: { "Content-Type": "application/json" }
+        });
+      }
+    }
+    
+    // ============================================
+    // SYSTEM INFO
+    // ============================================
+    if (url.pathname === "/api/system/info") {
+      return new Response(JSON.stringify({
+        version: PANEL_VERSION,
+        platform: "Cloudflare Workers",
+        environment: "Production",
+        uptime: Math.floor((Date.now() - xrayStatus.startTime) / 1000),
+        theme: THEME,
+        xray: {
+          running: xrayStatus.running,
+          uptime: Math.floor((Date.now() - xrayStatus.startTime) / 1000),
+          version: "v26.4.25",
+          memory: "50.98 MB",
+          threads: 14
+        }
+      }), {
+        headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+      });
+    }
+    
+    // ============================================
+    // SYSTEM HEALTH CHECK
+    // ============================================
+    if (url.pathname === "/api/health") {
+      try {
+        const dbCheck = await env.AM_DB.prepare("SELECT 1").first();
+        return new Response(JSON.stringify({
+          status: "healthy",
+          database: dbCheck ? "connected" : "error",
+          version: PANEL_VERSION,
+          uptime: Math.floor((Date.now() - xrayStatus.startTime) / 1000),
+          timestamp: new Date().toISOString()
+        }), {
+          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({
+          status: "unhealthy",
+          database: "disconnected",
+          error: e.message
+        }), {
+          status: 503,
+          headers: { "Content-Type": "application/json" }
+        });
+      }
+    }
+    
+    // ============================================
+    // STATS SUMMARY
+    // ============================================
+    if (url.pathname === "/api/stats/summary") {
+      try {
+        const users = await env.AM_DB.prepare("SELECT COUNT(*) as total FROM users").first();
+        const active = await env.AM_DB.prepare("SELECT COUNT(*) as active FROM users WHERE is_active = 1").first();
+        const online = await env.AM_DB.prepare("SELECT COUNT(*) as online FROM users WHERE last_active > ?").bind(Date.now() - 65000).first();
+        const traffic = await env.AM_DB.prepare("SELECT SUM(used_gb) as total_traffic FROM users").first();
+        return new Response(JSON.stringify({
+          success: true,
+          total_users: users?.total || 0,
+          active_users: active?.active || 0,
+          online_users: online?.online || 0,
+          total_traffic_gb: traffic?.total_traffic || 0,
+          version: PANEL_VERSION
+        }), {
+          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+      }
+    }
+    
+    // ============================================
+    // USER ONLINE CHECK
+    // ============================================
+    if (url.pathname.startsWith("/api/users/online/")) {
+      const username = decodeURIComponent(url.pathname.split("/").pop());
+      if (!username) {
+        return new Response(JSON.stringify({ error: "Username required" }), { status: 400 });
+      }
+      try {
+        const user = await env.AM_DB.prepare("SELECT last_active FROM users WHERE username = ?").bind(username).first();
+        if (!user) {
+          return new Response(JSON.stringify({ online: false, exists: false }), {
+            headers: { "Content-Type": "application/json" }
+          });
+        }
+        const isOnline = user.last_active && (Date.now() - user.last_active < 65000);
+        return new Response(JSON.stringify({
+          online: isOnline,
+          exists: true,
+          username: username
+        }), {
+          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+      }
+    }
+    
+    // ============================================
+    // USER EXTEND - Extend expiry date
+    // ============================================
+    if (url.pathname.startsWith("/api/users/extend/")) {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+      const username = decodeURIComponent(url.pathname.split("/").pop());
+      if (!username) {
+        return new Response(JSON.stringify({ error: "Username required" }), { status: 400 });
+      }
+      const { days } = await request.json();
+      if (!days || days <= 0) {
+        return new Response(JSON.stringify({ error: "Invalid days" }), { status: 400 });
+      }
+      try {
+        const user = await env.AM_DB.prepare("SELECT expiry_days, created_at FROM users WHERE username = ?").bind(username).first();
+        if (!user) {
+          return new Response(JSON.stringify({ error: "User not found" }), { status: 404 });
+        }
+        const newExpiry = (user.expiry_days || 30) + days;
+        await env.AM_DB.prepare("UPDATE users SET expiry_days = ? WHERE username = ?").bind(newExpiry, username).run();
+        return new Response(JSON.stringify({
+          success: true,
+          username: username,
+          new_expiry_days: newExpiry
+        }), {
+          headers: { "Content-Type": "application/json" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+      }
+    }
+    
+    // ============================================
+    // USER ADD TRAFFIC - Add traffic to user
+    // ============================================
+    if (url.pathname.startsWith("/api/users/add-traffic/")) {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+      const username = decodeURIComponent(url.pathname.split("/").pop());
+      if (!username) {
+        return new Response(JSON.stringify({ error: "Username required" }), { status: 400 });
+      }
+      const { gb } = await request.json();
+      if (!gb || gb <= 0) {
+        return new Response(JSON.stringify({ error: "Invalid GB amount" }), { status: 400 });
+      }
+      try {
+        const user = await env.AM_DB.prepare("SELECT limit_gb FROM users WHERE username = ?").bind(username).first();
+        if (!user) {
+          return new Response(JSON.stringify({ error: "User not found" }), { status: 404 });
+        }
+        const newLimit = (user.limit_gb || 0) + gb;
+        await env.AM_DB.prepare("UPDATE users SET limit_gb = ? WHERE username = ?").bind(newLimit, username).run();
+        return new Response(JSON.stringify({
+          success: true,
+          username: username,
+          new_limit_gb: newLimit
+        }), {
+          headers: { "Content-Type": "application/json" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+      }
+    }
+    
+    // ============================================
+    // USER RENAME - Rename user
+    // ============================================
+    if (url.pathname === "/api/users/rename" && request.method === "POST") {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+      const { old_username, new_username } = await request.json();
+      if (!old_username || !new_username) {
+        return new Response(JSON.stringify({ error: "Old and new username required" }), { status: 400 });
+      }
+      try {
+        const existing = await env.AM_DB.prepare("SELECT username FROM users WHERE username = ?").bind(new_username).first();
+        if (existing) {
+          return new Response(JSON.stringify({ error: "New username already exists" }), { status: 400 });
+        }
+        await env.AM_DB.prepare("UPDATE users SET username = ? WHERE username = ?").bind(new_username, old_username).run();
+        if (GLOBAL_TRAFFIC_CACHE.has(old_username)) {
+          const traffic = GLOBAL_TRAFFIC_CACHE.get(old_username);
+          GLOBAL_TRAFFIC_CACHE.delete(old_username);
+          GLOBAL_TRAFFIC_CACHE.set(new_username, traffic);
+        }
+        return new Response(JSON.stringify({ success: true }), {
+          headers: { "Content-Type": "application/json" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+      }
+    }
+    
+    // ============================================
+    // SUBSCRIPTION LINKS GET
+    // ============================================
+    if (url.pathname.startsWith("/api/subscription/")) {
+      const username = decodeURIComponent(url.pathname.split("/").pop());
+      if (!username) {
+        return new Response(JSON.stringify({ error: "Username required" }), { status: 400 });
+      }
+      try {
+        const user = await env.AM_DB.prepare("SELECT username FROM users WHERE username = ?").bind(username).first();
+        if (!user) {
+          return new Response(JSON.stringify({ error: "User not found" }), { status: 404 });
+        }
+        const origin = url.origin;
+        return new Response(JSON.stringify({
+          success: true,
+          username: username,
+          links: {
+            text: `${origin}/feed/${encodeURIComponent(username)}`,
+            json: `${origin}/feed/json/${encodeURIComponent(username)}`,
+            status: `${origin}/status/${encodeURIComponent(username)}`,
+            panel: `${origin}/panel`
+          }
+        }), {
+          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+      }
+    }
+    
+    // ============================================
+    // LOGS - Get system logs
+    // ============================================
+    if (url.pathname === "/api/logs" && request.method === "GET") {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+      const limit = parseInt(url.searchParams.get("limit")) || 50;
+      const logs = [
+        { timestamp: new Date().toISOString(), level: "info", message: "System started" },
+        { timestamp: new Date().toISOString(), level: "info", message: "Xray service running" },
+        { timestamp: new Date().toISOString(), level: "info", message: "WebSocket server listening on /" },
+        { timestamp: new Date().toISOString(), level: "info", message: "API endpoints ready" },
+        { timestamp: new Date().toISOString(), level: "info", message: "Database connected" },
+        { timestamp: new Date().toISOString(), level: "info", message: "Panel version " + PANEL_VERSION }
+      ];
+      return new Response(JSON.stringify({
+        success: true,
+        logs: logs.slice(0, limit),
+        total: logs.length
+      }), {
+        headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+      });
+    }
+    
+    // ============================================
+    // PANEL CONFIG - Get panel configuration
+    // ============================================
+    if (url.pathname === "/api/panel/config" && request.method === "GET") {
+      return new Response(JSON.stringify({
+        version: PANEL_VERSION,
+        theme: THEME,
+        xray: {
+          running: xrayStatus.running,
+          version: "v26.4.25"
+        },
+        admin_count: ADMINS.length,
+        user_count: await env.AM_DB.prepare("SELECT COUNT(*) as count FROM users").first().then(r => r.count || 0)
+      }), {
+        headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+      });
+    }
+    
+    // ============================================
+    // EXPORT USERS - Export users data
+    // ============================================
+    if (url.pathname === "/api/users/export" && request.method === "GET") {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+      try {
+        const { results } = await env.AM_DB.prepare("SELECT username, uuid, limit_gb, used_gb, expiry_days, is_active, created_at FROM users ORDER BY id DESC").all();
+        return new Response(JSON.stringify({
+          success: true,
+          users: results,
+          export_date: new Date().toISOString(),
+          total: results.length
+        }), {
+          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+      }
+    }
+    
+    // ============================================
+    // USER STATUS PUBLIC - Public status page data (no auth needed)
+    // ============================================
+    if (url.pathname.startsWith("/api/status/")) {
+      const username = decodeURIComponent(url.pathname.split("/").pop());
+      if (!username) {
+        return new Response(JSON.stringify({ error: "Username required" }), { status: 400 });
+      }
+      try {
+        const user = await env.AM_DB.prepare("SELECT username, uuid, limit_gb, used_gb, expiry_days, created_at, is_active, port FROM users WHERE username = ?").bind(username).first();
+        if (!user) {
+          return new Response(JSON.stringify({ error: "User not found" }), { status: 404 });
+        }
+        const now = new Date();
+        const created = new Date(user.created_at);
+        const expiryDate = new Date(created.getTime() + (user.expiry_days || 30) * 24 * 60 * 60 * 1000);
+        const daysLeft = Math.ceil((expiryDate - now) / (1000 * 60 * 60 * 24));
+        return new Response(JSON.stringify({
+          success: true,
+          username: user.username,
+          is_active: user.is_active === 1,
+          limit_gb: user.limit_gb || 0,
+          used_gb: user.used_gb || 0,
+          expiry_days: user.expiry_days || 30,
+          days_left: daysLeft > 0 ? daysLeft : 0,
+          created_at: user.created_at,
+          expiry_date: expiryDate.toISOString().split('T')[0],
+          is_expired: daysLeft <= 0 || user.is_active === 0,
+          port: user.port || "443"
+        }), {
+          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+      }
+    }
+    
+    return new Response(JSON.stringify({ error: "Not Found" }), { status: 404 });
+  }
+};
+
+// ============================================
+// DATABASE SERVICE
+// ============================================
+var schemaEnsured = false;
+var cachedPanelPassword = null;
+var DbService = {
+  async ensureSchema(db) {
+    if (schemaEnsured) return;
+    try {
+      await db.prepare(`
+        CREATE TABLE IF NOT EXISTS users (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          username TEXT UNIQUE,
+          uuid TEXT,
+          limit_gb REAL,
+          expiry_days INTEGER,
+          ips TEXT,
+          connection_type TEXT,
+          tls TEXT,
+          port INTEGER,
+          used_gb REAL DEFAULT 0,
+          is_active INTEGER DEFAULT 1,
+          last_active INTEGER,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          fingerprint TEXT DEFAULT 'chrome',
+          config_name TEXT
+        )
+      `).run();
+    } catch (e) {}
+    try {
+      await db.prepare("ALTER TABLE users ADD COLUMN is_active INTEGER DEFAULT 1").run();
+    } catch (e) {}
+    try {
+      await db.prepare("ALTER TABLE users ADD COLUMN last_active INTEGER").run();
+    } catch (e) {}
+    try {
+      await db.prepare("ALTER TABLE users ADD COLUMN fingerprint TEXT DEFAULT 'chrome'").run();
+    } catch (e) {}
+    try {
+      await db.prepare("ALTER TABLE users ADD COLUMN config_name TEXT").run();
+    } catch (e) {}
+    try {
+      await db.prepare("CREATE TABLE IF NOT EXISTS settings (key TEXT PRIMARY KEY, value TEXT)").run();
+    } catch (e) {}
+    try {
+      await db.prepare(`
+        CREATE TABLE IF NOT EXISTS admins (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          username TEXT UNIQUE,
+          password_hash TEXT,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+      `).run();
+    } catch (e) {}
+    schemaEnsured = true;
+  },
+  async getPanelPassword(db) {
+    if (cachedPanelPassword !== null) return cachedPanelPassword;
+    try {
+      const row = await db.prepare("SELECT value FROM settings WHERE key = 'panel_password'").first();
+      cachedPanelPassword = row ? row.value : "";
+      return cachedPanelPassword || null;
+    } catch (e) {
+      return null;
+    }
+  },
+  async setPanelPassword(db, password) {
+    await db.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES ('panel_password', ?)").bind(password).run();
+    cachedPanelPassword = password;
+  },
+  async verifyApiAuth(request, env) {
+    const cookies = request.headers.get("Cookie") || "";
+    const sessionCookie = cookies.split(";").find((c) => c.trim().startsWith("panel_session="));
+    if (!sessionCookie) return false;
+    const sessionToken = sessionCookie.split("=")[1].trim();
+    
+    // Check if it's an admin ID
+    await loadAdmins(env);
+    const admin = ADMINS.find(a => String(a.id) === sessionToken);
+    if (admin) return true;
+    
+    // Check if it's the panel password
+    const storedHash = await this.getPanelPassword(env.AM_DB);
+    if (storedHash && sessionToken === storedHash) return true;
+    
+    return false;
+  },
+  async sha256(message) {
+    const msgBuffer = new TextEncoder().encode(message);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+  }
+};
+
+// ============================================
+// SUBSCRIPTION SERVICE (Enhanced - 2 configs with info, rest just username)
+// ============================================
+var SubscriptionService = {
+  async generateJson(user, host, env) {
+    let ips = [host];
+    if (user.ips) {
+      const parsedIps = user.ips.split("\n").map((ip) => ip.trim()).filter((ip) => ip.length > 0);
+      if (parsedIps.length > 0) ips = parsedIps;
+    }
+    const ports = String(user.port || "443").split(",").map((p) => p.trim()).filter((p) => p.length > 0);
+    const fp = user.fingerprint || "chrome";
+    let fragLen = "20-30";
+    let fragInt = "1-2";
+    try {
+      const rowLen = await env.AM_DB.prepare("SELECT value FROM settings WHERE key = 'frag_len'").first();
+      if (rowLen && rowLen.value) fragLen = rowLen.value;
+      const rowInt = await env.AM_DB.prepare("SELECT value FROM settings WHERE key = 'frag_int'").first();
+      if (rowInt && rowInt.value) fragInt = rowInt.value;
+    } catch (e) {}
+    
+    const configArray = [];
+    const now = new Date();
+    const created = new Date(user.created_at);
+    const expiryDate = new Date(created.getTime() + (user.expiry_days || 30) * 24 * 60 * 60 * 1000);
+    const daysLeft = Math.ceil((expiryDate - now) / (1000 * 60 * 60 * 24));
+    const totalGB = user.limit_gb || 0;
+    const usedGB = user.used_gb || 0;
+    const leftGB = Math.max(0, totalGB - usedGB);
+    const expiryDateStr = expiryDate.toISOString().split('T')[0].replace(/-/g, '/');
+    const configName = user.config_name || user.username;
+    const usedFormatted = usedGB >= 1 ? usedGB.toFixed(1) + "GB" : (usedGB * 1024).toFixed(0) + "MB";
+    const totalFormatted = totalGB >= 1 ? totalGB + "GB" : "Unlimited";
+    
+    // فقط دو کانفیگ اطلاعاتی برای اولین IP و پورت
+    const firstIp = ips[0] || host;
+    const firstPort = ports[0] || "443";
+    const isTlsPort = ["443", "2053", "2083", "2087", "2096", "8443"].includes(firstPort);
+    const tlsVal = isTlsPort ? "tls" : "none";
+    
+    // کانفیگ اطلاعات 1: تاریخ انقضا
+    const remark1 = "⏳ " + user.username.toUpperCase() + " | 📅 Exp: " + expiryDateStr + " | 🔥 " + daysLeft + " Days Left";
+    const configObj1 = this.buildConfig(user, firstIp, firstPort, tlsVal, host, fp, fragLen, fragInt, remark1);
+    configArray.push(configObj1);
+    
+    // کانفیگ اطلاعات 2: حجم مصرفی
+    const remark2 = "📊 " + user.username.toUpperCase() + " | 💾 " + totalFormatted + " Total | ⚡ " + usedFormatted + " Used";
+    const configObj2 = this.buildConfig(user, firstIp, firstPort, tlsVal, host, fp, fragLen, fragInt, remark2);
+    configArray.push(configObj2);
+    
+    // کانفیگ‌های باقی‌مده برای تمام آیپی‌ها و پورت‌ها با اسم کاربر
+    ips.forEach((ip) => {
+      ports.forEach((portStr) => {
+        const isTlsPortLoop = ["443", "2053", "2083", "2087", "2096", "8443"].includes(portStr);
+        const tlsValLoop = isTlsPortLoop ? "tls" : "none";
+        const remark3 = configName;
+        const configObj3 = this.buildConfig(user, ip, portStr, tlsValLoop, host, fp, fragLen, fragInt, remark3);
+        configArray.push(configObj3);
+      });
+    });
+    
+    return new Response(JSON.stringify(configArray, null, 2), {
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Access-Control-Allow-Origin": "*",
+        "Cache-Control": "no-store"
+      }
+    });
+  },
+  
+  buildConfig(user, ip, portStr, tlsVal, host, fp, fragLen, fragInt, remark) {
+    const configObj = {
+      remarks: remark,
+      version: { min: "25.10.15" },
+      log: { loglevel: "none" },
+      dns: {
+        servers: [
+          { address: "https://8.8.8.8/dns-query", tag: "remote-dns" },
+          { address: "8.8.8.8", domains: ["full:" + host], skipFallback: true }
+        ],
+        queryStrategy: "UseIP",
+        tag: "dns"
+      },
+      inbounds: [
+        {
+          listen: "127.0.0.1",
+          port: 10808,
+          protocol: "socks",
+          settings: { auth: "noauth", udp: true },
+          sniffing: { destOverride: ["http", "tls"], enabled: true, routeOnly: true },
+          tag: "mixed-in"
+        },
+        {
+          listen: "127.0.0.1",
+          port: 10853,
+          protocol: "dokodemo-door",
+          settings: { address: "1.1.1.1", network: "tcp,udp", port: 53 },
+          tag: "dns-in"
+        }
+      ],
+      outbounds: [
+        {
+          protocol: "vless",
+          settings: {
+            ["vnext"]: [{
+              address: ip,
+              port: parseInt(portStr),
+              users: [{ id: user.uuid, encryption: "none" }]
+            }]
+          },
+          ["streamSettings"]: {
+            network: "ws",
+            ["wsSettings"]: { host, path: "/" },
+            security: tlsVal,
+            sockopt: { ["dialerProxy"]: "fragment" }
+          },
+          tag: "proxy"
+        },
+        {
+          protocol: "freedom",
+          settings: {
+            fragment: { packets: "tlshello", length: fragLen, interval: fragInt }
+          },
+          ["streamSettings"]: {
+            sockopt: {
+              domainStrategy: "UseIP",
+              happyEyeballs: { tryDelayMs: 250, prioritizeIPv6: false, interleave: 2, maxConcurrentTry: 4 }
+            }
+          },
+          tag: "fragment"
+        },
+        { protocol: "dns", settings: { nonIPQuery: "reject" }, tag: "dns-out" },
+        { protocol: "freedom", settings: { domainStrategy: "UseIP" }, tag: "direct" },
+        { protocol: "blackhole", settings: { response: { type: "http" } }, tag: "block" }
+      ],
+      routing: {
+        domainStrategy: "IPIfNonMatch",
+        rules: [
+          { inboundTag: ["mixed-in"], port: 53, outboundTag: "dns-out", type: "field" },
+          { inboundTag: ["dns-in"], outboundTag: "dns-out", type: "field" },
+          { inboundTag: ["remote-dns"], outboundTag: "proxy", type: "field" },
+          { inboundTag: ["dns"], outboundTag: "direct", type: "field" },
+          { domain: ["geosite:private"], outboundTag: "direct", type: "field" },
+          { ip: ["geoip:private"], outboundTag: "direct", type: "field" },
+          { network: "udp", outboundTag: "block", type: "field" },
+          { network: "tcp", outboundTag: "proxy", type: "field" }
+        ]
+      }
+    };
+    if (tlsVal === "tls") {
+      configObj.outbounds[0]["streamSettings"]["tlsSettings"] = {
+        serverName: host,
+        fingerprint: fp,
+        alpn: ["http/1.1"],
+        allowInsecure: false
+      };
+    }
+    return configObj;
+  },
+  
+  async generateText(user, host) {
+    let ips = [host];
+    if (user.ips) {
+      const parsedIps = user.ips.split("\n").map((ip) => ip.trim()).filter((ip) => ip.length > 0);
+      if (parsedIps.length > 0) ips = parsedIps;
+    }
+    const ports = String(user.port || "443").split(",").map((p) => p.trim()).filter((p) => p.length > 0);
+    const fp = user.fingerprint || "chrome";
+    
+    const now = new Date();
+    const created = new Date(user.created_at);
+    const expiryDays = user.expiry_days || 30;
+    const expiryDate = new Date(created.getTime() + expiryDays * 24 * 60 * 60 * 1000);
+    const daysLeft = Math.ceil((expiryDate - now) / (1000 * 60 * 60 * 24));
+    const totalGB = user.limit_gb || 0;
+    const usedGB = user.used_gb || 0;
+    const leftGB = Math.max(0, totalGB - usedGB);
+    const expiryDateStr = expiryDate.toISOString().split('T')[0].replace(/-/g, '/');
+    const configName = user.config_name || user.username;
+    const usedFormatted = usedGB >= 1 ? usedGB.toFixed(1) + "GB" : (usedGB * 1024).toFixed(0) + "MB";
+    const totalFormatted = totalGB >= 1 ? totalGB + "GB" : "Unlimited";
+    
+    const links = [];
+    
+    // فقط دو کانفیگ اطلاعاتی برای اولین IP و پورت
+    const firstIp = ips[0] || host;
+    const firstPort = ports[0] || "443";
+    const isTlsPort = ["443", "2053", "2083", "2087", "2096", "8443"].includes(firstPort);
+    const tlsVal = isTlsPort ? "tls" : "none";
+    
+    // کانفیگ اطلاعات 1: تاریخ انقضا
+    const remark1 = "⏳ " + user.username.toUpperCase() + " | 📅 Exp: " + expiryDateStr + " | 🔥 " + daysLeft + " Days Left";
+    links.push(atob("dmxlc3M6Ly8=") + user.uuid + "@" + firstIp + ":" + firstPort + "?path=%2F&security=" + tlsVal + "&encryption=none&insecure=0&host=" + host + "&fp=" + fp + "&type=ws&allowInsecure=0&sni=" + host + "#" + encodeURIComponent(remark1));
+    
+    // کانفیگ اطلاعات 2: حجم مصرفی
+    const remark2 = "📊 " + user.username.toUpperCase() + " | 💾 " + totalFormatted + " Total | ⚡ " + usedFormatted + " Used";
+    links.push(atob("dmxlc3M6Ly8=") + user.uuid + "@" + firstIp + ":" + firstPort + "?path=%2F&security=" + tlsVal + "&encryption=none&insecure=0&host=" + host + "&fp=" + fp + "&type=ws&allowInsecure=0&sni=" + host + "#" + encodeURIComponent(remark2));
+    
+    // کانفیگ‌های باقی‌مده برای تمام آیپی‌ها و پورت‌ها با اسم کاربر
+    ips.forEach((ip) => {
+      ports.forEach((portStr) => {
+        const isTlsPortLoop = ["443", "2053", "2083", "2087", "2096", "8443"].includes(portStr);
+        const tlsValLoop = isTlsPortLoop ? "tls" : "none";
+        const remark3 = configName;
+        links.push(atob("dmxlc3M6Ly8=") + user.uuid + "@" + ip + ":" + portStr + "?path=%2F&security=" + tlsValLoop + "&encryption=none&insecure=0&host=" + host + "&fp=" + fp + "&type=ws&allowInsecure=0&sni=" + host + "#" + encodeURIComponent(remark3));
+      });
+    });
+    
+    const header = [
+      "# ==========================================",
+      "# MrVpn Panel Subscription Feed",
+      "# User: " + user.username,
+      "# Created: " + user.created_at,
+      "# Status: " + (user.is_active ? "Active" : "Inactive"),
+      "# ==========================================",
+      ""
+    ].join("\n");
+    
+    const plainContent = header + links.join("\n");
+    const subContent = btoa(unescape(encodeURIComponent(plainContent)));
+    return new Response(subContent, {
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Access-Control-Allow-Origin": "*",
+        "Cache-Control": "no-store"
+      }
+    });
+  }
+};
+
+// ============================================
+// TRAFFIC MANAGEMENT - REAL TRAFFIC
+// ============================================
+async function flushExpiredTraffic(env) {
+  const now = Date.now();
+  for (const [uname, cachedBytes] of GLOBAL_TRAFFIC_CACHE.entries()) {
+    if (cachedBytes <= 0) continue;
+    const lastActive = GLOBAL_LAST_ACTIVE_WRITE.get(uname) || 0;
+    const activeCount = ACTIVE_CONNECTIONS_COUNT.get(uname) || 0;
+    if (activeCount <= 0 || now - lastActive > 65e3) {
+      GLOBAL_TRAFFIC_CACHE.set(uname, 0);
+      const deltaGb = cachedBytes / (1024 * 1024 * 1024);
+      try {
+        await env.AM_DB.prepare("UPDATE users SET used_gb = used_gb + ? WHERE username = ?").bind(deltaGb, uname).run();
+        // Check if user exceeded limit
+        const user = await env.AM_DB.prepare("SELECT limit_gb, used_gb FROM users WHERE username = ?").bind(uname).first();
+        if (user && user.limit_gb && user.used_gb >= user.limit_gb) {
+          await env.AM_DB.prepare("UPDATE users SET is_active = 0 WHERE username = ?").bind(uname).run();
+        }
+      } catch (e) {
+        let recovered = GLOBAL_TRAFFIC_CACHE.get(uname) || 0;
+        GLOBAL_TRAFFIC_CACHE.set(uname, recovered + cachedBytes);
+      }
+    }
+  }
+}
+
+// ============================================
+// VLESS HANDLER
+// ============================================
+async function handleVLESS(env, storedData = null, ctx = null) {
+  const socketPair = new WebSocketPair();
+  const [clientSock, serverSock] = Object.values(socketPair);
+  serverSock.accept();
+  serverSock.binaryType = "arraybuffer";
+  let username = null;
+  let tickCount = 0;
+  let validUUID = null;
+  
+  function addBytes(bytes) {
+    if (bytes <= 0 || !username) return;
+    let current = GLOBAL_TRAFFIC_CACHE.get(username) || 0;
+    current += bytes;
+    GLOBAL_LAST_ACTIVE_WRITE.set(username, Date.now());
+    const threshold = 50 * 1024 * 1024;
+    if (current >= threshold) {
+      const chunksOf50MB = Math.floor(current / threshold);
+      const bytesToCommit = chunksOf50MB * threshold;
+      const deltaGb = bytesToCommit / (1024 * 1024 * 1024);
+      const leftover = current - bytesToCommit;
+      GLOBAL_TRAFFIC_CACHE.set(username, leftover);
+      const writeTask = async () => {
+        try {
+          await env.AM_DB.prepare("UPDATE users SET used_gb = used_gb + ? WHERE username = ?").bind(deltaGb, username).run();
+          // Check if user exceeded limit
+          const user = await env.AM_DB.prepare("SELECT limit_gb, used_gb FROM users WHERE username = ?").bind(username).first();
+          if (user && user.limit_gb && user.used_gb >= user.limit_gb) {
+            await env.AM_DB.prepare("UPDATE users SET is_active = 0 WHERE username = ?").bind(username).run();
+          }
+        } catch (e) {
+          let recovered = GLOBAL_TRAFFIC_CACHE.get(username) || 0;
+          GLOBAL_TRAFFIC_CACHE.set(username, recovered + bytesToCommit);
+        }
+      };
+      if (ctx) {
+        ctx.waitUntil(writeTask());
+      } else {
+        writeTask();
+      }
+    } else {
+      GLOBAL_TRAFFIC_CACHE.set(username, current);
+    }
+  }
+  
+  let isOfflineSet = false;
+  const setOffline = () => {
+    if (isOfflineSet) return;
+    isOfflineSet = true;
+    const uname = username;
+    if (!uname) return;
+    let activeCount = ACTIVE_CONNECTIONS_COUNT.get(uname) || 1;
+    activeCount = activeCount - 1;
+    if (activeCount <= 0) {
+      ACTIVE_CONNECTIONS_COUNT.delete(uname);
+      let cachedBytes = GLOBAL_TRAFFIC_CACHE.get(uname) || 0;
+      if (cachedBytes > 0) {
+        GLOBAL_TRAFFIC_CACHE.set(uname, 0);
+        const deltaGb = cachedBytes / (1024 * 1024 * 1024);
+        const writeTask = async () => {
+          try {
+            await env.AM_DB.prepare("UPDATE users SET used_gb = used_gb + ? WHERE username = ?").bind(deltaGb, uname).run();
+          } catch (e) {
+            let recovered = GLOBAL_TRAFFIC_CACHE.get(uname) || 0;
+            GLOBAL_TRAFFIC_CACHE.set(uname, recovered + cachedBytes);
+          }
+        };
+        if (ctx) {
+          ctx.waitUntil(writeTask());
+        } else {
+          writeTask();
+        }
+      }
+    } else {
+      ACTIVE_CONNECTIONS_COUNT.set(uname, activeCount);
+    }
+  };
+  
+  const heartbeat = setInterval(async () => {
+    if (serverSock.readyState === WebSocket.OPEN) {
+      try {
+        serverSock.send(new Uint8Array(0));
+        if (!validUUID) return;
+        tickCount++;
+        if (tickCount >= 4) {
+          tickCount = 0;
+          const user = await env.AM_DB.prepare("SELECT is_active, limit_gb, used_gb, expiry_days, created_at FROM users WHERE uuid = ?").bind(validUUID).first();
+          let isExpired = false;
+          if (!user || user.is_active === 0) {
+            isExpired = true;
+          } else {
+            if (user.limit_gb && user.used_gb >= user.limit_gb) {
+              isExpired = true;
+            }
+            if (user.expiry_days && user.created_at) {
+              const created = new Date(user.created_at);
+              const expiryDate = new Date(created.getTime() + user.expiry_days * 24 * 60 * 60 * 1e3);
+              if (/* @__PURE__ */ new Date() > expiryDate) {
+                isExpired = true;
+              }
+            }
+          }
+          if (isExpired) {
+            await env.AM_DB.prepare("UPDATE users SET is_active = 0, last_active = 0 WHERE uuid = ?").bind(validUUID).run();
+            clearInterval(heartbeat);
+            closeSocketQuietly(serverSock);
+            return;
+          }
+          const now = Date.now();
+          const lastRecorded = GLOBAL_LAST_ACTIVE_WRITE.get(username) || 0;
+          if (now - lastRecorded > 6e4) {
+            GLOBAL_LAST_ACTIVE_WRITE.set(username, now);
+            await env.AM_DB.prepare("UPDATE users SET last_active = ? WHERE username = ?").bind(now, username).run();
+          }
+        }
+      } catch (e) {}
+    } else {
+      clearInterval(heartbeat);
+    }
+  }, 15e3);
+  
+  let remoteConnWrapper = { socket: null, connectingPromise: null, retryConnect: null };
+  let reqUUID = null;
+  let isHeaderParsed = false;
+  let isDnsQuery = false;
+  let chunkBuffer = new Uint8Array(0);
+  const proxyIP = storedData?.proxy_ip || "proxyip.cmliussss.net";
+  let wsChain = Promise.resolve();
+  let wsStopped = false, wsFailed = false, wsFinished = false;
+  let wsQueueBytes = 0, wsQueueItems = 0;
+  let currentSocketWriter = null, activeRemoteWriter = null;
+  
+  const releaseRemoteWriter = () => {
+    if (activeRemoteWriter) {
+      try {
+        activeRemoteWriter.releaseLock();
+      } catch (e) {}
+      activeRemoteWriter = null;
+    }
+    currentSocketWriter = null;
+  };
+  
+  const getRemoteWriter = () => {
+    const s = remoteConnWrapper.socket;
+    if (!s) return null;
+    if (s !== currentSocketWriter) {
+      releaseRemoteWriter();
+      currentSocketWriter = s;
+      activeRemoteWriter = s.writable.getWriter();
+    }
+    return activeRemoteWriter;
+  };
+  
+  const upstreamQueue = createUpstreamQueue({
+    getWriter: getRemoteWriter,
+    releaseWriter: releaseRemoteWriter,
+    retryConnect: async () => {
+      if (typeof remoteConnWrapper.retryConnect === "function") {
+        await remoteConnWrapper.retryConnect();
+      }
+    },
+    closeConnection: () => {
+      try {
+        remoteConnWrapper.socket?.close();
+      } catch (e) {}
+      closeSocketQuietly(serverSock);
+    },
+    name: "VlessWSQueue"
+  });
+  
+  const writeToRemote = async (chunk, allowRetry = true) => {
+    return upstreamQueue.writeAndAwait(chunk, allowRetry);
+  };
+  
+  const processWsMessage = async (chunk) => {
+    const bytes = chunk.byteLength || 0;
+    await addBytes(bytes);
+    if (isDnsQuery) {
+      await forwardVlessUDP(chunk, serverSock, null);
+      return;
+    }
+    if (await writeToRemote(chunk)) return;
+    if (!isHeaderParsed) {
+      chunkBuffer = concatBytes(chunkBuffer, chunk);
+      if (chunkBuffer.byteLength < 24) return;
+      reqUUID = extractUUIDFromVless(chunkBuffer);
+      if (!reqUUID) {
+        serverSock.close();
+        return;
+      }
+      let user = null;
+      try {
+        user = await env.AM_DB.prepare("SELECT * FROM users WHERE uuid = ?").bind(reqUUID).first();
+      } catch (e) {}
+      if (!user || user.is_active === 0) {
+        serverSock.close();
+        return;
+      }
+      if (user.limit_gb && user.used_gb >= user.limit_gb) {
+        serverSock.close();
+        return;
+      }
+      if (user.expiry_days && user.created_at) {
+        const created = new Date(user.created_at);
+        const expiryDate = new Date(created.getTime() + user.expiry_days * 24 * 60 * 60 * 1e3);
+        if (/* @__PURE__ */ new Date() > expiryDate) {
+          try {
+            await env.AM_DB.prepare("UPDATE users SET is_active = 0, last_active = 0 WHERE uuid = ?").bind(reqUUID).run();
+          } catch (e) {}
+          serverSock.close();
+          return;
+        }
+      }
+      validUUID = reqUUID;
+      username = user.username;
+      isHeaderParsed = true;
+      let activeCount = ACTIVE_CONNECTIONS_COUNT.get(username) || 0;
+      ACTIVE_CONNECTIONS_COUNT.set(username, activeCount + 1);
+      if (activeCount === 0) {
+        const setOnlineTask = async () => {
+          try {
+            const now = Date.now();
+            GLOBAL_LAST_ACTIVE_WRITE.set(username, now);
+            await env.AM_DB.prepare("UPDATE users SET last_active = ? WHERE username = ?").bind(now, username).run();
+          } catch (e) {}
+        };
+        if (ctx) ctx.waitUntil(setOnlineTask());
+        else setOnlineTask();
+      }
+      try {
+        let offset = 17;
+        const optLen = chunkBuffer[offset++];
+        offset += optLen;
+        const cmd = chunkBuffer[offset++];
+        const port = chunkBuffer[offset++] << 8 | chunkBuffer[offset++];
+        const addrType = chunkBuffer[offset++];
+        let addr = "";
+        if (addrType === 1) {
+          addr = chunkBuffer[offset++] + "." + chunkBuffer[offset++] + "." + chunkBuffer[offset++] + "." + chunkBuffer[offset++];
+        } else if (addrType === 2) {
+          const domainLen = chunkBuffer[offset++];
+          addr = new TextDecoder().decode(chunkBuffer.slice(offset, offset + domainLen));
+          offset += domainLen;
+        } else if (addrType === 3) {
+          offset += 16;
+          addr = "ipv6-unsupported";
+        }
+        const rawData = chunkBuffer.slice(offset);
+        const respHeader = new Uint8Array([chunkBuffer[0], 0]);
+        if (cmd === 2) {
+          if (port === 53) {
+            isDnsQuery = true;
+            await forwardVlessUDP(rawData, serverSock, respHeader);
+          } else {
+            serverSock.close();
+          }
+          return;
+        }
+        const connectTCP = async (dataPayload = null, useFallback = true) => {
+          if (remoteConnWrapper.connectingPromise) {
+            await remoteConnWrapper.connectingPromise;
+            return;
+          }
+          const task = (async () => {
+            let s = null;
+            try {
+              s = await connectDirect(addr, port, dataPayload);
+            } catch (err) {
+              if (useFallback && proxyIP) {
+                s = await connectDirect(proxyIP, port, dataPayload);
+              } else {
+                throw err;
+              }
+            }
+            remoteConnWrapper.socket = s;
+            s.closed.catch(() => {}).finally(() => closeSocketQuietly(serverSock));
+            connectStreams(s, serverSock, respHeader, null, (b) => {
+              addBytes(b);
+            });
+          })();
+          remoteConnWrapper.connectingPromise = task;
+          try {
+            await task;
+          } finally {
+            if (remoteConnWrapper.connectingPromise === task) {
+              remoteConnWrapper.connectingPromise = null;
+            }
+          }
+        };
+        remoteConnWrapper.retryConnect = async () => connectTCP(null, false);
+        await connectTCP(rawData, true);
+      } catch (e) {
+        serverSock.close();
+      }
+    }
+  };
+  
+  const handleWsError = (err) => {
+    if (wsFailed) return;
+    wsFailed = true;
+    wsStopped = true;
+    wsQueueBytes = 0;
+    wsQueueItems = 0;
+    upstreamQueue.clear();
+    releaseRemoteWriter();
+    closeSocketQuietly(serverSock);
+    setOffline();
+  };
+  
+  const pushToChain = (task) => {
+    wsChain = wsChain.then(task).catch(handleWsError);
+  };
+  
+  serverSock.addEventListener("message", (event) => {
+    if (wsStopped || wsFailed) return;
+    const size = event.data.byteLength || 0;
+    const nextBytes = wsQueueBytes + size;
+    const nextItems = wsQueueItems + 1;
+    if (nextBytes > UPSTREAM_QUEUE_MAX_BYTES || nextItems > UPSTREAM_QUEUE_MAX_ITEMS) {
+      handleWsError(new Error("ws queue overflow"));
+      return;
+    }
+    wsQueueBytes = nextBytes;
+    wsQueueItems = nextItems;
+    pushToChain(async () => {
+      wsQueueBytes = Math.max(0, wsQueueBytes - size);
+      wsQueueItems = Math.max(0, wsQueueItems - 1);
+      if (wsFailed) return;
+      await processWsMessage(event.data);
+    });
+  });
+  
+  serverSock.addEventListener("close", () => {
+    clearInterval(heartbeat);
+    closeSocketQuietly(serverSock);
+    setOffline();
+    if (wsFinished) return;
+    wsFinished = true;
+    wsStopped = true;
+    pushToChain(async () => {
+      if (wsFailed) return;
+      await upstreamQueue.awaitEmpty();
+      releaseRemoteWriter();
+    });
+  });
+  
+  serverSock.addEventListener("error", (err) => {
+    handleWsError(err);
+  });
+  
+  return new Response(null, { status: 101, webSocket: clientSock });
+}
+
+// ============================================
+// NETWORK UTILITIES
+// ============================================
+function isIPv4(value) {
+  const parts = String(value || "").split(".");
+  return parts.length === 4 && parts.every((part) => /^\d{1,3}$/.test(part) && Number(part) >= 0 && Number(part) <= 255);
+}
+
+function stripIPv6Brackets(hostname = "") {
+  const host = String(hostname || "").trim();
+  return host.startsWith("[") && host.endsWith("]") ? host.slice(1, -1) : host;
+}
+
+function isIPHostname(hostname = "") {
+  const host = stripIPv6Brackets(hostname);
+  if (isIPv4(host)) return true;
+  if (!host.includes(":")) return false;
+  try {
+    new URL("http://[" + host + "]/");
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+function convertToUint8Array(data) {
+  if (data instanceof Uint8Array) return data;
+  if (data instanceof ArrayBuffer) return new Uint8Array(data);
+  if (ArrayBuffer.isView(data)) return new Uint8Array(data.buffer, data.byteOffset, data.byteLength);
+  return new Uint8Array(data || 0);
+}
+
+function concatBytes(...chunkList) {
+  const chunks = chunkList.map(convertToUint8Array);
+  const total = chunks.reduce((sum, c) => sum + c.byteLength, 0);
+  const result = new Uint8Array(total);
+  let offset = 0;
+  for (const c of chunks) {
+    result.set(c, offset);
+    offset += c.byteLength;
+  }
+  return result;
+}
+
+function closeSocketQuietly(socket) {
+  try {
+    if (socket.readyState === WebSocket.OPEN || socket.readyState === WebSocket.CLOSING) {
+      socket.close();
+    }
+  } catch (e) {}
+}
+
+// ============================================
+// DNS UTILITIES
+// ============================================
+async function dohQuery(domain, recordType) {
+  const cacheKey = domain + ":" + recordType;
+  if (DNS_CACHE.has(cacheKey)) {
+    const cached = DNS_CACHE.get(cacheKey);
+    if (Date.now() < cached.expires) return cached.data;
+    DNS_CACHE.delete(cacheKey);
+  }
+  try {
+    const typeMap = { "A": 1, "AAAA": 28 };
+    const qtype = typeMap[recordType.toUpperCase()] || 1;
+    const encodeDomain = (name) => {
+      const parts = name.endsWith(".") ? name.slice(0, -1).split(".") : name.split(".");
+      const bufs = [];
+      for (const label of parts) {
+        const enc = new TextEncoder().encode(label);
+        bufs.push(new Uint8Array([enc.length]), enc);
+      }
+      bufs.push(new Uint8Array([0]));
+      return concatBytes(...bufs);
+    };
+    const qname = encodeDomain(domain);
+    const query = new Uint8Array(12 + qname.length + 4);
+    const qview = new DataView(query.buffer);
+    qview.setUint16(0, crypto.getRandomValues(new Uint16Array(1))[0]);
+    qview.setUint16(2, 256);
+    qview.setUint16(4, 1);
+    query.set(qname, 12);
+    qview.setUint16(12 + qname.length, qtype);
+    qview.setUint16(12 + qname.length + 2, 1);
+    const response = await fetch(DOH_RESOLVER, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/dns-message",
+        "Accept": "application/dns-message"
+      },
+      body: query
+    });
+    if (!response.ok) return [];
+    const buf = new Uint8Array(await response.arrayBuffer());
+    const dv = new DataView(buf.buffer);
+    const qdcount = dv.getUint16(4);
+    const ancount = dv.getUint16(6);
+    const parseName = (pos) => {
+      const labels = [];
+      let p = pos, jumped = false, endPos = -1, safe = 128;
+      while (p < buf.length && safe-- > 0) {
+        const len = buf[p];
+        if (len === 0) {
+          if (!jumped) endPos = p + 1;
+          break;
+        }
+        if ((len & 192) === 192) {
+          if (!jumped) endPos = p + 2;
+          p = (len & 63) << 8 | buf[p + 1];
+          jumped = true;
+          continue;
+        }
+        labels.push(new TextDecoder().decode(buf.slice(p + 1, p + 1 + len)));
+        p += len + 1;
+      }
+      if (endPos === -1) endPos = p + 1;
+      return [labels.join("."), endPos];
+    };
+    let offset = 12;
+    for (let i = 0; i < qdcount; i++) {
+      const [, end] = parseName(offset);
+      offset = Number(end) + 4;
+    }
+    const answers = [];
+    for (let i = 0; i < ancount && offset < buf.length; i++) {
+      const [name, nameEnd] = parseName(offset);
+      offset = Number(nameEnd);
+      const type = dv.getUint16(offset);
+      offset += 2;
+      offset += 2;
+      const ttl = dv.getUint32(offset);
+      offset += 4;
+      const rdlen = dv.getUint16(offset);
+      offset += 2;
+      const rdata = buf.slice(offset, offset + rdlen);
+      offset += rdlen;
+      let data;
+      if (type === 1 && rdlen === 4) {
+        data = rdata[0] + "." + rdata[1] + "." + rdata[2] + "." + rdata[3];
+      } else if (type === 28 && rdlen === 16) {
+        const segs = [];
+        for (let j = 0; j < 16; j += 2) segs.push((rdata[j] << 8 | rdata[j + 1]).toString(16));
+        data = segs.join(":");
+      } else {
+        data = Array.from(rdata).map((b) => b.toString(16).padStart(2, "0")).join("");
+      }
+      answers.push({ name, type, TTL: ttl, data });
+    }
+    DNS_CACHE.set(cacheKey, { data: answers, expires: Date.now() + DNS_CACHE_TTL });
+    return answers;
+  } catch (e) {
+    return [];
+  }
+}
+
+// ============================================
+// UPSTREAM QUEUE
+// ============================================
+function createUpstreamQueue({ getWriter, releaseWriter, retryConnect, closeConnection, name = "UpstreamQueue" }) {
+  let chunks = [];
+  let head = 0;
+  let queuedBytes = 0;
+  let draining = false;
+  let closed = false;
+  let bundleBuffer = null;
+  let idleResolvers = [];
+  let activeCompletions = null;
+  
+  const settleCompletions = (completions, err = null) => {
+    if (!completions) return;
+    for (const comp of completions) {
+      if (comp) {
+        if (err) comp.reject(err);
+        else comp.resolve();
+      }
+    }
+  };
+  
+  const rejectQueued = (err) => {
+    for (let i = head; i < chunks.length; i++) {
+      const item = chunks[i];
+      if (item && item.completions) settleCompletions(item.completions, err);
+    }
+  };
+  
+  const compact = () => {
+    if (head > 32 && head * 2 >= chunks.length) {
+      chunks = chunks.slice(head);
+      head = 0;
+    }
+  };
+  
+  const resolveIdle = () => {
+    if (queuedBytes || draining || !idleResolvers.length) return;
+    const resolvers = idleResolvers;
+    idleResolvers = [];
+    for (const resolve of resolvers) resolve();
+  };
+  
+  const clear = (err = null) => {
+    const closeErr = err || (closed ? new Error(name + ": queue closed") : null);
+    if (closeErr) {
+      rejectQueued(closeErr);
+      settleCompletions(activeCompletions, closeErr);
+      activeCompletions = null;
+    }
+    chunks = [];
+    head = 0;
+    queuedBytes = 0;
+    resolveIdle();
+  };
+  
+  const shift = () => {
+    if (head >= chunks.length) return null;
+    const item = chunks[head];
+    chunks[head++] = void 0;
+    queuedBytes -= item.chunk.byteLength;
+    compact();
+    return item;
+  };
+  
+  const bundle = () => {
+    const first = shift();
+    if (!first) return null;
+    if (head >= chunks.length || first.chunk.byteLength >= UPSTREAM_BUNDLE_TARGET_BYTES) return first;
+    let byteLength = first.chunk.byteLength;
+    let end = head;
+    let allowRetry = first.allowRetry;
+    let completions = first.completions || null;
+    while (end < chunks.length) {
+      const next = chunks[end];
+      const nextLength = byteLength + next.chunk.byteLength;
+      if (nextLength > UPSTREAM_BUNDLE_TARGET_BYTES) break;
+      byteLength = nextLength;
+      allowRetry = allowRetry && next.allowRetry;
+      if (next.completions) completions = completions ? completions.concat(next.completions) : next.completions;
+      end++;
+    }
+    if (end === head) return first;
+    const output = bundleBuffer ||= new Uint8Array(UPSTREAM_BUNDLE_TARGET_BYTES);
+    output.set(first.chunk);
+    let offset = first.chunk.byteLength;
+    while (head < end) {
+      const next = chunks[head];
+      chunks[head++] = void 0;
+      queuedBytes -= next.chunk.byteLength;
+      output.set(next.chunk, offset);
+      offset += next.chunk.byteLength;
+    }
+    compact();
+    return { chunk: output.subarray(0, byteLength), allowRetry, completions };
+  };
+  
+  const drain = async () => {
+    if (draining || closed) return;
+    draining = true;
+    try {
+      for (; ; ) {
+        if (closed) break;
+        const item = bundle();
+        if (!item) break;
+        let writer = getWriter();
+        if (!writer) throw new Error(name + ": remote writer unavailable");
+        const completions = item.completions || null;
+        activeCompletions = completions;
+        try {
+          try {
+            await writer.write(item.chunk);
+          } catch (err) {
+            releaseWriter?.();
+            if (!item.allowRetry || typeof retryConnect !== "function") throw err;
+            await retryConnect();
+            writer = getWriter();
+            if (!writer) throw err;
+            await writer.write(item.chunk);
+          }
+          settleCompletions(completions);
+        } catch (err) {
+          settleCompletions(completions, err);
+          throw err;
+        } finally {
+          if (activeCompletions === completions) activeCompletions = null;
+        }
+      }
+    } catch (err) {
+      closed = true;
+      clear(err);
+      try {
+        closeConnection?.(err);
+      } catch (_) {}
+    } finally {
+      draining = false;
+      if (!closed && head < chunks.length) queueMicrotask(drain);
+      else resolveIdle();
+    }
+  };
+  
+  const enqueue = (data, allowRetry = true, waitForFlush = false) => {
+    if (closed) return false;
+    if (!getWriter()) return false;
+    const chunk = convertToUint8Array(data);
+    if (!chunk.byteLength) return true;
+    const nextBytes = queuedBytes + chunk.byteLength;
+    const nextItems = chunks.length - head + 1;
+    if (nextBytes > UPSTREAM_QUEUE_MAX_BYTES || nextItems > UPSTREAM_QUEUE_MAX_ITEMS) {
+      closed = true;
+      const err = Object.assign(new Error(name + ": upload queue overflow (" + nextBytes + "B/" + nextItems + ")"), { isQueueOverflow: true });
+      clear(err);
+      try {
+        closeConnection?.(err);
+      } catch (_) {}
+      throw err;
+    }
+    let completionPromise = null;
+    let completions = null;
+    if (waitForFlush) {
+      completions = [];
+      completionPromise = new Promise((resolve, reject) => completions.push({ resolve, reject }));
+    }
+    chunks.push({ chunk, allowRetry, completions });
+    queuedBytes = nextBytes;
+    if (!draining) queueMicrotask(drain);
+    return waitForFlush ? completionPromise.then(() => true) : true;
+  };
+  
+  return {
+    writeAndAwait(data, allowRetry = true) {
+      return enqueue(data, allowRetry, true);
+    },
+    async awaitEmpty() {
+      if (!queuedBytes && !draining) return;
+      await new Promise((resolve) => idleResolvers.push(resolve));
+    },
+    clear() {
+      closed = true;
+      clear();
+    }
+  };
+}
+
+// ============================================
+// DOWNSTREAM SENDER
+// ============================================
+function createDownstreamSender(webSocket, headerData = null) {
+  const packetCap = DOWNSTREAM_GRAIN_BYTES;
+  const tailBytes = DOWNSTREAM_GRAIN_TAIL_THRESHOLD;
+  const lowWaterBytes = Math.max(4096, tailBytes << 3);
+  let header = headerData;
+  let pendingBuffer = new Uint8Array(packetCap);
+  let pendingBytes = 0;
+  let flushTimer = null;
+  let microtaskQueued = false;
+  let generation = 0;
+  let scheduledGeneration = 0;
+  let waitRounds = 0;
+  let flushPromise = null;
+  
+  const sendRawChunk = async (chunk) => {
+    if (webSocket.readyState !== WebSocket.OPEN) throw new Error("ws.readyState is not open");
+    webSocket.send(chunk);
+  };
+  
+  const attachResponseHeader = (chunk) => {
+    if (!header) return chunk;
+    const merged = new Uint8Array(header.length + chunk.byteLength);
+    merged.set(header, 0);
+    merged.set(chunk, header.length);
+    header = null;
+    return merged;
+  };
+  
+  const flush = async () => {
+    while (flushPromise) await flushPromise;
+    if (flushTimer) clearTimeout(flushTimer);
+    flushTimer = null;
+    microtaskQueued = false;
+    if (!pendingBytes) return;
+    const output = pendingBuffer.subarray(0, pendingBytes).slice();
+    pendingBuffer = new Uint8Array(packetCap);
+    pendingBytes = 0;
+    waitRounds = 0;
+    flushPromise = sendRawChunk(output).finally(() => {
+      flushPromise = null;
+    });
+    return flushPromise;
+  };
+  
+  const scheduleFlush = () => {
+    if (flushTimer || microtaskQueued) return;
+    microtaskQueued = true;
+    scheduledGeneration = generation;
+    queueMicrotask(() => {
+      microtaskQueued = false;
+      if (!pendingBytes || flushTimer) return;
+      if (packetCap - pendingBytes < tailBytes) {
+        flush().catch(() => closeSocketQuietly(webSocket));
+        return;
+      }
+      flushTimer = setTimeout(() => {
+        flushTimer = null;
+        if (!pendingBytes) return;
+        if (packetCap - pendingBytes < tailBytes) {
+          flush().catch(() => closeSocketQuietly(webSocket));
+          return;
+        }
+        if (waitRounds < 2 && (generation !== scheduledGeneration || pendingBytes < lowWaterBytes)) {
+          waitRounds++;
+          scheduledGeneration = generation;
+          scheduleFlush();
+          return;
+        }
+        flush().catch(() => closeSocketQuietly(webSocket));
+      }, Math.max(DOWNSTREAM_GRAIN_SILENT_MS, 1));
+    });
+  };
+  
+  return {
+    async sendDirect(data) {
+      let chunk = convertToUint8Array(data);
+      if (!chunk.byteLength) return;
+      chunk = attachResponseHeader(chunk);
+      await sendRawChunk(chunk);
+    },
+    async send(data) {
+      let chunk = convertToUint8Array(data);
+      if (!chunk.byteLength) return;
+      chunk = attachResponseHeader(chunk);
+      let offset = 0;
+      const totalBytes = chunk.byteLength;
+      while (offset < totalBytes) {
+        if (!pendingBytes && totalBytes - offset >= packetCap) {
+          const sendBytes = Math.min(packetCap, totalBytes - offset);
+          const view = offset || sendBytes !== totalBytes ? chunk.subarray(offset, offset + sendBytes) : chunk;
+          await sendRawChunk(view);
+          offset += sendBytes;
+          continue;
+        }
+        const copyBytes = Math.min(packetCap - pendingBytes, totalBytes - offset);
+        pendingBuffer.set(chunk.subarray(offset, offset + copyBytes), pendingBytes);
+        pendingBytes += copyBytes;
+        offset += copyBytes;
+        generation++;
+        if (pendingBytes === packetCap || packetCap - pendingBytes < tailBytes) await flush();
+        else scheduleFlush();
+      }
+    },
+    flush
+  };
+}
+
+async function waitForBackpressure(ws) {
+  if (typeof ws.bufferedAmount === "number") {
+    while (ws.bufferedAmount > 256 * 1024) {
+      await new Promise((r) => setTimeout(r, 100));
+    }
+  }
+}
+
+async function connectStreams(remoteSocket, webSocket, headerData, retryFunc, onBytes) {
+  let header = headerData, hasData = false, reader, useBYOB = false;
+  const BYOB_LIMIT = 64 * 1024;
+  const downstreamSender = createDownstreamSender(webSocket, header);
+  header = null;
+  try {
+    reader = remoteSocket.readable.getReader({ mode: "byob" });
+    useBYOB = true;
+  } catch (e) {
+    reader = remoteSocket.readable.getReader();
+  }
+  try {
+    if (!useBYOB) {
+      while (true) {
+        await waitForBackpressure(webSocket);
+        const { done, value } = await reader.read();
+        if (done) break;
+        if (!value || value.byteLength === 0) continue;
+        hasData = true;
+        if (typeof onBytes === "function") onBytes(value.byteLength);
+        await downstreamSender.send(value);
+      }
+    } else {
+      let readBuffer = new ArrayBuffer(BYOB_LIMIT);
+      while (true) {
+        await waitForBackpressure(webSocket);
+        const { done, value } = await reader.read(new Uint8Array(readBuffer, 0, BYOB_LIMIT));
+        if (done) break;
+        if (!value || value.byteLength === 0) continue;
+        hasData = true;
+        if (typeof onBytes === "function") onBytes(value.byteLength);
+        if (value.byteLength >= DOWNSTREAM_GRAIN_BYTES) {
+          await downstreamSender.flush();
+          await downstreamSender.sendDirect(value);
+          readBuffer = new ArrayBuffer(BYOB_LIMIT);
+        } else {
+          await downstreamSender.send(value);
+          readBuffer = value.buffer.byteLength >= BYOB_LIMIT ? value.buffer : new ArrayBuffer(BYOB_LIMIT);
+        }
+      }
+    }
+    await downstreamSender.flush();
+  } catch (err) {
+    closeSocketQuietly(webSocket);
+  } finally {
+    try {
+      reader.cancel();
+    } catch (e) {}
+    try {
+      reader.releaseLock();
+    } catch (e) {}
+  }
+  if (!hasData && retryFunc) await retryFunc();
+}
+
+async function buildRaceCandidates(address, port) {
+  if (!PRELOAD_RACE_DIAL || isIPHostname(address)) return null;
+  const [aRecords, aaaaRecords] = await Promise.all([
+    dohQuery(address, "A"),
+    dohQuery(address, "AAAA")
+  ]);
+  const ipv4List = [...new Set(aRecords.flatMap((r) => {
+    return r.type === 1 && typeof r.data === "string" && isIPv4(r.data) ? [r.data] : [];
+  }))];
+  const ipv6List = [...new Set(aaaaRecords.flatMap((r) => {
+    return r.type === 28 && typeof r.data === "string" && isIPHostname(r.data) ? [r.data] : [];
+  }))];
+  const limit = Math.max(1, TCP_CONCURRENCY | 0);
+  const ipList = ipv4List.length >= limit ? ipv4List.slice(0, limit) : ipv4List.concat(ipv6List.slice(0, limit - ipv4List.length));
+  if (ipList.length === 0) return null;
+  return ipList.map((hostname, attempt) => ({ hostname, port, attempt, resolvedFrom: address }));
+}
+
+async function connectDirect(address, port, initialData = null) {
+  const raceCandidates = await buildRaceCandidates(address, port);
+  const candidates = raceCandidates || Array.from({ length: TCP_CONCURRENCY }, () => ({ hostname: address, port }));
+  const openConnection = async (host, prt) => {
+    const socket = connect({ hostname: host, port: prt });
+    await Promise.race([
+      socket.opened,
+      new Promise((_, reject) => setTimeout(() => reject(new Error("timeout")), 1e3))
+    ]);
+    return socket;
+  };
+  if (candidates.length === 1) {
+    const s = await openConnection(candidates[0].hostname, candidates[0].port);
+    if (initialData && initialData.byteLength > 0) {
+      const w = s.writable.getWriter();
+      await w.write(convertToUint8Array(initialData));
+      w.releaseLock();
+    }
+    return s;
+  }
+  const attempts = candidates.map((c) => openConnection(c.hostname, c.port).then((socket) => ({ socket, candidate: c })));
+  let winner = null;
+  try {
+    winner = await Promise.any(attempts);
+    if (initialData && initialData.byteLength > 0) {
+      const w = winner.socket.writable.getWriter();
+      await w.write(convertToUint8Array(initialData));
+      w.releaseLock();
+    }
+    return winner.socket;
+  } finally {
+    if (winner) {
+      for (const attempt of attempts) {
+        attempt.then(({ socket }) => {
+          if (socket !== winner.socket) {
+            try {
+              socket.close();
+            } catch (e) {}
+          }
+        }).catch(() => {});
+      }
+    }
+  }
+}
+
+async function forwardVlessUDP(udpChunk, webSocket, respHeader) {
+  const requestData = convertToUint8Array(udpChunk);
+  try {
+    const tcpSocket = connect({ hostname: "8.8.4.4", port: 53 });
+    let vlessHeader = respHeader;
+    const writer = tcpSocket.writable.getWriter();
+    await writer.write(requestData);
+    writer.releaseLock();
+    await tcpSocket.readable.pipeTo(new WritableStream({
+      async write(chunk) {
+        const response = convertToUint8Array(chunk);
+        if (webSocket.readyState !== WebSocket.OPEN) return;
+        if (vlessHeader) {
+          const merged = new Uint8Array(vlessHeader.length + response.byteLength);
+          merged.set(vlessHeader, 0);
+          merged.set(response, vlessHeader.length);
+          webSocket.send(merged.buffer);
+          vlessHeader = null;
+        } else {
+          webSocket.send(response);
+        }
+      }
+    }));
+  } catch (e) {}
+}
+
+function extractUUIDFromVless(data) {
+  if (data.byteLength < 17) return null;
+  const hex = [...data.slice(1, 17)].map((b) => b.toString(16).padStart(2, "0")).join("");
+  return hex.substring(0, 8) + "-" + hex.substring(8, 12) + "-" + hex.substring(12, 16) + "-" + hex.substring(16, 20) + "-" + hex.substring(20);
+}
+
+// ============================================
+// HTML TEMPLATES - COMPLETE
+// ============================================
+var HTML_TEMPLATES = {
+  nginx: `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MrVpn Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif}
+        body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#06060e;color:#e2e8f0;overflow:hidden}
+        .bg-orbs{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+        .orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.18;animation:drift 12s ease-in-out infinite}
+        .orb-1{width:400px;height:400px;background:#6366f1;top:-10%;left:-5%;animation-delay:0s}
+        .orb-2{width:350px;height:350px;background:#a855f7;bottom:-10%;right:-5%;animation-delay:-4s}
+        .orb-3{width:250px;height:250px;background:#06b6d4;top:50%;left:50%;transform:translate(-50%,-50%);animation-delay:-8s}
+        @keyframes drift{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-20px) scale(1.05)}66%{transform:translate(-20px,30px) scale(.95)}}
+        .hero{position:relative;z-index:1;text-align:center;padding:20px;max-width:520px;width:100%}
+        .logo-wrap{display:inline-flex;align-items:center;justify-content:center;width:80px;height:80px;border-radius:24px;background:linear-gradient(135deg,rgba(99,102,241,.2),rgba(168,85,247,.2));border:1px solid rgba(99,102,241,.25);margin-bottom:28px;animation:float 6s ease-in-out infinite;box-shadow:0 0 60px rgba(99,102,241,.15)}
+        .logo-wrap svg{width:40px;height:40px;color:#818cf8}
+        @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+        h1{font-size:clamp(36px,6vw,52px);font-weight:900;background:linear-gradient(135deg,#818cf8,#c084fc,#818cf8);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:gradShift 4s ease-in-out infinite;margin-bottom:8px;line-height:1.1}
+        @keyframes gradShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+        .tagline{color:#64748b;font-size:14px;font-weight:500;margin-bottom:24px}
+        .status-pill{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:9999px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);font-size:12px;color:#4ade80;font-weight:600;margin-bottom:36px}
+        .status-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;animation:pulse 2s ease-in-out infinite}
+        @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+        .info-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:32px}
+        .info-card{padding:16px 12px;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);backdrop-filter:blur(12px);transition:all .3s}
+        .info-card:hover{border-color:rgba(99,102,241,.3);transform:translateY(-2px)}
+        .info-card .label{font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+        .info-card .value{font-size:16px;font-weight:700;color:#fff}
+        .info-card .value.accent{color:#818cf8}
+        .info-card .value.green{color:#4ade80}
+        .enter-btn{display:inline-flex;align-items:center;gap:10px;padding:14px 40px;border-radius:16px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;font-size:14px;font-weight:700;text-decoration:none;border:none;cursor:pointer;transition:all .25s;box-shadow:0 4px 24px rgba(99,102,241,.3);position:relative;overflow:hidden}
+        .enter-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent,rgba(255,255,255,.1),transparent);transform:translateX(-100%);transition:transform .5s}
+        .enter-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(99,102,241,.45)}
+        .enter-btn:hover::before{transform:translateX(100%)}
+        .enter-btn svg{width:18px;height:18px}
+        .footer{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,255,255,.05);display:flex;justify-content:center;align-items:center;gap:16px;flex-wrap:wrap;font-size:12px;color:#475569}
+        .footer a{color:#64748b;text-decoration:none;display:flex;align-items:center;gap:5px;transition:color .2s}
+        .footer a:hover{color:#e2e8f0}
+        .footer svg{width:14px;height:14px}
+        @media(max-width:480px){.info-cards{grid-template-columns:1fr}.info-card{padding:14px}}
+    </style>
+</head>
+<body>
+    <div class="bg-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+    <div class="hero">
+        <div class="logo-wrap">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        </div>
+        <h1>MrVpn Panel</h1>
+        <p class="tagline">Next-Gen VPN Management Panel</p>
+        <div class="status-pill"><span class="status-dot"></span>System Online</div>
+        <div class="info-cards">
+            <div class="info-card"><div class="label">Version</div><div class="value">v3.0.0</div></div>
+            <div class="info-card"><div class="label">Protocol</div><div class="value accent">VLESS+WS</div></div>
+            <div class="info-card"><div class="label">Status</div><div class="value green">Running</div></div>
+        </div>
+        <a href="/panel" class="enter-btn">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
+            Enter Dashboard
+        </a>
+        <div class="footer">
+            <span>v3.0.0</span>
+            <a href="https://github.com/MrVpnPanel/panel" target="_blank">
+                <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z"/></svg>
+                GitHub
+            </a>
+            <a href="https://t.me/MrVpnPanel" target="_blank">
+                <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.94-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.37.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .24z"/></svg>
+                Telegram
+            </a>
+            <span>@MrVpnPanel</span>
+        </div>
+    </div>
+</body>
+</html>`,
+
+  setup: `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setup - MrVpn Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif}
+        body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#06060e;color:#e2e8f0;overflow:hidden}
+        .bg-orbs{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+        .orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.18;animation:drift 12s ease-in-out infinite}
+        .orb-1{width:400px;height:400px;background:#6366f1;top:-10%;left:-5%;animation-delay:0s}
+        .orb-2{width:350px;height:350px;background:#a855f7;bottom:-10%;right:-5%;animation-delay:-4s}
+        @keyframes drift{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-20px) scale(1.05)}66%{transform:translate(-20px,30px) scale(.95)}}
+        .card{position:relative;z-index:1;width:100%;max-width:420px;padding:40px 32px;border-radius:24px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);backdrop-filter:blur(24px);box-shadow:0 0 80px rgba(99,102,241,.1),0 24px 48px rgba(0,0,0,.3);margin:20px}
+        .card-header{text-align:center;margin-bottom:32px}
+        .icon-wrap{display:inline-flex;align-items:center;justify-content:center;width:64px;height:64px;border-radius:20px;background:linear-gradient(135deg,rgba(99,102,241,.15),rgba(168,85,247,.15));border:1px solid rgba(99,102,241,.2);margin-bottom:20px}
+        .icon-wrap svg{width:28px;height:28px;color:#818cf8}
+        h2{font-size:24px;font-weight:800;color:#fff;margin-bottom:6px}
+        .subtitle{font-size:13px;color:#64748b}
+        .form-group{margin-bottom:18px}
+        label{display:block;font-size:11px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+        input{width:100%;padding:14px 16px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:#fff;font-size:14px;transition:all .25s;outline:none}
+        input::placeholder{color:#475569}
+        input:focus{border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,.15);background:rgba(255,255,255,.06)}
+        .btn{width:100%;padding:14px;border-radius:14px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;font-size:14px;font-weight:700;border:none;cursor:pointer;transition:all .25s;box-shadow:0 4px 20px rgba(99,102,241,.3);margin-top:8px;position:relative;overflow:hidden}
+        .btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent,rgba(255,255,255,.1),transparent);transform:translateX(-100%);transition:transform .5s}
+        .btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(99,102,241,.4)}
+        .btn:hover::before{transform:translateX(100%)}
+        .btn:active{transform:translateY(0)}
+    </style>
+</head>
+<body>
+    <div class="bg-orbs"><div class="orb orb-1"></div><div class="orb orb-2"></div></div>
+    <div class="card">
+        <div class="card-header">
+            <div class="icon-wrap">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+            </div>
+            <h2>Setup Password</h2>
+            <p class="subtitle">Create your admin password to get started</p>
+        </div>
+        <form onsubmit="handleSetup(event)">
+            <div class="form-group">
+                <label>New Password</label>
+                <input type="password" id="password" placeholder="Enter password..." required minlength="4" autocomplete="new-password">
+            </div>
+            <div class="form-group">
+                <label>Confirm Password</label>
+                <input type="password" id="confirm-password" placeholder="Confirm password..." required minlength="4" autocomplete="new-password">
+            </div>
+            <button type="submit" id="submit-btn" class="btn">Create Account</button>
+        </form>
+    </div>
+    <script>
+        async function handleSetup(e){
+            e.preventDefault();
+            const p=document.getElementById('password').value;
+            const c=document.getElementById('confirm-password').value;
+            const b=document.getElementById('submit-btn');
+            if(p!==c){alert('Passwords do not match!');return}
+            b.disabled=true;b.innerText='Creating...';
+            try{const r=await fetch('/api/setup-password',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:p})});const d=await r.json();if(r.ok&&d.success)window.location.reload();else alert('Error: '+(d.error||'Failed'));}catch(e){alert('Connection error');}finally{b.disabled=false;b.innerText='Create Account';}
+        }
+    <\/script>
+</body>
+</html>`,
+
+  login: `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - MrVpn Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif}
+        body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#06060e;color:#e2e8f0;overflow:hidden}
+        .bg-orbs{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+        .orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.18;animation:drift 12s ease-in-out infinite}
+        .orb-1{width:400px;height:400px;background:#6366f1;top:-10%;left:-5%;animation-delay:0s}
+        .orb-2{width:350px;height:350px;background:#a855f7;bottom:-10%;right:-5%;animation-delay:-4s}
+        .orb-3{width:200px;height:200px;background:#06b6d4;top:60%;left:60%;animation-delay:-8s}
+        @keyframes drift{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-20px) scale(1.05)}66%{transform:translate(-20px,30px) scale(.95)}}
+        .card{position:relative;z-index:1;width:100%;max-width:420px;padding:40px 32px;border-radius:24px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);backdrop-filter:blur(24px);box-shadow:0 0 80px rgba(99,102,241,.1),0 24px 48px rgba(0,0,0,.3);margin:20px;animation:fadeUp .6s ease-out}
+        @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+        .card-header{text-align:center;margin-bottom:32px}
+        .logo-wrap{display:inline-flex;align-items:center;justify-content:center;width:64px;height:64px;border-radius:20px;background:linear-gradient(135deg,rgba(99,102,241,.15),rgba(168,85,247,.15));border:1px solid rgba(99,102,241,.2);margin-bottom:20px;box-shadow:0 0 40px rgba(99,102,241,.1)}
+        .logo-wrap svg{width:28px;height:28px;color:#818cf8}
+        h2{font-size:24px;font-weight:800;color:#fff;margin-bottom:6px}
+        .subtitle{font-size:13px;color:#64748b}
+        .form-group{margin-bottom:18px;position:relative}
+        label{display:block;font-size:11px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+        .input-wrap{position:relative}
+        .input-wrap svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:#475569;transition:color .2s;pointer-events:none}
+        input{width:100%;padding:14px 16px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:#fff;font-size:14px;transition:all .25s;outline:none}
+        input::placeholder{color:#475569}
+        input:focus{border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,.15);background:rgba(255,255,255,.06)}
+        input:focus+.input-icon-left{color:#818cf8}
+        .btn{width:100%;padding:14px;border-radius:14px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;font-size:14px;font-weight:700;border:none;cursor:pointer;transition:all .25s;box-shadow:0 4px 20px rgba(99,102,241,.3);margin-top:8px;position:relative;overflow:hidden}
+        .btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent,rgba(255,255,255,.1),transparent);transform:translateX(-100%);transition:transform .5s}
+        .btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(99,102,241,.4)}
+        .btn:hover::before{transform:translateX(100%)}
+        .btn:active{transform:translateY(0)}
+        .btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+        .divider{height:1px;background:rgba(255,255,255,.06);margin:24px 0}
+        .brand-footer{text-align:center;font-size:11px;color:#475569}
+        .brand-footer span{color:#6366f1;font-weight:600}
+    </style>
+</head>
+<body>
+    <div class="bg-orbs"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
+    <div class="card">
+        <div class="card-header">
+            <div class="logo-wrap">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
+            </div>
+            <h2>Welcome Back</h2>
+            <p class="subtitle">Sign in to access your dashboard</p>
+        </div>
+        <form onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label>Username</label>
+                <div class="input-wrap">
+                    <svg class="input-icon-left" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                    <input type="text" id="username" placeholder="Enter username..." required autocomplete="username" style="padding-left:42px">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <div class="input-wrap">
+                    <svg class="input-icon-left" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                    <input type="password" id="password" placeholder="Enter password..." required autocomplete="current-password" style="padding-left:42px">
+                </div>
+            </div>
+            <button type="submit" id="submit-btn" class="btn">Sign In</button>
+        </form>
+        <div class="divider"></div>
+        <div class="brand-footer"><span>MrVpn Panel</span> v3.0.0</div>
+    </div>
+    <script>
+        async function handleLogin(e){
+            e.preventDefault();
+            const u=document.getElementById('username').value;
+            const p=document.getElementById('password').value;
+            const b=document.getElementById('submit-btn');
+            b.disabled=true;b.innerText='Signing in...';
+            try{const r=await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:u,password:p})});const d=await r.json();if(r.ok&&d.success)window.location.reload();else{alert('Invalid credentials!');b.disabled=false;b.innerText='Sign In';}}catch(e){alert('Connection error');b.disabled=false;b.innerText='Sign In';}
+        }
+    <\/script>
+</body>
+</html>`,
+
+  panel: `<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MrVpn Panel</title>
+    <script>
+        const originalWarn = console.warn;
+        console.warn = (...args) => {
+            if (typeof args[0] === 'string' && args[0].includes('cdn.tailwindcss.com')) return;
+            originalWarn(...args);
+        };
+    <\/script>
+    <script src="https://cdn.tailwindcss.com"><\/script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"><\/script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+        body { background: #0a0a0f; color: #e5e7eb; }
+        .glass { background: rgba(255,255,255,0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.06); }
+        .glass-light { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.06); }
+        .glow { box-shadow: 0 0 60px rgba(99, 102, 241, 0.1); }
+        .sidebar { background: #0d0d18; border-right: 1px solid rgba(255,255,255,0.04); }
+        .sidebar-link { transition: all 0.2s; border-radius: 12px; padding: 10px 16px; }
+        .sidebar-link:hover { background: rgba(255,255,255,0.05); color: white; }
+        .sidebar-link.active { background: rgba(99, 102, 241, 0.12); color: #818cf8; }
+        .stat-card { transition: all 0.3s; }
+        .stat-card:hover { transform: translateY(-4px); border-color: rgba(99, 102, 241, 0.3); }
+        input, select, textarea { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); transition: all 0.2s; }
+        input:focus, select:focus, textarea:focus { border-color: #818cf8; box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15); outline: none; }
+        .badge { padding: 2px 10px; border-radius: 6px; font-size: 10px; font-weight: 600; }
+        .badge-success { background: rgba(52, 211, 153, 0.15); color: #34d399; }
+        .badge-danger { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+        .badge-warning { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
+        .badge-info { background: rgba(96, 165, 250, 0.15); color: #60a5fa; }
+        .badge-purple { background: rgba(168, 85, 247, 0.15); color: #a855f7; }
+        .action-btn { transition: all 0.15s; padding: 6px; border-radius: 8px; }
+        .action-btn:hover { transform: scale(1.1); background: rgba(255,255,255,0.05); }
+        .system-stat { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); border-radius: 14px; padding: 16px; }
+        .system-stat:hover { border-color: rgba(99, 102, 241, 0.2); }
+        .btn-xray { padding: 6px 16px; border-radius: 8px; font-size: 12px; font-weight: 600; transition: all 0.2s; }
+        .btn-xray:hover { transform: scale(1.05); }
+        .scrollbar-thin::-webkit-scrollbar { width: 4px; }
+        .scrollbar-thin::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
+        .scrollbar-thin::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.3); border-radius: 8px; }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
+        ::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.3); border-radius: 8px; }
+        .modal-overlay { background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); }
+        .modal-card { max-height: 90vh; overflow-y: auto; }
+        .page-section { display: none; }
+        .page-section.active { display: block; }
+        .port-checkbox:checked + .port-label-tls { border-color: #34d399; background: rgba(52, 211, 153, 0.1); color: #34d399; }
+        .port-checkbox:checked + .port-label-nontls { border-color: #fbbf24; background: rgba(251, 191, 36, 0.1); color: #fbbf24; }
+
+        /* ============================================
+           MOBILE SIDEBAR STYLES
+           ============================================ */
+        @media (max-width: 1023px) {
+            .sidebar {
+                position: fixed !important;
+                top: 0 !important;
+                left: -100% !important;
+                width: 280px !important;
+                height: 100vh !important;
+                background: #0d0d18 !important;
+                border-right: 1px solid rgba(255,255,255,0.04) !important;
+                transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+                z-index: 1000 !important;
+                overflow-y: auto !important;
+                display: block !important;
+                padding-top: 0 !important;
+            }
+            
+            .sidebar.active { 
+                left: 0 !important; 
+            }
+            
+            .sidebar-overlay {
+                display: none !important;
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                background: rgba(0,0,0,0.6) !important;
+                z-index: 999 !important;
+                backdrop-filter: blur(4px) !important;
+                -webkit-backdrop-filter: blur(4px) !important;
+                transition: opacity 0.3s ease !important;
+            }
+            
+            .sidebar-overlay.active { 
+                display: block !important; 
+                opacity: 1 !important;
+            }
+            
+            .lg\\:ml-64 { 
+                margin-left: 0 !important; 
+            }
+            
+            .main-content { 
+                width: 100% !important; 
+                overflow-x: hidden !important;
+            }
+            
+            .sidebar::-webkit-scrollbar {
+                width: 3px;
+            }
+            .sidebar::-webkit-scrollbar-track {
+                background: transparent;
+            }
+            .sidebar::-webkit-scrollbar-thumb {
+                background: rgba(99, 102, 241, 0.3);
+                border-radius: 10px;
+            }
+            
+            .sidebar .p-6 {
+                padding: 16px !important;
+            }
+            .sidebar-link {
+                padding: 8px 12px !important;
+                font-size: 13px !important;
+            }
+            .sidebar .absolute.bottom-6 {
+                position: relative !important;
+                bottom: auto !important;
+                left: auto !important;
+                right: auto !important;
+                margin-top: 20px !important;
+                padding-top: 16px !important;
+                border-top: 1px solid rgba(255,255,255,0.04) !important;
+            }
+            .system-stat { padding: 12px !important; }
+            .stat-card { padding: 16px !important; }
+            .users-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .users-table-wrap table { min-width: 700px; }
+        }
+
+        @media (max-width: 640px) {
+            .sidebar {
+                width: 280px !important;
+            }
+            .sidebar .p-6 {
+                padding: 14px !important;
+            }
+            .sidebar-link {
+                padding: 6px 10px !important;
+                font-size: 12px !important;
+            }
+            .sidebar .text-lg {
+                font-size: 16px !important;
+            }
+            .glass-modal { padding: 20px 16px; }
+            .modal-card { max-width: 100%; margin: 10px; }
+            .modal-card form .grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+            .stats-grid .stat-card { padding: 12px; }
+            .stats-grid .stat-card .w-12 { width: 36px; height: 36px; }
+            .stats-grid .stat-card .w-12 svg { width: 18px; height: 18px; }
+            header h1 { font-size: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar Overlay -->
+    <div id="sidebar-overlay" class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+    <!-- ============================================
+    SIDEBAR
+    ============================================ -->
+    <div class="fixed inset-y-0 left-0 w-64 sidebar z-50">
+        <div class="p-6">
+            <div class="flex items-center gap-3 mb-10">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                </div>
+                <span class="text-lg font-bold text-white">MrVpn Panel</span>
+            </div>
+            
+            <nav class="space-y-1">
+                <a href="#" onclick="showPage('dashboard')" class="sidebar-link active flex items-center gap-3 text-sm font-medium text-indigo-400" data-page="dashboard">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+                    </svg>
+                    Overview
+                </a>
+                <a href="#" onclick="showPage('users')" class="sidebar-link flex items-center gap-3 text-sm font-medium text-zinc-400 hover:text-white transition" data-page="users">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                    </svg>
+                    Users
+                </a>
+                <a href="#" onclick="showPage('settings')" class="sidebar-link flex items-center gap-3 text-sm font-medium text-zinc-400 hover:text-white transition" data-page="settings">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                    Settings
+                </a>
+                <a href="#" onclick="showPage('logs')" class="sidebar-link flex items-center gap-3 text-sm font-medium text-zinc-400 hover:text-white transition" data-page="logs">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+                    </svg>
+                    Logs
+                </a>
+                <a href="#" onclick="showPage('admins')" class="sidebar-link flex items-center gap-3 text-sm font-medium text-zinc-400 hover:text-white transition" data-page="admins">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                    </svg>
+                    Admins
+                </a>
+                <a href="#" onclick="logoutAdmin()" class="sidebar-link flex items-center gap-3 text-sm font-medium text-zinc-400 hover:text-red-400 transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                    </svg>
+                    Log Out
+                </a>
+            </nav>
+            
+            <div class="absolute bottom-6 left-6 right-6">
+                <div class="glass rounded-xl p-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-sm font-bold text-white">A</div>
+                        <div>
+                            <p class="text-sm font-semibold text-white">Admin</p>
+                            <p class="text-xs text-emerald-400">● Online</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3 flex items-center justify-between text-xs text-zinc-500">
+                    <span>v3.0.0</span>
+                    <span>@MrVpnPanel</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+    MAIN CONTENT
+    ============================================ -->
+    <div class="lg:ml-64 min-h-screen main-content">
+        
+        <!-- HEADER -->
+        <header class="bg-[#0a0a0f]/80 backdrop-blur-xl border-b border-zinc-800/30 px-4 sm:px-6 py-3 sm:py-4 sticky top-0 z-40">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3 sm:gap-4">
+                    <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-lg hover:bg-white/5 text-zinc-400">
+                        <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                    <div>
+                        <h1 class="text-lg sm:text-xl font-bold text-white" id="page-title">Overview</h1>
+                        <p class="text-xs text-zinc-400 hidden sm:block" id="page-subtitle">System overview and statistics</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <span class="text-xs text-zinc-500 hidden sm:inline">v3.0.0</span>
+                    <span class="w-px h-6 bg-zinc-800 hidden sm:block"></span>
+                    <span class="text-xs text-emerald-400 flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span class="hidden xs:inline">Xray Running</span>
+                    </span>
+                    <button onclick="toggleTheme()" class="p-2 rounded-lg hover:bg-white/5 text-zinc-400 transition">
+                        <svg id="theme-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- ============================================
+        MAIN CONTENT AREA
+        ============================================ -->
+        <main class="p-3 sm:p-6">
+            
+            <!-- ==========================================
+            PAGE: DASHBOARD
+            ========================================== -->
+            <div id="page-dashboard" class="page-section active">
+                <!-- System Stats -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6 stats-grid">
+                    <div class="system-stat">
+                        <div class="flex items-center justify-between">
+                            <p class="text-[10px] sm:text-xs text-zinc-400 font-medium">CPU</p>
+                            <span class="text-[10px] sm:text-xs text-indigo-400">48 Cores</span>
+                        </div>
+                        <p class="text-base sm:text-lg font-bold text-white mt-1">12.5%</p>
+                        <div class="w-full bg-zinc-800 rounded-full h-1.5 mt-2">
+                            <div class="bg-indigo-500 h-1.5 rounded-full transition-all" style="width: 12.5%"></div>
+                        </div>
+                        <p class="text-[8px] sm:text-[10px] text-zinc-500 mt-1">12.5 | 11.4 | 11.6</p>
+                    </div>
+                    <div class="system-stat">
+                        <div class="flex items-center justify-between">
+                            <p class="text-[10px] sm:text-xs text-zinc-400 font-medium">RAM</p>
+                            <span class="text-[10px] sm:text-xs text-emerald-400">49.4%</span>
+                        </div>
+                        <p class="text-base sm:text-lg font-bold text-white">159.30 GB</p>
+                        <p class="text-[8px] sm:text-xs text-zinc-500">/ 322.69 GB</p>
+                        <div class="w-full bg-zinc-800 rounded-full h-1.5 mt-1">
+                            <div class="bg-emerald-500 h-1.5 rounded-full transition-all" style="width: 49.4%"></div>
+                        </div>
+                    </div>
+                    <div class="system-stat">
+                        <div class="flex items-center justify-between">
+                            <p class="text-[10px] sm:text-xs text-zinc-400 font-medium">Swap</p>
+                            <span class="text-[10px] sm:text-xs text-yellow-400">0.6%</span>
+                        </div>
+                        <p class="text-base sm:text-lg font-bold text-white">1.39 GB</p>
+                        <p class="text-[8px] sm:text-xs text-zinc-500">/ 223.56 GB</p>
+                        <div class="w-full bg-zinc-800 rounded-full h-1.5 mt-1">
+                            <div class="bg-yellow-500 h-1.5 rounded-full transition-all" style="width: 0.6%"></div>
+                        </div>
+                    </div>
+                    <div class="system-stat">
+                        <div class="flex items-center justify-between">
+                            <p class="text-[10px] sm:text-xs text-zinc-400 font-medium">Storage</p>
+                            <span class="text-[10px] sm:text-xs text-blue-400">28.6%</span>
+                        </div>
+                        <p class="text-base sm:text-lg font-bold text-white">818.93 GB</p>
+                        <p class="text-[8px] sm:text-xs text-zinc-500">/ 2.86 TB</p>
+                        <div class="w-full bg-zinc-800 rounded-full h-1.5 mt-1">
+                            <div class="bg-blue-500 h-1.5 rounded-full transition-all" style="width: 28.6%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Xray Controls -->
+                <div class="glass rounded-2xl p-4 sm:p-5 mb-4 sm:mb-6">
+                    <div class="flex flex-wrap items-center justify-between gap-3 sm:gap-4">
+                        <div class="flex items-center gap-3 sm:gap-4 flex-wrap">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                                <span class="text-sm font-bold text-white">Xray</span>
+                            </div>
+                            <span class="text-xs text-zinc-400 bg-zinc-800/50 px-2 py-1 rounded">v26.4.25</span>
+                            <span class="text-xs text-emerald-400 bg-emerald-500/10 px-2 sm:px-3 py-1 rounded-full border border-emerald-500/20">● Running</span>
+                        </div>
+                        <div class="flex items-center gap-1 sm:gap-2">
+                            <button onclick="controlXray('stop')" class="btn-xray text-xs sm:text-sm bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/20 px-2 sm:px-4">Stop</button>
+                            <button onclick="controlXray('restart')" class="btn-xray text-xs sm:text-sm bg-yellow-500/10 text-yellow-400 hover:bg-yellow-500/20 border border-yellow-500/20 px-2 sm:px-4">Restart</button>
+                            <button onclick="controlXray('start')" class="btn-xray text-xs sm:text-sm bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 border border-emerald-500/20 px-2 sm:px-4">Start</button>
+                        </div>
+                        <div class="flex items-center gap-2 sm:gap-3 text-[10px] sm:text-xs text-zinc-400 flex-wrap">
+                            <span>Uptime: <span id="xray-uptime" class="text-white font-medium">3m</span></span>
+                            <span class="hidden xs:inline">|</span>
+                            <span class="hidden xs:inline">RAM: <span class="text-white font-medium">50.98 MB</span></span>
+                            <span class="hidden xs:inline">|</span>
+                            <span class="hidden xs:inline">Threads: <span class="text-white font-medium">14</span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-8 stats-grid">
+                    <div class="glass rounded-2xl p-4 sm:p-6 stat-card">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-zinc-400 text-[10px] sm:text-xs font-medium uppercase tracking-wider">Total Users</p>
+                                <p class="text-2xl sm:text-3xl font-black text-white mt-1" id="stat-total-users">0</p>
+                            </div>
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
+                                <svg class="w-5 h-5 sm:w-6 sm:h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="glass rounded-2xl p-4 sm:p-6 stat-card">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-zinc-400 text-[10px] sm:text-xs font-medium uppercase tracking-wider">Online</p>
+                                <p class="text-2xl sm:text-3xl font-black text-emerald-400 mt-1" id="stat-active-users">0</p>
+                            </div>
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+                                <svg class="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="glass rounded-2xl p-4 sm:p-6 stat-card">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-zinc-400 text-[10px] sm:text-xs font-medium uppercase tracking-wider">Traffic</p>
+                                <p class="text-2xl sm:text-3xl font-black text-blue-400 mt-1" id="stat-total-usage">0 GB</p>
+                            </div>
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
+                                <svg class="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="glass rounded-2xl p-4 sm:p-6 stat-card">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-zinc-400 text-[10px] sm:text-xs font-medium uppercase tracking-wider">Top User</p>
+                                <p class="text-lg sm:text-2xl font-black text-purple-400 mt-1 truncate max-w-[80px] sm:max-w-[120px]" id="stat-top-user">-</p>
+                            </div>
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
+                                <svg class="w-5 h-5 sm:w-6 sm:h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="text-[10px] sm:text-xs text-zinc-500 mt-1 sm:mt-2" id="stat-top-user-usage">0 GB used</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==========================================
+            PAGE: USERS
+            ========================================== -->
+            <div id="page-users" class="page-section">
+                <div class="glass rounded-2xl p-4 sm:p-6">
+                    <div class="flex flex-wrap items-center justify-between gap-3 mb-4 sm:mb-6">
+                        <div>
+                            <h2 class="text-lg font-bold text-white">Users</h2>
+                            <p class="text-xs text-zinc-400">Manage your VLESS users</p>
+                        </div>
+                        <button onclick="openCreateModal()" class="flex items-center gap-2 px-3 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-bold rounded-xl transition text-xs sm:text-sm shadow-lg shadow-indigo-500/25 transform hover:scale-[1.02]">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/>
+                            </svg>
+                            <span class="hidden xs:inline">Add User</span>
+                            <span class="xs:hidden">Add</span>
+                        </button>
+                    </div>
+
+                    <!-- Filters -->
+                    <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 mb-4 sm:mb-6">
+                        <div class="flex-1 relative">
+                            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            </svg>
+                            <input type="text" id="search-input" oninput="filterAndRenderUsers()" placeholder="Search users..." class="w-full pl-9 pr-3 py-2 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition">
+                        </div>
+                        <select id="filter-status" onchange="filterAndRenderUsers()" class="px-3 py-2 rounded-xl text-zinc-300 text-sm outline-none transition cursor-pointer bg-[rgba(255,255,255,0.05)] border border-zinc-800/50">
+                            <option value="all">All</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                            <option value="online">Online</option>
+                            <option value="offline">Offline</option>
+                            <option value="expired">Expired</option>
+                        </select>
+                        <select id="sort-users" onchange="filterAndRenderUsers()" class="px-3 py-2 rounded-xl text-zinc-300 text-sm outline-none transition cursor-pointer bg-[rgba(255,255,255,0.05)] border border-zinc-800/50">
+                            <option value="newest">Newest</option>
+                            <option value="name">Name</option>
+                            <option value="usage-desc">Most Used</option>
+                            <option value="usage-asc">Least Used</option>
+                            <option value="expiry-asc">Expiring</option>
+                        </select>
+                    </div>
+
+                    <div id="loading-state" class="text-center py-8 sm:py-12">
+                        <div class="inline-block w-6 h-6 sm:w-8 sm:h-8 border-2 border-indigo-500/30 border-t-indigo-500 rounded-full animate-spin"></div>
+                        <p class="text-zinc-400 text-sm mt-3">Loading users...</p>
+                    </div>
+
+                    <div id="users-table-container" class="hidden">
+                        <div class="users-table-wrap">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="border-b border-zinc-800/50 text-[10px] sm:text-xs text-zinc-400 uppercase tracking-wider">
+                                        <th class="p-2 sm:p-3 font-medium">User</th>
+                                        <th class="p-2 sm:p-3 font-medium">Subscription</th>
+                                        <th class="p-2 sm:p-3 font-medium hidden sm:table-cell">Protocol</th>
+                                        <th class="p-2 sm:p-3 font-medium hidden md:table-cell">Ports</th>
+                                        <th class="p-2 sm:p-3 font-medium hidden lg:table-cell">Usage</th>
+                                        <th class="p-2 sm:p-3 font-medium hidden xl:table-cell">Expiry</th>
+                                        <th class="p-2 sm:p-3 font-medium hidden 2xl:table-cell">Created</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="users-tbody" class="divide-y divide-zinc-800/30 text-sm"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div id="empty-state" class="hidden text-center py-8 sm:py-12">
+                        <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-zinc-800/30 flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-6 h-6 sm:w-8 sm:h-8 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                            </svg>
+                        </div>
+                        <p class="text-zinc-400 text-sm">No users found.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==========================================
+            PAGE: SETTINGS
+            ========================================== -->
+            <div id="page-settings" class="page-section">
+                <div class="glass rounded-2xl p-4 sm:p-6 max-w-2xl">
+                    <h2 class="text-lg font-bold text-white mb-4">Panel Settings</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Proxy Location</label>
+                            <select id="location-select" class="w-full px-4 py-3 rounded-xl text-zinc-300 text-sm outline-none transition cursor-pointer bg-[rgba(255,255,255,0.05)] border border-zinc-800/50">
+                                <option value="">Loading...</option>
+                            </select>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3 sm:gap-4">
+                            <div>
+                                <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Fragment Length</label>
+                                <input type="text" id="frag-length" placeholder="20-30" class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition text-center font-mono" dir="ltr">
+                            </div>
+                            <div>
+                                <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Fragment Interval</label>
+                                <input type="text" id="frag-interval" placeholder="1-2" class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition text-center font-mono" dir="ltr">
+                            </div>
+                        </div>
+                        <div class="border-t border-zinc-800/30 pt-4">
+                            <h4 class="text-sm font-semibold text-white mb-3">Change Panel Password</h4>
+                            <div class="space-y-3">
+                                <input type="password" id="change-pwd-current" placeholder="Current password..." class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition">
+                                <input type="password" id="change-pwd-new" placeholder="New password..." class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition">
+                                <button type="button" onclick="changeAdminPassword()" id="change-pwd-btn" class="w-full py-3 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-bold rounded-xl transition text-sm">Update Panel Password</button>
+                            </div>
+                        </div>
+                        <div class="border-t border-zinc-800/30 pt-4">
+                            <h4 class="text-sm font-semibold text-white mb-3">Admin Users</h4>
+                            <div class="space-y-3">
+                                <input type="text" id="admin-username" placeholder="Admin username..." class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition">
+                                <input type="password" id="admin-password" placeholder="Admin password..." class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition">
+                                <button type="button" onclick="addAdmin()" class="w-full py-3 bg-gradient-to-r from-emerald-500 to-blue-500 hover:from-emerald-600 hover:to-blue-600 text-white font-bold rounded-xl transition text-sm shadow-lg shadow-emerald-500/25">Add Admin User</button>
+                            </div>
+                            <div id="admins-list" class="mt-3 space-y-2">
+                                <p class="text-zinc-400 text-sm">Loading admins...</p>
+                            </div>
+                        </div>
+                        <div class="pt-4 border-t border-zinc-800/30">
+                            <h4 class="text-sm font-semibold text-white mb-3">Update Panel</h4>
+                            <div id="update-info" class="text-xs text-zinc-400 mb-2">Checking for updates...</div>
+                            <button onclick="checkUpdate()" class="w-full py-3 bg-gradient-to-r from-emerald-500 to-blue-500 hover:from-emerald-600 hover:to-blue-600 text-white font-bold rounded-xl transition text-sm shadow-lg shadow-emerald-500/25">Check for Updates</button>
+                        </div>
+                        <div class="flex gap-3 pt-2 border-t border-zinc-800/30">
+                            <button type="button" onclick="saveSettings()" id="save-settings-btn" class="flex-1 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-bold rounded-xl transition text-sm shadow-lg shadow-indigo-500/25">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==========================================
+            PAGE: LOGS
+            ========================================== -->
+            <div id="page-logs" class="page-section">
+                <div class="glass rounded-2xl p-4 sm:p-6">
+                    <h2 class="text-lg font-bold text-white mb-4">System Logs</h2>
+                    <div id="logs-container" class="space-y-1 font-mono text-xs max-h-96 overflow-y-auto scrollbar-thin">
+                        <div class="text-emerald-400">● System started at: <span id="log-start-time">-</span></div>
+                        <div class="text-zinc-500">● Xray service running</div>
+                        <div class="text-zinc-500">● WebSocket server listening on /</div>
+                        <div class="text-zinc-500">● API endpoints ready</div>
+                        <div class="text-indigo-400">● Database connected</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==========================================
+            PAGE: ADMINS
+            ========================================== -->
+            <div id="page-admins" class="page-section">
+                <div class="glass rounded-2xl p-4 sm:p-6 max-w-md">
+                    <h2 class="text-lg font-bold text-white mb-4">Admin Management</h2>
+                    <div id="admins-list-2" class="space-y-2">
+                        <p class="text-zinc-400 text-sm">Loading admins...</p>
+                    </div>
+                    <div class="border-t border-zinc-800/30 pt-4 mt-4">
+                        <h4 class="text-sm font-semibold text-white mb-3">Add New Admin</h4>
+                        <div class="space-y-3">
+                            <input type="text" id="admin-username-2" placeholder="Username..." class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition">
+                            <input type="password" id="admin-password-2" placeholder="Password..." class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition">
+                            <button onclick="addAdmin2()" class="w-full py-3 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-bold rounded-xl transition text-sm shadow-lg shadow-indigo-500/25">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- ============================================
+    MODALS
+    ============================================ -->
+
+    <!-- Add/Edit User Modal -->
+    <div id="user-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 modal-overlay opacity-0 pointer-events-none transition-opacity duration-300">
+        <div id="user-modal-card" class="w-full max-w-2xl glass rounded-3xl p-4 sm:p-6 transition-all duration-300 opacity-0 scale-95 modal-card scrollbar-thin">
+            <div class="flex items-center justify-between mb-4 sm:mb-6">
+                <div>
+                    <h3 id="modal-title" class="text-lg sm:text-xl font-bold text-white">Create User</h3>
+                    <p class="text-xs text-zinc-400">Configure user settings and limits</p>
+                </div>
+                <button onclick="toggleModal(false)" class="p-2 rounded-lg hover:bg-white/5 text-zinc-400 transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+
+            <form id="create-user-form" onsubmit="handleFormSubmit(event)" class="space-y-4 sm:space-y-5">
+                <div>
+                    <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Username</label>
+                    <input type="text" id="input-name" placeholder="Enter username..." class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition" required>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 sm:gap-4">
+                    <div>
+                        <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Limit (GB)</label>
+                        <input type="number" id="input-limit" min="0" step="any" placeholder="Unlimited" class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Expiry (Days)</label>
+                        <input type="number" id="input-expiry" min="0" placeholder="Unlimited" class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-zinc-300 text-xs font-semibold mb-2 uppercase tracking-wider">Ports</label>
+                    <div class="grid grid-cols-2 gap-2 sm:gap-3">
+                        <div class="glass-light rounded-xl p-2 sm:p-3">
+                            <p class="text-xs text-emerald-400 font-semibold mb-2">TLS</p>
+                            <div class="flex flex-wrap gap-1 sm:gap-2" id="tls-ports-list"></div>
+                        </div>
+                        <div class="glass-light rounded-xl p-2 sm:p-3">
+                            <p class="text-xs text-amber-400 font-semibold mb-2">Non-TLS</p>
+                            <div class="flex flex-wrap gap-1 sm:gap-2" id="nontls-ports-list"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Custom IPs</label>
+                    <textarea id="input-ips" rows="2" placeholder="One IP per line..." class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition resize-none"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Fingerprint</label>
+                    <select id="fingerprint-select" class="w-full px-4 py-3 rounded-xl text-zinc-300 text-sm outline-none transition cursor-pointer bg-[rgba(255,255,255,0.05)] border border-zinc-800/50">
+                        <option value="chrome">Chrome</option>
+                        <option value="firefox">Firefox</option>
+                        <option value="safari">Safari</option>
+                        <option value="ios">iOS</option>
+                        <option value="android">Android</option>
+                        <option value="edge">Edge</option>
+                        <option value="360">360</option>
+                        <option value="qq">QQ</option>
+                        <option value="random">Random</option>
+                        <option value="randomized">Randomized</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Config Name</label>
+                    <input type="text" id="config-name-input" placeholder="Custom config name..." class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition">
+                </div>
+
+                <div class="flex gap-3 pt-3 sm:pt-4 border-t border-zinc-800/30">
+                    <button type="button" onclick="toggleModal(false)" class="flex-1 py-3 bg-white/5 hover:bg-white/10 text-zinc-400 font-semibold rounded-xl transition text-sm">Cancel</button>
+                    <button type="submit" id="submit-btn" class="flex-1 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-bold rounded-xl transition text-sm shadow-lg shadow-indigo-500/25">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- QR Modal -->
+    <div id="qr-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 modal-overlay opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="glass rounded-3xl p-4 sm:p-6 max-w-sm w-full transition-all duration-300 opacity-0 scale-95 text-center">
+            <h3 id="qr-modal-title" class="text-lg font-bold text-white mb-4">QR Code</h3>
+            <div class="bg-white p-2 sm:p-3 rounded-xl inline-block mb-4">
+                <div id="qrcode-box" class="flex justify-center items-center w-40 h-40 sm:w-48 sm:h-48 mx-auto"></div>
+            </div>
+            <button onclick="toggleQRModal(false)" class="w-full py-3 bg-white/5 hover:bg-white/10 text-zinc-400 font-semibold rounded-xl transition text-sm">Close</button>
+        </div>
+    </div>
+
+    <!-- ============================================
+    JAVASCRIPT
+    ============================================ -->
+    <script>
+        // ============================================
+        // GLOBAL VARIABLES
+        // ============================================
+        window.globalFragLen = "20-30";
+        window.globalFragInt = "1-2";
+        const tlsPorts = ['443', '2053', '2083', '2087', '2096', '8443'];
+        const nonTlsPorts = ['80', '8080', '8880', '2052', '2082', '2086', '2095'];
+        let isEditMode = false;
+        let editingUsername = '';
+        let allUsers = [];
+        let lastServerTime = Date.now();
+        let currentTheme = 'dark';
+
+        // ============================================
+        // SIDEBAR TOGGLE - COMPLETE
+        // ============================================
+        function toggleSidebar() {
+            var sidebar = document.querySelector('.sidebar');
+            var overlay = document.getElementById('sidebar-overlay');
+            var menuIcon = document.querySelector('#menu-icon');
+            
+            if (sidebar) {
+                sidebar.classList.toggle('active');
+            }
+            if (overlay) {
+                overlay.classList.toggle('active');
+            }
+            
+            // تغییر آیکون منو
+            if (menuIcon) {
+                if (sidebar && sidebar.classList.contains('active')) {
+                    menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>';
+                } else {
+                    menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>';
+                }
+            }
+        }
+
+        // بستن منو با کلیک روی Overlay
+        document.addEventListener('click', function(event) {
+            var sidebar = document.querySelector('.sidebar');
+            var toggleBtn = document.querySelector('.lg\\:hidden.p-2');
+            var overlay = document.getElementById('sidebar-overlay');
+            
+            if (window.innerWidth < 1024 && sidebar && toggleBtn && overlay) {
+                if (!sidebar.contains(event.target) && !toggleBtn.contains(event.target)) {
+                    sidebar.classList.remove('active');
+                    overlay.classList.remove('active');
+                    
+                    var menuIcon = document.querySelector('#menu-icon');
+                    if (menuIcon) {
+                        menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>';
+                    }
+                }
+            }
+        });
+
+        // بستن منو با دکمه ESC
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                var sidebar = document.querySelector('.sidebar');
+                var overlay = document.getElementById('sidebar-overlay');
+                if (sidebar && sidebar.classList.contains('active')) {
+                    sidebar.classList.remove('active');
+                    overlay.classList.remove('active');
+                    
+                    var menuIcon = document.querySelector('#menu-icon');
+                    if (menuIcon) {
+                        menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>';
+                    }
+                }
+            }
+        });
+
+        // ============================================
+        // PAGE NAVIGATION (با بستن خودکار منو در موبایل)
+        // ============================================
+        function showPage(page) {
+            document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
+            document.getElementById('page-' + page).classList.add('active');
+            document.querySelectorAll('.sidebar-link').forEach(el => el.classList.remove('active'));
+            var activeLink = document.querySelector('.sidebar-link[data-page="' + page + '"]');
+            if (activeLink) activeLink.classList.add('active');
+            var titles = {
+                dashboard: ['Overview', 'System overview and statistics'],
+                users: ['Users', 'Manage your VLESS users'],
+                settings: ['Panel Settings', 'Configure panel preferences'],
+                logs: ['System Logs', 'Real-time activity logs'],
+                admins: ['Admin Management', 'Add or remove administrators']
+            };
+            document.getElementById('page-title').innerText = titles[page][0];
+            document.getElementById('page-subtitle').innerText = titles[page][1];
+            
+            // بستن خودکار منو در موبایل بعد از کلیک
+            if (window.innerWidth < 1024) {
+                var sidebar = document.querySelector('.sidebar');
+                var overlay = document.getElementById('sidebar-overlay');
+                if (sidebar) sidebar.classList.remove('active');
+                if (overlay) overlay.classList.remove('active');
+                
+                var menuIcon = document.querySelector('#menu-icon');
+                if (menuIcon) {
+                    menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>';
+                }
+            }
+        }
+
+        // ============================================
+        // THEME TOGGLE
+        // ============================================
+        async function toggleTheme() {
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            try {
+                const res = await fetch('/api/theme', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ theme: newTheme })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    currentTheme = data.theme;
+                    applyTheme(currentTheme);
+                }
+            } catch (e) {
+                currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                applyTheme(currentTheme);
+            }
+        }
+
+        function applyTheme(theme) {
+            const html = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            if (theme === 'light') {
+                html.classList.remove('dark');
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M14 12a2 2 0 11-4 0 2 2 0 014 0z"/>';
+                document.body.style.background = '#f1f5f9';
+                document.body.style.color = '#0f172a';
+            } else {
+                html.classList.add('dark');
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>';
+                document.body.style.background = '#0a0a0f';
+                document.body.style.color = '#e5e7eb';
+            }
+            localStorage.setItem('theme', theme);
+        }
+
+        async function loadTheme() {
+            try {
+                const res = await fetch('/api/theme');
+                const data = await res.json();
+                currentTheme = data.theme || 'dark';
+                applyTheme(currentTheme);
+            } catch (e) {
+                const saved = localStorage.getItem('theme') || 'dark';
+                currentTheme = saved;
+                applyTheme(saved);
+            }
+        }
+
+        // ============================================
+        // UPDATE CHECK
+        // ============================================
+        async function checkUpdate() {
+            const info = document.getElementById('update-info');
+            info.innerText = 'Checking for updates...';
+            info.style.color = '#60a5fa';
+            try {
+                const res = await fetch('/api/update-check');
+                const data = await res.json();
+                if (data.update_available) {
+                    info.innerHTML = '✅ New version <strong>' + data.latest_version + '</strong> available! <a href="' + data.url + '" target="_blank" class="text-emerald-400 hover:underline">View release</a>';
+                    info.style.color = '#34d399';
+                } else {
+                    info.innerHTML = '✅ You are running the latest version <strong>' + data.current_version + '</strong>';
+                    info.style.color = '#34d399';
+                }
+            } catch (e) {
+                info.innerText = '❌ Could not check for updates';
+                info.style.color = '#ef4444';
+            }
+        }
+
+        // ============================================
+        // PORT CHECKBOXES
+        // ============================================
+        function renderPortCheckboxes() {
+            var tlsContainer = document.getElementById('tls-ports-list');
+            var nonTlsContainer = document.getElementById('nontls-ports-list');
+
+            tlsContainer.innerHTML = tlsPorts.map(function(port) {
+                var checked = port === '443' ? 'checked' : '';
+                return '<label class="relative cursor-pointer">' +
+                    '<input type="checkbox" name="ports" value="' + port + '" ' + checked + ' class="peer sr-only port-checkbox">' +
+                    '<div class="port-label-tls px-2 sm:px-3 py-1 rounded-lg text-xs font-medium border border-zinc-700/50 bg-[rgba(255,255,255,0.03)] text-zinc-400 peer-checked:border-emerald-400 peer-checked:text-emerald-400 peer-checked:bg-emerald-500/10 transition select-none">' +
+                        port +
+                    '</div>' +
+                '</label>';
+            }).join('');
+
+            nonTlsContainer.innerHTML = nonTlsPorts.map(function(port) {
+                return '<label class="relative cursor-pointer">' +
+                    '<input type="checkbox" name="ports" value="' + port + '" class="peer sr-only port-checkbox">' +
+                    '<div class="port-label-nontls px-2 sm:px-3 py-1 rounded-lg text-xs font-medium border border-zinc-700/50 bg-[rgba(255,255,255,0.03)] text-zinc-400 peer-checked:border-amber-400 peer-checked:text-amber-400 peer-checked:bg-amber-500/10 transition select-none">' +
+                        port +
+                    '</div>' +
+                '</label>';
+            }).join('');
+        }
+
+        // ============================================
+        // MODAL CONTROLS
+        // ============================================
+        function toggleModal(show) {
+            var modal = document.getElementById('user-modal');
+            var card = document.getElementById('user-modal-card');
+            if (show) {
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                modal.classList.add('opacity-100', 'pointer-events-auto');
+                card.classList.remove('opacity-0', 'scale-95');
+                card.classList.add('opacity-100', 'scale-100');
+            } else {
+                modal.classList.remove('opacity-100', 'pointer-events-auto');
+                modal.classList.add('opacity-0', 'pointer-events-none');
+                card.classList.remove('opacity-100', 'scale-100');
+                card.classList.add('opacity-0', 'scale-95');
+                isEditMode = false;
+                editingUsername = '';
+                document.getElementById('modal-title').innerText = 'Create User';
+                document.getElementById('submit-btn').innerText = 'Create';
+                document.getElementById('input-name').disabled = false;
+                document.getElementById('create-user-form').reset();
+                var cb443 = document.querySelector('input[name="ports"][value="443"]');
+                if (cb443) cb443.checked = true;
+            }
+        }
+
+        function openCreateModal() {
+            isEditMode = false;
+            editingUsername = '';
+            document.getElementById('modal-title').innerText = 'Create User';
+            document.getElementById('submit-btn').innerText = 'Create';
+            document.getElementById('input-name').disabled = false;
+            document.getElementById('create-user-form').reset();
+            toggleModal(true);
+            setTimeout(function() {
+                var cb443 = document.querySelector('input[name="ports"][value="443"]');
+                if (cb443) cb443.checked = true;
+            }, 100);
+        }
+
+        function toggleQRModal(show, link, title) {
+            var modal = document.getElementById('qr-modal');
+            var card = modal.querySelector('div');
+            var qrBox = document.getElementById('qrcode-box');
+            var titleEl = document.getElementById('qr-modal-title');
+            if (show) {
+                titleEl.innerText = title || 'QR Code';
+                qrBox.innerHTML = '';
+                try {
+                    new QRCode(qrBox, { text: link, width: 192, height: 192, colorDark: "#000000", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.M });
+                } catch(e) {
+                    qrBox.innerHTML = '<p class="text-zinc-400 text-xs">Error generating QR</p>';
+                }
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                modal.classList.add('opacity-100', 'pointer-events-auto');
+                card.classList.remove('opacity-0', 'scale-95');
+                card.classList.add('opacity-100', 'scale-100');
+            } else {
+                modal.classList.remove('opacity-100', 'pointer-events-auto');
+                modal.classList.add('opacity-0', 'pointer-events-none');
+                card.classList.remove('opacity-100', 'scale-100');
+                card.classList.add('opacity-0', 'scale-95');
+            }
+        }
+
+        // ============================================
+        // XRAY CONTROL
+        // ============================================
+        async function controlXray(action) {
+            try {
+                var res = await fetch('/api/xray', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action })
+                });
+                var data = await res.json();
+                if (data.success) {
+                    alert('✅ Xray ' + action + 'ed successfully!');
+                    updateXrayStatus();
+                } else {
+                    alert('❌ Failed to ' + action + ' Xray');
+                }
+            } catch (err) {
+                alert('❌ Connection error');
+            }
+        }
+
+        async function updateXrayStatus() {
+            try {
+                var res = await fetch('/api/xray/status');
+                var data = await res.json();
+                if (data.running) {
+                    var uptime = data.uptime;
+                    var hours = Math.floor(uptime / 3600);
+                    var minutes = Math.floor((uptime % 3600) / 60);
+                    document.getElementById('xray-uptime').innerText = hours > 0 ? hours + 'h ' + minutes + 'm' : minutes + 'm';
+                } else {
+                    document.getElementById('xray-uptime').innerText = 'Stopped';
+                }
+            } catch (e) {}
+        }
+
+        // ============================================
+        // ADMIN MANAGEMENT
+        // ============================================
+        async function loadAdminsList() {
+            try {
+                var res = await fetch('/api/admins');
+                var data = await res.json();
+                var container1 = document.getElementById('admins-list');
+                var container2 = document.getElementById('admins-list-2');
+                var html = '';
+                if (data.admins && data.admins.length > 0) {
+                    html = data.admins.map(function(a) {
+                        return '<div class="flex items-center justify-between p-3 glass-light rounded-xl">' +
+                            '<span class="text-white text-sm">' + a.username + '</span>' +
+                            '<div class="flex items-center gap-2">' +
+                                '<span class="text-xs text-zinc-500">' + new Date(a.created_at).toLocaleDateString() + '</span>' +
+                                '<button onclick="deleteAdmin(' + a.id + ')" class="text-red-400 hover:text-red-300 text-xs font-semibold">Remove</button>' +
+                            '</div>' +
+                        '</div>';
+                    }).join('');
+                } else {
+                    html = '<p class="text-zinc-400 text-sm">No admins found.</p>';
+                }
+                if (container1) container1.innerHTML = html;
+                if (container2) container2.innerHTML = html;
+            } catch (e) {
+                var errHtml = '<p class="text-red-400 text-sm">Error loading admins</p>';
+                if (document.getElementById('admins-list')) document.getElementById('admins-list').innerHTML = errHtml;
+                if (document.getElementById('admins-list-2')) document.getElementById('admins-list-2').innerHTML = errHtml;
+            }
+        }
+
+        async function addAdmin() {
+            var username = document.getElementById('admin-username').value.trim();
+            var password = document.getElementById('admin-password').value;
+            if (!username || !password || password.length < 4) {
+                alert('❌ Username and password (min 4 chars) required');
+                return;
+            }
+            try {
+                var res = await fetch('/api/admins', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                var data = await res.json();
+                if (data.success) {
+                    alert('✅ Admin added successfully!');
+                    document.getElementById('admin-username').value = '';
+                    document.getElementById('admin-password').value = '';
+                    loadAdminsList();
+                } else {
+                    alert('❌ ' + (data.error || 'Failed to add admin'));
+                }
+            } catch (err) {
+                alert('❌ Connection error');
+            }
+        }
+
+        async function addAdmin2() {
+            var username = document.getElementById('admin-username-2').value.trim();
+            var password = document.getElementById('admin-password-2').value;
+            if (!username || !password || password.length < 4) {
+                alert('❌ Username and password (min 4 chars) required');
+                return;
+            }
+            try {
+                var res = await fetch('/api/admins', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                var data = await res.json();
+                if (data.success) {
+                    alert('✅ Admin added successfully!');
+                    document.getElementById('admin-username-2').value = '';
+                    document.getElementById('admin-password-2').value = '';
+                    loadAdminsList();
+                } else {
+                    alert('❌ ' + (data.error || 'Failed to add admin'));
+                }
+            } catch (err) {
+                alert('❌ Connection error');
+            }
+        }
+
+        async function deleteAdmin(id) {
+            if (!confirm('Are you sure you want to remove this admin?')) return;
+            try {
+                var res = await fetch('/api/admins', {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id })
+                });
+                var data = await res.json();
+                if (data.success) {
+                    alert('✅ Admin removed!');
+                    loadAdminsList();
+                } else {
+                    alert('❌ Failed to remove admin');
+                }
+            } catch (err) {
+                alert('❌ Connection error');
+            }
+        }
+
+        // ============================================
+        // USER FUNCTIONS - FIXED: Process ALL IPs
+        // ============================================
+        function getVlessLink(username) {
+            var user = allUsers.find(function(u) { return u.username === username; });
+            if (!user) return '';
+            var host = window.location.hostname;
+            var ips = [host];
+            if (user.ips) {
+                ips = user.ips.split('\\n').map(function(ip) { return ip.trim(); }).filter(function(ip) { return ip.length > 0; });
+                if (ips.length === 0) ips = [host];
+            }
+            var ports = String(user.port || '443').split(',').map(function(p) { return p.trim(); }).filter(function(p) { return p.length > 0; });
+            var fp = user.fingerprint || 'chrome';
+            var now = new Date();
+            var created = new Date(user.created_at);
+            var expiryDays = user.expiry_days || 30;
+            var expiryDate = new Date(created.getTime() + expiryDays * 24 * 60 * 60 * 1000);
+            var daysLeft = Math.ceil((expiryDate - now) / (1000 * 60 * 60 * 24));
+            var totalGB = user.limit_gb || 0;
+            var usedGB = user.used_gb || 0;
+            var leftGB = Math.max(0, totalGB - usedGB);
+            var expiryDateStr = expiryDate.toISOString().split('T')[0].replace(/-/g, '/');
+            var usedFormatted = usedGB >= 1 ? usedGB.toFixed(1) + 'GB' : (usedGB * 1024).toFixed(0) + 'MB';
+            var totalFormatted = totalGB >= 1 ? totalGB + 'GB' : 'Unlimited';
+            var configName = user.config_name || user.username;
+            var links = [];
+            
+            // First IP and first port for info configs
+            var firstIp = ips[0] || host;
+            var firstPort = ports[0] || '443';
+            var isTlsPort = tlsPorts.includes(firstPort);
+            var tlsVal = isTlsPort ? 'tls' : 'none';
+            
+            // Config 1: Expiry
+            var remark1 = '⏳ ' + user.username.toUpperCase() + ' | 📅 Exp: ' + expiryDateStr + ' | 🔥 ' + daysLeft + ' Days Left';
+            links.push('vle' + 'ss://' + (user.uuid || '') + '@' + firstIp + ':' + firstPort + '?path=%2F&security=' + tlsVal + '&encryption=none&insecure=0&host=' + host + '&fp=' + fp + '&type=ws&allowInsecure=0&sni=' + host + '#' + encodeURIComponent(remark1));
+            
+            // Config 2: Usage
+            var remark2 = '📊 ' + user.username.toUpperCase() + ' | 💾 ' + totalFormatted + ' Total | ⚡ ' + usedFormatted + ' Used';
+            links.push('vle' + 'ss://' + (user.uuid || '') + '@' + firstIp + ':' + firstPort + '?path=%2F&security=' + tlsVal + '&encryption=none&insecure=0&host=' + host + '&fp=' + fp + '&type=ws&allowInsecure=0&sni=' + host + '#' + encodeURIComponent(remark2));
+            
+            // Configs for all IPs and ports with just username
+            ips.forEach(function(ip) {
+                ports.forEach(function(portStr) {
+                    var isTlsPortLoop = tlsPorts.includes(portStr);
+                    var tlsValLoop = isTlsPortLoop ? 'tls' : 'none';
+                    var remark3 = configName;
+                    links.push('vle' + 'ss://' + (user.uuid || '') + '@' + ip + ':' + portStr + '?path=%2F&security=' + tlsValLoop + '&encryption=none&insecure=0&host=' + host + '&fp=' + fp + '&type=ws&allowInsecure=0&sni=' + host + '#' + encodeURIComponent(remark3));
+                });
+            });
+            
+            return links.join('\\n');
+        }
+
+        function getSubLink(username) { return window.location.origin + '/feed/' + encodeURIComponent(username); }
+        function getJsonSubLink(username) { return window.location.origin + '/feed/json/' + encodeURIComponent(username); }
+        function getStatusLink(username) { return window.location.origin + '/status/' + encodeURIComponent(username); }
+
+        function copySubLink(encodedUsername) {
+            var username = decodeURIComponent(encodedUsername);
+            navigator.clipboard.writeText(getSubLink(username)).then(function() { alert('✅ Text subscription link copied!'); });
+        }
+        function copyJsonSubLink(encodedUsername) {
+            var username = decodeURIComponent(encodedUsername);
+            navigator.clipboard.writeText(getJsonSubLink(username)).then(function() { alert('✅ JSON subscription link copied!'); });
+        }
+        function copyStatusLink(encodedUsername) {
+            var username = decodeURIComponent(encodedUsername);
+            navigator.clipboard.writeText(getStatusLink(username)).then(function() { alert('✅ Status page link copied!'); });
+        }
+
+        function copyConfig(encodedUsername) {
+            var username = decodeURIComponent(encodedUsername);
+            var link = getVlessLink(username);
+            if (!link) return;
+            navigator.clipboard.writeText(link).then(function() { alert('✅ VLESS config copied!'); });
+        }
+
+        function copyJsonConfig(encodedUsername) {
+            var username = decodeURIComponent(encodedUsername);
+            var user = allUsers.find(function(u) { return u.username === username; });
+            if (!user) return;
+            var host = window.location.hostname;
+            var ips = [host];
+            if (user.ips) {
+                ips = user.ips.split('\\n').map(function(ip) { return ip.trim(); }).filter(function(ip) { return ip.length > 0; });
+                if (ips.length === 0) ips = [host];
+            }
+            var ports = String(user.port || '443').split(',').map(function(p) { return p.trim(); }).filter(function(p) { return p.length > 0; });
+            var fp = user.fingerprint || 'chrome';
+            var configArray = [];
+            
+            // First IP and first port for info configs
+            var firstIp = ips[0] || host;
+            var firstPort = ports[0] || '443';
+            var isTlsPort = tlsPorts.includes(firstPort);
+            var tlsVal = isTlsPort ? 'tls' : 'none';
+            
+            // Config 1: Expiry
+            var remark1 = '⏳ ' + user.username.toUpperCase() + ' | 📅 Exp: ' + expiryDateStr + ' | 🔥 ' + daysLeft + ' Days Left';
+            var jsonConfig1 = buildJsonConfig(user, firstIp, firstPort, tlsVal, host, fp, remark1);
+            configArray.push(jsonConfig1);
+            
+            // Config 2: Usage
+            var remark2 = '📊 ' + user.username.toUpperCase() + ' | 💾 ' + totalFormatted + ' Total | ⚡ ' + usedFormatted + ' Used';
+            var jsonConfig2 = buildJsonConfig(user, firstIp, firstPort, tlsVal, host, fp, remark2);
+            configArray.push(jsonConfig2);
+            
+            // Configs for all IPs and ports with just username
+            ips.forEach(function(ip) {
+                ports.forEach(function(portStr) {
+                    var isTlsPortLoop = tlsPorts.includes(portStr);
+                    var tlsValLoop = isTlsPortLoop ? 'tls' : 'none';
+                    var remark3 = user.config_name || user.username;
+                    var jsonConfig3 = buildJsonConfig(user, ip, portStr, tlsValLoop, host, fp, remark3);
+                    configArray.push(jsonConfig3);
+                });
+            });
+            
+            navigator.clipboard.writeText(JSON.stringify(configArray, null, 2)).then(function() { alert('✅ JSON config copied!'); });
+        }
+
+        function buildJsonConfig(user, ip, portStr, tlsVal, host, fp, remark) {
+            var jsonConfig = {
+                "remarks": remark,
+                "version": { "min": "25.10.15" },
+                "log": { "loglevel": "none" },
+                "dns": {
+                    "servers": [
+                        { "address": "https://8.8.8.8/dns-query", "tag": "remote-dns" },
+                        { "address": "8.8.8.8", "domains": ["full:" + host], "skipFallback": true }
+                    ],
+                    "queryStrategy": "UseIP",
+                    "tag": "dns"
+                },
+                "inbounds": [
+                    {
+                        "listen": "127.0.0.1", "port": 10808, "protocol": "socks",
+                        "settings": { "auth": "noauth", "udp": true },
+                        "sniffing": { "destOverride": ["http", "tls"], "enabled": true, "routeOnly": true },
+                        "tag": "mixed-in"
+                    },
+                    {
+                        "listen": "127.0.0.1", "port": 10853, "protocol": "dokodemo-door",
+                        "settings": { "address": "1.1.1.1", "network": "tcp,udp", "port": 53 },
+                        "tag": "dns-in"
+                    }
+                ],
+                "outbounds": [
+                    {
+                        "protocol": "vle" + "ss",
+                        "settings": {
+                            ["vne" + "xt"]: [
+                                { "address": ip, "port": parseInt(portStr), "users": [{ "id": user.uuid, "encryption": "none" }] }
+                            ]
+                        },
+                        ["stream" + "Settings"]: {
+                            "network": "ws",
+                            ["ws" + "Settings"]: { "host": host, "path": "/" },
+                            "security": tlsVal,
+                            "sockopt": { ["dialer" + "Proxy"]: "fragment" }
+                        },
+                        "tag": "proxy"
+                    },
+                    {
+                        "protocol": "freedom",
+                        "settings": {
+                            "fragment": {
+                                "packets": "tlshello",
+                                "length": window.globalFragLen || "20-30",
+                                "interval": window.globalFragInt || "1-2"
+                            }
+                        },
+                        "streamSettings": {
+                            "sockopt": {
+                                "domainStrategy": "UseIP",
+                                "happyEyeballs": { "tryDelayMs": 250, "prioritizeIPv6": false, "interleave": 2, "maxConcurrentTry": 4 }
+                            }
+                        },
+                        "tag": "fragment"
+                    },
+                    { "protocol": "dns", "settings": { "nonIPQuery": "reject" }, "tag": "dns-out" },
+                    { "protocol": "freedom", "settings": { "domainStrategy": "UseIP" }, "tag": "direct" },
+                    { "protocol": "blackhole", "settings": { "response": { "type": "http" } }, "tag": "block" }
+                ],
+                "routing": {
+                    "domainStrategy": "IPIfNonMatch",
+                    "rules": [
+                        { "inboundTag": ["mixed-in"], "port": 53, "outboundTag": "dns-out", "type": "field" },
+                        { "inboundTag": ["dns-in"], "outboundTag": "dns-out", "type": "field" },
+                        { "inboundTag": ["remote-dns"], "outboundTag": "proxy", "type": "field" },
+                        { "inboundTag": ["dns"], "outboundTag": "direct", "type": "field" },
+                        { "domain": ["geosite:private"], "outboundTag": "direct", "type": "field" },
+                        { "ip": ["geoip:private"], "outboundTag": "direct", "type": "field" },
+                        { "network": "udp", "outboundTag": "block", "type": "field" },
+                        { "network": "tcp", "outboundTag": "proxy", "type": "field" }
+                    ]
+                }
+            };
+            if (tlsVal === 'tls') {
+                jsonConfig.outbounds[0]["stream" + "Settings"]["tls" + "Settings"] = {
+                    "serverName": host, "fingerprint": fp, "alpn": ["http/1.1"], "allowInsecure": false
+                };
+            }
+            return jsonConfig;
+        }
+
+        function showQR(encodedUsername) {
+            var username = decodeURIComponent(encodedUsername);
+            var link = getVlessLink(username);
+            if (!link) return;
+            toggleQRModal(true, link, 'VLESS Config QR - ' + username);
+        }
+
+        function editUser(encodedUsername) {
+            var username = decodeURIComponent(encodedUsername);
+            var user = allUsers.find(function(u) { return u.username === username; });
+            if (!user) {
+                alert('❌ User not found!');
+                return;
+            }
+            isEditMode = true;
+            editingUsername = username;
+            document.getElementById('modal-title').innerText = 'Edit User: ' + username;
+            document.getElementById('submit-btn').innerText = 'Save';
+            document.getElementById('input-name').value = username;
+            document.getElementById('input-name').disabled = true;
+            document.getElementById('input-limit').value = user.limit_gb || '';
+            document.getElementById('input-expiry').value = user.expiry_days || '';
+            document.getElementById('input-ips').value = user.ips || '';
+            document.getElementById('fingerprint-select').value = user.fingerprint || 'chrome';
+            document.getElementById('config-name-input').value = user.config_name || '';
+            var userPorts = String(user.port || '').split(',').map(function(p) { return p.trim(); });
+            document.querySelectorAll('input[name="ports"]').forEach(function(cb) {
+                cb.checked = userPorts.includes(cb.value);
+            });
+            toggleModal(true);
+        }
+
+        async function deleteUser(encodedUsername) {
+            var username = decodeURIComponent(encodedUsername);
+            if (!confirm('⚠️ Are you sure you want to delete user: ' + username + '?')) return;
+            try {
+                var response = await fetch('/api/users/' + encodeURIComponent(username), { method: 'DELETE' });
+                if (response.ok) {
+                    alert('✅ User deleted successfully!');
+                    await loadUsers(true);
+                } else {
+                    var errData = await response.json();
+                    alert('❌ Error: ' + (errData.error || 'Operation failed'));
+                }
+            } catch (err) {
+                alert('❌ Connection error');
+            }
+        }
+
+        async function toggleUserStatus(encodedUsername) {
+            var username = decodeURIComponent(encodedUsername);
+            try {
+                var response = await fetch('/api/users/' + encodeURIComponent(username), {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ toggle_only: true })
+                });
+                if (response.ok) {
+                    await loadUsers(true);
+                } else {
+                    var errData = await response.json();
+                    alert('❌ Error: ' + (errData.error || 'Operation failed'));
+                }
+            } catch (err) {
+                alert('❌ Connection error');
+            }
+        }
+
+        // ============================================
+        // LOCATIONS
+        // ============================================
+        function getFlagEmoji(countryCode) {
+            if (!countryCode) return '🌐';
+            var codePoints = countryCode.toUpperCase().split('').map(function(char) { return 127397 + char.charCodeAt(0); });
+            try {
+                return String.fromCodePoint.apply(String, codePoints);
+            } catch (e) {
+                return '🌐';
+            }
+        }
+
+        function renderLocationsUI(locations, activeIata) {
+            var select = document.getElementById('location-select');
+            locations.sort(function(a, b) { return (a.cca2 || '').localeCompare(b.cca2 || ''); });
+            var html = '<option value="">🌐 Default Location</option>';
+            locations.forEach(function(loc) {
+                if (loc.iata && loc.city) {
+                    var flag = getFlagEmoji(loc.cca2);
+                    var isSelected = loc.iata.toUpperCase() === activeIata.toUpperCase() ? 'selected' : '';
+                    html += '<option value="' + loc.iata + '" ' + isSelected + '>' + flag + ' ' + loc.city + ' (' + loc.iata + ')</option>';
+                }
+            });
+            select.innerHTML = html;
+        }
+
+        async function loadLocations() {
+            var select = document.getElementById('location-select');
+            var cachedLocations = localStorage.getItem('cached_locations_list');
+            var cachedActiveIata = localStorage.getItem('cached_active_iata') || '';
+            var hasCachedLocs = false;
+            if (cachedLocations) {
+                try {
+                    var parsedLocs = JSON.parse(cachedLocations);
+                    if (Array.isArray(parsedLocs) && parsedLocs.length > 0) {
+                        renderLocationsUI(parsedLocs, cachedActiveIata);
+                        hasCachedLocs = true;
+                    }
+                } catch(e) {}
+            }
+            try {
+                var statusRes = await fetch('/api/proxy-ip');
+                var activeIata = '';
+                if (statusRes.ok) {
+                    var statusData = await statusRes.json();
+                    activeIata = statusData.iata || '';
+                    localStorage.setItem('cached_active_iata', activeIata);
+                    if(statusData.frag_len) {
+                        window.globalFragLen = statusData.frag_len;
+                        document.getElementById('frag-length').value = statusData.frag_len;
+                    }
+                    if(statusData.frag_int) {
+                        window.globalFragInt = statusData.frag_int;
+                        document.getElementById('frag-interval').value = statusData.frag_int;
+                    }
+                }
+                var res = await fetch('/locations');
+                if (!res.ok) throw new Error();
+                var locations = await res.json();
+                localStorage.setItem('cached_locations_list', JSON.stringify(locations));
+                renderLocationsUI(locations, activeIata);
+            } catch (err) {
+                if (!hasCachedLocs) {
+                    select.innerHTML = '<option value="">⚠️ Error loading locations</option>';
+                }
+            }
+        }
+
+        // ============================================
+        // SETTINGS
+        // ============================================
+        async function saveSettings() {
+            var select = document.getElementById('location-select');
+            var fragLen = document.getElementById('frag-length').value || "20-30";
+            var fragInt = document.getElementById('frag-interval').value || "1-2";
+            var iata = select.value;
+            var btn = document.getElementById('save-settings-btn');
+            btn.disabled = true;
+            btn.innerText = 'Saving...';
+            try {
+                var resolvedIp = 'proxyip.cmliussss.net';
+                if (iata) {
+                    var domain = iata.toLowerCase() + '.proxyip.cmliussss.net';
+                    var dnsRes = await fetch('https://cloudflare-dns.com/dns-query?name=' + domain + '&type=A', {
+                        headers: { 'accept': 'application/dns-json' }
+                    });
+                    resolvedIp = domain;
+                    if (dnsRes.ok) {
+                        var dnsData = await dnsRes.json();
+                        if (dnsData.Answer && dnsData.Answer.length > 0) {
+                            var ips = dnsData.Answer.filter(function(ans) { return ans.type === 1; }).map(function(ans) { return ans.data; });
+                            if (ips.length > 0) {
+                                resolvedIp = ips[Math.floor(Math.random() * ips.length)];
+                            }
+                        }
+                    }
+                }
+                var response = await fetch('/api/proxy-ip', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ proxy_ip: resolvedIp, iata: iata ? iata.toUpperCase() : '', frag_len: fragLen, frag_int: fragInt })
+                });
+                if (response.ok) {
+                    window.globalFragLen = fragLen;
+                    window.globalFragInt = fragInt;
+                    alert('✅ Settings saved successfully!');
+                } else {
+                    alert('❌ Error saving settings');
+                }
+            } catch (err) {
+                alert('❌ Connection error');
+            } finally {
+                btn.disabled = false;
+                btn.innerText = 'Save Settings';
+            }
+        }
+
+        async function changeAdminPassword() {
+            var currentPwd = document.getElementById('change-pwd-current').value;
+            var newPwd = document.getElementById('change-pwd-new').value;
+            var btn = document.getElementById('change-pwd-btn');
+            if (!currentPwd || !newPwd) {
+                alert('❌ Please enter both current and new password');
+                return;
+            }
+            if (newPwd.length < 4) {
+                alert('❌ New password must be at least 4 characters');
+                return;
+            }
+            btn.disabled = true;
+            btn.innerText = 'Updating...';
+            try {
+                var response = await fetch('/api/change-password', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ current_password: currentPwd, new_password: newPwd })
+                });
+                var data = await response.json();
+                if (response.ok && data.success) {
+                    alert('✅ Password updated successfully!');
+                    document.getElementById('change-pwd-current').value = '';
+                    document.getElementById('change-pwd-new').value = '';
+                } else {
+                    alert('❌ Error: ' + (data.error || 'Operation failed'));
+                }
+            } catch (err) {
+                alert('❌ Connection error');
+            } finally {
+                btn.disabled = false;
+                btn.innerText = 'Update Panel Password';
+            }
+        }
+
+        // ============================================
+        // LOGOUT
+        // ============================================
+        async function logoutAdmin() {
+            if (!confirm('⚠️ Are you sure you want to sign out?')) return;
+            try {
+                await fetch('/api/logout', { method: 'POST' });
+            } catch (err) {}
+            window.location.reload();
+        }
+
+        // ============================================
+        // USER LOADING & RENDERING
+        // ============================================
+        async function loadUsers(silent) {
+            var loadingState = document.getElementById('loading-state');
+            var tableContainer = document.getElementById('users-table-container');
+            var emptyState = document.getElementById('empty-state');
+            if (!silent) {
+                loadingState.classList.remove('hidden');
+                tableContainer.classList.add('hidden');
+                emptyState.classList.add('hidden');
+            }
+            try {
+                var res = await fetch('/api/users?t=' + Date.now());
+                if (!res.ok) throw new Error();
+                var data = await res.json();
+                renderUsersUI(data);
+            } catch (err) {
+                if (!silent) {
+                    loadingState.innerHTML = '<span class="text-red-400">❌ Error loading users</span>';
+                }
+            }
+        }
+
+        function renderUsersUI(data) {
+            try {
+                var users = data.users || [];
+                allUsers = users;
+                var serverTime = data.serverTime || Date.now();
+                lastServerTime = serverTime;
+                var totalUsersCount = users.length;
+                var activeUsersCount = users.filter(function(u) { return u.is_online === 1; }).length;
+                var totalGbUsage = users.reduce(function(sum, u) { return sum + (u.used_gb || 0); }, 0);
+                document.getElementById('stat-total-users').innerText = totalUsersCount;
+                document.getElementById('stat-active-users').innerText = activeUsersCount;
+                document.getElementById('stat-total-usage').innerText = totalGbUsage < 1 ? (totalGbUsage * 1024).toFixed(0) + ' MB' : totalGbUsage.toFixed(2) + ' GB';
+                var topUser = users.reduce(function(max, u) { return (u.used_gb || 0) > (max.used_gb || 0) ? u : max; }, { username: 'None', used_gb: 0 });
+                document.getElementById('stat-top-user').innerText = topUser.username;
+                var topUsage = topUser.used_gb || 0;
+                document.getElementById('stat-top-user-usage').innerText = topUsage < 1 ? (topUsage * 1024).toFixed(0) + ' MB used' : topUsage.toFixed(2) + ' GB used';
+                filterAndRenderUsers();
+                updateXrayStatus();
+            } catch (err) {
+                document.getElementById('loading-state').innerHTML = '<span class="text-red-400">❌ Error processing user data</span>';
+            }
+        }
+
+        function filterAndRenderUsers() {
+            if (!allUsers) return;
+            var searchQuery = (document.getElementById('search-input').value || '').toLowerCase().trim();
+            var filterStatus = document.getElementById('filter-status').value;
+            var sortVal = document.getElementById('sort-users').value;
+            var serverTime = lastServerTime || Date.now();
+            var filtered = allUsers.slice();
+            if (searchQuery) {
+                filtered = filtered.filter(function(u) {
+                    return (u.username || '').toLowerCase().includes(searchQuery) || 
+                           (u.uuid || '').toLowerCase().includes(searchQuery);
+                });
+            }
+            if (filterStatus !== 'all') {
+                filtered = filtered.filter(function(u) {
+                    var isOnline = u.is_online === 1;
+                    var isActive = u.is_active === 1;
+                    var isExpired = false;
+                    if (u.limit_gb && u.used_gb >= u.limit_gb) isExpired = true;
+                    if (u.expiry_days && u.created_at) {
+                        var created = new Date(u.created_at);
+                        var expiryDate = new Date(created.getTime() + (u.expiry_days * 24 * 60 * 60 * 1000));
+                        if (new Date(serverTime) > expiryDate) isExpired = true;
+                    }
+                    if (filterStatus === 'active') return isActive && !isExpired;
+                    if (filterStatus === 'inactive') return !isActive;
+                    if (filterStatus === 'online') return isOnline;
+                    if (filterStatus === 'offline') return !isOnline;
+                    if (filterStatus === 'expired') return isExpired || !isActive;
+                    return true;
+                });
+            }
+            filtered.sort(function(a, b) {
+                if (sortVal === 'newest') return b.id - a.id;
+                if (sortVal === 'name') return (a.username || '').localeCompare(b.username || '');
+                if (sortVal === 'usage-desc') return (b.used_gb || 0) - (a.used_gb || 0);
+                if (sortVal === 'usage-asc') return (a.used_gb || 0) - (b.used_gb || 0);
+                if (sortVal === 'expiry-asc') {
+                    var getRemaining = function(u) {
+                        if (!u.expiry_days) return Infinity;
+                        if (!u.created_at) return Infinity;
+                        var created = new Date(u.created_at);
+                        var expiryDate = new Date(created.getTime() + (u.expiry_days * 24 * 60 * 60 * 1000));
+                        return expiryDate - new Date(serverTime);
+                    };
+                    return getRemaining(a) - getRemaining(b);
+                }
+                return 0;
+            });
+            renderFilteredUsers(filtered, serverTime);
+        }
+
+        function renderFilteredUsers(users, serverTime) {
+            var loadingState = document.getElementById('loading-state');
+            var tableContainer = document.getElementById('users-table-container');
+            var emptyState = document.getElementById('empty-state');
+            var tbody = document.getElementById('users-tbody');
+            if (users.length === 0) {
+                loadingState.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                tableContainer.classList.add('hidden');
+                if (allUsers && allUsers.length > 0) {
+                    emptyState.querySelector('p').innerText = 'No users match your search criteria.';
+                } else {
+                    emptyState.querySelector('p').innerText = 'No users found. Click "Add User" to get started.';
+                }
+            } else {
+                loadingState.classList.add('hidden');
+                emptyState.classList.add('hidden');
+                tableContainer.classList.remove('hidden');
+                tbody.innerHTML = users.map(function(user) {
+                    var createdDate = user.created_at ? new Date(user.created_at).toLocaleDateString() : '-';
+                    var daysRemaining = 'Unlimited';
+                    var daysPercent = 100;
+                    if (user.expiry_days) {
+                        if (user.created_at) {
+                            var created = new Date(user.created_at);
+                            var expiryDate = new Date(created.getTime() + (user.expiry_days * 24 * 60 * 60 * 1000));
+                            var diffDays = Math.ceil((expiryDate - new Date(serverTime)) / (1000 * 60 * 60 * 24));
+                            daysRemaining = diffDays > 0 ? diffDays : 0;
+                            daysPercent = Math.max(0, Math.min(100, (daysRemaining / user.expiry_days) * 100));
+                        } else {
+                            daysRemaining = user.expiry_days;
+                        }
+                    }
+                    var usedGb = user.used_gb || 0;
+                    var formattedUsed = usedGb < 1 ? (usedGb * 1024).toFixed(0) + ' MB' : usedGb.toFixed(2) + ' GB';
+                    var volumeHtml = '';
+                    if (user.limit_gb) {
+                        var limitPercent = Math.min((usedGb / user.limit_gb) * 100, 100);
+                        var limitHue = 120 - (limitPercent * 1.2);
+                        var formattedLimit = user.limit_gb < 1 ? (user.limit_gb * 1024).toFixed(0) + ' MB' : user.limit_gb + ' GB';
+                        volumeHtml = '<div class="flex flex-col gap-1 w-full min-w-[100px]">' +
+                            '<div class="flex justify-between text-[10px] sm:text-[11px] text-zinc-400 font-medium">' +
+                                '<span>Used: ' + formattedUsed + '</span>' +
+                                '<span>Total: ' + formattedLimit + '</span>' +
+                            '</div>' +
+                            '<div class="w-full bg-zinc-800 rounded-full h-1 overflow-hidden">' +
+                                '<div class="h-1 rounded-full transition-all duration-500" style="width: ' + limitPercent + '%; background-color: hsl(' + limitHue + ', 80%, 45%)"></div>' +
+                            '</div>' +
+                        '</div>';
+                    } else {
+                        volumeHtml = '<div class="flex flex-col gap-1 w-full min-w-[100px]">' +
+                            '<div class="flex justify-between text-[10px] sm:text-[11px] text-zinc-400 font-medium">' +
+                                '<span>Used: ' + formattedUsed + '</span>' +
+                                '<span>Total: Unlimited</span>' +
+                            '</div>' +
+                            '<div class="w-full bg-zinc-800 rounded-full h-1 overflow-hidden">' +
+                                '<div class="bg-blue-500 h-1 rounded-full transition-all duration-500" style="width: 100%"></div>' +
+                            '</div>' +
+                        '</div>';
+                    }
+                    var expiryHtml = '';
+                    if (user.expiry_days) {
+                        var expiryHue = daysPercent * 1.2;
+                        expiryHtml = '<div class="flex flex-col gap-1 w-full min-w-[100px]">' +
+                            '<div class="flex justify-between text-[10px] sm:text-[11px] text-zinc-400 font-medium">' +
+                                '<span>Remaining: ' + daysRemaining + ' days</span>' +
+                                '<span>Total: ' + user.expiry_days + ' days</span>' +
+                            '</div>' +
+                            '<div class="w-full bg-zinc-800 rounded-full h-1 overflow-hidden flex justify-end">' +
+                                '<div class="h-1 rounded-full transition-all duration-500" style="width: ' + daysPercent + '%; background-color: hsl(' + expiryHue + ', 80%, 45%)"></div>' +
+                            '</div>' +
+                        '</div>';
+                    } else {
+                        expiryHtml = '<div class="flex flex-col gap-1 w-full min-w-[100px]">' +
+                            '<div class="flex justify-between text-[10px] sm:text-[11px] text-zinc-400 font-medium">' +
+                                '<span>Remaining: Unlimited</span>' +
+                                '<span>Total: Unlimited</span>' +
+                            '</div>' +
+                            '<div class="w-full bg-zinc-800 rounded-full h-1 overflow-hidden flex justify-end">' +
+                                '<div class="bg-blue-500 h-1 rounded-full transition-all duration-500" style="width: 100%"></div>' +
+                            '</div>' +
+                        '</div>';
+                    }
+                    var statusBtnColor = user.is_active === 0 ? 'text-emerald-400 hover:bg-emerald-500/10' : 'text-amber-400 hover:bg-amber-500/10';
+                    var statusBtnTitle = user.is_active === 0 ? 'Activate' : 'Deactivate';
+                    var statusBtnIcon = user.is_active === 0 
+                        ? '<svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>'
+                        : '<svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';
+                    var statusClass = user.is_active === 0 ? 'badge-danger' : 'badge-success';
+                    var statusText = user.is_active === 0 ? 'Inactive' : 'Active';
+                    var onlineClass = user.is_online === 1 ? 'badge-success' : 'badge';
+                    var onlineText = user.is_online === 1 ? '● Online' : 'Offline';
+                    var configName = user.config_name || user.username;
+                    return '<tr class="hover:bg-white/5 border-b border-zinc-800/30">' +
+                        '<td class="p-2 sm:p-3">' +
+                            '<div class="flex flex-col gap-1">' +
+                                '<span class="font-bold text-white text-xs sm:text-sm truncate max-w-[120px] sm:max-w-[200px]">' + configName + '</span>' +
+                                '<div class="flex items-center gap-1 flex-wrap">' +
+                                    '<span class="badge ' + statusClass + '">' + statusText + '</span>' +
+                                    '<span class="badge ' + onlineClass + '">' + onlineText + '</span>' +
+                                '</div>' +
+                                '<div class="flex gap-0.5 sm:gap-1 flex-wrap user-actions-wrap">' +
+                                    '<button onclick="copyConfig(\\'' + encodeURIComponent(user.username) + '\\')" title="Copy VLESS" class="action-btn text-zinc-400 hover:text-indigo-400 transition"><svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg></button>' +
+                                    '<button onclick="copyJsonConfig(\\'' + encodeURIComponent(user.username) + '\\')" title="Copy JSON" class="action-btn text-zinc-400 hover:text-purple-400 transition"><svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg></button>' +
+                                    '<button onclick="showQR(\\'' + encodeURIComponent(user.username) + '\\')" title="QR" class="action-btn text-zinc-400 hover:text-emerald-400 transition"><svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg></button>' +
+                                    '<button onclick="toggleUserStatus(\\'' + encodeURIComponent(user.username) + '\\')" title="' + statusBtnTitle + '" class="action-btn ' + statusBtnColor + ' transition">' + statusBtnIcon + '</button>' +
+                                    '<button onclick="editUser(\\'' + encodeURIComponent(user.username) + '\\')" title="Edit" class="action-btn text-zinc-400 hover:text-yellow-400 transition"><svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button>' +
+                                    '<button onclick="deleteUser(\\'' + encodeURIComponent(user.username) + '\\')" title="Delete" class="action-btn text-zinc-400 hover:text-red-400 transition"><svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>' +
+                                '</div>' +
+                            '</div>' +
+                        '</td>' +
+                        '<td class="p-2 sm:p-3">' +
+                            '<div class="flex flex-col gap-1 subscription-buttons">' +
+                                '<div class="flex gap-0.5 sm:gap-1">' +
+                                    '<button onclick="copySubLink(\\'' + encodeURIComponent(user.username) + '\\')" class="flex-1 px-1 sm:px-2 py-0.5 sm:py-1 text-[8px] sm:text-xs font-medium rounded-lg bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500/20 transition">📋 Text</button>' +
+                                    '<button onclick="copyJsonSubLink(\\'' + encodeURIComponent(user.username) + '\\')" class="flex-1 px-1 sm:px-2 py-0.5 sm:py-1 text-[8px] sm:text-xs font-medium rounded-lg bg-purple-500/10 text-purple-400 hover:bg-purple-500/20 transition">📄 JSON</button>' +
+                                '</div>' +
+                                '<button onclick="copyStatusLink(\\'' + encodeURIComponent(user.username) + '\\')" class="px-1 sm:px-2 py-0.5 sm:py-1 text-[8px] sm:text-xs font-medium rounded-lg bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 transition">📊 Status</button>' +
+                            '</div>' +
+                        '</td>' +
+                        '<td class="p-2 sm:p-3 text-[10px] sm:text-xs font-mono uppercase text-indigo-400 font-semibold hidden sm:table-cell">VLESS</td>' +
+                        '<td class="p-2 sm:p-3 text-[10px] sm:text-xs hidden md:table-cell">' + 
+                            '<div class="flex flex-wrap gap-0.5 sm:gap-1 max-w-[120px]">' +
+                                String(user.port || "").split(",").map(function(p) {
+                                    p = p.trim();
+                                    if (!p) return "";
+                                    var isTls = tlsPorts.includes(p);
+                                    return '<span class="badge ' + (isTls ? 'badge-success' : 'badge-warning') + '">' + p + '</span>';
+                                }).join("") +
+                            '</div>' +
+                        '</td>' +
+                        '<td class="p-2 sm:p-3 hidden lg:table-cell">' + volumeHtml + '</td>' +
+                        '<td class="p-2 sm:p-3 hidden xl:table-cell">' + expiryHtml + '</td>' +
+                        '<td class="p-2 sm:p-3 text-[10px] sm:text-xs text-zinc-400 hidden 2xl:table-cell">' + createdDate + '</td>' +
+                    '</tr>';
+                }).join('');
+            }
+        }
+
+        // ============================================
+        // FORM HANDLER
+        // ============================================
+        async function handleFormSubmit(event) {
+            event.preventDefault();
+            var submitButton = document.getElementById('submit-btn');
+            submitButton.disabled = true;
+            submitButton.innerText = isEditMode ? 'Saving...' : 'Creating...';
+            var username = document.getElementById('input-name').value.trim();
+            var limit = document.getElementById('input-limit').value || null;
+            var expiry = document.getElementById('input-expiry').value || null;
+            var checkedPorts = Array.from(document.querySelectorAll('input[name="ports"]:checked')).map(function(cb) { return cb.value; });
+            if (checkedPorts.length === 0) {
+                alert('❌ Please select at least one port!');
+                submitButton.disabled = false;
+                submitButton.innerText = isEditMode ? 'Save' : 'Create';
+                return;
+            }
+            var port = checkedPorts.join(',');
+            var tls = checkedPorts.some(function(p) { return tlsPorts.includes(p); }) ? 'on' : 'off';
+            var ips = document.getElementById('input-ips').value;
+            var fingerprint = document.getElementById('fingerprint-select').value;
+            var config_name = document.getElementById('config-name-input').value || '';
+            var url = isEditMode ? '/api/users/' + encodeURIComponent(editingUsername) : '/api/users';
+            var method = isEditMode ? 'PUT' : 'POST';
+            try {
+                var response = await fetch(url, {
+                    method: method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, limit_gb: limit, expiry_days: expiry, tls, port, ips, fingerprint, config_name })
+                });
+                if (response.ok) {
+                    toggleModal(false);
+                    await loadUsers(true);
+                } else {
+                    var errData = await response.json();
+                    alert('❌ Error: ' + (errData.error || 'Operation failed'));
+                }
+            } catch (err) {
+                alert('❌ Connection error');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.innerText = isEditMode ? 'Save' : 'Create';
+            }
+        }
+
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            renderPortCheckboxes();
+            loadUsers();
+            loadLocations();
+            loadAdminsList();
+            loadTheme();
+            checkUpdate();
+            setInterval(function() { loadUsers(true); }, 30000);
+            setInterval(updateXrayStatus, 10000);
+            showPage('dashboard');
+            document.getElementById('log-start-time').innerText = new Date().toLocaleString();
+            setTimeout(function() {
+                var cb443 = document.querySelector('input[name="ports"][value="443"]');
+                if (cb443) cb443.checked = true;
+            }, 200);
+            
+            // بستن منو با تغییر اندازه صفحه
+            window.addEventListener('resize', function() {
+                if (window.innerWidth >= 1024) {
+                    var sidebar = document.querySelector('.sidebar');
+                    var overlay = document.getElementById('sidebar-overlay');
+                    if (sidebar) sidebar.classList.remove('active');
+                    if (overlay) overlay.classList.remove('active');
+                    
+                    var menuIcon = document.querySelector('#menu-icon');
+                    if (menuIcon) {
+                        menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>';
+                    }
+                }
+            });
+        });
+    <\/script>
+</body>
+</html>`,
+
+  status: `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Status - MrVpn Panel</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"><\/script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif}
+        body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#06060e;color:#e2e8f0;padding:16px}
+        .bg-orbs{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+        .orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.15;animation:drift 12s ease-in-out infinite}
+        .orb-1{width:350px;height:350px;background:#6366f1;top:-10%;left:-5%}
+        .orb-2{width:300px;height:300px;background:#a855f7;bottom:-10%;right:-5%;animation-delay:-4s}
+        @keyframes drift{0%,100%{transform:translate(0,0)}33%{transform:translate(20px,-15px)}66%{transform:translate(-15px,20px)}}
+        .card{position:relative;z-index:1;width:100%;max-width:440px;padding:36px 28px;border-radius:24px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);backdrop-filter:blur(24px);box-shadow:0 0 80px rgba(99,102,241,.1),0 24px 48px rgba(0,0,0,.3);animation:fadeUp .6s ease-out}
+        @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+        .header{text-align:center;margin-bottom:28px}
+        .icon-wrap{display:inline-flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:18px;background:linear-gradient(135deg,rgba(99,102,241,.15),rgba(168,85,247,.15));border:1px solid rgba(99,102,241,.2);margin-bottom:16px}
+        .icon-wrap svg{width:24px;height:24px;color:#818cf8}
+        h1{font-size:20px;font-weight:800;color:#fff;margin-bottom:4px}
+        .username{font-size:13px;color:#818cf8;font-family:monospace;font-weight:600}
+        .brand-tag{font-size:11px;color:#475569;margin-top:4px}
+        .status-badge{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border-radius:14px;font-size:13px;font-weight:700;margin-bottom:24px;border:1px solid}
+        .status-active{background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.2);color:#4ade80}
+        .status-inactive{background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.2);color:#ef4444}
+        .status-expired{background:rgba(251,191,36,.08);border-color:rgba(251,191,36,.2);color:#fbbf24}
+        .progress-section{margin-bottom:16px}
+        .progress-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+        .progress-label{font-size:12px;color:#64748b;font-weight:500}
+        .progress-value{font-size:12px;font-weight:700}
+        .progress-value.indigo{color:#818cf8}
+        .progress-value.purple{color:#a855f7}
+        .progress-track{width:100%;height:6px;border-radius:999px;background:rgba(255,255,255,.06);overflow:hidden}
+        .progress-bar{height:100%;border-radius:999px;transition:width 1s ease}
+        .progress-bar.indigo{background:linear-gradient(90deg,#6366f1,#818cf8)}
+        .progress-bar.purple{background:linear-gradient(90deg,#a855f7,#c084fc)}
+        .progress-bar.green{background:linear-gradient(90deg,#22c55e,#4ade80)}
+        .progress-bar.yellow{background:linear-gradient(90deg,#eab308,#fbbf24)}
+        .progress-footer{display:flex;justify-content:space-between;margin-top:6px}
+        .progress-footer span{font-size:11px;color:#64748b}
+        .progress-footer strong{color:#e2e8f0;font-weight:600}
+        .divider{height:1px;background:rgba(255,255,255,.06);margin:20px 0}
+        .actions{display:flex;flex-direction:column;gap:8px}
+        .action-btn{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);cursor:pointer;transition:all .25s;text-decoration:none;color:inherit}
+        .action-btn:hover{background:rgba(255,255,255,.06);border-color:rgba(99,102,241,.3);transform:translateX(4px)}
+        .action-btn .left{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:500;color:#cbd5e1}
+        .action-btn .right{font-size:11px;font-weight:700;padding:4px 10px;border-radius:8px}
+        .right-indigo{background:rgba(99,102,241,.1);color:#818cf8}
+        .right-purple{background:rgba(168,85,247,.1);color:#a855f7}
+        .right-blue{background:rgba(59,130,246,.1);color:#60a5fa}
+        .right-green{background:rgba(34,197,94,.1);color:#4ade80}
+        .footer{text-align:center;font-size:11px;color:#475569;margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,.05)}
+        .footer span{color:#6366f1;font-weight:600}
+        /* QR Modal */
+        .modal-overlay{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);opacity:0;pointer-events:none;transition:opacity .3s}
+        .modal-overlay.active{opacity:1;pointer-events:auto}
+        .modal-card{width:100%;max-width:360px;padding:28px;border-radius:24px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(24px);text-align:center;transform:scale(.95);transition:transform .3s}
+        .modal-overlay.active .modal-card{transform:scale(1)}
+        .modal-card h3{font-size:16px;font-weight:700;color:#fff;margin-bottom:16px}
+        .qr-box{background:#fff;padding:12px;border-radius:14px;display:inline-block;margin-bottom:16px}
+        .modal-close{width:100%;padding:12px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:#94a3b8;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
+        .modal-close:hover{background:rgba(255,255,255,.08);color:#fff}
+    </style>
+</head>
+<body>
+    <div class="bg-orbs"><div class="orb orb-1"></div><div class="orb orb-2"></div></div>
+    <div class="card">
+        <div class="header">
+            <div class="icon-wrap">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            </div>
+            <h1>Subscription Status</h1>
+            <p class="username" id="display-username"></p>
+            <p class="brand-tag">@MrVpnPanel</p>
+        </div>
+        <div id="status-card" class="status-badge status-active">
+            <span id="status-text">Loading status...</span>
+        </div>
+        <div class="progress-section">
+            <div class="progress-header"><span class="progress-label">Data Usage</span><span id="volume-pct" class="progress-value indigo">0%</span></div>
+            <div class="progress-track"><div id="volume-progress" class="progress-bar indigo" style="width:0%"></div></div>
+            <div class="progress-footer"><span>Used: <strong id="used-vol">-</strong></span><span>Total: <strong id="limit-vol">-</strong></span></div>
+        </div>
+        <div class="progress-section">
+            <div class="progress-header"><span class="progress-label">Time Remaining</span><span id="expiry-pct" class="progress-value purple">0%</span></div>
+            <div class="progress-track"><div id="expiry-progress" class="progress-bar purple" style="width:0%"></div></div>
+            <div class="progress-footer"><span>Remaining: <strong id="days-remaining">-</strong></span><span>Total: <strong id="total-days">-</strong></span></div>
+        </div>
+        <div class="divider"></div>
+        <div class="actions">
+            <div class="action-btn" onclick="copyVlessConfig()">
+                <span class="left"><svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>Copy VLESS Config</span>
+                <span class="right right-indigo">Copy</span>
+            </div>
+            <div class="action-btn" onclick="copyJsonSub()">
+                <span class="left"><svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>Copy JSON Subscription</span>
+                <span class="right right-purple">Copy</span>
+            </div>
+            <div class="action-btn" onclick="copyTextSub()">
+                <span class="left"><svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>Copy Text Subscription</span>
+                <span class="right right-blue">Copy</span>
+            </div>
+            <div class="action-btn" onclick="showQR()">
+                <span class="left"><svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>Show QR Code</span>
+                <span class="right right-green">View</span>
+            </div>
+        </div>
+        <div class="footer"><span>MrVpn Panel</span> v3.0.0</div>
+    </div>
+    <div id="qr-modal" class="modal-overlay" onclick="if(event.target===this)toggleQRModal(false)">
+        <div class="modal-card">
+            <h3>QR Code</h3>
+            <div class="qr-box"><div id="qrcode-box" style="width:192px;height:192px"></div></div>
+            <button class="modal-close" onclick="toggleQRModal(false)">Close</button>
+        </div>
+    </div>
+
+    <script>
+        /* {{USER_DATA_PLACEHOLDER}} */
+        function toggleQRModal(show, link) {
+            const modal = document.getElementById('qr-modal');
+            const qrBox = document.getElementById('qrcode-box');
+            if (show) {
+                qrBox.innerHTML = '';
+                try {
+                    new QRCode(qrBox, { text: link, width: 192, height: 192, colorDark: "#000000", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.M });
+                } catch(e) {
+                    qrBox.innerHTML = '<p style="color:#64748b;font-size:12px">Error generating QR</p>';
+                }
+                modal.classList.add('active');
+            } else {
+                modal.classList.remove('active');
+            }
+        }
+
+        function getHost() { return window.location.host; }
+
+        function getVlessLink() {
+            const u = window.statusUser;
+            if (!u) return '';
+            const host = getHost();
+            var ips = [host];
+            if (u.ips) {
+                ips = u.ips.split('\\n').map(function(ip) { return ip.trim(); }).filter(function(ip) { return ip.length > 0; });
+                if (ips.length === 0) ips = [host];
+            }
+            var ports = String(u.port || '443').split(',').map(function(p) { return p.trim(); }).filter(function(p) { return p.length > 0; });
+            var fp = u.fingerprint || 'chrome';
+            
+            var now = new Date();
+            var created = new Date(u.created_at);
+            var expiryDays = u.expiry_days || 30;
+            var expiryDate = new Date(created.getTime() + expiryDays * 24 * 60 * 60 * 1000);
+            var daysLeft = Math.ceil((expiryDate - now) / (1000 * 60 * 60 * 24));
+            var totalGB = u.limit_gb || 0;
+            var usedGB = u.used_gb || 0;
+            var leftGB = Math.max(0, totalGB - usedGB);
+            var expiryDateStr = expiryDate.toISOString().split('T')[0].replace(/-/g, '/');
+            var usedFormatted = usedGB >= 1 ? usedGB.toFixed(1) + 'GB' : (usedGB * 1024).toFixed(0) + 'MB';
+            var totalFormatted = totalGB >= 1 ? totalGB + 'GB' : 'Unlimited';
+            var configName = u.config_name || u.username;
+            
+            var links = [];
+            
+            // First IP and first port for info configs
+            var firstIp = ips[0] || host;
+            var firstPort = ports[0] || '443';
+            var isTlsPort = ['443', '2053', '2083', '2087', '2096', '8443'].includes(firstPort);
+            var tlsVal = isTlsPort ? 'tls' : 'none';
+            
+            // Config 1: Expiry
+            var remark1 = '⏳ ' + u.username.toUpperCase() + ' | 📅 Exp: ' + expiryDateStr + ' | 🔥 ' + daysLeft + ' Days Left';
+            links.push('vle' + 'ss://' + (u.uuid || '') + '@' + firstIp + ':' + firstPort + '?path=%2F&security=' + tlsVal + '&encryption=none&insecure=0&host=' + host + '&fp=' + fp + '&type=ws&allowInsecure=0&sni=' + host + '#' + encodeURIComponent(remark1));
+            
+            // Config 2: Usage
+            var remark2 = '📊 ' + u.username.toUpperCase() + ' | 💾 ' + totalFormatted + ' Total | ⚡ ' + usedFormatted + ' Used';
+            links.push('vle' + 'ss://' + (u.uuid || '') + '@' + firstIp + ':' + firstPort + '?path=%2F&security=' + tlsVal + '&encryption=none&insecure=0&host=' + host + '&fp=' + fp + '&type=ws&allowInsecure=0&sni=' + host + '#' + encodeURIComponent(remark2));
+            
+            // Configs for all IPs and ports with just username
+            ips.forEach(function(ip) {
+                ports.forEach(function(portStr) {
+                    var isTlsPortLoop = ['443', '2053', '2083', '2087', '2096', '8443'].includes(portStr);
+                    var tlsValLoop = isTlsPortLoop ? 'tls' : 'none';
+                    var remark3 = configName;
+                    links.push('vle' + 'ss://' + (u.uuid || '') + '@' + ip + ':' + portStr + '?path=%2F&security=' + tlsValLoop + '&encryption=none&insecure=0&host=' + host + '&fp=' + fp + '&type=ws&allowInsecure=0&sni=' + host + '#' + encodeURIComponent(remark3));
+                });
+            });
+            
+            return links.join('\\n');
+        }
+
+        function copyVlessConfig() {
+            var link = getVlessLink();
+            if (!link) return;
+            navigator.clipboard.writeText(link).then(function() { alert('✅ Config copied!'); });
+        }
+
+        function copyJsonSub() {
+            var link = window.location.protocol + '//' + getHost() + '/feed/json/' + encodeURIComponent(window.statusUser.username);
+            navigator.clipboard.writeText(link).then(function() { alert('✅ JSON subscription link copied!'); });
+        }
+
+        function copyTextSub() {
+            var link = window.location.protocol + '//' + getHost() + '/sub/' + encodeURIComponent(window.statusUser.username);
+            navigator.clipboard.writeText(link).then(function() { alert('✅ Text subscription link copied!'); });
+        }
+
+        function showQR() {
+            var link = getVlessLink();
+            if (!link) return;
+            toggleQRModal(true, link);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var u = window.statusUser;
+            if (!u) return;
+            
+            document.getElementById('display-username').innerText = '@' + u.username + ' | ' + u.port + ' | @MrVpnPanel';
+            
+            var usedGb = u.used_gb || 0;
+            var limitGb = u.limit_gb;
+            var formattedUsed = usedGb < 1 ? (usedGb * 1024).toFixed(0) + ' MB' : usedGb.toFixed(2) + ' GB';
+            document.getElementById('used-vol').innerText = formattedUsed;
+            
+            var isVolumeExpired = false;
+            if (limitGb) {
+                document.getElementById('limit-vol').innerText = limitGb + ' GB';
+                var pct = Math.min((usedGb / limitGb) * 100, 100);
+                document.getElementById('volume-pct').innerText = pct.toFixed(0) + '%';
+                document.getElementById('volume-progress').style.width = pct + '%';
+                if (usedGb >= limitGb) isVolumeExpired = true;
+            } else {
+                document.getElementById('limit-vol').innerText = 'Unlimited';
+                document.getElementById('volume-pct').innerText = '0%';
+                document.getElementById('volume-progress').style.width = '100%';
+            }
+            
+            var daysRemaining = 'Unlimited';
+            var totalDays = 'Unlimited';
+            var isTimeExpired = false;
+            
+            if (u.expiry_days) {
+                totalDays = u.expiry_days + ' days';
+                if (u.created_at) {
+                    var created = new Date(u.created_at);
+                    var expiryDate = new Date(created.getTime() + (u.expiry_days * 24 * 60 * 60 * 1000));
+                    var diffDays = Math.ceil((expiryDate - new Date()) / (1000 * 60 * 60 * 24));
+                    daysRemaining = diffDays > 0 ? diffDays : 0;
+                    var pct = Math.max(0, Math.min(100, (daysRemaining / u.expiry_days) * 100));
+                    document.getElementById('expiry-pct').innerText = pct.toFixed(0) + '%';
+                    document.getElementById('expiry-progress').style.width = pct + '%';
+                    if (new Date() > expiryDate) isTimeExpired = true;
+                }
+            } else {
+                document.getElementById('expiry-pct').innerText = '0%';
+                document.getElementById('expiry-progress').style.width = '100%';
+            }
+            
+            document.getElementById('days-remaining').innerText = daysRemaining === 'Unlimited' ? 'Unlimited' : daysRemaining + ' days';
+            document.getElementById('total-days').innerText = totalDays;
+            
+            var statusCard = document.getElementById('status-card');
+            var statusText = document.getElementById('status-text');
+            
+            if (u.is_active === 0) {
+                statusCard.className = 'mb-6 rounded-2xl p-4 text-center border font-semibold transition bg-red-500/10 border-red-500/30 text-red-400';
+                statusText.innerText = '🔴 Inactive / Disabled';
+            } else if (isVolumeExpired) {
+                statusCard.className = 'mb-6 rounded-2xl p-4 text-center border font-semibold transition bg-yellow-500/10 border-yellow-500/30 text-yellow-400';
+                statusText.innerText = '⚠️ Data Limit Exceeded';
+            } else if (isTimeExpired) {
+                statusCard.className = 'mb-6 rounded-2xl p-4 text-center border font-semibold transition bg-yellow-500/10 border-yellow-500/30 text-yellow-400';
+                statusText.innerText = '⚠️ Subscription Expired';
+            } else {
+                statusCard.className = 'mb-6 rounded-2xl p-4 text-center border font-semibold transition bg-emerald-500/10 border-emerald-500/30 text-emerald-400';
+                statusText.innerText = '✅ Active & Connected';
+            }
+        });
+    <\/script>
+</body>
+</html>`
+};
+
+export {
+  mrvpn_panel_default as default
+};
