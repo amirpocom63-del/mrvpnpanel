@@ -1,8 +1,8 @@
-var __defProp = Object.defineProperty;
-var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
-
 // mrvpn-panel.js - Complete Panel with All Features
 import { connect } from "cloudflare:sockets";
+
+var __defProp = Object.defineProperty;
+var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
 
 // ============================================
 // BACKEND CONSTANTS & VARIABLES
@@ -1087,10 +1087,12 @@ var Router = {
         async function testIP(ip) {
           if (testedIPs.has(ip)) return null;
           testedIPs.add(ip);
+          const start = Date.now();
+          let controller;
+          let timeout;
           try {
-            const start = Date.now();
-            const controller = new AbortController();
-            const timeout = setTimeout(() => controller.abort(), 3000);
+            controller = new AbortController();
+            timeout = setTimeout(() => controller.abort(), 3000);
             
             await fetch(`https://${ip}`, {
               method: "HEAD",
@@ -1103,6 +1105,7 @@ var Router = {
             const latency = Date.now() - start;
             return { ip, latency, status: "clean", host: targetHost };
           } catch (e) {
+            if (timeout) clearTimeout(timeout);
             const latency = Date.now() - start;
             if (e.name === "AbortError") {
               return { ip, latency: 9999, status: "timeout", host: targetHost };
