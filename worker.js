@@ -435,7 +435,11 @@ var Router = {
         });
       }
       const newHash = await DbService.sha256(new_password);
-      await env.AM_DB.prepare("UPDATE admins SET password_hash = ? WHERE username = ?").bind(newHash, username).run();
+      try {
+        await env.AM_DB.prepare("UPDATE admins SET password_hash = ? WHERE username = ?").bind(newHash, username).run();
+      } catch (dbErr) {
+        return new Response(JSON.stringify({ error: "Database error" }), { status: 500, headers: { "Content-Type": "application/json" } });
+      }
       return new Response(JSON.stringify({ success: true }), {
         headers: {
           "Content-Type": "application/json; charset=utf-8"
@@ -520,7 +524,11 @@ var Router = {
       const { theme } = await request.json();
       if (theme === "dark" || theme === "light") {
         THEME = theme;
-        await env.AM_DB.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES ('theme', ?)").bind(theme).run();
+        try {
+          await env.AM_DB.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES ('theme', ?)").bind(theme).run();
+        } catch (dbErr) {
+          return new Response(JSON.stringify({ error: "Database error" }), { status: 500, headers: { "Content-Type": "application/json" } });
+        }
         return new Response(JSON.stringify({ success: true, theme: THEME }), {
           headers: { "Content-Type": "application/json" }
         });
@@ -547,17 +555,26 @@ var Router = {
       if (request.method === "POST") {
         if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
         const { proxy_ip, iata, frag_len, frag_int } = await request.json();
-        if (proxy_ip) await env.AM_DB.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES ('proxy_ip', ?)").bind(proxy_ip).run();
-        if (iata !== void 0) await env.AM_DB.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES ('proxy_location_iata', ?)").bind(iata).run();
-        if (frag_len !== void 0) await env.AM_DB.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES ('frag_len', ?)").bind(frag_len).run();
-        if (frag_int !== void 0) await env.AM_DB.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES ('frag_int', ?)").bind(frag_int).run();
+        try {
+          if (proxy_ip) await env.AM_DB.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES ('proxy_ip', ?)").bind(proxy_ip).run();
+          if (iata !== void 0) await env.AM_DB.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES ('proxy_location_iata', ?)").bind(iata).run();
+          if (frag_len !== void 0) await env.AM_DB.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES ('frag_len', ?)").bind(frag_len).run();
+          if (frag_int !== void 0) await env.AM_DB.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES ('frag_int', ?)").bind(frag_int).run();
+        } catch (dbErr) {
+          return new Response(JSON.stringify({ error: "Database error" }), { status: 500, headers: { "Content-Type": "application/json" } });
+        }
         return new Response(JSON.stringify({ success: true }), { headers: { "Content-Type": "application/json" } });
       }
       if (request.method === "GET") {
-        const rowIp = await env.AM_DB.prepare("SELECT value FROM settings WHERE key = 'proxy_ip'").first();
-        const rowIata = await env.AM_DB.prepare("SELECT value FROM settings WHERE key = 'proxy_location_iata'").first();
-        const rowLen = await env.AM_DB.prepare("SELECT value FROM settings WHERE key = 'frag_len'").first();
-        const rowInt = await env.AM_DB.prepare("SELECT value FROM settings WHERE key = 'frag_int'").first();
+        let rowIp, rowIata, rowLen, rowInt;
+        try {
+          rowIp = await env.AM_DB.prepare("SELECT value FROM settings WHERE key = 'proxy_ip'").first();
+          rowIata = await env.AM_DB.prepare("SELECT value FROM settings WHERE key = 'proxy_location_iata'").first();
+          rowLen = await env.AM_DB.prepare("SELECT value FROM settings WHERE key = 'frag_len'").first();
+          rowInt = await env.AM_DB.prepare("SELECT value FROM settings WHERE key = 'frag_int'").first();
+        } catch (dbErr) {
+          return new Response(JSON.stringify({ error: "Database error" }), { status: 500, headers: { "Content-Type": "application/json" } });
+        }
         return new Response(JSON.stringify({
           proxy_ip: rowIp ? rowIp.value : "proxyip.cmliussss.net",
           iata: rowIata ? rowIata.value : "",
@@ -592,8 +609,12 @@ var Router = {
       }
       if (request.method === "DELETE") {
         const { id } = await request.json();
-        await env.AM_DB.prepare("DELETE FROM admins WHERE id = ?").bind(id).run();
-        await loadAdmins(env);
+        try {
+          await env.AM_DB.prepare("DELETE FROM admins WHERE id = ?").bind(id).run();
+          await loadAdmins(env);
+        } catch (dbErr) {
+          return new Response(JSON.stringify({ error: "Database error" }), { status: 500, headers: { "Content-Type": "application/json" } });
+        }
         return new Response(JSON.stringify({ success: true }));
       }
     }
@@ -614,38 +635,51 @@ var Router = {
         
         if (request.method === "PUT") {
           const body = await request.json();
-          if (body.toggle_only !== void 0) {
-            await env.AM_DB.prepare(
-              "UPDATE users SET is_active = CASE WHEN is_active = 1 THEN 0 ELSE 1 END WHERE username = ?"
-            ).bind(username).run();
-            return new Response(JSON.stringify({ success: true }), { headers: { "Content-Type": "application/json" } });
-          } else {
-            const { limit_gb, expiry_days, ips, tls, port, fingerprint, config_name } = body;
-            await env.AM_DB.prepare(
-              "UPDATE users SET limit_gb = ?, expiry_days = ?, ips = ?, tls = ?, port = ?, fingerprint = ?, config_name = ? WHERE username = ?"
-            ).bind(
-              limit_gb ? parseFloat(limit_gb) : null,
-              expiry_days ? parseInt(expiry_days) : null,
-              ips || null,
-              tls,
-              port,
-              fingerprint || "chrome",
-              config_name || username,
-              username
-            ).run();
-            return new Response(JSON.stringify({ success: true }), { headers: { "Content-Type": "application/json" } });
+          try {
+            if (body.toggle_only !== void 0) {
+              await env.AM_DB.prepare(
+                "UPDATE users SET is_active = CASE WHEN is_active = 1 THEN 0 ELSE 1 END WHERE username = ?"
+              ).bind(username).run();
+              return new Response(JSON.stringify({ success: true }), { headers: { "Content-Type": "application/json" } });
+            } else {
+              const { limit_gb, expiry_days, ips, tls, port, fingerprint, config_name } = body;
+              await env.AM_DB.prepare(
+                "UPDATE users SET limit_gb = ?, expiry_days = ?, ips = ?, tls = ?, port = ?, fingerprint = ?, config_name = ? WHERE username = ?"
+              ).bind(
+                limit_gb ? parseFloat(limit_gb) : null,
+                expiry_days ? parseInt(expiry_days) : null,
+                ips || null,
+                tls,
+                port,
+                fingerprint || "chrome",
+                config_name || username,
+                username
+              ).run();
+              return new Response(JSON.stringify({ success: true }), { headers: { "Content-Type": "application/json" } });
+            }
+          } catch (dbErr) {
+            return new Response(JSON.stringify({ error: "Database error" }), { status: 500, headers: { "Content-Type": "application/json" } });
           }
         }
         
         if (request.method === "DELETE") {
-          await env.AM_DB.prepare("DELETE FROM users WHERE username = ?").bind(username).run();
-          GLOBAL_TRAFFIC_CACHE.delete(username);
-          ACTIVE_CONNECTIONS_COUNT.delete(username);
+          try {
+            await env.AM_DB.prepare("DELETE FROM users WHERE username = ?").bind(username).run();
+            GLOBAL_TRAFFIC_CACHE.delete(username);
+            ACTIVE_CONNECTIONS_COUNT.delete(username);
+          } catch (dbErr) {
+            return new Response(JSON.stringify({ error: "Database error" }), { status: 500, headers: { "Content-Type": "application/json" } });
+          }
           return new Response(JSON.stringify({ success: true }), { headers: { "Content-Type": "application/json" } });
         }
         
         if (request.method === "GET") {
-          const user = await env.AM_DB.prepare("SELECT * FROM users WHERE username = ?").bind(username).first();
+          let user;
+          try {
+            user = await env.AM_DB.prepare("SELECT * FROM users WHERE username = ?").bind(username).first();
+          } catch (dbErr) {
+            return new Response(JSON.stringify({ error: "Database error" }), { status: 500, headers: { "Content-Type": "application/json" } });
+          }
           if (!user) {
             return new Response(JSON.stringify({ error: "User not found" }), { status: 404 });
           }
@@ -655,10 +689,16 @@ var Router = {
         }
       } else {
         if (request.method === "GET") {
+          let results;
           try {
             await flushExpiredTraffic(env);
           } catch (e) {}
-          const { results } = await env.AM_DB.prepare("SELECT * FROM users ORDER BY id DESC").all();
+          try {
+            const dbResult = await env.AM_DB.prepare("SELECT * FROM users ORDER BY id DESC").all();
+            results = dbResult.results;
+          } catch (dbErr) {
+            return new Response(JSON.stringify({ error: "Database error" }), { status: 500, headers: { "Content-Type": "application/json" } });
+          }
           const now = Date.now();
           const enrichedUsers = (results || []).map((user) => ({
             ...user,
@@ -1310,6 +1350,11 @@ var Router = {
     // PANEL CONFIG - Get panel configuration
     // ============================================
     if (url.pathname === "/api/panel/config" && request.method === "GET") {
+      let userCount = 0;
+      try {
+        const countResult = await env.AM_DB.prepare("SELECT COUNT(*) as count FROM users").first();
+        userCount = countResult?.count || 0;
+      } catch (dbErr) {}
       return new Response(JSON.stringify({
         version: PANEL_VERSION,
         theme: THEME,
@@ -1318,7 +1363,7 @@ var Router = {
           version: "v26.4.25"
         },
         admin_count: ADMINS.length,
-        user_count: await env.AM_DB.prepare("SELECT COUNT(*) as count FROM users").first().then(r => r.count || 0)
+        user_count: userCount
       }), {
         headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
       });
@@ -4134,7 +4179,7 @@ var HTML_TEMPLATES = {
             var host = window.location.hostname;
             var ips = [host];
             if (user.ips) {
-                ips = user.ips.split('\\n').map(function(ip) { return ip.trim(); }).filter(function(ip) { return ip.length > 0; });
+                ips = user.ips.split('\n').map(function(ip) { return ip.trim(); }).filter(function(ip) { return ip.length > 0; });
                 if (ips.length === 0) ips = [host];
             }
             var ports = String(user.port || '443').split(',').map(function(p) { return p.trim(); }).filter(function(p) { return p.length > 0; });
@@ -4177,7 +4222,7 @@ var HTML_TEMPLATES = {
                 });
             });
             
-            return links.join('\\n');
+            return links.join('\n');
         }
 
         function getSubLink(username) { return window.location.origin + '/feed/' + encodeURIComponent(username); }
@@ -4211,7 +4256,7 @@ var HTML_TEMPLATES = {
             var host = window.location.hostname;
             var ips = [host];
             if (user.ips) {
-                ips = user.ips.split('\\n').map(function(ip) { return ip.trim(); }).filter(function(ip) { return ip.length > 0; });
+                ips = user.ips.split('\n').map(function(ip) { return ip.trim(); }).filter(function(ip) { return ip.length > 0; });
                 if (ips.length === 0) ips = [host];
             }
             var ports = String(user.port || '443').split(',').map(function(p) { return p.trim(); }).filter(function(p) { return p.length > 0; });
@@ -5112,7 +5157,7 @@ var HTML_TEMPLATES = {
             const host = getHost();
             var ips = [host];
             if (u.ips) {
-                ips = u.ips.split('\\n').map(function(ip) { return ip.trim(); }).filter(function(ip) { return ip.length > 0; });
+                ips = u.ips.split('\n').map(function(ip) { return ip.trim(); }).filter(function(ip) { return ip.length > 0; });
                 if (ips.length === 0) ips = [host];
             }
             var ports = String(u.port || '443').split(',').map(function(p) { return p.trim(); }).filter(function(p) { return p.length > 0; });
@@ -5157,7 +5202,7 @@ var HTML_TEMPLATES = {
                 });
             });
             
-            return links.join('\\n');
+            return links.join('\n');
         }
 
         function copyVlessConfig() {
