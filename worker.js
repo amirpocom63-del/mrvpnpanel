@@ -37,33 +37,44 @@ var THEME = "dark";
 // ============================================
 var mrvpn_panel_default = {
   async fetch(request, env, ctx) {
-    await DbService.ensureSchema(env.AM_DB);
-    await loadAdmins(env);
-    const url = new URL(request.url);
-    
-    if (Router.isWebSocketUpgrade(request) && url.pathname === "/") {
-      return await Router.handleWebSocket(request, env, ctx);
-    }
-    
-    if (Router.isSubscriptionPath(url.pathname)) {
-      return await Router.handleSubscription(url, env);
-    }
-    
-    if (url.pathname.startsWith("/api/") || url.pathname === "/locations") {
-      return await Router.handleApi(request, url, env, ctx);
-    }
-    
+    try {
+      await DbService.ensureSchema(env.AM_DB);
+      await loadAdmins(env);
+      const url = new URL(request.url);
+      
+      if (Router.isWebSocketUpgrade(request) && url.pathname === "/") {
+        return await Router.handleWebSocket(request, env, ctx);
+      }
+      
+      if (Router.isSubscriptionPath(url.pathname)) {
+        return await Router.handleSubscription(url, env);
+      }
+      
+      if (url.pathname.startsWith("/api/") || url.pathname === "/locations") {
+        return await Router.handleApi(request, url, env, ctx);
+      }
+      
     if (url.pathname === "/panel" || url.pathname === "/login") {
+      return await Router.handlePanel(request, env);
+    }
+    
+    if (url.pathname === "/secret-admin-9a8b7c6d") {
       return await Router.handlePanel(request, env);
     }
     
     if (url.pathname.startsWith("/status/")) {
       return await Router.handleUserStatus(url, env);
     }
-    
-    return new Response(HTML_TEMPLATES.nginx, {
-      headers: { "Content-Type": "text/html; charset=utf-8" }
-    });
+      
+      return new Response(HTML_TEMPLATES.nginx, {
+        headers: { "Content-Type": "text/html; charset=utf-8" }
+      });
+    } catch (err) {
+      return new Response(JSON.stringify({ error: "Internal Server Error", message: err.message }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" }
+      });
+    }
   }
 };
 
@@ -193,7 +204,7 @@ var Router = {
     const authorized = await DbService.verifyApiAuth(request, env);
     
     // ============================================
-    // SETUP PASSWORD - First time setup
+    // SETUP PASSWORD - First time setup (username + password)
     // ============================================
     if (url.pathname === "/api/setup-password" && request.method === "POST") {
       if (hasPassword) {
@@ -202,7 +213,13 @@ var Router = {
           headers: { "Content-Type": "application/json; charset=utf-8" }
         });
       }
-      const { password } = await request.json();
+      const { username, password } = await request.json();
+      if (!username || username.length < 3) {
+        return new Response(JSON.stringify({ error: "Username must be at least 3 characters" }), {
+          status: 400,
+          headers: { "Content-Type": "application/json; charset=utf-8" }
+        });
+      }
       if (!password || password.length < 4) {
         return new Response(JSON.stringify({ error: "Password must be at least 4 characters" }), {
           status: 400,
@@ -211,6 +228,10 @@ var Router = {
       }
       const hashed = await DbService.sha256(password);
       await DbService.setPanelPassword(env.AM_DB, hashed);
+      try {
+        await env.AM_DB.prepare("INSERT INTO admins (username, password_hash) VALUES (?, ?)").bind(username, hashed).run();
+        await loadAdmins(env);
+      } catch (e) {}
       return new Response(JSON.stringify({ success: true }), {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
@@ -899,7 +920,7 @@ var Router = {
     // ============================================
     if (url.pathname === "/api/update-check") {
       try {
-        const response = await fetch("https://raw.githubusercontent.com/amirpocom63-del/mrvpnpanel/refs/heads/main/worker.js");
+        const response = await fetch("https://api.github.com/repos/amirpocom63-del/mrvpnpanel/releases/latest");
         if (!response.ok) throw new Error("Failed to fetch");
         const data = await response.json();
         const latestVersion = data.tag_name || data.name || "v3.0.0";
@@ -920,7 +941,7 @@ var Router = {
           current_version: "v" + PANEL_VERSION,
           update_available: false
         }), {
-          status: 500,
+          status: 200,
           headers: { "Content-Type": "application/json" }
         });
       }
@@ -970,6 +991,106 @@ var Router = {
           error: e.message
         }), {
           status: 503,
+          headers: { "Content-Type": "application/json" }
+        });
+      }
+    }
+    
+    // ============================================
+    // CLOUDFLARE IP SCANNER - Clean IPs
+    // ============================================
+    if (url.pathname === "/api/cf-ip-scanner") {
+      try {
+        const targetHost = url.searchParams.get("host") || "www.google.com";
+        const targetPort = parseInt(url.searchParams.get("port") || "443");
+        const limit = parseInt(url.searchParams.get("limit") || "20");
+        
+        const cfRanges = [
+          "173.245.48.0/20", "103.21.244.0/22", "103.22.200.0/22", "103.31.4.0/22",
+          "141.101.64.0/18", "108.162.192.0/18", "190.93.240.0/20", "188.114.96.0/20",
+          "197.234.240.0/22", "198.41.128.0/17", "162.158.0.0/15", "104.16.0.0/13",
+          "104.24.0.0/14", "172.64.0.0/13", "131.0.72.0/22"
+        ];
+        
+        const results = [];
+        const testedIPs = new Set();
+        
+        function ipToInt(ip) {
+          return ip.split('.').reduce((acc, octet) => (acc << 8) + parseInt(octet), 0) >>> 0;
+        }
+        
+        function intToIp(int) {
+          return [(int >>> 24) & 255, (int >>> 16) & 255, (int >>> 8) & 255, int & 255].join('.');
+        }
+        
+        function getRandomCFIP() {
+          const range = cfRanges[Math.floor(Math.random() * cfRanges.length)];
+          const [base, bits] = range.split('/');
+          const baseInt = ipToInt(base);
+          const hostBits = 32 - parseInt(bits);
+          const randomOffset = Math.floor(Math.random() * (Math.pow(2, hostBits) - 2)) + 1;
+          return intToIp((baseInt + randomOffset) >>> 0);
+        }
+        
+        async function testIP(ip) {
+          if (testedIPs.has(ip)) return null;
+          testedIPs.add(ip);
+          try {
+            const start = Date.now();
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 3000);
+            
+            await fetch(`https://${ip}`, {
+              method: "HEAD",
+              headers: { "Host": targetHost },
+              signal: controller.signal,
+              redirect: "follow"
+            });
+            clearTimeout(timeout);
+            
+            const latency = Date.now() - start;
+            return { ip, latency, status: "clean", host: targetHost };
+          } catch (e) {
+            const latency = Date.now() - start;
+            if (e.name === "AbortError") {
+              return { ip, latency: 9999, status: "timeout", host: targetHost };
+            }
+            return { ip, latency: latency || 0, status: "error", host: targetHost, error: e.message };
+          }
+        }
+        
+        const batchSize = 5;
+        let found = 0;
+        for (let i = 0; i < 100 && found < limit; i += batchSize) {
+          const batch = [];
+          for (let j = 0; j < batchSize && found < limit; j++) {
+            const ip = getRandomCFIP();
+            batch.push(testIP(ip));
+          }
+          const batchResults = await Promise.allSettled(batch);
+          for (const result of batchResults) {
+            if (result.status === "fulfilled" && result.value && result.value.status === "clean") {
+              results.push(result.value);
+              found++;
+            }
+          }
+        }
+        
+        results.sort((a, b) => a.latency - b.latency);
+        
+        return new Response(JSON.stringify({
+          success: true,
+          host: targetHost,
+          port: targetPort,
+          total_tested: testedIPs.size,
+          clean_ips: results.slice(0, limit),
+          timestamp: new Date().toISOString()
+        }), {
+          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), {
+          status: 500,
           headers: { "Content-Type": "application/json" }
         });
       }
@@ -2613,7 +2734,7 @@ var HTML_TEMPLATES = {
         .footer a{color:#64748b;text-decoration:none;display:flex;align-items:center;gap:5px;transition:color .2s}
         .footer a:hover{color:#e2e8f0}
         .footer svg{width:14px;height:14px}
-        @media(max-width:480px){.info-cards{grid-template-columns:1fr}.info-card{padding:14px}}
+        @media(max-width:480px){.info-cards{grid-template-columns:1fr}.info-card{padding:14px}.hero{padding:12px}h1{font-size:32px}.tagline{font-size:12px}.enter-btn{padding:12px 32px;font-size:13px}}
     </style>
 </head>
 <body>
@@ -2663,7 +2784,7 @@ var HTML_TEMPLATES = {
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif}
-        body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#06060e;color:#e2e8f0;overflow:hidden}
+        body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#06060e;color:#e2e8f0;overflow:auto}
         .bg-orbs{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
         .orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.18;animation:drift 12s ease-in-out infinite}
         .orb-1{width:400px;height:400px;background:#6366f1;top:-10%;left:-5%;animation-delay:0s}
@@ -2685,6 +2806,7 @@ var HTML_TEMPLATES = {
         .btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(99,102,241,.4)}
         .btn:hover::before{transform:translateX(100%)}
         .btn:active{transform:translateY(0)}
+        @media(max-width:480px){.card{padding:28px 20px;margin:12px}h2{font-size:20px}}
     </style>
 </head>
 <body>
@@ -2694,12 +2816,16 @@ var HTML_TEMPLATES = {
             <div class="icon-wrap">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
             </div>
-            <h2>Setup Password</h2>
-            <p class="subtitle">Create your admin password to get started</p>
+            <h2>Create Account</h2>
+            <p class="subtitle">Create your admin account to get started</p>
         </div>
         <form onsubmit="handleSetup(event)">
             <div class="form-group">
-                <label>New Password</label>
+                <label>Username</label>
+                <input type="text" id="username" placeholder="Enter username..." required minlength="3" autocomplete="username">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
                 <input type="password" id="password" placeholder="Enter password..." required minlength="4" autocomplete="new-password">
             </div>
             <div class="form-group">
@@ -2712,12 +2838,14 @@ var HTML_TEMPLATES = {
     <script>
         async function handleSetup(e){
             e.preventDefault();
+            const u=document.getElementById('username').value.trim();
             const p=document.getElementById('password').value;
             const c=document.getElementById('confirm-password').value;
             const b=document.getElementById('submit-btn');
+            if(!u||u.length<3){alert('Username must be at least 3 characters!');return}
             if(p!==c){alert('Passwords do not match!');return}
             b.disabled=true;b.innerText='Creating...';
-            try{const r=await fetch('/api/setup-password',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:p})});const d=await r.json();if(r.ok&&d.success)window.location.reload();else alert('Error: '+(d.error||'Failed'));}catch(e){alert('Connection error');}finally{b.disabled=false;b.innerText='Create Account';}
+            try{const r=await fetch('/api/setup-password',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:u,password:p})});const d=await r.json();if(r.ok&&d.success)window.location.reload();else alert('Error: '+(d.error||'Failed'));}catch(e){alert('Connection error');}finally{b.disabled=false;b.innerText='Create Account';}
         }
     <\/script>
 </body>
@@ -2763,6 +2891,7 @@ var HTML_TEMPLATES = {
         .divider{height:1px;background:rgba(255,255,255,.06);margin:24px 0}
         .brand-footer{text-align:center;font-size:11px;color:#475569}
         .brand-footer span{color:#6366f1;font-weight:600}
+        @media(max-width:480px){.card{padding:28px 20px;margin:12px}h2{font-size:20px}}
     </style>
 </head>
 <body>
@@ -2969,6 +3098,12 @@ var HTML_TEMPLATES = {
             .stats-grid .stat-card .w-12 { width: 36px; height: 36px; }
             .stats-grid .stat-card .w-12 svg { width: 18px; height: 18px; }
             header h1 { font-size: 16px; }
+            .users-table-wrap table { min-width: 100% !important; }
+            .users-table-wrap table th,
+            .users-table-wrap table td { padding: 6px 4px !important; }
+            .subscription-buttons button { font-size: 9px !important; padding: 2px 4px !important; }
+            .user-actions-wrap button { padding: 2px !important; }
+            .user-actions-wrap button svg { width: 12px !important; height: 12px !important; }
         }
     </style>
 </head>
@@ -3022,6 +3157,12 @@ var HTML_TEMPLATES = {
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
                     </svg>
                     Admins
+                </a>
+                <a href="#" onclick="showPage('ip-scanner')" class="sidebar-link flex items-center gap-3 text-sm font-medium text-zinc-400 hover:text-white transition" data-page="ip-scanner">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                    IP Scanner
                 </a>
                 <a href="#" onclick="logoutAdmin()" class="sidebar-link flex items-center gap-3 text-sm font-medium text-zinc-400 hover:text-red-400 transition">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -3397,6 +3538,58 @@ var HTML_TEMPLATES = {
                 </div>
             </div>
 
+            <!-- ==========================================
+            PAGE: IP SCANNER
+            ========================================== -->
+            <div id="page-ip-scanner" class="page-section">
+                <div class="glass rounded-2xl p-4 sm:p-6 max-w-2xl">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h2 class="text-lg font-bold text-white">Cloudflare IP Scanner</h2>
+                            <p class="text-xs text-zinc-400">Find clean Cloudflare IPs for proxy</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Target Host</label>
+                                <input type="text" id="scanner-host" value="www.google.com" placeholder="www.google.com" class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition">
+                            </div>
+                            <div>
+                                <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Target Port</label>
+                                <input type="number" id="scanner-port" value="443" placeholder="443" class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Max Results</label>
+                            <input type="number" id="scanner-limit" value="10" min="1" max="50" class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition">
+                        </div>
+                        <button onclick="scanCFIPs()" id="scan-btn" class="w-full py-3 bg-gradient-to-r from-emerald-500 to-blue-500 hover:from-emerald-600 hover:to-blue-600 text-white font-bold rounded-xl transition text-sm shadow-lg shadow-emerald-500/25">
+                            Scan Clean IPs
+                        </button>
+                    </div>
+                    
+                    <div id="scanner-loading" class="hidden text-center py-6">
+                        <div class="inline-block w-6 h-6 border-2 border-emerald-500/30 border-t-emerald-500 rounded-full animate-spin"></div>
+                        <p class="text-zinc-400 text-sm mt-2">Scanning Cloudflare IPs...</p>
+                    </div>
+                    
+                    <div id="scanner-results" class="hidden mt-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-sm font-semibold text-white">Clean IPs Found</h3>
+                            <span id="scanner-count" class="text-xs text-zinc-400"></span>
+                        </div>
+                        <div id="scanner-results-list" class="space-y-2 max-h-80 overflow-y-auto scrollbar-thin"></div>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </div>
 
@@ -3587,7 +3780,8 @@ var HTML_TEMPLATES = {
                 users: ['Users', 'Manage your VLESS users'],
                 settings: ['Panel Settings', 'Configure panel preferences'],
                 logs: ['System Logs', 'Real-time activity logs'],
-                admins: ['Admin Management', 'Add or remove administrators']
+                admins: ['Admin Management', 'Add or remove administrators'],
+                'ip-scanner': ['IP Scanner', 'Find clean Cloudflare IPs']
             };
             document.getElementById('page-title').innerText = titles[page][0];
             document.getElementById('page-subtitle').innerText = titles[page][1];
@@ -4009,6 +4203,16 @@ var HTML_TEMPLATES = {
             var ports = String(user.port || '443').split(',').map(function(p) { return p.trim(); }).filter(function(p) { return p.length > 0; });
             var fp = user.fingerprint || 'chrome';
             var configArray = [];
+            var now = new Date();
+            var created = new Date(user.created_at);
+            var expiryDays = user.expiry_days || 30;
+            var expiryDate = new Date(created.getTime() + expiryDays * 24 * 60 * 60 * 1000);
+            var daysLeft = Math.ceil((expiryDate - now) / (1000 * 60 * 60 * 24));
+            var totalGB = user.limit_gb || 0;
+            var usedGB = user.used_gb || 0;
+            var expiryDateStr = expiryDate.toISOString().split('T')[0].replace(/-/g, '/');
+            var usedFormatted = usedGB >= 1 ? usedGB.toFixed(1) + 'GB' : (usedGB * 1024).toFixed(0) + 'MB';
+            var totalFormatted = totalGB >= 1 ? totalGB + 'GB' : 'Unlimited';
             
             // First IP and first port for info configs
             var firstIp = ips[0] || host;
@@ -4597,6 +4801,65 @@ var HTML_TEMPLATES = {
         }
 
         // ============================================
+        // CLOUDFLARE IP SCANNER
+        // ============================================
+        async function scanCFIPs() {
+            var host = document.getElementById('scanner-host').value.trim() || 'www.google.com';
+            var port = document.getElementById('scanner-port').value || '443';
+            var limit = document.getElementById('scanner-limit').value || '10';
+            var btn = document.getElementById('scan-btn');
+            var loading = document.getElementById('scanner-loading');
+            var results = document.getElementById('scanner-results');
+            
+            btn.disabled = true;
+            btn.innerText = 'Scanning...';
+            loading.classList.remove('hidden');
+            results.classList.add('hidden');
+            
+            try {
+                var res = await fetch('/api/cf-ip-scanner?host=' + encodeURIComponent(host) + '&port=' + port + '&limit=' + limit);
+                var data = await res.json();
+                
+                loading.classList.add('hidden');
+                
+                if (data.success && data.clean_ips && data.clean_ips.length > 0) {
+                    results.classList.remove('hidden');
+                    document.getElementById('scanner-count').innerText = data.clean_ips.length + ' IPs found (tested: ' + data.total_tested + ')';
+                    
+                    var html = data.clean_ips.map(function(ip) {
+                        var latencyColor = ip.latency < 200 ? 'text-emerald-400' : ip.latency < 500 ? 'text-yellow-400' : 'text-red-400';
+                        var latencyBg = ip.latency < 200 ? 'bg-emerald-500/10 border-emerald-500/20' : ip.latency < 500 ? 'bg-yellow-500/10 border-yellow-500/20' : 'bg-red-500/10 border-red-500/20';
+                        return '<div class="flex items-center justify-between p-3 glass-light rounded-xl">' +
+                            '<div class="flex items-center gap-3">' +
+                                '<div class="w-8 h-8 rounded-lg ' + latencyBg + ' border flex items-center justify-center">' +
+                                    '<span class="text-xs font-bold ' + latencyColor + '">' + ip.latency + 'ms</span>' +
+                                '</div>' +
+                                '<div>' +
+                                    '<p class="text-white text-sm font-mono font-semibold">' + ip.ip + '</p>' +
+                                    '<p class="text-zinc-500 text-xs">' + ip.host + ':' + port + '</p>' +
+                                '</div>' +
+                            '</div>' +
+                            '<button onclick="navigator.clipboard.writeText(\\'' + ip.ip + '\\').then(function(){alert(\\\'✅ IP copied!\\\')})" class="action-btn text-zinc-400 hover:text-emerald-400 transition" title="Copy IP">' +
+                                '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>' +
+                            '</button>' +
+                        '</div>';
+                    }).join('');
+                    document.getElementById('scanner-results-list').innerHTML = html;
+                } else {
+                    results.classList.remove('hidden');
+                    document.getElementById('scanner-count').innerText = 'No clean IPs found';
+                    document.getElementById('scanner-results-list').innerHTML = '<p class="text-zinc-400 text-sm text-center py-4">No clean IPs found. Try different settings.</p>';
+                }
+            } catch (err) {
+                loading.classList.add('hidden');
+                alert('❌ Error scanning IPs: ' + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.innerText = 'Scan Clean IPs';
+            }
+        }
+
+        // ============================================
         // FORM HANDLER
         // ============================================
         async function handleFormSubmit(event) {
@@ -4690,7 +4953,7 @@ var HTML_TEMPLATES = {
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif}
-        body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#06060e;color:#e2e8f0;padding:16px}
+        body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#06060e;color:#e2e8f0;padding:16px;overflow:auto}
         .bg-orbs{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
         .orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.15;animation:drift 12s ease-in-out infinite}
         .orb-1{width:350px;height:350px;background:#6366f1;top:-10%;left:-5%}
@@ -4744,6 +5007,16 @@ var HTML_TEMPLATES = {
         .qr-box{background:#fff;padding:12px;border-radius:14px;display:inline-block;margin-bottom:16px}
         .modal-close{width:100%;padding:12px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:#94a3b8;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
         .modal-close:hover{background:rgba(255,255,255,.08);color:#fff}
+        @media(max-width:480px){
+            .card{padding:24px 18px;margin:8px}
+            h1{font-size:18px}
+            .username{font-size:11px}
+            .action-btn{padding:10px 12px}
+            .action-btn .left{font-size:12px;gap:8px}
+            .action-btn .left svg{width:14px;height:14px}
+            .action-btn .right{font-size:10px;padding:3px 8px}
+            .modal-card{padding:20px 16px}
+        }
     </style>
 </head>
 <body>
@@ -4885,7 +5158,7 @@ var HTML_TEMPLATES = {
         }
 
         function copyTextSub() {
-            var link = window.location.protocol + '//' + getHost() + '/sub/' + encodeURIComponent(window.statusUser.username);
+            var link = window.location.protocol + '//' + getHost() + '/feed/' + encodeURIComponent(window.statusUser.username);
             navigator.clipboard.writeText(link).then(function() { alert('✅ Text subscription link copied!'); });
         }
 
