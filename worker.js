@@ -5,17 +5,6 @@ var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
 
 // ============================================
-// OBFUSCATED STRING CONSTANTS (Cloudflare WAF bypass)
-// ============================================
-var _P = "vle" + "ss";             // vless
-var _P2 = "vl" + "ess://";        // vless://
-var _SK = "so" + "cks";           // socks
-var _DD = "dokodemo" + "-door";   // dokodemo-door
-var _FR = "frag" + "ment";        // fragment
-var _TL = "tls" + "hello";        // tlshello
-var _PX = "pro" + "xy";           // proxy
-
-// ============================================
 // BACKEND CONSTANTS & VARIABLES
 // ============================================
 var GLOBAL_TRAFFIC_CACHE = /* @__PURE__ */ new Map();
@@ -1628,7 +1617,7 @@ var SubscriptionService = {
         {
           listen: "127.0.0.1",
           port: 10808,
-          protocol: _SK,
+          protocol: "socks",
           settings: { auth: "noauth", udp: true },
           sniffing: { destOverride: ["http", "tls"], enabled: true, routeOnly: true },
           tag: "mixed-in"
@@ -1636,41 +1625,41 @@ var SubscriptionService = {
         {
           listen: "127.0.0.1",
           port: 10853,
-          protocol: _DD,
+          protocol: "dokodemo-door",
           settings: { address: "1.1.1.1", network: "tcp,udp", port: 53 },
           tag: "dns-in"
         }
       ],
       outbounds: [
         {
-          protocol: _P,
+          protocol: "vless",
           settings: {
-            ["vne" + "xt"]: [{
+            ["vnext"]: [{
               address: ip,
               port: parseInt(portStr),
               users: [{ id: user.uuid, encryption: "none" }]
             }]
           },
-          ["stream" + "Settings"]: {
+          ["streamSettings"]: {
             network: "ws",
-            ["ws" + "Settings"]: { host, path: "/" },
+            ["wsSettings"]: { host, path: "/" },
             security: tlsVal,
-            sockopt: { ["dialer" + "Proxy"]: _FR }
+            sockopt: { ["dialerProxy"]: "fragment" }
           },
-          tag: _PX
+          tag: "proxy"
         },
         {
           protocol: "freedom",
           settings: {
-            [_FR]: { packets: _TL, length: fragLen, interval: fragInt }
+            fragment: { packets: "tlshello", length: fragLen, interval: fragInt }
           },
-          ["stream" + "Settings"]: {
+          ["streamSettings"]: {
             sockopt: {
               domainStrategy: "UseIP",
               happyEyeballs: { tryDelayMs: 250, prioritizeIPv6: false, interleave: 2, maxConcurrentTry: 4 }
             }
           },
-          tag: _FR
+          tag: "fragment"
         },
         { protocol: "dns", settings: { nonIPQuery: "reject" }, tag: "dns-out" },
         { protocol: "freedom", settings: { domainStrategy: "UseIP" }, tag: "direct" },
@@ -1681,17 +1670,17 @@ var SubscriptionService = {
         rules: [
           { inboundTag: ["mixed-in"], port: 53, outboundTag: "dns-out", type: "field" },
           { inboundTag: ["dns-in"], outboundTag: "dns-out", type: "field" },
-          { inboundTag: ["remote-dns"], outboundTag: _PX, type: "field" },
+          { inboundTag: ["remote-dns"], outboundTag: "proxy", type: "field" },
           { inboundTag: ["dns"], outboundTag: "direct", type: "field" },
           { domain: ["geosite:private"], outboundTag: "direct", type: "field" },
           { ip: ["geoip:private"], outboundTag: "direct", type: "field" },
           { network: "udp", outboundTag: "block", type: "field" },
-          { network: "tcp", outboundTag: _PX, type: "field" }
+          { network: "tcp", outboundTag: "proxy", type: "field" }
         ]
       }
     };
     if (tlsVal === "tls") {
-      configObj.outbounds[0]["stream" + "Settings"]["tls" + "Settings"] = {
+      configObj.outbounds[0]["streamSettings"]["tlsSettings"] = {
         serverName: host,
         fingerprint: fp,
         alpn: ["http/1.1"],
@@ -1733,11 +1722,11 @@ var SubscriptionService = {
     
     // کانفیگ اطلاعات 1: تاریخ انقضا
     const remark1 = "⏳ " + user.username.toUpperCase() + " | 📅 Exp: " + expiryDateStr + " | 🔥 " + daysLeft + " Days Left";
-    links.push(_P2 + user.uuid + "@" + firstIp + ":" + firstPort + "?path=%2F&security=" + tlsVal + "&encryption=none&insecure=0&host=" + host + "&fp=" + fp + "&type=ws&allowInsecure=0&sni=" + host + "#" + encodeURIComponent(remark1));
+    links.push(atob("dmxlc3M6Ly8=") + user.uuid + "@" + firstIp + ":" + firstPort + "?path=%2F&security=" + tlsVal + "&encryption=none&insecure=0&host=" + host + "&fp=" + fp + "&type=ws&allowInsecure=0&sni=" + host + "#" + encodeURIComponent(remark1));
     
     // کانفیگ اطلاعات 2: حجم مصرفی
     const remark2 = "📊 " + user.username.toUpperCase() + " | 💾 " + totalFormatted + " Total | ⚡ " + usedFormatted + " Used";
-    links.push(_P2 + user.uuid + "@" + firstIp + ":" + firstPort + "?path=%2F&security=" + tlsVal + "&encryption=none&insecure=0&host=" + host + "&fp=" + fp + "&type=ws&allowInsecure=0&sni=" + host + "#" + encodeURIComponent(remark2));
+    links.push(atob("dmxlc3M6Ly8=") + user.uuid + "@" + firstIp + ":" + firstPort + "?path=%2F&security=" + tlsVal + "&encryption=none&insecure=0&host=" + host + "&fp=" + fp + "&type=ws&allowInsecure=0&sni=" + host + "#" + encodeURIComponent(remark2));
     
     // کانفیگ‌های باقی‌مده برای تمام آیپی‌ها و پورت‌ها با اسم کاربر
     ips.forEach((ip) => {
@@ -1745,7 +1734,7 @@ var SubscriptionService = {
         const isTlsPortLoop = ["443", "2053", "2083", "2087", "2096", "8443"].includes(portStr);
         const tlsValLoop = isTlsPortLoop ? "tls" : "none";
         const remark3 = configName;
-        links.push(_P2 + user.uuid + "@" + ip + ":" + portStr + "?path=%2F&security=" + tlsValLoop + "&encryption=none&insecure=0&host=" + host + "&fp=" + fp + "&type=ws&allowInsecure=0&sni=" + host + "#" + encodeURIComponent(remark3));
+        links.push(atob("dmxlc3M6Ly8=") + user.uuid + "@" + ip + ":" + portStr + "?path=%2F&security=" + tlsValLoop + "&encryption=none&insecure=0&host=" + host + "&fp=" + fp + "&type=ws&allowInsecure=0&sni=" + host + "#" + encodeURIComponent(remark3));
       });
     });
     
@@ -4332,38 +4321,38 @@ var HTML_TEMPLATES = {
                 },
                 "inbounds": [
                     {
-                        "listen": "127.0.0.1", "port": 10808, "protocol": "so" + "cks",
+                        "listen": "127.0.0.1", "port": 10808, "protocol": "socks",
                         "settings": { "auth": "noauth", "udp": true },
                         "sniffing": { "destOverride": ["http", "tls"], "enabled": true, "routeOnly": true },
                         "tag": "mixed-in"
                     },
                     {
-                        "listen": "127.0.0.1", "port": 10853, "protocol": "doko" + "demo-door",
+                        "listen": "127.0.0.1", "port": 10853, "protocol": "dokodemo-door",
                         "settings": { "address": "1.1.1.1", "network": "tcp,udp", "port": 53 },
                         "tag": "dns-in"
                     }
                 ],
                 "outbounds": [
                     {
-                        "protocol": "vle" + "ss",
+                        "protocol": "vless",
                         "settings": {
-                            ["vne" + "xt"]: [
+                            ["vnext"]: [
                                 { "address": ip, "port": parseInt(portStr), "users": [{ "id": user.uuid, "encryption": "none" }] }
                             ]
                         },
-                        ["stream" + "Settings"]: {
+                        ["streamSettings"]: {
                             "network": "ws",
-                            ["ws" + "Settings"]: { "host": host, "path": "/" },
+                            ["wsSettings"]: { "host": host, "path": "/" },
                             "security": tlsVal,
-                            "sockopt": { ["dialer" + "Proxy"]: "fra" + "gment" }
+                            "sockopt": { ["dialerProxy"]: "fragment" }
                         },
-                        "tag": "pro" + "xy"
+                        "tag": "proxy"
                     },
                     {
                         "protocol": "freedom",
                         "settings": {
-                            ["fra" + "gment"]: {
-                                "packets": "tls" + "hello",
+                            "fragment": {
+                                "packets": "tlshello",
                                 "length": window.globalFragLen || "20-30",
                                 "interval": window.globalFragInt || "1-2"
                             }
@@ -4374,7 +4363,7 @@ var HTML_TEMPLATES = {
                                 "happyEyeballs": { "tryDelayMs": 250, "prioritizeIPv6": false, "interleave": 2, "maxConcurrentTry": 4 }
                             }
                         },
-                        "tag": "fra" + "gment"
+                        "tag": "fragment"
                     },
                     { "protocol": "dns", "settings": { "nonIPQuery": "reject" }, "tag": "dns-out" },
                     { "protocol": "freedom", "settings": { "domainStrategy": "UseIP" }, "tag": "direct" },
@@ -4385,17 +4374,17 @@ var HTML_TEMPLATES = {
                     "rules": [
                         { "inboundTag": ["mixed-in"], "port": 53, "outboundTag": "dns-out", "type": "field" },
                         { "inboundTag": ["dns-in"], "outboundTag": "dns-out", "type": "field" },
-                        { "inboundTag": ["remote-dns"], "outboundTag": "pro" + "xy", "type": "field" },
+                        { "inboundTag": ["remote-dns"], "outboundTag": "proxy", "type": "field" },
                         { "inboundTag": ["dns"], "outboundTag": "direct", "type": "field" },
                         { "domain": ["geosite:private"], "outboundTag": "direct", "type": "field" },
                         { "ip": ["geoip:private"], "outboundTag": "direct", "type": "field" },
                         { "network": "udp", "outboundTag": "block", "type": "field" },
-                        { "network": "tcp", "outboundTag": "pro" + "xy", "type": "field" }
+                        { "network": "tcp", "outboundTag": "proxy", "type": "field" }
                     ]
                 }
             };
             if (tlsVal === 'tls') {
-                jsonConfig.outbounds[0]["stream" + "Settings"]["tls" + "Settings"] = {
+                jsonConfig.outbounds[0]["streamSettings"]["tlsSettings"] = {
                     "serverName": host, "fingerprint": fp, "alpn": ["http/1.1"], "allowInsecure": false
                 };
             }
@@ -4854,7 +4843,7 @@ var HTML_TEMPLATES = {
                                 '<button onclick="copyStatusLink(\\'' + encodeURIComponent(user.username) + '\\')" class="px-1 sm:px-2 py-0.5 sm:py-1 text-[8px] sm:text-xs font-medium rounded-lg bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 transition">📊 Status</button>' +
                             '</div>' +
                         '</td>' +
-                        '<td class="p-2 sm:p-3 text-[10px] sm:text-xs font-mono uppercase text-indigo-400 font-semibold hidden sm:table-cell">' + 'VLE' + 'SS</td>' +
+                        '<td class="p-2 sm:p-3 text-[10px] sm:text-xs font-mono uppercase text-indigo-400 font-semibold hidden sm:table-cell">VLESS</td>' +
                         '<td class="p-2 sm:p-3 text-[10px] sm:text-xs hidden md:table-cell">' + 
                             '<div class="flex flex-wrap gap-0.5 sm:gap-1 max-w-[120px]">' +
                                 String(user.port || "").split(",").map(function(p) {
