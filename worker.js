@@ -391,6 +391,10 @@ var Router = {
     const hasPassword = await DbService.getPanelPassword(env.AM_DB);
     const authorized = await DbService.verifyApiAuth(request, env);
     
+    // Bypass auth for eng/status and system/stats (read-only)
+    const readOnlyEndpoints = ["/api/eng/status", "/api/system/stats"];
+    const isReadOnly = readOnlyEndpoints.includes(url.pathname);
+    
     // ============================================
     // SETUP PASSWORD - First time setup (username + password)
     // ============================================
@@ -4161,6 +4165,7 @@ var HTML_TEMPLATES = {
             try {
                 const res = await fetch('/api/theme', {
                     method: 'POST',
+                    credentials: 'include',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ theme: newTheme })
                 });
@@ -4194,7 +4199,7 @@ var HTML_TEMPLATES = {
 
         async function loadTheme() {
             try {
-                const res = await fetch('/api/theme');
+                const res = await fetch('/api/theme', { credentials: 'include' });
                 const data = await res.json();
                 currentTheme = data.theme || 'dark';
                 applyTheme(currentTheme);
@@ -4213,7 +4218,7 @@ var HTML_TEMPLATES = {
             info.innerText = 'Checking for updates...';
             info.style.color = '#60a5fa';
             try {
-                const res = await fetch('/api/update-check');
+                const res = await fetch('/api/update-check', { credentials: 'include' });
                 const data = await res.json();
                 if (data.update_available) {
                     info.innerHTML = '✅ New version <strong>' + data.latest_version + '</strong> available! <a href="' + data.url + '" target="_blank" class="text-emerald-400 hover:underline">View release</a>';
@@ -4328,6 +4333,7 @@ var HTML_TEMPLATES = {
             try {
                 var res = await fetch('/api/eng', {
                     method: 'POST',
+                    credentials: 'include',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ action })
                 });
@@ -4345,7 +4351,7 @@ var HTML_TEMPLATES = {
 
         async function updateXrayStatus() {
             try {
-                var res = await fetch('/api/eng/status');
+                var res = await fetch('/api/eng/status', { credentials: 'include' });
                 var data = await res.json();
                 if (data.running) {
                     var uptime = data.uptime;
@@ -4368,7 +4374,7 @@ var HTML_TEMPLATES = {
         // ============================================
         async function loadAdminsList() {
             try {
-                var res = await fetch('/api/admins');
+                var res = await fetch('/api/admins', { credentials: 'include' });
                 var data = await res.json();
                 var container1 = document.getElementById('admins-list');
                 var container2 = document.getElementById('admins-list-2');
@@ -4405,6 +4411,7 @@ var HTML_TEMPLATES = {
             try {
                 var res = await fetch('/api/admins', {
                     method: 'POST',
+                    credentials: 'include',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username, password })
                 });
@@ -4432,6 +4439,7 @@ var HTML_TEMPLATES = {
             try {
                 var res = await fetch('/api/admins', {
                     method: 'POST',
+                    credentials: 'include',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username, password })
                 });
@@ -4454,6 +4462,7 @@ var HTML_TEMPLATES = {
             try {
                 var res = await fetch('/api/admins', {
                     method: 'DELETE',
+                    credentials: 'include',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ id })
                 });
@@ -4728,7 +4737,7 @@ var HTML_TEMPLATES = {
             var username = decodeURIComponent(encodedUsername);
             if (!confirm('⚠️ Are you sure you want to delete user: ' + username + '?')) return;
             try {
-                var response = await fetch('/api/users/' + encodeURIComponent(username), { method: 'DELETE' });
+                var response = await fetch('/api/users/' + encodeURIComponent(username), { method: 'DELETE', credentials: 'include' });
                 if (response.ok) {
                     alert('✅ User deleted successfully!');
                     await loadUsers(true);
@@ -4746,6 +4755,7 @@ var HTML_TEMPLATES = {
             try {
                 var response = await fetch('/api/users/' + encodeURIComponent(username), {
                     method: 'PUT',
+                    credentials: 'include',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ toggle_only: true })
                 });
@@ -4895,6 +4905,7 @@ var HTML_TEMPLATES = {
             try {
                 var response = await fetch('/api/change-password', {
                     method: 'POST',
+                    credentials: 'include',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ current_password: currentPwd, new_password: newPwd })
                 });
@@ -4920,7 +4931,7 @@ var HTML_TEMPLATES = {
         async function logoutAdmin() {
             if (!confirm('⚠️ Are you sure you want to sign out?')) return;
             try {
-                await fetch('/api/logout', { method: 'POST' });
+                await fetch('/api/logout', { method: 'POST', credentials: 'include' });
             } catch (err) {}
             window.location.reload();
         }
@@ -4938,7 +4949,7 @@ var HTML_TEMPLATES = {
                 emptyState.classList.add('hidden');
             }
             try {
-                var res = await fetch('/api/users?t=' + Date.now());
+                var res = await fetch('/api/users?t=' + Date.now(), { credentials: 'include' });
                 if (!res.ok) throw new Error();
                 var data = await res.json();
                 renderUsersUI(data);
@@ -5189,7 +5200,7 @@ var HTML_TEMPLATES = {
             results.classList.add('hidden');
             
             try {
-                var res = await fetch('/api/cf-ip-scanner?host=' + encodeURIComponent(host) + '&port=' + port + '&limit=' + limit);
+                var res = await fetch('/api/cf-ip-scanner?host=' + encodeURIComponent(host) + '&port=' + port + '&limit=' + limit, { credentials: 'include' });
                 var data = await res.json();
                 
                 loading.classList.add('hidden');
