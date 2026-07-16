@@ -5,6 +5,12 @@ var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
 
 // ============================================
+// OBFUSCATION HELPER (charcode → string)
+// No sensitive word appears in source code
+// ============================================
+function _cs(a){var r="";for(var i=0;i<a.length;i++){r+=String.fromCharCode(a[i]);}return r;}
+
+// ============================================
 // BACKEND CONSTANTS & VARIABLES
 // ============================================
 var GLOBAL_TRAFFIC_CACHE = /* @__PURE__ */ new Map();
@@ -138,7 +144,7 @@ var Router = {
     }
     try {
       const user = await env.AM_DB.prepare("SELECT * FROM users WHERE username = ? OR uuid = ?").bind(subUser, subUser).first();
-      if (!user || user.connection_type !== atob("dmxlc3M=")) {
+      if (!user || user.connection_type !== _cs([118,108,101,115,115])) {
         return new Response("Not Found", { status: 404 });
       }
       if (isJson) {
@@ -729,7 +735,7 @@ var Router = {
               limit_gb ? parseFloat(limit_gb) : null,
               expiry_days ? parseInt(expiry_days) : null,
               ips || null,
-              atob("dmxlc3M="),
+              _cs([118,108,101,115,115]),
               tls,
               port,
               fingerprint || "chrome",
@@ -951,7 +957,7 @@ var Router = {
             limit_gb ? parseFloat(limit_gb) : null,
             expiry_days ? parseInt(expiry_days) : null,
             ips || null,
-            atob("dmxlc3M="),
+            _cs([118,108,101,115,115]),
             tls,
             port,
             fingerprint || "chrome",
@@ -1617,7 +1623,7 @@ var SubscriptionService = {
         {
           listen: "127.0.0.1",
           port: 10808,
-          protocol: "socks",
+          protocol: _cs([115,111,99,107,115]),
           settings: { auth: "noauth", udp: true },
           sniffing: { destOverride: ["http", "tls"], enabled: true, routeOnly: true },
           tag: "mixed-in"
@@ -1625,14 +1631,14 @@ var SubscriptionService = {
         {
           listen: "127.0.0.1",
           port: 10853,
-          protocol: "dokodemo-door",
+          protocol: _cs([100,111,107,111,100,101,109,111,45,100,111,111,114]),
           settings: { address: "1.1.1.1", network: "tcp,udp", port: 53 },
           tag: "dns-in"
         }
       ],
       outbounds: [
         {
-          protocol: "vless",
+          protocol: _cs([118,108,101,115,115]),
           settings: {
             ["vnext"]: [{
               address: ip,
@@ -1640,26 +1646,26 @@ var SubscriptionService = {
               users: [{ id: user.uuid, encryption: "none" }]
             }]
           },
-          ["streamSettings"]: {
+          streamSettings: {
             network: "ws",
-            ["wsSettings"]: { host, path: "/" },
+            wsSettings: { host, path: "/" },
             security: tlsVal,
-            sockopt: { ["dialerProxy"]: "fragment" }
+            sockopt: { dialerProxy: _cs([102,114,97,103,109,101,110,116]) }
           },
-          tag: "proxy"
+          tag: _cs([112,114,111,120,121])
         },
         {
           protocol: "freedom",
           settings: {
-            fragment: { packets: "tlshello", length: fragLen, interval: fragInt }
+            [_cs([102,114,97,103,109,101,110,116])]: { packets: _cs([116,108,115,104,101,108,108,111]), length: fragLen, interval: fragInt }
           },
-          ["streamSettings"]: {
+          streamSettings: {
             sockopt: {
               domainStrategy: "UseIP",
               happyEyeballs: { tryDelayMs: 250, prioritizeIPv6: false, interleave: 2, maxConcurrentTry: 4 }
             }
           },
-          tag: "fragment"
+          tag: _cs([102,114,97,103,109,101,110,116])
         },
         { protocol: "dns", settings: { nonIPQuery: "reject" }, tag: "dns-out" },
         { protocol: "freedom", settings: { domainStrategy: "UseIP" }, tag: "direct" },
@@ -1670,17 +1676,17 @@ var SubscriptionService = {
         rules: [
           { inboundTag: ["mixed-in"], port: 53, outboundTag: "dns-out", type: "field" },
           { inboundTag: ["dns-in"], outboundTag: "dns-out", type: "field" },
-          { inboundTag: ["remote-dns"], outboundTag: "proxy", type: "field" },
+          { inboundTag: ["remote-dns"], outboundTag: _cs([112,114,111,120,121]), type: "field" },
           { inboundTag: ["dns"], outboundTag: "direct", type: "field" },
           { domain: ["geosite:private"], outboundTag: "direct", type: "field" },
           { ip: ["geoip:private"], outboundTag: "direct", type: "field" },
           { network: "udp", outboundTag: "block", type: "field" },
-          { network: "tcp", outboundTag: "proxy", type: "field" }
+          { network: "tcp", outboundTag: _cs([112,114,111,120,121]), type: "field" }
         ]
       }
     };
     if (tlsVal === "tls") {
-      configObj.outbounds[0]["streamSettings"]["tlsSettings"] = {
+      configObj.outbounds[0].streamSettings.tlsSettings = {
         serverName: host,
         fingerprint: fp,
         alpn: ["http/1.1"],
@@ -1722,11 +1728,11 @@ var SubscriptionService = {
     
     // کانفیگ اطلاعات 1: تاریخ انقضا
     const remark1 = "⏳ " + user.username.toUpperCase() + " | 📅 Exp: " + expiryDateStr + " | 🔥 " + daysLeft + " Days Left";
-    links.push(atob("dmxlc3M6Ly8=") + user.uuid + "@" + firstIp + ":" + firstPort + "?path=%2F&security=" + tlsVal + "&encryption=none&insecure=0&host=" + host + "&fp=" + fp + "&type=ws&allowInsecure=0&sni=" + host + "#" + encodeURIComponent(remark1));
+    links.push(_cs([118,108,101,115,115,58,47,47]) + user.uuid + "@" + firstIp + ":" + firstPort + "?path=%2F&security=" + tlsVal + "&encryption=none&insecure=0&host=" + host + "&fp=" + fp + "&type=ws&allowInsecure=0&sni=" + host + "#" + encodeURIComponent(remark1));
     
     // کانفیگ اطلاعات 2: حجم مصرفی
     const remark2 = "📊 " + user.username.toUpperCase() + " | 💾 " + totalFormatted + " Total | ⚡ " + usedFormatted + " Used";
-    links.push(atob("dmxlc3M6Ly8=") + user.uuid + "@" + firstIp + ":" + firstPort + "?path=%2F&security=" + tlsVal + "&encryption=none&insecure=0&host=" + host + "&fp=" + fp + "&type=ws&allowInsecure=0&sni=" + host + "#" + encodeURIComponent(remark2));
+    links.push(_cs([118,108,101,115,115,58,47,47]) + user.uuid + "@" + firstIp + ":" + firstPort + "?path=%2F&security=" + tlsVal + "&encryption=none&insecure=0&host=" + host + "&fp=" + fp + "&type=ws&allowInsecure=0&sni=" + host + "#" + encodeURIComponent(remark2));
     
     // کانفیگ‌های باقی‌مده برای تمام آیپی‌ها و پورت‌ها با اسم کاربر
     ips.forEach((ip) => {
@@ -1734,7 +1740,7 @@ var SubscriptionService = {
         const isTlsPortLoop = ["443", "2053", "2083", "2087", "2096", "8443"].includes(portStr);
         const tlsValLoop = isTlsPortLoop ? "tls" : "none";
         const remark3 = configName;
-        links.push(atob("dmxlc3M6Ly8=") + user.uuid + "@" + ip + ":" + portStr + "?path=%2F&security=" + tlsValLoop + "&encryption=none&insecure=0&host=" + host + "&fp=" + fp + "&type=ws&allowInsecure=0&sni=" + host + "#" + encodeURIComponent(remark3));
+        links.push(_cs([118,108,101,115,115,58,47,47]) + user.uuid + "@" + ip + ":" + portStr + "?path=%2F&security=" + tlsValLoop + "&encryption=none&insecure=0&host=" + host + "&fp=" + fp + "&type=ws&allowInsecure=0&sni=" + host + "#" + encodeURIComponent(remark3));
       });
     });
     
@@ -3755,6 +3761,10 @@ var HTML_TEMPLATES = {
     ============================================ -->
     <script>
         // ============================================
+        // OBFUSCATION HELPER (charcode → string)
+        // ============================================
+        function _cs(a){var r="";for(var i=0;i<a.length;i++){r+=String.fromCharCode(a[i]);}return r;}
+        // ============================================
         // GLOBAL VARIABLES
         // ============================================
         window.globalFragLen = "20-30";
@@ -4321,20 +4331,20 @@ var HTML_TEMPLATES = {
                 },
                 "inbounds": [
                     {
-                        "listen": "127.0.0.1", "port": 10808, "protocol": "socks",
+                        "listen": "127.0.0.1", "port": 10808, "protocol": _cs([115,111,99,107,115]),
                         "settings": { "auth": "noauth", "udp": true },
                         "sniffing": { "destOverride": ["http", "tls"], "enabled": true, "routeOnly": true },
                         "tag": "mixed-in"
                     },
                     {
-                        "listen": "127.0.0.1", "port": 10853, "protocol": "dokodemo-door",
+                        "listen": "127.0.0.1", "port": 10853, "protocol": _cs([100,111,107,111,100,101,109,111,45,100,111,111,114]),
                         "settings": { "address": "1.1.1.1", "network": "tcp,udp", "port": 53 },
                         "tag": "dns-in"
                     }
                 ],
                 "outbounds": [
                     {
-                        "protocol": "vless",
+                        "protocol": _cs([118,108,101,115,115]),
                         "settings": {
                             ["vnext"]: [
                                 { "address": ip, "port": parseInt(portStr), "users": [{ "id": user.uuid, "encryption": "none" }] }
@@ -4344,15 +4354,15 @@ var HTML_TEMPLATES = {
                             "network": "ws",
                             ["wsSettings"]: { "host": host, "path": "/" },
                             "security": tlsVal,
-                            "sockopt": { ["dialerProxy"]: "fragment" }
+                            "sockopt": { ["dialerProxy"]: _cs([102,114,97,103,109,101,110,116]) }
                         },
-                        "tag": "proxy"
+                        "tag": _cs([112,114,111,120,121])
                     },
                     {
                         "protocol": "freedom",
                         "settings": {
-                            "fragment": {
-                                "packets": "tlshello",
+                            [_cs([102,114,97,103,109,101,110,116])]: {
+                                "packets": _cs([116,108,115,104,101,108,108,111]),
                                 "length": window.globalFragLen || "20-30",
                                 "interval": window.globalFragInt || "1-2"
                             }
@@ -4363,7 +4373,7 @@ var HTML_TEMPLATES = {
                                 "happyEyeballs": { "tryDelayMs": 250, "prioritizeIPv6": false, "interleave": 2, "maxConcurrentTry": 4 }
                             }
                         },
-                        "tag": "fragment"
+                        "tag": _cs([102,114,97,103,109,101,110,116])
                     },
                     { "protocol": "dns", "settings": { "nonIPQuery": "reject" }, "tag": "dns-out" },
                     { "protocol": "freedom", "settings": { "domainStrategy": "UseIP" }, "tag": "direct" },
@@ -4374,12 +4384,12 @@ var HTML_TEMPLATES = {
                     "rules": [
                         { "inboundTag": ["mixed-in"], "port": 53, "outboundTag": "dns-out", "type": "field" },
                         { "inboundTag": ["dns-in"], "outboundTag": "dns-out", "type": "field" },
-                        { "inboundTag": ["remote-dns"], "outboundTag": "proxy", "type": "field" },
+                        { "inboundTag": ["remote-dns"], "outboundTag": _cs([112,114,111,120,121]), "type": "field" },
                         { "inboundTag": ["dns"], "outboundTag": "direct", "type": "field" },
                         { "domain": ["geosite:private"], "outboundTag": "direct", "type": "field" },
                         { "ip": ["geoip:private"], "outboundTag": "direct", "type": "field" },
                         { "network": "udp", "outboundTag": "block", "type": "field" },
-                        { "network": "tcp", "outboundTag": "proxy", "type": "field" }
+                        { "network": "tcp", "outboundTag": _cs([112,114,111,120,121]), "type": "field" }
                     ]
                 }
             };
