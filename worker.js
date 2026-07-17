@@ -80,7 +80,7 @@ var TCP_CONCURRENCY = 2;
 var PRELOAD_RACE_DIAL = true;
 var engSt = { running: true, uptime: 0, startTime: Date.now() };
 var ADMINS = [];
-var PANEL_VERSION = "3.0.0";
+var PANEL_VERSION = "3.1.0";
 var THEME = "dark";
 
 // ============================================
@@ -118,7 +118,7 @@ code{background:rgba(99,102,241,.1);color:#818cf8;padding:2px 8px;border-radius:
 <div class="step"><span class="step-num">1</span><span class="step-title">Go to Cloudflare Dashboard</span><div class="step-desc">Open your Worker page → <strong>Settings</strong> tab → <strong>Bindings</strong> section</div></div>
 <div class="step"><span class="step-num">2</span><span class="step-title">Add D1 Database Binding</span><div class="step-desc">Click <strong>"Add binding"</strong> → Select <strong>D1 Database</strong><br>Variable name: <code>AM_DB</code><br>Select your D1 database (or create one if you don't have it)</div></div>
 <div class="step"><span class="step-num">3</span><span class="step-title">Redeploy the Worker</span><div class="step-desc">After adding the binding, click <strong>"Deploy"</strong> or <strong>"Save and Deploy"</strong></div></div>
-<div class="footer"><span>MrVpn Panel</span> v3.0.0</div>
+<div class="footer"><span>MrVpn Panel</span> v3.1.0</div>
 </div></body></html>`, {
           status: 500,
           headers: { "Content-Type": "text/html; charset=utf-8" }
@@ -127,6 +127,19 @@ code{background:rgba(99,102,241,.1);color:#818cf8;padding:2px 8px;border-radius:
       await DbService.ensureSchema(env.AM_DB);
       await loadAdmins(env);
       const url = new URL(request.url);
+      
+      // CORS preflight handler
+      if (request.method === "OPTIONS") {
+        return new Response(null, {
+          status: 204,
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Cookie, Authorization",
+            "Access-Control-Max-Age": "86400"
+          }
+        });
+      }
       
       if (Router.isWSUpgrade(request) && url.pathname === "/") {
         return await Router.handleWS(request, env, ctx);
@@ -295,7 +308,7 @@ var Router = {
     try {
       let pxIP = _cs([112,114,111,120,121,105,112,46,99,109,108,105,117,115,115,115,115,46,110,101,116]);
       try {
-        const pxRow = await env.AM_DB.prepare("SELECT value FROM settings WHERE key = '" + _cs([112,114,111,120,121,95,105,112]) + "'").first();
+        const pxRow = await env.AM_DB.prepare("SELECT value FROM settings WHERE key = ?").bind(_cs([112,114,111,120,121,95,105,112])).first();
         if (pxRow && pxRow.value) {
           pxIP = pxRow.value;
         }
@@ -777,8 +790,8 @@ var Router = {
         var frag_len = _body.frag_len;
         var frag_int = _body.frag_int;
         try {
-          if (proxy_ip) await env.AM_DB.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES ('" + _cs([112,114,111,120,121,95,105,112]) + "', ?)").bind(proxy_ip).run();
-          if (iata !== void 0) await env.AM_DB.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES ('" + _cs([112,114,111,120,121,95,108,111,99,97,116,105,111,110,95,105,97,116,97]) + "', ?)").bind(iata).run();
+          if (proxy_ip) await env.AM_DB.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)").bind(_cs([112,114,111,120,121,95,105,112]), proxy_ip).run();
+          if (iata !== void 0) await env.AM_DB.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)").bind(_cs([112,114,111,120,121,95,108,111,99,97,116,105,111,110,95,105,97,116,97]), iata).run();
           if (frag_len !== void 0) await env.AM_DB.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES ('frag_len', ?)").bind(frag_len).run();
           if (frag_int !== void 0) await env.AM_DB.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES ('frag_int', ?)").bind(frag_int).run();
         } catch (dbErr) {
@@ -789,8 +802,8 @@ var Router = {
       if (request.method === "GET") {
         let rowIp, rowIata, rowLen, rowInt;
         try {
-          rowIp = await env.AM_DB.prepare("SELECT value FROM settings WHERE key = '" + _cs([112,114,111,120,121,95,105,112]) + "'").first();
-          rowIata = await env.AM_DB.prepare("SELECT value FROM settings WHERE key = '" + _cs([112,114,111,120,121,95,108,111,99,97,116,105,111,110,95,105,97,116,97]) + "'").first();
+          rowIp = await env.AM_DB.prepare("SELECT value FROM settings WHERE key = ?").bind(_cs([112,114,111,120,121,95,105,112])).first();
+          rowIata = await env.AM_DB.prepare("SELECT value FROM settings WHERE key = ?").bind(_cs([112,114,111,120,121,95,108,111,99,97,116,105,111,110,95,105,97,116,97])).first();
           rowLen = await env.AM_DB.prepare("SELECT value FROM settings WHERE key = 'frag_len'").first();
           rowInt = await env.AM_DB.prepare("SELECT value FROM settings WHERE key = 'frag_int'").first();
         } catch (dbErr) {
@@ -848,9 +861,9 @@ var Router = {
     // ============================================
     // USERS - CRUD (Requires authentication)
     // ============================================
-    const _userKeywords = ["stats","traffic","check","config","reset","online","extend","add-traffic","bulk","rename","export","reset-all"];
+    const _userKeywords = ["stats","traffic","check","config","reset","online","extend","add-traffic","bulk","rename","export","reset-all","subscription"];
     const _pathSegs = url.pathname.split("/");
-    const _isUserRoute = url.pathname === "/api/users" || (url.pathname.startsWith("/api/users/") && !_userKeywords.includes(_pathSegs[3]));
+    const _isUserRoute = url.pathname === "/api/users" || (url.pathname.startsWith("/api/users/") && _pathSegs.length === 4 && !_userKeywords.includes(_pathSegs[3]));
     if (_isUserRoute) {
       if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
       const pathParts = url.pathname.split("/");
@@ -1224,7 +1237,7 @@ var Router = {
         const response = await fetch("https://api.github.com/repos/amirpocom63-del/mrvpnpanel/releases/latest");
         if (!response.ok) throw new Error("Failed to fetch");
         const data = await response.json();
-        const latestVersion = data.tag_name || data.name || "v3.0.0";
+        const latestVersion = data.tag_name || data.name || "v" + PANEL_VERSION;
         const currentVersion = "v" + PANEL_VERSION;
         return new Response(JSON.stringify({
           current_version: currentVersion,
@@ -1585,21 +1598,31 @@ var Router = {
     if (url.pathname === "/api/logs" && request.method === "GET") {
       if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
       const limit = parseInt(url.searchParams.get("limit")) || 50;
-      const logs = [
-        { timestamp: new Date().toISOString(), level: "info", message: "System started" },
-        { timestamp: new Date().toISOString(), level: "info", message: "Xray service running" },
-        { timestamp: new Date().toISOString(), level: "info", message: "Server listening on /" },
-        { timestamp: new Date().toISOString(), level: "info", message: "API endpoints ready" },
-        { timestamp: new Date().toISOString(), level: "info", message: "Database connected" },
-        { timestamp: new Date().toISOString(), level: "info", message: "Panel version " + PANEL_VERSION }
-      ];
-      return new Response(JSON.stringify({
-        success: true,
-        logs: logs.slice(0, limit),
-        total: logs.length
-      }), {
-        headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
-      });
+      try {
+        const result = await env.AM_DB.prepare("SELECT * FROM logs ORDER BY id DESC LIMIT ?").bind(limit).all();
+        const logs = (result.results || []).map(l => ({
+          timestamp: l.timestamp ? new Date(l.timestamp).toISOString() : new Date().toISOString(),
+          level: l.level || 'info',
+          message: l.message || ''
+        }));
+        if (logs.length === 0) {
+          logs.push(
+            { timestamp: new Date().toISOString(), level: "info", message: "System started" },
+            { timestamp: new Date().toISOString(), level: "info", message: "Xray service running" },
+            { timestamp: new Date().toISOString(), level: "info", message: "API endpoints ready" },
+            { timestamp: new Date().toISOString(), level: "info", message: "Database connected" }
+          );
+        }
+        return new Response(JSON.stringify({
+          success: true,
+          logs: logs.slice(0, limit),
+          total: logs.length
+        }), {
+          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+      }
     }
     
     // ============================================
@@ -1681,6 +1704,224 @@ var Router = {
       }
     }
     
+    // ============================================
+    // INBOUNDS MANAGEMENT (Nova-style)
+    // ============================================
+    if (url.pathname === "/api/inbounds") {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { "Content-Type": "application/json" } });
+      if (request.method === "GET") {
+        try {
+          const result = await env.AM_DB.prepare("SELECT * FROM inbounds ORDER BY id DESC").all();
+          return new Response(JSON.stringify({ success: true, inbounds: result.results || [] }), { headers: { "Content-Type": "application/json" } });
+        } catch (e) {
+          return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: { "Content-Type": "application/json" } });
+        }
+      }
+      if (request.method === "POST") {
+        var _body = await _rj(request);
+        if (_body === null) return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: { "Content-Type": "application/json" } });
+        var tag = _body.tag;
+        var protocol = _body.protocol || "vless";
+        var port = _body.port;
+        var listen = _body.listen || "0.0.0.0";
+        var settings = _body.settings || "{}";
+        var stream_settings = _body.stream_settings || "{}";
+        var sniffing = _body.sniffing !== void 0 ? (_body.sniffing ? 1 : 0) : 1;
+        var remark = _body.remark || "";
+        if (!tag || !port) {
+          return new Response(JSON.stringify({ error: "Tag and port are required" }), { status: 400, headers: { "Content-Type": "application/json" } });
+        }
+        try {
+          await env.AM_DB.prepare(
+            "INSERT INTO inbounds (tag, protocol, port, listen, settings, stream_settings, sniffing, remark) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+          ).bind(tag, protocol, parseInt(port), listen, typeof settings === 'string' ? settings : JSON.stringify(settings), typeof stream_settings === 'string' ? stream_settings : JSON.stringify(stream_settings), sniffing, remark).run();
+          try { await env.AM_DB.prepare("INSERT INTO logs (level, message, timestamp) VALUES (?, ?, ?)").bind("info", "Inbound created: " + tag, Date.now()).run(); } catch(_) {}
+          return new Response(JSON.stringify({ success: true }), { headers: { "Content-Type": "application/json" } });
+        } catch (e) {
+          if (e.message && e.message.includes("UNIQUE")) {
+            return new Response(JSON.stringify({ error: "Tag already exists" }), { status: 400, headers: { "Content-Type": "application/json" } });
+          }
+          return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: { "Content-Type": "application/json" } });
+        }
+      }
+      if (request.method === "DELETE") {
+        var _body = await _rj(request);
+        if (_body === null) return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: { "Content-Type": "application/json" } });
+        var id = _body.id;
+        if (!id) return new Response(JSON.stringify({ error: "ID required" }), { status: 400, headers: { "Content-Type": "application/json" } });
+        try {
+          var inb = await env.AM_DB.prepare("SELECT tag FROM inbounds WHERE id = ?").bind(id).first();
+          await env.AM_DB.prepare("DELETE FROM inbounds WHERE id = ?").bind(id).run();
+          try { await env.AM_DB.prepare("INSERT INTO logs (level, message, timestamp) VALUES (?, ?, ?)").bind("info", "Inbound deleted: " + (inb ? inb.tag : id), Date.now()).run(); } catch(_) {}
+          return new Response(JSON.stringify({ success: true }), { headers: { "Content-Type": "application/json" } });
+        } catch (e) {
+          return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: { "Content-Type": "application/json" } });
+        }
+      }
+    }
+    
+    if (url.pathname.startsWith("/api/inbounds/") && request.method === "PUT") {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { "Content-Type": "application/json" } });
+      var id = parseInt(url.pathname.split("/").pop());
+      if (!id) return new Response(JSON.stringify({ error: "Invalid ID" }), { status: 400, headers: { "Content-Type": "application/json" } });
+      var _body = await _rj(request);
+      if (_body === null) return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: { "Content-Type": "application/json" } });
+      try {
+        var fields = [];
+        var binds = [];
+        if (_body.tag !== void 0) { fields.push("tag = ?"); binds.push(_body.tag); }
+        if (_body.protocol !== void 0) { fields.push("protocol = ?"); binds.push(_body.protocol); }
+        if (_body.port !== void 0) { fields.push("port = ?"); binds.push(parseInt(_body.port)); }
+        if (_body.listen !== void 0) { fields.push("listen = ?"); binds.push(_body.listen); }
+        if (_body.settings !== void 0) { fields.push("settings = ?"); binds.push(typeof _body.settings === 'string' ? _body.settings : JSON.stringify(_body.settings)); }
+        if (_body.stream_settings !== void 0) { fields.push("stream_settings = ?"); binds.push(typeof _body.stream_settings === 'string' ? _body.stream_settings : JSON.stringify(_body.stream_settings)); }
+        if (_body.sniffing !== void 0) { fields.push("sniffing = ?"); binds.push(_body.sniffing ? 1 : 0); }
+        if (_body.is_active !== void 0) { fields.push("is_active = ?"); binds.push(_body.is_active ? 1 : 0); }
+        if (_body.remark !== void 0) { fields.push("remark = ?"); binds.push(_body.remark); }
+        if (fields.length === 0) return new Response(JSON.stringify({ error: "No fields to update" }), { status: 400, headers: { "Content-Type": "application/json" } });
+        binds.push(id);
+        await env.AM_DB.prepare("UPDATE inbounds SET " + fields.join(", ") + " WHERE id = ?").bind(...binds).run();
+        return new Response(JSON.stringify({ success: true }), { headers: { "Content-Type": "application/json" } });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: { "Content-Type": "application/json" } });
+      }
+    }
+    
+    // ============================================
+    // SYSTEM LOGS (Nova-style)
+    // ============================================
+    if (url.pathname === "/api/system/logs") {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { "Content-Type": "application/json" } });
+      const limit = parseInt(url.searchParams.get("limit")) || 100;
+      try {
+        const result = await env.AM_DB.prepare("SELECT * FROM logs ORDER BY id DESC LIMIT ?").bind(limit).all();
+        return new Response(JSON.stringify({ success: true, logs: result.results || [] }), { headers: { "Content-Type": "application/json" } });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: { "Content-Type": "application/json" } });
+      }
+    }
+    
+    if (url.pathname === "/api/system/logs" && request.method === "DELETE") {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { "Content-Type": "application/json" } });
+      try {
+        await env.AM_DB.prepare("DELETE FROM logs").run();
+        return new Response(JSON.stringify({ success: true }), { headers: { "Content-Type": "application/json" } });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: { "Content-Type": "application/json" } });
+      }
+    }
+    
+    // ============================================
+    // BACKUP / EXPORT (Nova-style)
+    // ============================================
+    if (url.pathname === "/api/backup" && request.method === "GET") {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { "Content-Type": "application/json" } });
+      try {
+        const users = await env.AM_DB.prepare("SELECT * FROM users").all();
+        const inbounds = await env.AM_DB.prepare("SELECT * FROM inbounds").all();
+        const settings = await env.AM_DB.prepare("SELECT * FROM settings").all();
+        const admins = await env.AM_DB.prepare("SELECT id, username, created_at FROM admins").all();
+        const backup = {
+          version: PANEL_VERSION,
+          created_at: new Date().toISOString(),
+          users: users.results || [],
+          inbounds: inbounds.results || [],
+          settings: (settings.results || []).filter(s => s.key !== 'panel_password'),
+          admins: admins.results || []
+        };
+        try { await env.AM_DB.prepare("INSERT INTO logs (level, message, timestamp) VALUES (?, ?, ?)").bind("info", "Backup exported", Date.now()).run(); } catch(_) {}
+        return new Response(JSON.stringify(backup, null, 2), {
+          headers: { "Content-Type": "application/json", "Content-Disposition": "attachment; filename=backup-" + new Date().toISOString().split('T')[0] + ".json" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: { "Content-Type": "application/json" } });
+      }
+    }
+    
+    if (url.pathname === "/api/backup" && request.method === "POST") {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { "Content-Type": "application/json" } });
+      var _body = await _rj(request);
+      if (_body === null) return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: { "Content-Type": "application/json" } });
+      try {
+        let imported = { users: 0, inbounds: 0, settings: 0 };
+        if (_body.users && Array.isArray(_body.users)) {
+          for (const u of _body.users) {
+            try {
+              await env.AM_DB.prepare(
+                "INSERT OR REPLACE INTO users (username, uuid, limit_gb, expiry_days, ips, connection_type, tls, port, used_gb, is_active, last_active, created_at, fingerprint, config_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+              ).bind(u.username, u.uuid, u.limit_gb, u.expiry_days, u.ips, u.connection_type, u.tls, u.port, u.used_gb || 0, u.is_active !== void 0 ? u.is_active : 1, u.last_active || null, u.created_at || new Date().toISOString(), u.fingerprint || 'chrome', u.config_name || u.username).run();
+              imported.users++;
+            } catch(_) {}
+          }
+        }
+        if (_body.inbounds && Array.isArray(_body.inbounds)) {
+          for (const i of _body.inbounds) {
+            try {
+              await env.AM_DB.prepare(
+                "INSERT OR REPLACE INTO inbounds (tag, protocol, port, listen, settings, stream_settings, sniffing, is_active, remark) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+              ).bind(i.tag, i.protocol, i.port, i.listen, i.settings, i.stream_settings, i.sniffing, i.is_active !== void 0 ? i.is_active : 1, i.remark || '').run();
+              imported.inbounds++;
+            } catch(_) {}
+          }
+        }
+        if (_body.settings && Array.isArray(_body.settings)) {
+          for (const s of _body.settings) {
+            try {
+              await env.AM_DB.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)").bind(s.key, s.value).run();
+              imported.settings++;
+            } catch(_) {}
+          }
+        }
+        try { await env.AM_DB.prepare("INSERT INTO logs (level, message, timestamp) VALUES (?, ?, ?)").bind("info", "Backup imported: " + imported.users + " users, " + imported.inbounds + " inbounds, " + imported.settings + " settings", Date.now()).run(); } catch(_) {}
+        return new Response(JSON.stringify({ success: true, imported }), { headers: { "Content-Type": "application/json" } });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: { "Content-Type": "application/json" } });
+      }
+    }
+    
+    // ============================================
+    // USER BATCH OPERATIONS (Nova-style)
+    // ============================================
+    if (url.pathname === "/api/users/batch-delete" && request.method === "POST") {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { "Content-Type": "application/json" } });
+      var _body = await _rj(request);
+      if (_body === null) return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: { "Content-Type": "application/json" } });
+      var usernames = _body.usernames;
+      if (!usernames || !Array.isArray(usernames)) {
+        return new Response(JSON.stringify({ error: "Invalid usernames array" }), { status: 400, headers: { "Content-Type": "application/json" } });
+      }
+      let deleted = 0;
+      for (const uname of usernames) {
+        try {
+          await env.AM_DB.prepare("DELETE FROM users WHERE username = ?").bind(uname).run();
+          GLOBAL_TRAFFIC_CACHE.delete(uname);
+          ACTIVE_CONNECTIONS_COUNT.delete(uname);
+          deleted++;
+        } catch(_) {}
+      }
+      try { await env.AM_DB.prepare("INSERT INTO logs (level, message, timestamp) VALUES (?, ?, ?)").bind("info", "Batch deleted " + deleted + " users", Date.now()).run(); } catch(_) {}
+      return new Response(JSON.stringify({ success: true, deleted }), { headers: { "Content-Type": "application/json" } });
+    }
+    
+    if (url.pathname === "/api/users/batch-toggle" && request.method === "POST") {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { "Content-Type": "application/json" } });
+      var _body = await _rj(request);
+      if (_body === null) return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: { "Content-Type": "application/json" } });
+      var usernames = _body.usernames;
+      var activate = _body.activate;
+      if (!usernames || !Array.isArray(usernames) || activate === void 0) {
+        return new Response(JSON.stringify({ error: "Invalid params" }), { status: 400, headers: { "Content-Type": "application/json" } });
+      }
+      let updated = 0;
+      for (const uname of usernames) {
+        try {
+          await env.AM_DB.prepare("UPDATE users SET is_active = ? WHERE username = ?").bind(activate ? 1 : 0, uname).run();
+          updated++;
+        } catch(_) {}
+      }
+      return new Response(JSON.stringify({ success: true, updated }), { headers: { "Content-Type": "application/json" } });
+    }
+    
     return new Response(JSON.stringify({ error: "Not Found" }), { status: 404 });
   }
 };
@@ -1692,7 +1933,8 @@ var schemaEnsured = false;
 var cachedPanelPassword = null;
 var DbService = {
   async ensureSchema(db) {
-    if (schemaEnsured || !db) return;
+    if (!db) return;
+    if (schemaEnsured) return;
     try {
       await db.prepare(`
         CREATE TABLE IF NOT EXISTS users (
@@ -1739,6 +1981,36 @@ var DbService = {
         )
       `).run();
     } catch (e) {}
+    try {
+      await db.prepare(`
+        CREATE TABLE IF NOT EXISTS inbounds (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          tag TEXT UNIQUE,
+          protocol TEXT DEFAULT 'vless',
+          port INTEGER,
+          listen TEXT DEFAULT '0.0.0.0',
+          settings TEXT DEFAULT '{}',
+          stream_settings TEXT DEFAULT '{}',
+          sniffing INTEGER DEFAULT 1,
+          is_active INTEGER DEFAULT 1,
+          remark TEXT,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+      `).run();
+    } catch (e) {}
+    try {
+      await db.prepare(`
+        CREATE TABLE IF NOT EXISTS logs (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          level TEXT DEFAULT 'info',
+          message TEXT,
+          timestamp INTEGER
+        )
+      `).run();
+    } catch (e) {}
+    try {
+      await db.prepare("ALTER TABLE logs ADD COLUMN details TEXT").run();
+    } catch (e) {}
     schemaEnsured = true;
   },
   async getPanelPassword(db) {
@@ -1756,6 +2028,9 @@ var DbService = {
     if (!db) return;
     await db.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES ('panel_password', ?)").bind(password).run();
     cachedPanelPassword = password;
+  },
+  invalidatePasswordCache() {
+    cachedPanelPassword = null;
   },
   async verifyApiAuth(request, env) {
     const cookies = request.headers.get("Cookie") || "";
@@ -2128,6 +2403,7 @@ async function handleVLESS(env, storedData = null, ctx = null) {
     activeCount = activeCount - 1;
     if (activeCount <= 0) {
       ACTIVE_CONNECTIONS_COUNT.delete(uname);
+      try { const now = Date.now(); env?.AM_DB?.prepare("INSERT INTO logs (level, message, timestamp) VALUES (?, ?, ?)").bind("info", "User disconnected: " + uname, now).run().catch(()=>{}); } catch(_) {}
       let cachedBytes = GLOBAL_TRAFFIC_CACHE.get(uname) || 0;
       if (cachedBytes > 0) {
         GLOBAL_TRAFFIC_CACHE.set(uname, 0);
@@ -2297,6 +2573,7 @@ async function handleVLESS(env, storedData = null, ctx = null) {
             const now = Date.now();
             GLOBAL_LAST_ACTIVE_WRITE.set(username, now);
             await env.AM_DB.prepare("UPDATE users SET last_active = ? WHERE username = ?").bind(now, username).run();
+            try { await env.AM_DB.prepare("INSERT INTO logs (level, message, timestamp) VALUES (?, ?, ?)").bind("info", "User connected: " + username, now).run(); } catch(_) {}
           } catch (e) {}
         };
         if (ctx) ctx.waitUntil(setOnlineTask());
@@ -3098,7 +3375,7 @@ var HTML_TEMPLATES = {
         <p class="tagline">MRVPN294 Management Panel</p>
         <div class="status-pill"><span class="status-dot"></span>System Online</div>
         <div class="info-cards">
-            <div class="info-card"><div class="label">Version</div><div class="value">v3.0.0</div></div>
+            <div class="info-card"><div class="label">Version</div><div class="value">v3.1.0</div></div>
             <div class="info-card"><div class="label">Protocol</div><div class="value accent">VLESS+WS</div></div>
             <div class="info-card"><div class="label">Status</div><div class="value green">Running</div></div>
         </div>
@@ -3107,7 +3384,7 @@ var HTML_TEMPLATES = {
             Enter Dashboard
         </a>
         <div class="footer">
-            <span>v3.0.0</span>
+            <span>v3.1.0</span>
             <a href="https://github.com/amirpocom63-del/mrvpnpanel" target="_blank">
                 <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z"/></svg>
                 GitHub
@@ -3269,7 +3546,7 @@ var HTML_TEMPLATES = {
             <button type="submit" id="submit-btn" class="btn">Sign In</button>
         </form>
         <div class="divider"></div>
-        <div class="brand-footer"><span>MrVpn Panel</span> v3.0.0</div>
+        <div class="brand-footer"><span>MrVpn Panel</span> v3.1.0</div>
     </div>
     <script>
         async function handleLogin(e){
@@ -3511,6 +3788,12 @@ var HTML_TEMPLATES = {
                     </svg>
                     IP Scanner
                 </a>
+                <a href="javascript:void(0)" onclick="showPage('inbounds')" class="sidebar-link flex items-center gap-3 text-sm font-medium text-zinc-400 hover:text-white transition" data-page="inbounds">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                    </svg>
+                    Inbounds
+                </a>
                 <a href="javascript:void(0)" onclick="logoutAdmin()" class="sidebar-link flex items-center gap-3 text-sm font-medium text-zinc-400 hover:text-red-400 transition">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
@@ -3530,7 +3813,7 @@ var HTML_TEMPLATES = {
                     </div>
                 </div>
                 <div class="mt-3 flex items-center justify-between text-xs text-zinc-500">
-                    <span>v3.0.0</span>
+                    <span>v3.1.0</span>
                     <span>@MrVpn294</span>
                 </div>
             </div>
@@ -3557,7 +3840,7 @@ var HTML_TEMPLATES = {
                     </div>
                 </div>
                 <div class="flex items-center gap-2 sm:gap-3">
-                    <span class="text-xs text-zinc-500 hidden sm:inline">v3.0.0</span>
+                    <span class="text-xs text-zinc-500 hidden sm:inline">v3.1.0</span>
                     <span class="w-px h-6 bg-zinc-800 hidden sm:block"></span>
                     <span class="text-xs text-emerald-400 flex items-center gap-1.5">
                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -3838,6 +4121,13 @@ var HTML_TEMPLATES = {
                             <div id="update-info" class="text-xs text-zinc-400 mb-2">Checking for updates...</div>
                             <button onclick="checkUpdate()" class="w-full py-3 bg-gradient-to-r from-emerald-500 to-blue-500 hover:from-emerald-600 hover:to-blue-600 text-white font-bold rounded-xl transition text-sm shadow-lg shadow-emerald-500/25">Check for Updates</button>
                         </div>
+                        <div class="pt-4 border-t border-zinc-800/30">
+                            <h4 class="text-sm font-semibold text-white mb-3">Backup & Restore</h4>
+                            <div class="grid grid-cols-2 gap-3">
+                                <button onclick="exportBackup()" class="py-3 bg-gradient-to-r from-emerald-500 to-blue-500 hover:from-emerald-600 hover:to-blue-600 text-white font-bold rounded-xl transition text-sm shadow-lg shadow-emerald-500/25">Export Backup</button>
+                                <button onclick="importBackup()" class="py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold rounded-xl transition text-sm shadow-lg shadow-amber-500/25">Import Backup</button>
+                            </div>
+                        </div>
                         <div class="flex gap-3 pt-2 border-t border-zinc-800/30">
                             <button type="button" onclick="saveSettings()" id="save-settings-btn" class="flex-1 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-bold rounded-xl transition text-sm shadow-lg shadow-indigo-500/25">Save</button>
                         </div>
@@ -3850,13 +4140,15 @@ var HTML_TEMPLATES = {
             ========================================== -->
             <div id="page-logs" class="page-section">
                 <div class="glass rounded-2xl p-4 sm:p-6">
-                    <h2 class="text-lg font-bold text-white mb-4">System Logs</h2>
+                    <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+                        <h2 class="text-lg font-bold text-white">System Logs</h2>
+                        <div class="flex gap-2">
+                            <button onclick="loadSystemLogs()" class="px-3 py-1.5 bg-white/5 hover:bg-white/10 text-zinc-400 text-xs font-semibold rounded-lg transition">Refresh</button>
+                            <button onclick="clearSystemLogs()" class="px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-semibold rounded-lg transition">Clear</button>
+                        </div>
+                    </div>
                     <div id="logs-container" class="space-y-1 font-mono text-xs max-h-96 overflow-y-auto scrollbar-thin">
                         <div class="text-emerald-400">● System started at: <span id="log-start-time">-</span></div>
-                        <div class="text-zinc-500">● Xray service running</div>
-                        <div class="text-zinc-500">● Server listening on /</div>
-                        <div class="text-zinc-500">● API endpoints ready</div>
-                        <div class="text-indigo-400">● Database connected</div>
                     </div>
                 </div>
             </div>
@@ -3929,6 +4221,40 @@ var HTML_TEMPLATES = {
                             <span id="scanner-count" class="text-xs text-zinc-400"></span>
                         </div>
                         <div id="scanner-results-list" class="space-y-2 max-h-80 overflow-y-auto scrollbar-thin"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==========================================
+            PAGE: INBOUNDS (Nova-style)
+            ========================================== -->
+            <div id="page-inbounds" class="page-section">
+                <div class="glass rounded-2xl p-4 sm:p-6">
+                    <div class="flex flex-wrap items-center justify-between gap-3 mb-4 sm:mb-6">
+                        <div>
+                            <h2 class="text-lg font-bold text-white">Inbounds</h2>
+                            <p class="text-xs text-zinc-400">Manage protocol inbounds (VLESS, Trojan)</p>
+                        </div>
+                        <button onclick="openInboundModal()" class="flex items-center gap-2 px-3 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-bold rounded-xl transition text-xs sm:text-sm shadow-lg shadow-indigo-500/25 transform hover:scale-[1.02]">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/>
+                            </svg>
+                            Add Inbound
+                        </button>
+                    </div>
+                    <div id="inbounds-loading" class="text-center py-8">
+                        <div class="inline-block w-6 h-6 border-2 border-indigo-500/30 border-t-indigo-500 rounded-full animate-spin"></div>
+                        <p class="text-zinc-400 text-sm mt-3">Loading inbounds...</p>
+                    </div>
+                    <div id="inbounds-container" class="hidden space-y-3"></div>
+                    <div id="inbounds-empty" class="hidden text-center py-8">
+                        <div class="w-12 h-12 rounded-full bg-zinc-800/30 flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-6 h-6 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                            </svg>
+                        </div>
+                        <p class="text-zinc-400 text-sm">No inbounds configured.</p>
+                        <p class="text-zinc-500 text-xs mt-1">Click "Add Inbound" to create one.</p>
                     </div>
                 </div>
             </div>
@@ -4040,6 +4366,60 @@ var HTML_TEMPLATES = {
         </div>
     </div>
 
+    <!-- Inbound Modal -->
+    <div id="inbound-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 modal-overlay opacity-0 pointer-events-none transition-opacity duration-300">
+        <div id="inbound-modal-card" class="w-full max-w-lg glass rounded-3xl p-4 sm:p-6 transition-all duration-300 opacity-0 scale-95 modal-card scrollbar-thin">
+            <div class="flex items-center justify-between mb-4 sm:mb-6">
+                <div>
+                    <h3 id="inbound-modal-title" class="text-lg sm:text-xl font-bold text-white">Add Inbound</h3>
+                    <p class="text-xs text-zinc-400">Configure protocol inbound</p>
+                </div>
+                <button onclick="toggleInboundModal(false)" class="p-2 rounded-lg hover:bg-white/5 text-zinc-400 transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <form id="inbound-form" onsubmit="handleInboundSubmit(event)" class="space-y-4">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Tag</label>
+                        <input type="text" id="inbound-tag" placeholder="e.g. vless-ws" class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition" required>
+                    </div>
+                    <div>
+                        <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Protocol</label>
+                        <select id="inbound-protocol" class="w-full px-4 py-3 rounded-xl text-zinc-300 text-sm outline-none transition cursor-pointer bg-[rgba(255,255,255,0.05)] border border-zinc-800/50">
+                            <option value="vless">VLESS</option>
+                            <option value="trojan">Trojan</option>
+                            <option value="vmess">VMess</option>
+                            <option value="shadowsocks">Shadowsocks</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Port</label>
+                        <input type="number" id="inbound-port" placeholder="443" class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition" required>
+                    </div>
+                    <div>
+                        <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Listen</label>
+                        <input type="text" id="inbound-listen" value="0.0.0.0" placeholder="0.0.0.0" class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Remark</label>
+                    <input type="text" id="inbound-remark" placeholder="Optional description..." class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition">
+                </div>
+                <div class="flex items-center gap-3">
+                    <input type="checkbox" id="inbound-sniffing" checked class="w-4 h-4 rounded border-zinc-600 bg-zinc-800 text-indigo-500 focus:ring-indigo-500">
+                    <label for="inbound-sniffing" class="text-zinc-300 text-sm">Enable Sniffing</label>
+                </div>
+                <div class="flex gap-3 pt-3 border-t border-zinc-800/30">
+                    <button type="button" onclick="toggleInboundModal(false)" class="flex-1 py-3 bg-white/5 hover:bg-white/10 text-zinc-400 font-semibold rounded-xl transition text-sm">Cancel</button>
+                    <button type="submit" id="inbound-submit-btn" class="flex-1 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-bold rounded-xl transition text-sm shadow-lg shadow-indigo-500/25">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- ============================================
     JAVASCRIPT
     ============================================ -->
@@ -4138,10 +4518,15 @@ var HTML_TEMPLATES = {
                 settings: ['Panel Settings', 'Configure panel preferences'],
                 logs: ['System Logs', 'Real-time activity logs'],
                 admins: ['Admin Management', 'Add or remove administrators'],
-                'ip-scanner': ['IP Scanner', 'Find clean Cloudflare IPs']
+                'ip-scanner': ['IP Scanner', 'Find clean Cloudflare IPs'],
+                inbounds: ['Inbounds', 'Manage protocol inbounds']
             };
             document.getElementById('page-title').innerText = titles[page][0];
             document.getElementById('page-subtitle').innerText = titles[page][1];
+            
+            // Auto-load data for specific pages
+            if (page === 'logs') loadSystemLogs();
+            if (page === 'inbounds') loadInbounds();
             
             // Auto-close menu on mobile after click
             if (window.innerWidth < 1024) {
@@ -5243,6 +5628,273 @@ var HTML_TEMPLATES = {
         }
 
         // ============================================
+        // INBOUNDS MANAGEMENT (Nova-style)
+        // ============================================
+        let allInbounds = [];
+        let isEditInboundMode = false;
+        let editingInboundId = null;
+
+        function toggleInboundModal(show) {
+            var modal = document.getElementById('inbound-modal');
+            var card = document.getElementById('inbound-modal-card');
+            if (show) {
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                modal.classList.add('opacity-100', 'pointer-events-auto');
+                card.classList.remove('opacity-0', 'scale-95');
+                card.classList.add('opacity-100', 'scale-100');
+            } else {
+                modal.classList.remove('opacity-100', 'pointer-events-auto');
+                modal.classList.add('opacity-0', 'pointer-events-none');
+                card.classList.remove('opacity-100', 'scale-100');
+                card.classList.add('opacity-0', 'scale-95');
+                isEditInboundMode = false;
+                editingInboundId = null;
+                document.getElementById('inbound-modal-title').innerText = 'Add Inbound';
+                document.getElementById('inbound-submit-btn').innerText = 'Create';
+                document.getElementById('inbound-form').reset();
+                document.getElementById('inbound-sniffing').checked = true;
+            }
+        }
+
+        function openInboundModal() {
+            isEditInboundMode = false;
+            editingInboundId = null;
+            document.getElementById('inbound-modal-title').innerText = 'Add Inbound';
+            document.getElementById('inbound-submit-btn').innerText = 'Create';
+            document.getElementById('inbound-form').reset();
+            document.getElementById('inbound-sniffing').checked = true;
+            toggleInboundModal(true);
+        }
+
+        function editInbound(id) {
+            var inbound = allInbounds.find(function(i) { return i.id === id; });
+            if (!inbound) return;
+            isEditInboundMode = true;
+            editingInboundId = id;
+            document.getElementById('inbound-modal-title').innerText = 'Edit Inbound';
+            document.getElementById('inbound-submit-btn').innerText = 'Save';
+            document.getElementById('inbound-tag').value = inbound.tag || '';
+            document.getElementById('inbound-protocol').value = inbound.protocol || 'vless';
+            document.getElementById('inbound-port').value = inbound.port || '';
+            document.getElementById('inbound-listen').value = inbound.listen || '0.0.0.0';
+            document.getElementById('inbound-remark').value = inbound.remark || '';
+            document.getElementById('inbound-sniffing').checked = inbound.sniffing === 1;
+            toggleInboundModal(true);
+        }
+
+        async function handleInboundSubmit(event) {
+            event.preventDefault();
+            var btn = document.getElementById('inbound-submit-btn');
+            btn.disabled = true;
+            btn.innerText = isEditInboundMode ? 'Saving...' : 'Creating...';
+            var tag = document.getElementById('inbound-tag').value.trim();
+            var protocol = document.getElementById('inbound-protocol').value;
+            var port = document.getElementById('inbound-port').value;
+            var listen = document.getElementById('inbound-listen').value.trim();
+            var remark = document.getElementById('inbound-remark').value.trim();
+            var sniffing = document.getElementById('inbound-sniffing').checked;
+            try {
+                var url, method;
+                if (isEditInboundMode) {
+                    url = '/api/inbounds/' + editingInboundId;
+                    method = 'PUT';
+                } else {
+                    url = '/api/inbounds';
+                    method = 'POST';
+                }
+                var res = await fetch(url, {
+                    method: method,
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ tag, protocol, port: parseInt(port), listen, remark, sniffing })
+                });
+                var data = await res.json();
+                if (data.success) {
+                    toggleInboundModal(false);
+                    loadInbounds();
+                } else {
+                    alert('Error: ' + (data.error || 'Failed'));
+                }
+            } catch (err) {
+                alert('Connection error');
+            } finally {
+                btn.disabled = false;
+                btn.innerText = isEditInboundMode ? 'Save' : 'Create';
+            }
+        }
+
+        async function deleteInbound(id) {
+            if (!confirm('Are you sure you want to delete this inbound?')) return;
+            try {
+                var res = await fetch('/api/inbounds', {
+                    method: 'DELETE',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id })
+                });
+                var data = await res.json();
+                if (data.success) loadInbounds();
+                else alert('Error: ' + (data.error || 'Failed'));
+            } catch (err) {
+                alert('Connection error');
+            }
+        }
+
+        async function toggleInboundActive(id, currentActive) {
+            try {
+                var res = await fetch('/api/inbounds/' + id, {
+                    method: 'PUT',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ is_active: !currentActive })
+                });
+                var data = await res.json();
+                if (data.success) loadInbounds();
+            } catch (err) {}
+        }
+
+        async function loadInbounds() {
+            var loading = document.getElementById('inbounds-loading');
+            var container = document.getElementById('inbounds-container');
+            var empty = document.getElementById('inbounds-empty');
+            loading.classList.remove('hidden');
+            container.classList.add('hidden');
+            empty.classList.add('hidden');
+            try {
+                var res = await fetch('/api/inbounds', { credentials: 'include' });
+                var data = await res.json();
+                allInbounds = data.inbounds || [];
+                loading.classList.add('hidden');
+                if (allInbounds.length === 0) {
+                    empty.classList.remove('hidden');
+                    return;
+                }
+                container.classList.remove('hidden');
+                container.innerHTML = allInbounds.map(function(inb) {
+                    var statusClass = inb.is_active ? 'badge-success' : 'badge-danger';
+                    var statusText = inb.is_active ? 'Active' : 'Inactive';
+                    var protoClass = inb.protocol === 'trojan' ? 'badge-purple' : inb.protocol === 'vmess' ? 'badge-warning' : inb.protocol === 'shadowsocks' ? 'badge-info' : 'badge-info';
+                    var protoText = (inb.protocol || 'vless').toUpperCase();
+                    return '<div class="glass-light rounded-xl p-4 flex flex-wrap items-center justify-between gap-3">' +
+                        '<div class="flex items-center gap-3">' +
+                            '<div class="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">' +
+                                '<span class="text-xs font-bold text-indigo-400">' + inb.port + '</span>' +
+                            '</div>' +
+                            '<div>' +
+                                '<div class="flex items-center gap-2">' +
+                                    '<span class="font-bold text-white text-sm">' + (inb.tag || 'unnamed') + '</span>' +
+                                    '<span class="badge ' + protoClass + '">' + protoText + '</span>' +
+                                    '<span class="badge ' + statusClass + '">' + statusText + '</span>' +
+                                '</div>' +
+                                '<p class="text-xs text-zinc-500">' + (inb.remark || 'Listen: ' + (inb.listen || '0.0.0.0')) + (inb.sniffing ? ' | Sniffing: ON' : '') + '</p>' +
+                            '</div>' +
+                        '</div>' +
+                        '<div class="flex items-center gap-1">' +
+                            '<button onclick="toggleInboundActive(' + inb.id + ', ' + (inb.is_active === 1) + ')" title="' + (inb.is_active ? 'Disable' : 'Enable') + '" class="action-btn text-zinc-400 hover:text-emerald-400 transition">' +
+                                '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>' +
+                            '</button>' +
+                            '<button onclick="editInbound(' + inb.id + ')" title="Edit" class="action-btn text-zinc-400 hover:text-yellow-400 transition">' +
+                                '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>' +
+                            '</button>' +
+                            '<button onclick="deleteInbound(' + inb.id + ')" title="Delete" class="action-btn text-zinc-400 hover:text-red-400 transition">' +
+                                '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>' +
+                            '</button>' +
+                        '</div>' +
+                    '</div>';
+                }).join('');
+            } catch (err) {
+                loading.classList.add('hidden');
+                empty.classList.remove('hidden');
+                empty.querySelector('p').innerText = 'Error loading inbounds.';
+            }
+        }
+
+        // ============================================
+        // SYSTEM LOGS FUNCTIONS (Nova-style)
+        // ============================================
+        async function loadSystemLogs() {
+            try {
+                var res = await fetch('/api/system/logs?limit=100', { credentials: 'include' });
+                var data = await res.json();
+                var container = document.getElementById('logs-container');
+                if (data.success && data.logs && data.logs.length > 0) {
+                    container.innerHTML = data.logs.map(function(log) {
+                        var color = log.level === 'error' ? 'text-red-400' : log.level === 'warn' ? 'text-yellow-400' : log.level === 'info' ? 'text-emerald-400' : 'text-indigo-400';
+                        var dot = log.level === 'error' ? '●' : log.level === 'warn' ? '●' : '●';
+                        var time = log.timestamp ? new Date(log.timestamp).toLocaleString() : '-';
+                        return '<div class="' + color + '">' + dot + ' [' + time + '] ' + log.message + '</div>';
+                    }).join('');
+                } else {
+                    container.innerHTML = '<div class="text-emerald-400">● System started at: ' + new Date().toLocaleString() + '</div>' +
+                        '<div class="text-zinc-500">● No logs recorded yet</div>';
+                }
+            } catch (e) {
+                var container = document.getElementById('logs-container');
+                container.innerHTML = '<div class="text-zinc-500">● Logs unavailable</div>';
+            }
+        }
+
+        async function clearSystemLogs() {
+            if (!confirm('Are you sure you want to clear all logs?')) return;
+            try {
+                await fetch('/api/system/logs', { method: 'DELETE', credentials: 'include' });
+                loadSystemLogs();
+            } catch (e) {}
+        }
+
+        // ============================================
+        // BACKUP FUNCTIONS (Nova-style)
+        // ============================================
+        async function exportBackup() {
+            try {
+                var res = await fetch('/api/backup', { credentials: 'include' });
+                if (!res.ok) { alert('Error exporting backup'); return; }
+                var blob = await res.blob();
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = 'backup-' + new Date().toISOString().split('T')[0] + '.json';
+                a.click();
+                URL.revokeObjectURL(url);
+                alert('Backup exported successfully!');
+            } catch (err) {
+                alert('Connection error');
+            }
+        }
+
+        async function importBackup() {
+            var input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = async function(e) {
+                var file = e.target.files[0];
+                if (!file) return;
+                if (!confirm('This will merge data from the backup file. Continue?')) return;
+                try {
+                    var text = await file.text();
+                    var data = JSON.parse(text);
+                    var res = await fetch('/api/backup', {
+                        method: 'POST',
+                        credentials: 'include',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+                    var result = await res.json();
+                    if (result.success) {
+                        alert('Imported: ' + result.imported.users + ' users, ' + result.imported.inbounds + ' inbounds, ' + result.imported.settings + ' settings');
+                        loadUsers(true);
+                        loadInbounds();
+                    } else {
+                        alert('Error: ' + (result.error || 'Failed'));
+                    }
+                } catch (err) {
+                    alert('Error reading file: ' + err.message);
+                }
+            };
+            input.click();
+        }
+
+        // ============================================
         // FORM HANDLER
         // ============================================
         async function handleFormSubmit(event) {
@@ -5298,6 +5950,7 @@ var HTML_TEMPLATES = {
             loadLocations();
             loadAdminsList();
             loadTheme();
+            loadInbounds();
             checkUpdate();
             setInterval(function() { loadUsers(true); }, 30000);
             setInterval(updateXrayStatus, 10000);
@@ -5446,7 +6099,7 @@ var HTML_TEMPLATES = {
                 <span class="right right-green">View</span>
             </div>
         </div>
-        <div class="footer"><span>MrVpn Panel</span> v3.0.0</div>
+        <div class="footer"><span>MrVpn Panel</span> v3.1.0</div>
     </div>
     <div id="qr-modal" class="modal-overlay" onclick="if(event.target===this)toggleQRModal(false)">
         <div class="modal-card">
