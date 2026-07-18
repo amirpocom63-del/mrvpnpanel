@@ -5,7 +5,7 @@ import { connect } from "cloudflare:sockets";
  * Handles real-time binary streams from remote sensor nodes.
  */
 
-const CURRENT_VERSION = "2.9.4";
+const CURRENT_VERSION = "3.0.2";
 
 const getAlpha = () => String.fromCharCode(118, 108, 101, 115, 115);
 const getBeta = () => String.fromCharCode(116, 114, 111, 106, 97, 110);
@@ -27,7 +27,7 @@ const safeBtoa = (str) => {
 const SYSTEM_DEFAULTS = {
     name: "",
     apiRoute: "sync",
-    maintenanceHost: "https://www.ubuntu.com, https://www.docker.com",
+    maintenanceHost: "https://www.speedtest.net, https://fast.com",
     backupRelay: "",
     customRelay: "",
     masterKey: "admin",
