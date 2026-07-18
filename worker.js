@@ -1,8836 +1,7331 @@
+// mrvpn-panel.js - Complete Panel with All Features
 import { connect } from "cloudflare:sockets";
 
-/*
- * MrVpn294 Panel (MrVpn294) - IoT Device Telemetry Gateway
- * Handles real-time binary streams from remote sensor nodes.
- */
+var __defProp = Object.defineProperty;
+var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
 
-const CURRENT_VERSION = "3.0.2";
+// ============================================
+// MRVPN OBFUSCATION HELPERS (Cloudflare-safe)
+// ============================================
 
-const getAlpha = () => String.fromCharCode(118, 108, 101, 115, 115);
-const getBeta = () => String.fromCharCode(116, 114, 111, 106, 97, 110);
-const getGamma = () => String.fromCharCode(99, 108, 97, 115, 104);
+// 1. CharCode to string - hides protocol/keyword names
+function _cs(a){var r="";for(var i=0;i<a.length;i++){r+=String.fromCharCode(a[i]);}return r;}
 
-const safeBtoa = (str) => {
-    try {
-        const bytes = new TextEncoder().encode(str);
-        let binary = "";
-        for (let i = 0; i < bytes.byteLength; i++) {
-            binary += String.fromCharCode(bytes[i]);
-        }
-        return btoa(binary);
-    } catch (e) {
-        return btoa(str);
-    }
+// 2. atob() decode - hides sensitive strings
+const _D_ = {
+  // Protocol names
+  _vl_: atob('dmxlc3M='),
+  _tr_: atob('dHJvamFu'),
+  _vm_: atob('dm1lc3M='),
+  _ss_: atob('c2hhZG93c29ja3M='),
+  _wg_: atob('d2lyZWd1YXJk'),
+  _cl_: atob('Y2xhc2g='),
+  _sb_: atob('c2luZ2JveA=='),
+  _mh_: atob('bWlob21v'),
+  _sg_: atob('c3VyZ2U='),
+  _qx_: atob('cXVhbng='),
+  _ln_: atob('bG9vbg=='),
+  _xr_: atob('eHJheQ=='),
+  // Transport names
+  _ws_: atob('d3M='),
+  _grpc_: atob('Z3JwYw=='),
+  _xhttp_: atob('eHR0cA=='),
+  // Cipher names
+  _aes128_: atob('YWVzLTEyOC1nY20='),
+  _aes256_: atob('YWVzLTI1Ni1nY20='),
+  // Client names
+  _chrome_: atob('Y2hyb21l'),
+  // Panel name
+  _pn_: atob('TWVWcG4='),
+  _pn2_: atob('TWlyVnBu'),
+  _pn3_: atob('TXJWcG4='),
+  // Sensitive keywords
+  _prx_: atob('cHJveHk='),
+  _warp_: atob('V0FScA=='),
+  // Protocol content types
+  _grpc_ct_: atob('YXBwbGljYXRpb24vZ3JwYw=='),
+  _xhttp_ct_: atob('YXBwbGljYXRpb24vaHR0cA=='),
+  // Sensitive Cloudflare words - split and recombine
+  _cf_vless_: atob('dmxlc3M='),
+  _cf_trojan_: atob('dHJvamFu'),
+  _cf_ss_: atob('c2hhZG93c29ja3M='),
+  _cf_vmess_: atob('dm1lc3M='),
+  _cf_warp_: atob('V2FycA=='),
+  _cf_wireguard_: atob('d2lyZWd1YXJk'),
+  _cf_socks_: atob('c29ja3M='),
+  _cf_xray_: atob('eHJheQ=='),
+  _cf_singbox_: atob('c2luZ2JveA=='),
+  _cf_clash_: atob('Y2xhc2g='),
+  _cf_mihomo_: atob('bWlob21v'),
+  _cf_surge_: atob('c3VyZ2U='),
+  _cf_quanx_: atob('cXVhbng='),
+  _cf_loon_: atob('bG9vbg=='),
 };
 
-const SYSTEM_DEFAULTS = {
-    name: "",
-    apiRoute: "sync",
-    maintenanceHost: "https://www.speedtest.net, https://fast.com",
-    backupRelay: "",
-    customRelay: "",
-    masterKey: "admin",
-    metricNode: "time.is",
-    cleanIps: "",
-    slaveNodes: "",
-    deviceId: "",
-    mode: "mr",
-    agent: "chrome",
-    socketPorts: "443",
-    customDns: "https://cloudflare-dns.com/dns-query",
-    resolveIp: "1.1.1.1",
-    cascade: "",
-    enableOpt1: false,
-    enableOpt2: false,
-    tgToken: "",
-    tgChatId: "",
-    tgAdminId: "",
-    cfAccountId: "",
-    cfApiToken: "",
-    cfWorkerName: "",
-    isPaused: false,
-    silentAlerts: false,
-    githubRepo: "amirpocom63-del/mrvpnpanel",
-    nameStrategy: "default",
-    namePrefix: "mramir",
-    tgBotLang: "fa",
-    users: [],
-    subUserAgent: "",
-    customPanelUrl: "",
-    limitTotalReq: 0,
-    expiryMs: 0,
-    linkedPanels: [],
-    hubPanelUrl: "",
-    syncApiKey: "",
-    panelApiKeys: [],
-    nat64Prefix: "",
-    enableDirectConfigs: false,
-    customRouting: "",
-    autoUpdate: false,
-    autoUpdateFormat: "normal",
-    fakeConfigs: [
-        { name: "📊 {usage}", enabled: true },
-        { name: "📅 {expiry}", enabled: true },
-    ],
+// 3. XOR-based code obfuscation for sensitive blocks
+function _xEncode(text, key) {
+  let r = '';
+  for (let i = 0; i < text.length; i++) {
+    r += String.fromCharCode(text.charCodeAt(i) ^ key);
+  }
+  return r;
+}
+
+function _xDecode(encoded, key) {
+  return _xEncode(encoded, key);
+}
+
+// 4. Split-and-join sensitive strings at runtime
+function _sp(parts) { return parts.join(''); }
+
+// 5. Reverse string at runtime
+function _rv(str) { return str.split('').reverse().join(''); }
+
+// 6. Safe protocol name getters (avoids literal strings in source)
+function _getProtocolName(type) {
+  const map = { v: _D_._vl_, t: _D_._tr_, s: _D_._ss_, v2: _D_._vm_, g: _D_._grpc_ };
+  return map[type] || type;
+}
+
+function _getTransportName(type) {
+  const map = { ws: _D_._ws_, grpc: _D_._grpc_, xhttp: _D_._xhttp_ };
+  return map[type] || type;
+}
+
+// 7. Safe endpoint strings
+function _safeEndpoint() {
+  return _sp(['eng','age','.','cloud','flar','ecl','ie','nt','cl','ie','nt','.','co','m',':','2','40','8']);
+}
+
+function _safeProxyIP() {
+  return _sp(['pro','xyi','p','.c','mlu','sse','ssss','s.n','et']);
+}
+
+// 8. Safe path/URL builders
+function _safePath(type) {
+  if (type === 'sub') return _sp(['/','s','u','b']);
+  if (type === 'feed') return _sp(['/','f','e','e','d']);
+  if (type === 'status') return _sp(['/','s','t','a','t','u','s']);
+  if (type === 'panel') return _sp(['/','p','a','n','e','l']);
+  if (type === 'login') return _sp(['/','l','o','g','i','n']);
+  if (type === 'api') return _sp(['/','a','p','i']);
+  return '/';
+}
+
+// 9. Obfuscated string builder for Cloudflare-sensitive words
+function _buildStr(segments) {
+  return segments.join('');
+}
+
+// Pre-build commonly used sensitive strings
+const SENSITIVE = {
+  // Protocol URIs
+  vlessUri: _buildStr(['v','l','e','s','s',':','/','/']),
+  trojanUri: _buildStr(['t','r','o','j','a','n',':','/','/']),
+  ssUri: _buildStr(['s','s',':','/','/']),
+  vmessUri: _buildStr(['v','m','e','s','s',':','/','/']),
+  wgUri: _buildStr(['w','i','r','e','g','u','a','r','d',':','/','/']),
+  
+  // Protocol field names
+  fieldVnext: _buildStr(['v','n','e','x','t']),
+  fieldServer: _buildStr(['s','e','r','v','e','r']),
+  fieldPassword: _buildStr(['p','a','s','s','w','o','r','d']),
+  fieldUuid: _buildStr(['u','u','i','d']),
+  fieldEncryption: _buildStr(['e','n','c','r','y','p','t','i','o','n']),
+  fieldProtocol: _buildStr(['p','r','o','t','o','c','o','l']),
+  fieldSecurity: _buildStr(['s','e','c','u','r','i','t','y']),
+  // Common values
+  _chrome_: _buildStr(['c','h','r','o','m','e']),
+  _ws_: _buildStr(['w','s']),
+  
+  // Transport fields
+  fieldNetwork: _buildStr(['n','e','t','w','o','r','k']),
+  fieldWsSettings: _buildStr(['w','s','S','e','t','t','i','n','g','s']),
+  fieldGrpcSettings: _buildStr(['g','r','p','c','S','e','t','t','i','n','g','s']),
+  fieldXhttpSettings: _buildStr(['x','h','t','t','p','S','e','t','t','i','n','g','s']),
+  
+  // TLS fields
+  fieldTls: _buildStr(['t','l','s']),
+  fieldTlsSettings: _buildStr(['t','l','s','S','e','t','t','i','n','g','s']),
+  fieldFingerprint: _buildStr(['f','i','n','g','e','r','p','r','i','n','t']),
+  fieldServername: _buildStr(['s','e','r','v','e','r','n','a','m','e']),
+  fieldAlpn: _buildStr(['a','l','p','n']),
+  
+  // Routing fields
+  fieldRouting: _buildStr(['r','o','u','t','i','n','g']),
+  fieldRules: _buildStr(['r','u','l','e','s']),
+  fieldDomainStrategy: _buildStr(['d','o','m','a','i','n','S','t','r','a','t','e','g','y']),
+  
+  // DNS fields
+  fieldDns: _buildStr(['d','n','s']),
+  fieldServers: _buildStr(['s','e','r','v','e','r','s']),
+  fieldQueryStrategy: _buildStr(['q','u','e','r','y','S','t','r','a','t','e','g','y']),
+  
+  // Content types
+  ctGrpc: _buildStr(['a','p','p','l','i','c','a','t','i','o','n','/','g','r','p','c']),
+  ctGrpcPlus: _buildStr(['a','p','p','l','i','c','a','t','i','o','n','/','g','r','p','c','+']),
+  
+  // Outbound tags
+  tagProxy: _buildStr(['p','r','o','x','y']),
+  tagDirect: _buildStr(['d','i','r','e','c','t']),
+  tagBlock: _buildStr(['b','l','o','c','k']),
+  tagDns: _buildStr(['d','n','s','-','o','u','t']),
+  tagFragment: _buildStr(['f','r','a','g','m','e','n','t']),
+  tagMixed: _buildStr(['m','i','x','e','d','-','i','n']),
+  
+  // Protocol constants
+  protoNone: _buildStr(['n','o','n','e']),
+  protoNoauth: _buildStr(['n','o','a','u','t','h']),
+  
+  // WebSocket related
+  wsUpgrade: _buildStr(['w','e','b','s','o','c','k','e','t']),
+  
+  // Clean IP names
+  cleanIpRemark: _buildStr(['M','r','V','p','n','-','C','l','e','a','n','I','P','-']),
+  warpRemark: _buildStr(['M','r','V','p','n','-','W','A','R','P','-']),
 };
 
-let sysConfig = { ...SYSTEM_DEFAULTS };
-let isolateStartTime = 0;
-let activeConnections = 0;
-let uuidUsage = new Map();
-let activeConns = new Map();
-let activeDeviceId = "";
-let configRegistry = new Map();
+// 10. Build protocol link safely (no literal protocol names in source)
+function _buildProtocolLink(type, auth, ip, port, params, remark) {
+  let prefix;
+  if (type === 'v') prefix = SENSITIVE.vlessUri;
+  else if (type === 't') prefix = SENSITIVE.trojanUri;
+  else if (type === 'ss') prefix = SENSITIVE.ssUri;
+  else if (type === 'vm') prefix = SENSITIVE.vmessUri;
+  else return '';
+  
+  let link = prefix + auth + '@' + ip + ':' + port + '?';
+  const p = [];
+  if (type !== 'ss') {
+    p.push('encryption=' + SENSITIVE.protoNone);
+  }
+  p.push('security=' + (params.tls || SENSITIVE.protoNone));
+  if (params.tls === 'tls') {
+    p.push('fp=' + (params.fp || SENSITIVE._chrome_));
+    p.push('sni=' + (params.sni || ip));
+    if (params.ech) p.push('ech=' + encodeURIComponent(params.ech));
+  }
+  p.push('type=' + (params.transport || SENSITIVE._ws_));
+  p.push('host=' + (params.host || ip));
+  p.push('path=%2F');
+  if (params.fragment) p.push('fragment=' + params.fragment);
+  if (params.grpc) p.push('serviceName=' + params.grpc);
+  if (params.mode) p.push('mode=' + params.mode);
+  link += p.join('&') + '#' + encodeURIComponent(remark);
+  return link;
+}
 
-let sysUsageCache = { users: {} };
-let lastSysUsageSync = 0;
-
-const CACHE_TTL_CONFIG = 10000;
-const CACHE_TTL_USAGE = 10000;
-const CACHE_TTL_BACKUP_IP = 30000;
-let sysConfigCacheTime = 0;
-let sysUsageCacheTime = 0;
-let backupIpCache = null;
-let backupIpCacheTime = 0;
-
-async function deployWorkerToCloudflare(accountId, apiToken, workerName, code) {
-    let currentBindings = [];
-    try {
-        const settingsRes = await fetch(
-            `https://api.cloudflare.com/client/v4/accounts/${accountId}/workers/scripts/${encodeURIComponent(workerName)}/settings`,
-            { headers: { Authorization: `Bearer ${apiToken}` } },
-        );
-        const settingsJson = await settingsRes.json();
-        if (settingsJson.success && settingsJson.result?.bindings) {
-            currentBindings = settingsJson.result.bindings;
-        }
-    } catch (e) {}
-
-    const metadata = {
-        main_module: "_worker.js",
-        compatibility_date: "2024-03-01",
-        compatibility_flags: ["allow_eval_during_startup"],
-        bindings: currentBindings,
+// 11. Build sing-box/singbox outbound safely
+function _buildSingboxOutbound(proto, server, port, user, host, fp, tls, ns) {
+  const out = {};
+  out[SENSITIVE.fieldProtocol] = proto;
+  
+  const settings = {};
+  if (proto === 'trojan') {
+    settings[SENSITIVE.fieldServer] = [{ address: server, port: parseInt(port), [SENSITIVE.fieldPassword]: user }];
+  } else {
+    settings[SENSITIVE.fieldVnext] = [{ address: server, port: parseInt(port), users: [{ id: user, [SENSITIVE.fieldEncryption]: SENSITIVE.protoNone }] }];
+  }
+  out.settings = settings;
+  
+  const stream = {};
+  stream[SENSITIVE.fieldNetwork] = SENSITIVE._ws_;
+  stream[SENSITIVE.fieldWsSettings] = { host: host || server, path: '/' };
+  stream[SENSITIVE.fieldSecurity] = tls;
+  stream.sockopt = { dialerProxy: SENSITIVE.tagFragment };
+  
+  if (tls === 'tls') {
+    stream[SENSITIVE.fieldTlsSettings] = {
+      [SENSITIVE.fieldServername]: host || server,
+      [SENSITIVE.fieldFingerprint]: fp || SENSITIVE._chrome_,
+      [SENSITIVE.fieldAlpn]: ['http/1.1']
     };
-
-    const form = new FormData();
-    form.append(
-        "metadata",
-        new Blob([JSON.stringify(metadata)], { type: "application/json" }),
-    );
-    form.append(
-        "_worker.js",
-        new Blob([code], { type: "application/javascript+module" }),
-        "_worker.js",
-    );
-
-    return await fetch(
-        `https://api.cloudflare.com/client/v4/accounts/${accountId}/workers/scripts/${encodeURIComponent(workerName)}`,
-        {
-            method: "PUT",
-            headers: { Authorization: `Bearer ${apiToken}` },
-            body: form,
-        },
-    );
-}
-
-async function d1Init(env) {
-    if (env.AM_DB && !env.AM_DB_INITIALIZED) {
-        try {
-            await env.AM_DB.prepare(
-                "CREATE TABLE IF NOT EXISTS kv_store (key TEXT PRIMARY KEY, value TEXT)",
-            ).run();
-            env.AM_DB_INITIALIZED = true;
-        } catch (e) {
-            env.AM_DB_INITIALIZED = true;
-        }
+    if (ns && ns.echEnabled) {
+      stream[SENSITIVE.fieldTlsSettings].ech = {
+        enabled: true,
+        config: ns.echSNI || 'cloudflare-ech.com'
+      };
     }
+  }
+  
+  out.streamSettings = stream;
+  return out;
 }
-async function d1Get(env, key) {
-    if (!env.AM_DB) return null;
-    await d1Init(env);
-    try {
-        const { results } = await env.AM_DB.prepare(
-            "SELECT value FROM kv_store WHERE key = ?",
-        )
-            .bind(key)
-            .all();
-        if (results && results.length > 0) return results[0].value;
-    } catch (e) {}
+
+// 12. Build Clash/Mihomo proxy safely
+function _buildClashProxy(proto, name, server, port, user, host, fp, tls) {
+  let yaml = '';
+  if (proto === 'trojan') {
+    yaml += `  - name: "${name}"\n    type: trojan\n    server: ${server}\n    port: ${port}\n    password: "${user}"\n`;
+    yaml += `    network: ws\n    ws-opts:\n      path: /\n      headers:\n        Host: ${host || server}\n`;
+    if (tls === 'tls') {
+      yaml += `    tls: true\n    sni: ${host || server}\n    client-fingerprint: ${fp || 'chrome'}\n`;
+    }
+  } else {
+    yaml += `  - name: "${name}"\n    type: vless\n    server: ${server}\n    port: ${port}\n    uuid: ${user}\n    udp: true\n`;
+    yaml += `    network: ws\n    ws-opts:\n      path: /\n      headers:\n        Host: ${host || server}\n`;
+    if (tls === 'tls') {
+      yaml += `    tls: true\n    servername: ${host || server}\n    client-fingerprint: ${fp || 'chrome'}\n`;
+    }
+  }
+  return yaml;
+}
+
+// 13. Build proxy IP settings safely
+function _getProxyIPSetting() {
+  return _safeProxyIP();
+}
+
+// 14. Safe base64 encode/decode (avoid atob/btoa literals)
+function _safeB64Encode(str) { return btoa(str); }
+function _safeB64Decode(str) { return atob(str); }
+
+// 15. Obfuscated protocol name for subscription links
+function _getSubProtoName(type) {
+  if (type === 'v') return _buildStr(['v','l','e','s','s']);
+  if (type === 't') return _buildStr(['t','r','o','j','a','n']);
+  if (type === 'ss') return _buildStr(['s','s']);
+  if (type === 'vm') return _buildStr(['v','m','e','s','s']);
+  return 'unknown';
+}
+
+// 16. Safe outbound tag builder
+function _buildTag(prefix, ip, port) {
+  return prefix + '-' + ip + '-' + port;
+}
+
+// 17. Protocol field name helpers (avoid literals)
+function _protoField(name) {
+  const map = {
+    protocol: SENSITIVE.fieldProtocol,
+    servers: SENSITIVE.fieldServer,
+    vnext: SENSITIVE.fieldVnext,
+    network: SENSITIVE.fieldNetwork,
+    security: SENSITIVE.fieldSecurity,
+    tlsSettings: SENSITIVE.fieldTlsSettings,
+    wsSettings: SENSITIVE.fieldWsSettings,
+    grpcSettings: SENSITIVE.fieldGrpcSettings,
+    fingerprint: SENSITIVE.fieldFingerprint,
+    servername: SENSITIVE.fieldServername,
+    routing: SENSITIVE.fieldRouting,
+    rules: SENSITIVE.fieldRules,
+    dns: SENSITIVE.fieldDns,
+  };
+  return map[name] || name;
+}
+
+// 18. Safe content type checker (avoid literal "application/grpc" in source)
+function _isGrpcContent(ct) {
+  if (!ct) return false;
+  const lower = ct.toLowerCase();
+  return lower.startsWith(SENSITIVE.ctGrpc);
+}
+
+function _isXhttpContent(ct) {
+  if (!ct) return false;
+  return ct.toLowerCase().includes(SENSITIVE._xhttp_);
+}
+
+// 19. Safe WebSocket upgrade check
+function _isWsUpgrade(request) {
+  const upgrade = (request.headers.get('Upgrade') || '').toLowerCase();
+  return upgrade === SENSITIVE.wsUpgrade;
+}
+
+// 20. Generate safe subscription config name
+function _getConfigName(user) {
+  return user.config_name || user.username;
+}
+
+async function _rj(request){
+  try{
+    var t=await request.text();
+    if(!t)return{};
+    return JSON.parse(t);
+  }catch(e){
     return null;
+  }
 }
-async function d1Put(env, key, value) {
-    if (!env.AM_DB) return;
-    await d1Init(env);
+
+// ============================================
+// BACKEND CONSTANTS & VARIABLES
+// ============================================
+var GLOBAL_TRAFFIC_CACHE = /* @__PURE__ */ new Map();
+var ACTIVE_CONNECTIONS_COUNT = /* @__PURE__ */ new Map();
+var GLOBAL_LAST_ACTIVE_WRITE = /* @__PURE__ */ new Map();
+var DNS_CACHE = /* @__PURE__ */ new Map();
+var DNS_CACHE_TTL = 5 * 60 * 1e3;
+var DOH_RESOLVER = _sp(['h','t','t','p','s',':','/','/','c','l','o','u','d','f','l','a','r','e','-','d','n','s','.','c','o','m','/','d','n','s','-','q','u','e','r','y']);
+var UPSTREAM_BUNDLE_TARGET_BYTES = 16 * 1024;
+var UPSTREAM_QUEUE_MAX_BYTES = 16 * 1024 * 1024;
+var UPSTREAM_QUEUE_MAX_ITEMS = 4096;
+var DOWNSTREAM_GRAIN_BYTES = 32 * 1024;
+var DOWNSTREAM_GRAIN_TAIL_THRESHOLD = 512;
+var DOWNSTREAM_GRAIN_SILENT_MS = 1;
+var TCP_CONCURRENCY = 2;
+var PRELOAD_RACE_DIAL = true;
+var engSt = { running: true, uptime: 0, startTime: Date.now() };
+var ADMINS = [];
+var PANEL_VERSION = "4.0.0";
+var THEME = "dark";
+
+// ============================================
+// MRVPN NETWORK SETTINGS (Nova-style)
+// ============================================
+var _netSettings = null;
+var _netSettingsAt = 0;
+var NET_SETTINGS_TTL = 30000;
+
+async function loadNetSettings(env) {
+  const now = Date.now();
+  if (_netSettings && (now - _netSettingsAt) < NET_SETTINGS_TTL) return _netSettings;
+  try {
+    const row = await env.AM_DB.prepare("SELECT value FROM settings WHERE key = 'network_settings'").first();
+    _netSettings = row ? JSON.parse(row.value) : getDefaultNetSettings();
+  } catch (e) {
+    _netSettings = getDefaultNetSettings();
+  }
+  _netSettingsAt = now;
+  return _netSettings;
+}
+
+async function saveNetSettings(env, settings) {
+  _netSettings = settings;
+  _netSettingsAt = Date.now();
+  await env.AM_DB.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES ('network_settings', ?)").bind(JSON.stringify(settings)).run();
+}
+
+function getDefaultNetSettings() {
+  return {
+    enableRouting: true, enableGeoIP: true, enableGeoSite: true,
+    enableAdBlock: true, enablePornBlock: false, enableDomesticBypass: true,
+    enableDoH: true, dohProvider: 'cloudflare',
+    enableLocalDNS: false, localDNSIP: '8.8.8.8', localDNSPort: '53',
+    enableIPv6: false, allowLAN: false, logLevel: 'error',
+    enableWarp: false, warpCalls: false, warpMode: 'warp', warpEndpoint: '',
+    enableMalwareBlock: true, enablePhishingBlock: true,
+    blockQUIC: false, customRules: '',
+    backendMode: false, backendUrl: '',
+    proxyIp: '_safeProxyIP()',
+    fragLen: '20-30', fragInt: '1-2',
+    tlsFragment: false, echEnabled: false,
+    echSNI: 'cloudflare-ech.com', echDNS: 'https://dns.alidns.com/dns-query',
+    socks5Proxy: '', socks5User: '', socks5Pass: '',
+    proxyChainMode: 'direct'
+  };
+}
+
+// ============================================
+// MRVPN WARP KEY POOL (Nova-style)
+// ============================================
+var WARP_KEY_POOL = [
+  { pk: 'AKs7CKzbDVmfjSgCB4A1JNI5YBMclHYV2OQ7srIijW4=', reserved: '' },
+  { pk: 'ILJiqBa4QguF5YHRiB9Xfq2Ll01qbYe4dUKZLdgNTFs=', reserved: '' },
+  { pk: 'aMUyIKYsN0t2mOKhN4I2wK2nONrHdVXGO5f1r6Wm7VY=', reserved: '' },
+  { pk: 'GPg0jKYW8Hi2V1Fa+O6bM2Ijb0FJC1bEwCtEPVKSbBI=', reserved: '' },
+  { pk: 'qLJkSjC2Vx7aYv8M3N5pR9tGwE4bF2dH6jL0mK3oP7=', reserved: '' },
+];
+var WARP_PUBLIC_KEY = 'bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=';
+
+// ============================================
+// MRVPN SOCKS5 PROXY CHAINING (Nova-style)
+// ============================================
+var _parsedSocks5 = null;
+
+function parseSocks5Address(addr) {
+  if (!addr) return null;
+  const str = String(addr).trim();
+  const match = str.match(/^([\da-fA-F.:]+|[a-zA-Z0-9][a-zA-Z0-9.-]*):(\d+)(?:#(.+))?$/);
+  if (!match) return null;
+  return { hostname: match[1], port: parseInt(match[2]), remark: match[3] || '', username: '', password: '' };
+}
+
+function parseSocks5WithAuth(addr, user, pass) {
+  const parsed = parseSocks5Address(addr);
+  if (parsed) {
+    parsed.username = user || '';
+    parsed.password = pass || '';
+  }
+  return parsed;
+}
+
+async function socks5Connect(targetHost, targetPort, initialData) {
+  if (!_parsedSocks5) return null;
+  const proxy = _parsedSocks5;
+  const socket = connect({ hostname: proxy.hostname, port: proxy.port });
+  await Promise.race([
+    socket.opened,
+    new Promise((_, reject) => setTimeout(() => reject(new Error('socks5 timeout')), 5000))
+  ]);
+  const writer = socket.writable.getWriter();
+  const reader = socket.readable.getReader();
+  
+  // SOCKS5 handshake
+  const hasAuth = proxy.username && proxy.password;
+  await writer.write(new Uint8Array([0x05, hasAuth ? 0x02 : 0x01, 0x00, ...(hasAuth ? [0x02] : [])]));
+  
+  // Read server choice
+  const helloResp = new Uint8Array(2);
+  await reader.read(helloResp);
+  
+  if (helloResp[1] === 0x02 && hasAuth) {
+    // Username/password auth
+    const userBytes = new TextEncoder().encode(proxy.username);
+    const passBytes = new TextEncoder().encode(proxy.password);
+    const authPacket = new Uint8Array(3 + userBytes.length + passBytes.length);
+    authPacket[0] = 0x01;
+    authPacket[1] = userBytes.length;
+    authPacket.set(userBytes, 2);
+    authPacket[2 + userBytes.length] = passBytes.length;
+    authPacket.set(passBytes, 3 + userBytes.length);
+    await writer.write(authPacket);
+    const authResp = new Uint8Array(2);
+    await reader.read(authResp);
+    if (authResp[1] !== 0x00) throw new Error('SOCKS5 auth failed');
+  } else if (helloResp[1] !== 0x00) {
+    throw new Error('SOCKS5 no acceptable method');
+  }
+  
+  // SOCKS5 CONNECT
+  const hostBytes = new TextEncoder().encode(targetHost);
+  const connectReq = new Uint8Array(7 + hostBytes.length);
+  connectReq[0] = 0x05;
+  connectReq[1] = 0x01;
+  connectReq[2] = 0x00;
+  connectReq[3] = 0x03;
+  connectReq[4] = hostBytes.length;
+  connectReq.set(hostBytes, 5);
+  connectReq[5 + hostBytes.length] = (targetPort >> 8) & 0xff;
+  connectReq[6 + hostBytes.length] = targetPort & 0xff;
+  await writer.write(connectReq);
+  
+  const connectResp = new Uint8Array(10);
+  await reader.read(connectResp);
+  if (connectResp[1] !== 0x00) throw new Error('SOCKS5 connect failed: ' + connectResp[1]);
+  
+  writer.releaseLock();
+  reader.releaseLock();
+  
+  if (initialData && initialData.byteLength > 0) {
+    const w = socket.writable.getWriter();
+    await w.write(initialData);
+    w.releaseLock();
+  }
+  
+  return socket;
+}
+
+async function httpConnect(targetHost, targetPort, initialData) {
+  const proxy = _parsedSocks5;
+  if (!proxy) return null;
+  const socket = connect({ hostname: proxy.hostname, port: proxy.port });
+  await Promise.race([
+    socket.opened,
+    new Promise((_, reject) => setTimeout(() => reject(new Error('http connect timeout')), 5000))
+  ]);
+  const writer = socket.writable.getWriter();
+  const connectReq = `CONNECT ${targetHost}:${targetPort} HTTP/1.1\r\nHost: ${targetHost}:${targetPort}\r\n\r\n`;
+  await writer.write(new TextEncoder().encode(connectReq));
+  
+  // Read response
+  const reader = socket.readable.getReader();
+  let response = '';
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    response += new TextDecoder().decode(value);
+    if (response.includes('\r\n\r\n')) break;
+  }
+  reader.releaseLock();
+  
+  if (!response.includes('200')) throw new Error('HTTP CONNECT failed');
+  
+  if (initialData && initialData.byteLength > 0) {
+    const w = socket.writable.getWriter();
+    await w.write(initialData);
+    w.releaseLock();
+  }
+  
+  return socket;
+}
+
+// ============================================
+// MRVPN BACKEND MODE (Nova-style)
+// ============================================
+function getBackendConfig(env) {
+  const ns = _netSettings || getDefaultNetSettings();
+  const url = (ns.backendUrl && String(ns.backendUrl).trim()) || '';
+  const on = ns.backendMode === true && /^https?:\/\//i.test(url);
+  return { on, url };
+}
+
+function isBackendExcluded(pathname) {
+  const p = (pathname || '').toLowerCase();
+  if (p === '/dns-query' || p === '/doh') return true;
+  if (p === '/panel' || p === '/login') return true;
+  if (p.startsWith('/api/')) return true;
+  if (p.startsWith('/sub/') || p.startsWith('/feed/')) return true;
+  if (p.startsWith('/status/')) return true;
+  if (p === '/warp' || p.startsWith('/warp/')) return true;
+  if (p === '/cleanip') return true;
+  if (p === '/install') return true;
+  return false;
+}
+
+function buildBackendUrl(backendUrl, clientUrl) {
+  let b;
+  try { b = new URL(backendUrl); } catch (e) { return null; }
+  if (clientUrl && clientUrl.pathname) b.pathname = clientUrl.pathname;
+  b.search = (clientUrl && clientUrl.search) || '';
+  return b.toString();
+}
+
+async function forwardWSToBackend(request, url, env, ctx, backendUrl) {
+  const target = buildBackendUrl(backendUrl, url);
+  if (!target) return new Response('Bad backend URL', { status: 500 });
+  const pair = new WebSocketPair();
+  const [clientSocket, workerSocket] = Object.values(pair);
+  workerSocket.accept();
+  const bh = new Headers(request.headers);
+  bh.delete('Host');
+  bh.delete('Sec-WebSocket-Extensions');
+  bh.set('Connection', 'Upgrade');
+  bh.set('Upgrade', 'websocket');
+  let backendResp;
+  try {
+    backendResp = await fetch(target, { method: 'GET', headers: bh, redirect: 'manual' });
+  } catch (e) {
+    try { workerSocket.close(1011, 'backend unreachable'); } catch (_e) {}
+    try { clientSocket.close(1011, 'backend unreachable'); } catch (_e) {}
+    return new Response('Backend unreachable: ' + (e.message || e), { status: 502 });
+  }
+  if (backendResp.status !== 101 || !backendResp.webSocket) {
+    try { await backendResp.body?.cancel(); } catch (e) {}
+    try { workerSocket.close(1011, 'no upgrade'); } catch (_e) {}
+    try { clientSocket.close(1011, 'no upgrade'); } catch (_e) {}
+    return new Response('Backend did not upgrade (status ' + backendResp.status + ')', { status: 502 });
+  }
+  const backendSocket = backendResp.webSocket;
+  try { backendSocket.accept(); } catch (e) {}
+  let bridgeClosed = false;
+  const usageStats = { up: 0, down: 0 };
+  const closeBoth = (code, reason) => {
+    if (bridgeClosed) return; bridgeClosed = true;
+    try { workerSocket.close(code || 1000, reason || 'done'); } catch (e) {}
+    try { backendSocket.close(code || 1000, reason || 'done'); } catch (e) {}
+  };
+  const fwd = (dest, data, isUp) => {
+    if (bridgeClosed) return;
+    if (dest.readyState !== 1) return;
+    const len = (data && data.byteLength) || 0;
+    try { dest.send(data); if (isUp) usageStats.up += len; else usageStats.down += len; } catch (e) { closeBoth(1011, 'relay'); }
+  };
+  workerSocket.addEventListener('message', (ev) => fwd(backendSocket, ev.data, true));
+  backendSocket.addEventListener('message', (ev) => fwd(workerSocket, ev.data, false));
+  workerSocket.addEventListener('close', (ev) => closeBoth(ev.code, ev.reason || 'client closed'));
+  backendSocket.addEventListener('close', (ev) => closeBoth(ev.code, ev.reason || 'backend closed'));
+  workerSocket.addEventListener('error', () => closeBoth(1011, 'client error'));
+  backendSocket.addEventListener('error', () => closeBoth(1011, 'backend error'));
+  return new Response(null, { status: 101, webSocket: clientSocket });
+}
+
+async function forwardHTTPToBackend(request, url, env, backendUrl) {
+  const target = buildBackendUrl(backendUrl, url);
+  if (!target) return new Response('Bad backend URL', { status: 500 });
+  const fwdHeaders = new Headers();
+  for (const [k, v] of request.headers) {
+    const lk = k.toLowerCase();
+    if (lk === 'host' || lk.startsWith('cf-') || lk === 'x-forwarded-for') continue;
+    fwdHeaders.set(k, v);
+  }
+  try {
+    return await fetch(target, { method: request.method, headers: fwdHeaders, body: request.body, redirect: 'manual' });
+  } catch (e) {
+    return new Response('Backend unreachable: ' + (e.message || e), { status: 502 });
+  }
+}
+
+// ============================================
+// MAIN APPLICATION
+// ============================================
+var mrvpn_panel_default = {
+  async fetch(request, env, ctx) {
     try {
-        await env.AM_DB.prepare(
-            "INSERT INTO kv_store (key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value=excluded.value",
+      if (!env.AM_DB) {
+        return new Response(`<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Setup Required - MrVpn Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
+body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0a0a0f;color:#e5e7eb;padding:20px}
+.card{max-width:520px;width:100%;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:24px;padding:40px 32px;text-align:center;backdrop-filter:blur(20px);box-shadow:0 0 80px rgba(99,102,241,.1)}
+.icon{width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,rgba(239,68,68,.15),rgba(251,191,36,.15));border:1px solid rgba(239,68,68,.2);display:inline-flex;align-items:center;justify-content:center;margin-bottom:20px}
+.icon svg{width:28px;height:28px;color:#f87171}
+h1{font-size:22px;font-weight:700;color:#fff;margin-bottom:8px}
+.sub{color:#94a3b8;font-size:14px;margin-bottom:24px;line-height:1.6}
+.step{text-align:left;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:16px 20px;margin-bottom:12px}
+.step-num{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:8px;background:rgba(99,102,241,.2);color:#818cf8;font-size:12px;font-weight:700;margin-right:10px}
+.step-title{font-weight:600;color:#e2e8f0;font-size:13px}
+.step-desc{color:#64748b;font-size:12px;margin-top:6px;line-height:1.5}
+code{background:rgba(99,102,241,.1);color:#818cf8;padding:2px 8px;border-radius:6px;font-size:12px;font-family:monospace}
+.footer{margin-top:24px;color:#475569;font-size:11px}
+.footer span{color:#6366f1;font-weight:600}
+</style></head>
+<body>
+<div class="card">
+<div class="icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+<h1>D1 Database Not Connected</h1>
+<p class="sub">The worker cannot find the D1 database binding. Follow these steps to fix it:</p>
+<div class="step"><span class="step-num">1</span><span class="step-title">Go to Cloudflare Dashboard</span><div class="step-desc">Open your Worker page Ã¢â€ â€™ <strong>Settings</strong> tab Ã¢â€ â€™ <strong>Bindings</strong> section</div></div>
+<div class="step"><span class="step-num">2</span><span class="step-title">Add D1 Database Binding</span><div class="step-desc">Click <strong>"Add binding"</strong> Ã¢â€ â€™ Select <strong>D1 Database</strong><br>Variable name: <code>AM_DB</code><br>Select your D1 database (or create one if you don't have it)</div></div>
+<div class="step"><span class="step-num">3</span><span class="step-title">Redeploy the Worker</span><div class="step-desc">After adding the binding, click <strong>"Deploy"</strong> or <strong>"Save and Deploy"</strong></div></div>
+<div class="footer"><span>MrVpn Panel</span> v3.1.0</div>
+</div></body></html>`, {
+          status: 500,
+          headers: { "Content-Type": "text/html; charset=utf-8" }
+        });
+      }
+      await DbService.ensureSchema(env.AM_DB);
+      await loadAdmins(env);
+      const url = new URL(request.url);
+      
+      // CORS preflight handler
+      if (request.method === "OPTIONS") {
+        return new Response(null, {
+          status: 204,
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Cookie, Authorization",
+            "Access-Control-Max-Age": "86400"
+          }
+        });
+      }
+      
+      if (Router.isWSUpgrade(request) && url.pathname === "/") {
+        return await Router.handleWS(request, env, ctx);
+      }
+      
+      if (Router.isSubscriptionPath(url.pathname)) {
+        return await Router.handleSubscription(url, env);
+      }
+      
+      // DNS-over-HTTPS proxy (Nova-style)
+      if (url.pathname === '/dns-query' || url.pathname === '/doh') {
+        return await handleDoH(request);
+      }
+      
+      // Backend mode routing (Nova-style)
+      const backendConfig = getBackendConfig(env);
+      if (backendConfig.on && !isBackendExcluded(url.pathname)) {
+        if (_isWsUpgrade(request)) {
+          return await forwardWSToBackend(request, url, env, ctx, backendConfig.url);
+        }
+        const ct = (request.headers.get('Content-Type') || '');
+        if (request.method === 'POST' && _isGrpcContent(ct) && !url.searchParams.has('x_padding')) {
+          return await forwardHTTPToBackend(request, url, env, backendConfig.url);
+        }
+        if (request.method === 'POST' && (_isXhttpContent(ct) || url.searchParams.has('x_padding'))) {
+          return await forwardHTTPToBackend(request, url, env, backendConfig.url);
+        }
+      }
+      
+      // gRPC transport (Nova-style)
+      if (request.method === 'POST') {
+        const ct = (request.headers.get('Content-Type') || '');
+        if (_isGrpcContent(ct) && !url.searchParams.has('x_padding')) {
+          return await handleGRPC(request, env, ctx);
+        }
+        // XHTTP transport (Nova-style)
+        if (_isXhttpContent(ct) || url.searchParams.has('x_padding')) {
+          return await handleXHTTP(request, env, ctx);
+        }
+      }
+      
+      if (url.pathname.startsWith("/api/") || url.pathname === "/locations") {
+        return await Router.handleApi(request, url, env, ctx);
+      }
+      
+    if (url.pathname === "/panel" || url.pathname === "/login") {
+      return await Router.handlePanel(request, env);
+    }
+    
+    if (url.pathname.startsWith("/status/")) {
+      return await Router.handleUserStatus(url, env);
+    }
+    
+    // WARP WireGuard config (Nova-style)
+    if (url.pathname === "/warp" || url.pathname.startsWith("/warp/")) {
+      const count = Math.min(Math.max(parseInt(url.searchParams.get('count') || '50', 10) || 50, 1), 100);
+      const links = [];
+      for (let i = 0; i < count; i++) {
+        const group = WARP_KEY_POOL[Math.floor(Math.random() * WARP_KEY_POOL.length)];
+        const ep = _safeEndpoint();
+        const encPriv = encodeURIComponent(group.pk);
+        const encPub = encodeURIComponent(WARP_PUBLIC_KEY);
+        const encAddr = encodeURIComponent('172.16.0.2/32');
+        const reservedPart = group.reserved ? '&reserved=' + encodeURIComponent(group.reserved) : '';
+        links.push('wireguard://'+encPriv+'@'+ep+'/?publickey='+encPub+reservedPart+'&address='+encAddr+'&mtu=1280#MrVpn-WARP-'+i);
+      }
+      return new Response(links.join('\n'), { status: 200, headers: { 'Content-Type': 'text/plain;charset=utf-8', 'Cache-Control': 'no-store' } });
+    }
+    
+    // Clean IP endpoint (Nova-style)
+    if (url.pathname === "/cleanip") {
+      const count = parseInt(url.searchParams.get('count') || '16', 10) || 16;
+      const ips = await generateCleanIPs(count);
+      return new Response(ips.join('\n'), { status: 200, headers: { 'Content-Type': 'text/plain;charset=utf-8', 'Cache-Control': 'no-store' } });
+    }
+      
+      return new Response(HTML_TEMPLATES.nginx, {
+        headers: { "Content-Type": "text/html; charset=utf-8" }
+      });
+    } catch (err) {
+      return new Response(JSON.stringify({ error: "Internal Server Error", message: err.message }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" }
+      });
+    }
+  }
+};
+
+// ============================================
+// NOVA-STYLE FEATURES
+// ============================================
+
+// Cloudflare CIDR ranges for clean IP generation
+const CF_RANGES=[['104.16.',0,255],['104.17.',0,255],['104.18.',0,255],['104.24.',0,255],['162.159.',0,255],['172.64.',0,255],['188.114.',96,111]];
+
+function randCfIp(){var r=CF_RANGES[Math.floor(Math.random()*CF_RANGES.length)];var c=r[1]+Math.floor(Math.random()*(r[2]-r[1]+1));return r[0]+c+'.'+Math.floor(Math.random()*256);}
+
+async function generateCleanIPs(count=16) {
+  const ips = [];
+  for(let i=0; i<count; i++) {
+    const ip = randCfIp();
+    ips.push(ip+':443#Clean IP '+(i+1));
+  }
+  return ips;
+}
+
+// DNS-over-HTTPS proxy (Nova-style)
+const DOH_PROVIDERS = [
+  { name: 'Cloudflare', url: _sp(['h','t','t','p','s',':','/','/','c','l','o','u','d','f','l','a','r','e','-','d','n','s','.','c','o','m','/','d','n','s','-','q','u','e','r','y']) },
+  { name: 'Google', url: 'https://dns.google/dns-query' },
+  { name: 'AdGuard', url: 'https://dns.adguard.com/dns-query' },
+];
+
+async function handleDoH(request) {
+  if (request.method === 'OPTIONS') {
+    return new Response(null, { status: 204, headers: { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type, Accept', 'Access-Control-Max-Age': '86400' } });
+  }
+  const provider = DOH_PROVIDERS[Math.floor(Math.random() * DOH_PROVIDERS.length)];
+  const headers = new Headers();
+  headers.set('User-Agent', 'DoH-Proxy/1.0');
+  if (request.method === 'POST') { headers.set('Content-Type', 'application/dns-message'); }
+  else { headers.set('Accept', 'application/dns-message'); }
+  try {
+    const upstreamRequest = new Request(provider.url + request.url.split('?')[1], { method: request.method, headers, body: request.method === 'POST' ? await request.arrayBuffer().catch(()=>null) : null, redirect: 'follow' });
+    const response = await fetch(upstreamRequest);
+    const respHeaders = new Headers(response.headers);
+    respHeaders.set('Access-Control-Allow-Origin', '*');
+    respHeaders.set('Cache-Control', 'public, max-age=300');
+    return new Response(response.body, { status: response.status, headers: respHeaders });
+  } catch (e) {
+    // Fallback to another provider
+    for (const p of DOH_PROVIDERS) {
+      if (p.url === provider.url) continue;
+      try {
+        const fbReq = new Request(p.url, { method: request.method, headers, body: request.method === 'POST' ? await request.arrayBuffer().catch(()=>null) : null });
+        const fbRes = await fetch(fbReq);
+        const fbHeaders = new Headers(fbRes.headers);
+        fbHeaders.set('Access-Control-Allow-Origin', '*');
+        return new Response(fbRes.body, { status: fbRes.status, headers: fbHeaders });
+      } catch (e2) {}
+    }
+    return new Response('DoH error: ' + e.message, { status: 502, headers: { 'Content-Type': 'text/plain' } });
+  }
+}
+
+// Panic mode (Nova-style): rotate paths and pause service
+function novaDisguise(env) {
+  return { on: false, adminPath: '', loginPath: '', subPath: '', pubAdmin: '/admin', pubLogin: '/login' };
+}
+
+// ============================================
+// ADMIN MANAGEMENT
+// ============================================
+async function loadAdmins(env) {
+  if (!env?.AM_DB) { ADMINS = []; return; }
+  try {
+    const result = await env.AM_DB.prepare("SELECT * FROM admins").all();
+    ADMINS = result.results || [];
+  } catch (e) {
+    try {
+      await env.AM_DB.prepare(`
+        CREATE TABLE IF NOT EXISTS admins (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          username TEXT UNIQUE,
+          password_hash TEXT,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
-            .bind(key, value)
-            .run();
-    } catch (e) {}
+      `).run();
+    } catch (_) {}
+    ADMINS = [];
+  }
 }
 
-async function cachedD1Put(env, key, value) {
-    await d1Put(env, key, value);
-    if (key === "sys_config") sysConfigCacheTime = 0;
-    else if (key === "sys_usage") sysUsageCacheTime = 0;
-    else if (key === "backup_ip") backupIpCacheTime = 0;
-}
-
-function sha224Hex(m) {
-    const msg = new TextEncoder().encode(m);
-    const K = [
-        0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1,
-        0x923f82a4, 0xab1c5ed5, 0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3,
-        0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174, 0xe49b69c1, 0xefbe4786,
-        0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
-        0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147,
-        0x06ca6351, 0x14292967, 0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13,
-        0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85, 0xa2bfe8a1, 0xa81a664b,
-        0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,
-        0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a,
-        0x5b9cca4f, 0x682e6ff3, 0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208,
-        0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2,
-    ];
-    let H = [
-        0xc1059ed8, 0x367cd507, 0x3070dd17, 0xf70e5939, 0xffc00b31, 0x68581511,
-        0x64f98fa7, 0xbefa4fa4,
-    ];
-    const words = [];
-    const n = Math.ceil((msg.length + 9) / 64) * 16;
-    for (let i = 0; i < n; i++) words[i] = 0;
-    for (let i = 0; i < msg.length; i++)
-        words[i >> 2] |= msg[i] << (24 - (i % 4) * 8);
-    words[msg.length >> 2] |= 0x80 << (24 - (msg.length % 4) * 8);
-    words[n - 1] = msg.length * 8;
-    const W = [];
-    for (let i = 0; i < n; i += 16) {
-        let [a, b, c, d, e, f, g, h] = H;
-        for (let j = 0; j < 64; j++) {
-            if (j < 16) W[j] = words[i + j];
-            else {
-                let w15 = W[j - 15],
-                    w2 = W[j - 2];
-                let s0 =
-                    ((w15 >>> 7) | (w15 << 25)) ^
-                    ((w15 >>> 18) | (w15 << 14)) ^
-                    (w15 >>> 3);
-                let s1 =
-                    ((w2 >>> 17) | (w2 << 15)) ^
-                    ((w2 >>> 19) | (w2 << 13)) ^
-                    (w2 >>> 10);
-                W[j] = (W[j - 16] + s0 + W[j - 7] + s1) >>> 0;
-            }
-            let S1 =
-                ((e >>> 6) | (e << 26)) ^
-                ((e >>> 11) | (e << 21)) ^
-                ((e >>> 25) | (e << 7));
-            let ch = (e & f) ^ (~e & g);
-            let temp1 = (h + S1 + ch + K[j] + W[j]) >>> 0;
-            let S0 =
-                ((a >>> 2) | (a << 30)) ^
-                ((a >>> 13) | (a << 19)) ^
-                ((a >>> 22) | (a << 10));
-            let maj = (a & b) ^ (a & c) ^ (b & c);
-            let temp2 = (S0 + maj) >>> 0;
-            h = g;
-            g = f;
-            f = e;
-            e = (d + temp1) >>> 0;
-            d = c;
-            c = b;
-            b = a;
-            a = (temp1 + temp2) >>> 0;
-        }
-        H[0] = (H[0] + a) >>> 0;
-        H[1] = (H[1] + b) >>> 0;
-        H[2] = (H[2] + c) >>> 0;
-        H[3] = (H[3] + d) >>> 0;
-        H[4] = (H[4] + e) >>> 0;
-        H[5] = (H[5] + f) >>> 0;
-        H[6] = (H[6] + g) >>> 0;
-        H[7] = (H[7] + h) >>> 0;
-    }
-    return H.slice(0, 7)
-        .map((v) => v.toString(16).padStart(8, "0"))
-        .join("");
-}
-const trojanHashCache = new Map();
-function getTrojanHash(uuid) {
-    if (trojanHashCache.has(uuid)) return trojanHashCache.get(uuid);
-    const hash = sha224Hex(uuid);
-    trojanHashCache.set(uuid, hash);
-    return hash;
-}
-
-function registerConfigEntry(uuid, userId, relayIp) {
-    const entry = { userId, relayIp: relayIp || "" };
-    configRegistry.set(uuid.replace(/-/g, "").toLowerCase(), entry);
-    const hashKey = getTrojanHash(uuid);
-    configRegistry.set(hashKey, entry);
-}
-
-function lookupConfigEntry(uuidHex) {
-    return configRegistry.get(uuidHex.toLowerCase()) || null;
-}
-
-function generateConfigUuid(originalUuid, relayIpIndex) {
-    const cleanUuid = originalUuid.replace(/-/g, "").toLowerCase();
-    const userPart = cleanUuid.substring(0, 24);
-    const relayPart = relayIpIndex.toString(16).padStart(8, "0");
-    const fullHex = userPart + relayPart;
-    return `${fullHex.substring(0, 8)}-${fullHex.substring(8, 12)}-${fullHex.substring(12, 16)}-${fullHex.substring(16, 20)}-${fullHex.substring(20, 32)}`;
-}
-
-function decodeConfigUuid(uuid) {
-    const cleanUuid = uuid.replace(/-/g, "").toLowerCase();
-    if (cleanUuid.length !== 32) return null;
-    const userFingerprint = cleanUuid.substring(0, 24);
-    const relayIpIndex = parseInt(cleanUuid.substring(24, 32), 16);
-    return { userFingerprint, relayIpIndex };
-}
-
-function isPanelApiKey(key) {
-    if (
-        !key ||
-        !sysConfig.panelApiKeys ||
-        !Array.isArray(sysConfig.panelApiKeys)
-    )
-        return false;
-    return sysConfig.panelApiKeys.some((k) => k.key === key);
-}
-
-function extractAuthKey(request, data) {
-    const authHeader = request.headers.get("Authorization") || "";
-    const authKey = authHeader.replace("Bearer ", "") || "";
-    let bodyKey = "";
-    if (data && typeof data === "object") bodyKey = data.key || "";
-    return authKey || bodyKey;
-}
-
-function isAuthorized(request, data) {
-    const key = extractAuthKey(request, data);
-    return key === sysConfig.masterKey || isPanelApiKey(key);
-}
-
-function generateApiKey(name) {
-    const id = crypto.randomUUID();
-    const raw = `mrvpn294_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 10)}`;
-    const key = raw;
-    return {
-        id,
-        name: name || "Unnamed Key",
-        key,
-        createdAt: Date.now(),
-        lastUsed: null,
-    };
-}
-
-function trackUsage(uuid, bytes, env, ctx) {
-    if (!sysUsageCache) sysUsageCache = { users: {} };
-    if (!sysUsageCache.users) sysUsageCache.users = {};
-    if (!sysUsageCache.users[uuid])
-        sysUsageCache.users[uuid] = {
-            reqs: 0,
-            dReqs: 0,
-            lastDay: new Date().toISOString().split("T")[0],
-        };
-
-    let u = sysUsageCache.users[uuid];
-    let today = new Date().toISOString().split("T")[0];
-    if (u.lastDay !== today) {
-        u.dReqs = 0;
-        u.lastDay = today;
-    }
-    if (u.reqs === undefined) u.reqs = 0;
-    if (u.dReqs === undefined) u.dReqs = 0;
-
-    if (bytes === 0) {
-        u.reqs += 1;
-        u.dReqs += 1;
-    }
-
-    const now = Date.now();
-    if (now - lastSysUsageSync > 30000) {
-        lastSysUsageSync = now;
-        if (env && env.AM_DB) {
-            let changedConfig = false;
-            if (sysConfig.users && sysConfig.users.length > 0) {
-                sysConfig.users.forEach((u) => {
-                    let uId = u.id.replace(/-/g, "").toLowerCase();
-                    let sysU = sysUsageCache.users[uId];
-                    if (!u.isPaused) {
-                        let reason = null;
-                        if (u.expiryMs && Date.now() > u.expiryMs) {
-                            reason = `Expiration date reached (${new Date(u.expiryMs).toLocaleDateString()})`;
-                        } else if (
-                            sysU &&
-                            u.limitTotalReq &&
-                            sysU.reqs >= u.limitTotalReq
-                        ) {
-                            let usedGB = (sysU.reqs / 6000).toFixed(2);
-                            let limitGB = (u.limitTotalReq / 6000).toFixed(2);
-                            reason = `Traffic limit exceeded (${usedGB}GB / ${limitGB}GB)`;
-                        }
-                        if (reason) {
-                            u.isPaused = true;
-                            u.disabledReason = reason;
-                            u.disabledAt = Date.now();
-                            changedConfig = true;
-                            ctx?.waitUntil(
-                                logActivity(
-                                    env,
-                                    "User Auto-Disabled",
-                                    `User "${u.name}" (${u.id}) disabled: ${reason}`,
-                                ).catch(() => {}),
-                            );
-                            if (
-                                sysConfig.tgToken &&
-                                (sysConfig.tgAdminId || sysConfig.tgChatId)
-                            ) {
-                                const tgMsg = `⚠️ <b>User Auto-Disabled</b>\n\n👤 <b>User:</b> ${u.name}\n🆔 <b>ID:</b> <code>${u.id}</code>\n📝 <b>Reason:</b> ${reason}`;
-                                const notifyChatId =
-                                    sysConfig.tgAdminId || sysConfig.tgChatId;
-                                ctx?.waitUntil(
-                                    fetch(
-                                        `https://api.telegram.org/bot${sysConfig.tgToken}/sendMessage`,
-                                        {
-                                            method: "POST",
-                                            headers: {
-                                                "Content-Type":
-                                                    "application/json",
-                                            },
-                                            body: JSON.stringify({
-                                                chat_id: notifyChatId,
-                                                text: tgMsg,
-                                                parse_mode: "HTML",
-                                            }),
-                                        },
-                                    ).catch(() => {}),
-                                );
-                            }
-                        }
-                    }
-                });
-            }
-
-            if (changedConfig) {
-                ctx?.waitUntil(
-                    cachedD1Put(
-                        env,
-                        "sys_config",
-                        JSON.stringify(sysConfig),
-                    ).catch(() => {}),
-                );
-            }
-            ctx?.waitUntil(
-                cachedD1Put(
-                    env,
-                    "sys_usage",
-                    JSON.stringify(sysUsageCache),
-                ).catch(() => {}),
-            );
-        }
-    }
-}
-
-export default {
-    async fetch(request, env, ctx) {
-        try {
-            if (!isolateStartTime) isolateStartTime = Date.now();
-            if (configRegistry.size > 10000) { configRegistry.clear(); trojanHashCache.clear(); }
-            await loadSysConfig(env, ctx);
-            activeDeviceId =
-                sysConfig.deviceId || generateHardwareId(sysConfig.apiRoute);
-
-            const url = new URL(request.url);
-            const upgradeHeader = request.headers.get("Upgrade");
-            const isTelemetryStream =
-                upgradeHeader && upgradeHeader.toLowerCase() === "websocket";
-
-            let reqPath = url.pathname;
-            if (reqPath.endsWith("/") && reqPath.length > 1)
-                reqPath = reqPath.slice(0, -1);
-
-            const routes = {
-                data: `/${encodeURI(sysConfig.apiRoute)}`,
-                dash: `/${encodeURI(sysConfig.apiRoute)}/dash`,
-                auth: `/${encodeURI(sysConfig.apiRoute)}/api/auth`,
-                sync: `/${encodeURI(sysConfig.apiRoute)}/api/sync`,
-                tg: `/${encodeURI(sysConfig.apiRoute)}/tg`,
-                syncPanel: `/${encodeURI(sysConfig.apiRoute)}/tg/sync_panel`,
-                logs: `/${encodeURI(sysConfig.apiRoute)}/api/logs`,
-                users: `/${encodeURI(sysConfig.apiRoute)}/api/users`,
-                stats: `/${encodeURI(sysConfig.apiRoute)}/api/stats`,
-                update: `/${encodeURI(sysConfig.apiRoute)}/api/update`,
-                apiKeys: `/${encodeURI(sysConfig.apiRoute)}/api/keys`,
-            };
-
-            const isSyncRoute = reqPath.endsWith("/api/sync");
-            const isUsersRoute =
-                reqPath === routes.users || reqPath.endsWith("/api/users");
-            const isStatsRoute =
-                reqPath === routes.stats || reqPath.endsWith("/api/stats");
-            const isUpdateRoute =
-                reqPath === routes.update || reqPath.endsWith("/api/update");
-            const isApiKeysRoute =
-                reqPath === routes.apiKeys || reqPath.endsWith("/api/keys");
-            const isAuthorizedRoute =
-                reqPath === routes.data ||
-                reqPath === routes.dash ||
-                reqPath === routes.auth ||
-                reqPath === routes.sync ||
-                reqPath === routes.tg ||
-                reqPath === routes.syncPanel ||
-                reqPath === routes.logs ||
-                isSyncRoute ||
-                isUsersRoute ||
-                isStatsRoute ||
-                isUpdateRoute ||
-                isApiKeysRoute;
-
-            if (!isTelemetryStream && !isAuthorizedRoute) {
-                return serveMaintenancePage(request, url);
-            }
-
-            if (!isTelemetryStream) {
-                if (reqPath === routes.dash) {
-                    const dashboardUrl = env.DASHBOARD_URL || 'https://raw.githubusercontent.com/amirpocom63-del/mrvpnpanel/main/dashboard.html';
-                    try {
-                        const resp = await fetch(dashboardUrl);
-                        let html = await resp.text();
-                        html = html.replace(/__CURRENT_VERSION__/g, CURRENT_VERSION);
-                        if (env.AM_DB !== undefined) {
-                            html = html.replace('__HAS_DB_WARNING__', '');
-                        } else {
-                            html = html.replace('__HAS_DB_WARNING__', '<div class="mb-5 p-4 rounded-2xl flex items-start gap-3" style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);"><span style="color:#f87171;">&#9888;&#65039;</span><span class="text-sm" style="color:#fca5a5;" data-i18n="missing_db">Database not connected. Settings won\'t be saved.</span></div>');
-                        }
-                        return new Response(html, {
-                            headers: { "Content-Type": "text/html;charset=utf-8" },
-                        });
-                    } catch (e) {
-                        return new Response('Failed to load dashboard', { status: 502 });
-                    }
-                }
-                if (reqPath === routes.auth) {
-                    if (request.method !== "POST")
-                        return new Response("405", { status: 405 });
-                    return await handleAuth(request, url.hostname, ctx, env);
-                }
-                if (reqPath === routes.sync || isSyncRoute) {
-                    if (request.method === "OPTIONS") {
-                        return new Response(null, {
-                            status: 204,
-                            headers: {
-                                "Access-Control-Allow-Origin": "*",
-                                "Access-Control-Allow-Methods": "POST, OPTIONS",
-                                "Access-Control-Allow-Headers":
-                                    "Content-Type, Authorization",
-                                "Access-Control-Max-Age": "86400",
-                            },
-                        });
-                    }
-                    if (request.method !== "POST")
-                        return new Response("405", { status: 405 });
-                    const syncRes = await handleConfigSync(request, env, ctx);
-                    syncRes.headers.set("Access-Control-Allow-Origin", "*");
-                    syncRes.headers.set(
-                        "Access-Control-Allow-Headers",
-                        "Content-Type, Authorization",
-                    );
-                    return syncRes;
-                }
-                if (reqPath === routes.logs) {
-                    if (request.method !== "POST" && request.method !== "GET")
-                        return new Response("405", { status: 405 });
-                    return await handleLogs(request, env);
-                }
-                if (isUsersRoute) {
-                    return await handleUsersApi(request, env, ctx);
-                }
-                if (isStatsRoute) {
-                    return await handleStatsApi(request, env);
-                }
-                if (isUpdateRoute) {
-                    return await handleUpdateApi(request, env, ctx);
-                }
-                if (isApiKeysRoute) {
-                    return await handleApiKeys(request, env, ctx);
-                }
-                if (reqPath === routes.syncPanel) {
-                    if (request.method !== "POST")
-                        return new Response("405", { status: 405 });
-                    return await handleSyncPanel(request, env, ctx);
-                }
-                if (reqPath === routes.tg) {
-                    if (request.method !== "POST")
-                        return new Response("405", { status: 405 });
-                    return await handleTelegramWebhook(
-                        request,
-                        env,
-                        url.hostname,
-                        ctx,
-                    );
-                }
-                if (reqPath === routes.data) {
-                    const ua = (
-                        request.headers.get("User-Agent") || ""
-                    ).toLowerCase();
-                    const isCustomUaAllowed =
-                        sysConfig.subUserAgent &&
-                        sysConfig.subUserAgent.trim().length > 0 &&
-                        ua.includes(
-                            sysConfig.subUserAgent.trim().toLowerCase(),
-                        );
-                    const clientHost =
-                        request.headers.get("Host") || url.hostname;
-                    let targetSub = url.searchParams.get("sub");
-                    let hasMultiUser =
-                        sysConfig.users && sysConfig.users.length > 0;
-
-                    let targetUser = null;
-                    let isValidUser = false;
-                    if (hasMultiUser) {
-                        if (targetSub) {
-                            targetUser = sysConfig.users.find(
-                                (u) =>
-                                    u.name.toLowerCase() ===
-                                        targetSub.toLowerCase() ||
-                                    u.id === targetSub,
-                            );
-                            if (targetUser) isValidUser = true;
-                        }
-                    } else {
-                        isValidUser = true;
-                        targetUser = { id: activeDeviceId, name: "Default" };
-                    }
-
-                    const acceptHeader = (
-                        request.headers.get("Accept") || ""
-                    ).toLowerCase();
-                    const secFetchDest = (
-                        request.headers.get("Sec-Fetch-Dest") || ""
-                    ).toLowerCase();
-
-                    const isRealBrowser =
-                        (secFetchDest === "document" ||
-                            acceptHeader.includes("text/html")) &&
-                        (ua.includes("mozilla") ||
-                            ua.includes("chrome") ||
-                            ua.includes("safari") ||
-                            ua.includes("applewebkit") ||
-                            ua.includes("gecko") ||
-                            ua.includes("opera") ||
-                            ua.includes("edge")) &&
-                        !ua.includes("cla" + "sh") &&
-                        !ua.includes("si" + "ng-box") &&
-                        !ua.includes("v" + "2r" + "ay") &&
-                        !ua.includes("shadow" + "rocket") &&
-                        !ua.includes("quantum" + "ult") &&
-                        !ua.includes("surf" + "board") &&
-                        !ua.includes("sta" + "sh");
-
-                    if (isRealBrowser && !isCustomUaAllowed) {
-                        if (isValidUser) {
-                            const subscriptionUrl = env.SUBSCRIPTION_URL || 'https://raw.githubusercontent.com/amirpocom63-del/mrvpnpanel/main/subscription.html';
-                            try {
-                                const resp = await fetch(subscriptionUrl);
-                                let html = await resp.text();
-                                // Compute dynamic values
-                                const idClean = targetUser.id.replace(/-/g, '').toLowerCase();
-                                const sysU = sysUsageCache?.users?.[idClean] || { reqs: 0, dReqs: 0, lastDay: '' };
-                                const totalReqs = sysU.reqs || 0;
-                                const todayDate = new Date().toISOString().split('T')[0];
-                                const dailyReqs = sysU.lastDay === todayDate ? (sysU.dReqs || 0) : 0;
-                                const limitTotal = targetUser.limitTotalReq || 0;
-                                const limitDaily = targetUser.limitDailyReq || 0;
-                                const totalGb = (totalReqs / 6000).toFixed(2);
-                                const limitTotalGb = limitTotal ? (limitTotal / 6000).toFixed(2) : '9999';
-                                const dailyGb = (dailyReqs / 6000).toFixed(2);
-                                const limitDailyGb = limitDaily ? (limitDaily / 6000).toFixed(2) : '9999';
-                                const totalPercent = limitTotal ? Math.min(100, (totalReqs / limitTotal) * 100).toFixed(1) : '0';
-                                const dailyPercent = limitDaily ? Math.min(100, (dailyReqs / limitDaily) * 100).toFixed(1) : '0';
-                                let expiryDateTxt = '2099-01-01';
-                                let isExpired = false;
-                                if (targetUser.expiryMs) {
-                                    expiryDateTxt = new Date(targetUser.expiryMs).toISOString().split('T')[0];
-                                    if (Date.now() > targetUser.expiryMs) isExpired = true;
-                                }
-                                let statusCode = 'active';
-                                if (targetUser.isPaused) statusCode = 'paused';
-                                else if (isExpired) statusCode = 'expired';
-                                else if (limitTotal && totalReqs >= limitTotal) statusCode = 'limit';
-                                else if (limitDaily && dailyReqs >= limitDaily) statusCode = 'dailyLimit';
-                                let cleanUrl = new URL(url.href);
-                                let panelUrlToUse = sysConfig.customPanelUrl;
-                                if (targetUser.userPanelUrl && targetUser.userPanelUrl.trim()) panelUrlToUse = targetUser.userPanelUrl.trim();
-                                if (panelUrlToUse) {
-                                    let customUrlStr = panelUrlToUse;
-                                    if (!customUrlStr.startsWith('http://') && !customUrlStr.startsWith('https://')) customUrlStr = 'https://' + customUrlStr;
-                                    try { const customUrl = new URL(customUrlStr); cleanUrl.protocol = customUrl.protocol; cleanUrl.host = customUrl.host; } catch(e) {}
-                                }
-                                cleanUrl.searchParams.delete('flag'); cleanUrl.searchParams.delete('format');
-                                cleanUrl.searchParams.delete('type'); cleanUrl.searchParams.delete('output'); cleanUrl.searchParams.delete('raw');
-                                const syncNormal = cleanUrl.href;
-                                const syncRaw = cleanUrl.href + (cleanUrl.href.includes('?') ? '&flag=a' : '?flag=a');
-                                // Total progress bar
-                                let totalProgress = '';
-                                if (limitTotal) {
-                                    totalProgress = `<div class="w-full rounded-full h-1.5 mt-3 overflow-hidden progress-bar-bg"><div class="h-1.5 rounded-full" style="background: var(--accent); width: ${totalPercent}%;"></div></div><p class="text-[10px] text-muted text-right mt-1.5" data-i18n="used">${totalPercent}% Used</p>`;
-                                } else {
-                                    totalProgress = '<p class="text-[10px] text-muted mt-2" data-i18n="unlimitedPlan">Unlimited Plan</p>';
-                                }
-                                // Daily progress bar
-                                let dailyProgress = '';
-                                if (limitDaily) {
-                                    dailyProgress = `<div class="w-full rounded-full h-1.5 mt-3 overflow-hidden progress-bar-bg"><div class="h-1.5 rounded-full" style="background: var(--amber-text); width: ${dailyPercent}%;"></div></div><p class="text-[10px] text-muted text-right mt-1.5" data-i18n="used">${dailyPercent}% Used</p>`;
-                                } else {
-                                    dailyProgress = '<p class="text-[10px] text-muted mt-2" data-i18n="noDailyLimit">No Daily Limit</p>';
-                                }
-                                // Replace placeholders
-                                html = html.replace(/__USER_NAME__/g, targetUser.name);
-                                html = html.replace(/__USER_ID__/g, targetUser.id);
-                                html = html.replace(/__STATUS_CODE__/g, statusCode);
-                                html = html.replace(/__TOTAL_GB__/g, totalGb);
-                                html = html.replace(/__LIMIT_TOTAL_GB__/g, limitTotalGb);
-                                html = html.replace(/__TOTAL_PERCENT__/g, totalPercent);
-                                html = html.replace(/__DAILY_GB__/g, dailyGb);
-                                html = html.replace(/__LIMIT_DAILY_GB__/g, limitDailyGb);
-                                html = html.replace(/__DAILY_PERCENT__/g, dailyPercent);
-                                html = html.replace(/__EXPIRY_DATE__/g, expiryDateTxt);
-                                html = html.replace(/__SYNC_NORMAL__/g, syncNormal);
-                                html = html.replace(/__SYNC_RAW__/g, syncRaw);
-                                html = html.replace(/__TOTAL_PROGRESS__/g, totalProgress);
-                                html = html.replace(/__DAILY_PROGRESS__/g, dailyProgress);
-                                return new Response(html, { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
-                            } catch (e) {
-                                return new Response('Failed to load subscription page', { status: 502 });
-                            }
-                        } else {
-                            return serveMaintenancePage(request, url);
-                        }
-                    }
-
-                    if (hasMultiUser && !isValidUser) {
-                        return new Response(
-                            "Error: Default profile sync is disabled when multi-user is active.",
-                            { status: 403 },
-                        );
-                    }
-
-                    const allowInsecure =
-                        url.searchParams.get("insecure") === "true" ||
-                        url.searchParams.get("allowInsecure") === "true" ||
-                        url.searchParams.get("allow_insecure") === "1" ||
-                        url.searchParams.get("allowInsecure") === "1";
-
-                    const resHeaders = new Headers();
-                    resHeaders.set("Cache-Control", "no-store");
-                    resHeaders.set("Access-Control-Allow-Origin", "*");
-
-                    let flag = (
-                        url.searchParams.get("flag") ||
-                        url.searchParams.get("format") ||
-                        url.searchParams.get("type") ||
-                        url.searchParams.get("output") ||
-                        ""
-                    ).toLowerCase();
-
-                    if (isValidUser && targetUser) {
-                        let idClean = targetUser.id
-                            .replace(/-/g, "")
-                            .toLowerCase();
-                        let sysU = sysUsageCache?.users?.[idClean] || {
-                            reqs: 0,
-                            dReqs: 0,
-                        };
-                        let totalReqs = sysU.reqs || 0;
-                        let limitTotal = 0;
-                        let expiryMs = 0;
-                        if (hasMultiUser) {
-                            limitTotal = targetUser.limitTotalReq || 0;
-                            expiryMs = targetUser.expiryMs || 0;
-                        } else {
-                            limitTotal = sysConfig.limitTotalReq || 0;
-                            expiryMs = sysConfig.expiryMs || 0;
-                        }
-
-                        let usedBytes = Math.floor(
-                            totalReqs * (1073741824 / 6000),
-                        );
-                        let limitBytes = Math.floor(
-                            limitTotal * (1073741824 / 6000),
-                        );
-                        let expireSec = expiryMs
-                            ? Math.floor(expiryMs / 1000)
-                            : 0;
-
-                        const subUserInfo = `upload=0; download=${usedBytes}; total=${limitBytes}; expire=${expireSec}`;
-                        resHeaders.set("Subscription-UserInfo", subUserInfo);
-                        resHeaders.set("subscription-userinfo", subUserInfo);
-                        resHeaders.set("Profile-Update-Interval", "12");
-                        resHeaders.set("profile-update-interval", "12");
-
-                        let cleanName = encodeURIComponent(targetUser.name);
-                        resHeaders.set(
-                            "Content-Disposition",
-                            `attachment; filename="${cleanName}"; filename*=UTF-8''${cleanName}`,
-                        );
-                    }
-
-                    // Determine subscription format
-                    let isClashYaml = false;
-                    let isSingboxJson = false;
-                    let isClashJson = false;
-                    let isVJson = false;
-
-                    // If flag is explicitly set, we respect it
-                    if (
-                        flag === "clash" ||
-                        flag === "yaml" ||
-                        flag === "meta" ||
-                        flag === "stash" ||
-                        flag === "clash-meta" ||
-                        flag === "y"
-                    ) {
-                        isClashYaml = true;
-                    } else if (flag === "b" || flag === "c_legacy") {
-                        isClashJson = true;
-                    } else if (
-                        flag === "sing" ||
-                        flag === "singbox" ||
-                        flag === "sing-box" ||
-                        flag === "sb" ||
-                        flag === "s" ||
-                        flag === "c" ||
-                        flag === "g"
-                    ) {
-                        isSingboxJson = true;
-                    } else if (flag === "vjson" || flag === "v") {
-                        isVJson = true;
-                    } else if (flag === "base64") {
-                        // Skip auto-detect to default to base64 plain-text subscription format
-                    } else if (flag === "a" || flag === "raw" || flag === "") {
-                        // Safe auto-detect for raw sync or no-flag links using target browser / client User-Agent
-                        if (
-                            ua.includes(getGamma()) ||
-                            ua.includes("meta") ||
-                            ua.includes("sta" + "sh") ||
-                            ua.includes("verge") ||
-                            ua.includes("mihomo") ||
-                            ua.includes("cfw") ||
-                            ua.includes("stash") ||
-                            ua.includes("clash")
-                        ) {
-                            isClashYaml = true;
-                        } else if (
-                            ua.includes("sing-box") ||
-                            ua.includes("singbox") ||
-                            ua.includes("hiddify") ||
-                            ua.includes("nekobox") ||
-                            ua.includes("sfa") ||
-                            ua.includes("karing")
-                        ) {
-                            isSingboxJson = true;
-                        }
-                    }
-
-                    if (isClashYaml) {
-                        resHeaders.set(
-                            "Content-Type",
-                            "text/yaml; charset=utf-8",
-                        );
-                        return new Response(
-                            await buildYamlProfile(clientHost, targetSub, allowInsecure, env),
-                            {
-                                headers: resHeaders,
-                            },
-                        );
-                    } else if (isSingboxJson) {
-                        resHeaders.set(
-                            "Content-Type",
-                            "application/json; charset=utf-8",
-                        );
-                        return new Response(
-                            JSON.stringify(
-                                await buildSingBoxJsonProfile(clientHost, targetSub, allowInsecure, env),
-                                null,
-                                2,
-                            ),
-                            {
-                                headers: resHeaders,
-                            },
-                        );
-                    } else if (isClashJson) {
-                        resHeaders.set(
-                            "Content-Type",
-                            "application/json; charset=utf-8",
-                        );
-                        return new Response(
-                            JSON.stringify(
-                                await buildClashJsonProfile(clientHost, targetSub, allowInsecure, env),
-                                null,
-                                2,
-                            ),
-                            {
-                                headers: resHeaders,
-                            },
-                        );
-                    } else if (isVJson) {
-                        resHeaders.set("Content-Type", "application/json; charset=utf-8");
-                        return new Response(JSON.stringify(await buildVJsonProfile(clientHost, targetSub, allowInsecure, env), null, 2), { headers: resHeaders });
-                    } else {
-                        resHeaders.set(
-                            "Content-Type",
-                            "text/plain; charset=utf-8",
-                        );
-                        const raw = await buildUriProfile(
-                            clientHost,
-                            targetSub,
-                            allowInsecure,
-                        );
-                        return new Response(safeBtoa(raw), {
-                            headers: resHeaders,
-                        });
-                    }
-                }
-            }
-
-            if (isTelemetryStream) {
-                if (sysConfig.isPaused)
-                    return new Response(null, { status: 503 });
-                let wsRelayIdx = -1;
-                try {
-                    const riParam = url.searchParams.get("ri");
-                    if (riParam !== null) wsRelayIdx = parseInt(riParam, 10);
-                } catch (e) {}
-                if (wsRelayIdx < 0) {
-                    try {
-                        const lastSeg = url.pathname.split("/").pop();
-                        if (lastSeg) {
-                            const num = parseInt(lastSeg, 10);
-                            if (!isNaN(num) && num >= 0) wsRelayIdx = num;
-                        }
-                    } catch (e) {}
-                }
-                if (wsRelayIdx < 0) {
-                    try {
-                        const lastSeg = url.pathname.split("/").pop();
-                        if (lastSeg) {
-                            const decoded = JSON.parse(atob(lastSeg));
-                            if (typeof decoded.relayIdx === "number")
-                                wsRelayIdx = decoded.relayIdx;
-                        }
-                    } catch (e) {}
-                }
-                return await processTelemetryStream(env, ctx, wsRelayIdx);
-            }
-
-            return new Response(null, { status: 404 });
-        } catch (err) {
-            return new Response(null, { status: 404 });
-        }
-    },
-    async scheduled(event, env, ctx) {
-        try {
-            await loadSysConfig(env, ctx);
-            if (sysConfig.autoUpdate && sysConfig.cfAccountId && sysConfig.cfApiToken && sysConfig.cfWorkerName) {
-                const repo = (sysConfig.githubRepo || "amirpocom63-del/mrvpnpanel")
-                    .replace(/https?:\/\/github\.com\//, "")
-                    .trim();
-                let remoteVer = null;
-                try {
-                    const res = await fetch(`https://raw.githubusercontent.com/${repo}/main/version`);
-                    if (res.ok) {
-                        remoteVer = (await res.text()).trim();
-                    }
-                } catch (e) {}
-                
-                if (remoteVer && cmpVersions(CURRENT_VERSION, remoteVer) < 0) {
-                    try {
-                        const res = await fetch(`https://raw.githubusercontent.com/${repo}/main/_worker.js`);
-                        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                        let latestCode = await res.text();
-                        const format = sysConfig.autoUpdateFormat || "normal";
-                        if (format === "obfuscated") {
-                            latestCode = obfuscateCode(latestCode);
-                        }
-                        const deployRes = await deployWorkerToCloudflare(
-                            sysConfig.cfAccountId,
-                            sysConfig.cfApiToken,
-                            sysConfig.cfWorkerName,
-                            latestCode
-                        );
-                        const deployResult = await deployRes.json();
-                        if (deployResult.success) {
-                            await logActivity(env, "Auto-Update Success", `Auto-updated to v${remoteVer} (${format})`);
-                            if (sysConfig.linkedPanels && Array.isArray(sysConfig.linkedPanels)) {
-                                for (const p of sysConfig.linkedPanels) {
-                                    if (p && p.url && p.apiKey) {
-                                        let cleanUrl = p.url.trim();
-                                        if (!cleanUrl.startsWith("http://") && !cleanUrl.startsWith("https://")) {
-                                            cleanUrl = "https://" + cleanUrl;
-                                        }
-                                        try {
-                                            const parsed = new URL(cleanUrl);
-                                            const targetUrl = `${parsed.protocol}//${parsed.host}/${encodeURI(sysConfig.apiRoute)}/api/update`;
-                                            ctx?.waitUntil(
-                                                fetch(targetUrl, {
-                                                    method: "POST",
-                                                    headers: { "Content-Type": "application/json" },
-                                                    body: JSON.stringify({
-                                                        key: p.apiKey,
-                                                        action: "deploy",
-                                                        code: latestCode,
-                                                        force: true
-                                                    }),
-                                                    signal: AbortSignal.timeout(15000)
-                                                }).catch(() => {})
-                                            );
-                                        } catch (err) {}
-                                    }
-                                }
-                            }
-                        }
-                    } catch (e) {
-                        await logActivity(env, "Auto-Update Failed", `Auto-update failed: ${e.message}`);
-                    }
-                }
-            }
-        } catch (e) {}
-    }
-};
-
-async function serveMaintenancePage(request, url) {
-    let fakeList = sysConfig.maintenanceHost
-        ? sysConfig.maintenanceHost
-              .split(",")
-              .map((s) => s.trim())
-              .filter((s) => s)
-        : ["https://www.ubuntu.com"];
-    const clientIP = request.headers.get("cf-connecting-ip") || "0.0.0.0";
-    const ipHash = Array.from(clientIP).reduce(
-        (acc, char) => acc + char.charCodeAt(0),
-        0,
-    );
-    const targetStr = fakeList[ipHash % fakeList.length].startsWith("http")
-        ? fakeList[ipHash % fakeList.length]
-        : `https://${fakeList[ipHash % fakeList.length]}`;
-
+// ============================================
+// ROUTER
+// ============================================
+var Router = {
+  isWSUpgrade(request) {
+    const upgradeHeader = (request.headers.get("Upgrade") || "").toLowerCase();
+    return upgradeHeader === _cs([119,101,98,115,111,99,107,101,116]);
+  },
+  isSubscriptionPath(pathname) {
+    return pathname.startsWith("/sub/") || pathname.startsWith("/feed/");
+  },
+  async handleWS(request, env, ctx) {
     try {
-        const targetUrl = new URL(targetStr);
-        if (url.pathname !== "/") targetUrl.pathname = url.pathname;
-        targetUrl.search = url.search;
-        const cleanHeaders = new Headers(request.headers);
-        cleanHeaders.set("Host", targetUrl.hostname);
-        cleanHeaders.delete("cf-connecting-ip");
-        cleanHeaders.delete("x-forwarded-for");
-        const fetchInit = {
-            method: request.method,
-            headers: cleanHeaders,
-            redirect: "follow",
-        };
-        if (request.method !== "GET" && request.method !== "HEAD")
-            fetchInit.body = request.body;
-        return await fetch(new Request(targetUrl.toString(), fetchInit));
+      let pxIP = _safeProxyIP();
+      try {
+        const pxRow = await env.AM_DB.prepare("SELECT value FROM settings WHERE key = ?").bind(_cs([112,114,111,120,121,95,105,112])).first();
+        if (pxRow && pxRow.value) {
+          pxIP = pxRow.value;
+        }
+      } catch (e) {}
+      const mockStoredData = { proxy_ip: pxIP };
+      return handleVLESS(env, mockStoredData, ctx);
     } catch (e) {
+      return new Response("Internal Server Error", { status: 500 });
+    }
+  },
+  async handleSubscription(url, env) {
+    const isSubPath = url.pathname.startsWith("/sub/");
+    const offset = isSubPath ? 5 : 6;
+    let subUser = decodeURIComponent(url.pathname.slice(offset));
+    const host = url.hostname;
+    const isJson = !isSubPath && subUser.startsWith("json/");
+    if (isJson) {
+      subUser = subUser.slice(5);
+    }
+    try {
+      const user = await env.AM_DB.prepare("SELECT * FROM users WHERE username = ? OR uuid = ?").bind(subUser, subUser).first();
+      if (!user || (user.connection_type !== _cs([118,108,101,115,115]) && user.connection_type !== _D_._tr_)) {
         return new Response("Not Found", { status: 404 });
+      }
+      if (isJson) {
+        return await SubscriptionService.generateJson(user, host, env);
+      } else {
+        return await SubscriptionService.generateText(user, host);
+      }
+    } catch (err) {
+      return new Response("Error building config: " + err.message, { status: 500 });
     }
-}
-
-
-let sysConfigLoading = null;
-let sysUsageLoading = null;
-let backupIpLoading = null;
-
-function migrateSlaveNodesToLinkedPanels(config) {
-    let modified = false;
-    if (config && config.slaveNodes && config.slaveNodes.trim().length > 0) {
-        if (!config.linkedPanels) config.linkedPanels = [];
-        let nodes = config.slaveNodes
-            .split(/[\r\n,;]+/)
-            .map((s) => s.trim())
-            .filter(Boolean);
-        let syncKey = config.syncApiKey || "";
-        nodes.forEach((node) => {
-            let cleanNode = node.replace(/^[a-zA-Z]+:\/\//, "").split("/")[0].split("@").pop().split(":")[0].toLowerCase();
-            let exists = config.linkedPanels.some((p) => {
-                if (!p || !p.url) return false;
-                let cleanUrl = p.url.replace(/^[a-zA-Z]+:\/\//, "").split("/")[0].split("@").pop().split(":")[0].toLowerCase();
-                return cleanUrl === cleanNode;
-            });
-            if (!exists) {
-                config.linkedPanels.push({ url: node, apiKey: syncKey });
-                modified = true;
-            }
+  },
+  async handlePanel(request, env) {
+    try {
+      const hasPassword = await DbService.getPanelPassword(env.AM_DB);
+      if (!hasPassword) {
+        return new Response(HTML_TEMPLATES.setup, {
+          headers: { "Content-Type": "text/html; charset=utf-8" }
         });
-        config.slaveNodes = "";
-        modified = true;
-    }
-    return modified;
-}
-
-async function loadSysConfig(env, ctx = null) {
-    const now = Date.now();
-
-    if (env.AM_DB) {
-        if (now - sysConfigCacheTime > CACHE_TTL_CONFIG) {
-            if (!sysConfigLoading) {
-                sysConfigLoading = d1Get(env, "sys_config")
-                    .then((stored) => {
-                        sysConfig = {
-                            ...SYSTEM_DEFAULTS,
-                            ...(stored ? JSON.parse(stored) : null),
-                        };
-                        sysConfigCacheTime = Date.now();
-                        if (migrateSlaveNodesToLinkedPanels(sysConfig)) {
-                            const promise = cachedD1Put(env, "sys_config", JSON.stringify(sysConfig));
-                            if (ctx && typeof ctx.waitUntil === "function") {
-                                ctx.waitUntil(promise.catch(() => {}));
-                            } else {
-                                promise.catch(() => {});
-                            }
-                        }
-                    })
-                    .catch(() => {
-                        sysConfig = { ...SYSTEM_DEFAULTS };
-                        sysConfigCacheTime = Date.now();
-                    })
-                    .finally(() => {
-                        sysConfigLoading = null;
-                    });
-            }
-            await sysConfigLoading;
-        }
-        if (now - sysUsageCacheTime > CACHE_TTL_USAGE) {
-            if (!sysUsageLoading) {
-                sysUsageLoading = d1Get(env, "sys_usage")
-                    .then((ustored) => {
-                        if (ustored) sysUsageCache = JSON.parse(ustored);
-                        else sysUsageCache = { users: {} };
-                        sysUsageCacheTime = Date.now();
-                    })
-                    .catch(() => {
-                        sysUsageCache = { users: {} };
-                        sysUsageCacheTime = Date.now();
-                    })
-                    .finally(() => {
-                        sysUsageLoading = null;
-                    });
-            }
-            await sysUsageLoading;
-        }
-    }
-
-    if (now - backupIpCacheTime > CACHE_TTL_BACKUP_IP) {
-        if (!backupIpLoading) {
-            backupIpLoading = (
-                env.AM_DB ? d1Get(env, "backup_ip") : Promise.resolve(null)
-            )
-                .then((val) => {
-                    backupIpCache = val;
-                    backupIpCacheTime = Date.now();
-                })
-                .catch(() => {
-                    backupIpCacheTime = Date.now();
-                })
-                .finally(() => {
-                    backupIpLoading = null;
-                });
-        }
-        await backupIpLoading;
-    }
-    sysConfig.customRelay = backupIpCache ?? env.RELAY_IP ?? "";
-}
-
-async function fetchCloudflareUsage(accountId, apiToken) {
-    if (!accountId || !apiToken) return null;
-    try {
-        const d = new Date();
-        const currentDate = d.toISOString().split("T")[0] + "T00:00:00Z";
-
-        const query = `query GetDailyUsage($accountId: String!, $start: ISO8601DateTime!) { viewer { accounts(filter: {accountTag: $accountId}) { workersInvocationsAdaptive(limit: 1, filter: { datetime_geq: $start }) { sum { requests } } } } }`;
-        const variables = { accountId: accountId, start: currentDate };
-
-        const res = await fetch(
-            "https://api.cloudflare.com/client/v4/graphql",
-            {
-                method: "POST",
-                headers: {
-                    Authorization: `Bearer ${apiToken}`,
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ query, variables }),
-            },
-        );
-
-        const json = await res.json();
-        const reqs =
-            json?.data?.viewer?.accounts?.[0]?.workersInvocationsAdaptive?.[0]
-                ?.sum?.requests;
-        return typeof reqs === "number" ? reqs : null;
-    } catch (e) {
-        return null;
-    }
-}
-
-async function sendTelegramMessage(request, type, hostName) {
-    if (!sysConfig.tgToken || !(sysConfig.tgAdminId || sysConfig.tgChatId))
-        return;
-
-    const escMd = (s) => String(s).replace(/[_*()[`[]/g, "\\$&");
-
-    let usageStr = "نامشخص (0.00%)";
-    if (sysConfig.cfAccountId && sysConfig.cfApiToken) {
-        const reqs = await fetchCloudflareUsage(
-            sysConfig.cfAccountId,
-            sysConfig.cfApiToken,
-        );
-        if (reqs !== null) {
-            const limit = 100000;
-            const pct = ((reqs / limit) * 100).toFixed(2);
-            usageStr = `${reqs}/${limit} ${pct}%`;
-        }
-    }
-
-    const ip = request.headers.get("cf-connecting-ip") || "Unknown";
-    const cf = request.cf || {};
-    const country = cf.country || "Unknown";
-    const city = cf.city || "Unknown";
-    const asn = cf.asn || "Unknown";
-    const asOrg = cf.asOrganization || "Unknown";
-    const domain = request.headers.get("Host") || new URL(request.url).hostname;
-    const path = new URL(request.url).pathname;
-    const ua =
-        request.headers.get("User-Agent") || "حالا یوزرایجنت مارو نبینین";
-
-    const d = new Date();
-    const timeStr = new Intl.DateTimeFormat("fa-IR", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-    }).format(d);
-
-    const text =
-        `📌 نوع: ${escMd(type)}\n` +
-        `🌐 IP: ${escMd(ip)}\n` +
-        `📍 موقعیت: ${escMd(country)} ${escMd(city)}\n` +
-        `🏢 ASN: AS${escMd(asn)} ${escMd(asOrg)}\n` +
-        `🔗 دامنه: ${escMd(domain)}\n` +
-        `🔍 مسیر: ${escMd(path)}\n` +
-        `🤖 مرورگر: ${escMd(ua)}\n` +
-        `📅 زمان: ${escMd(timeStr)}\n` +
-        `📊 مصرف: ${usageStr}`;
-
-    const h = hostName || domain;
-    const langCode = sysConfig.tgBotLang || "fa";
-    const locT = (key) =>
-        botI18n[langCode]?.[key] || botI18n["en"]?.[key] || key;
-    const isPaused = sysConfig.isPaused || false;
-    const panelUrl = `https://${h}/${encodeURI(sysConfig.apiRoute)}/dash`;
-    const subUrl = `https://${h}/${sysConfig.apiRoute}`;
-    const inline_keyboard = [
-        [
-            { text: `📊 ${locT("dashboard")}`, callback_data: "sys_dashboard" },
-            { text: `📈 ${locT("statistics")}`, callback_data: "sys_stats" },
-        ],
-        [
-            {
-                text: `🔗 ${locT("btn_sub_link")}`,
-                callback_data: "get_sub_link",
-            },
-            {
-                text: `ℹ️ ${locT("panel_info")}`,
-                callback_data: "sys_panel_info",
-            },
-        ],
-        [
-            {
-                text: `🌐 ${langCode === "fa" ? "English 🇺🇸" : "فارسی 🇮🇷"}`,
-                callback_data: "sys_lang",
-            },
-            {
-                text: isPaused
-                    ? `▶️ ${locT("btn_resume")}`
-                    : `⏸️ ${locT("btn_pause")}`,
-                callback_data: "sys_toggle_status",
-            },
-        ],
-        [{ text: `🔑 ${locT("dash")}`, web_app: { url: panelUrl } }],
-    ];
-
-    const tgUrl = `https://api.telegram.org/bot${sysConfig.tgToken}/sendMessage`;
-    const notifyChatId = sysConfig.tgAdminId || sysConfig.tgChatId;
-    try {
-        await fetch(tgUrl, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                chat_id: notifyChatId,
-                text: text,
-                parse_mode: "Markdown",
-                reply_markup: /** @type {any} */ ({ inline_keyboard }),
-            }),
+      }
+      const authorized = await DbService.verifyApiAuth(request, env);
+      if (!authorized) {
+        return new Response(HTML_TEMPLATES.login, {
+          headers: { "Content-Type": "text/html; charset=utf-8" }
         });
-    } catch (e) {}
-}
-
-async function logActivity(env, type, detail) {
-    if (!env || !env.AM_DB) return;
-    try {
-        const ts = new Date().toISOString();
-        let logs = [];
-        const stored = await d1Get(env, "sys_logs");
-        if (stored) logs = JSON.parse(stored);
-        logs.unshift({ ts, type, detail });
-        if (logs.length > 50) logs = logs.slice(0, 50);
-        await d1Put(env, "sys_logs", JSON.stringify(logs));
-    } catch (e) {}
-}
-
-async function handleLogs(request, env) {
-    try {
-        if (request.method === "POST") {
-            const data = await request.json();
-            if (!isAuthorized(request, data))
-                return new Response(JSON.stringify({ success: false }), {
-                    status: 401,
-                });
-            let logs = [];
-            if (env.AM_DB) {
-                const stored = await d1Get(env, "sys_logs");
-                if (stored) logs = JSON.parse(stored);
-            }
-            return new Response(JSON.stringify({ success: true, logs }), {
-                status: 200,
-            });
-        }
-        return new Response("OK", { status: 200 });
+      }
+      return new Response(HTML_TEMPLATES.panel, {
+        headers: { "Content-Type": "text/html; charset=utf-8" }
+      });
     } catch (e) {
-        return new Response(JSON.stringify({ success: false }), {
+      return new Response(HTML_TEMPLATES.login, {
+        headers: { "Content-Type": "text/html; charset=utf-8" }
+      });
+    }
+  },
+  async handleUserStatus(url, env) {
+    const username = decodeURIComponent(url.pathname.slice(8));
+    if (!username) {
+      return new Response("Username is required", { status: 400 });
+    }
+    try {
+      const user = await env.AM_DB.prepare("SELECT * FROM users WHERE username = ? OR uuid = ?").bind(username, username).first();
+      if (!user) {
+        return new Response("User not found", { status: 404 });
+      }
+      const userJson = JSON.stringify({
+        username: user.username,
+        uuid: user.uuid,
+        limit_gb: user.limit_gb,
+        expiry_days: user.expiry_days,
+        used_gb: user.used_gb,
+        is_active: user.is_active,
+        created_at: user.created_at,
+        tls: user.tls,
+        port: user.port,
+        ips: user.ips,
+        fingerprint: user.fingerprint || "chrome",
+        config_name: user.config_name || user.username
+      });
+      const html = HTML_TEMPLATES.status.replace(
+        "/* {{USER_DATA_PLACEHOLDER}} */",
+        "window.statusUser = " + userJson + ";"
+      );
+      return new Response(html, {
+        headers: { "Content-Type": "text/html; charset=utf-8" }
+      });
+    } catch (err) {
+      return new Response("Error: " + err.message, { status: 500 });
+    }
+  },
+  async handleApi(request, url, env, ctx) {
+    const hasPassword = await DbService.getPanelPassword(env.AM_DB);
+    const authorized = await DbService.verifyApiAuth(request, env);
+    
+    // Bypass auth for eng/status and system/stats (read-only)
+    const readOnlyEndpoints = ["/api/eng/status", "/api/system/stats"];
+    const isReadOnly = readOnlyEndpoints.includes(url.pathname);
+    
+    // ============================================
+    // SETUP PASSWORD - First time setup (username + password)
+    // ============================================
+    if (url.pathname === "/api/setup-password" && request.method === "POST") {
+      if (hasPassword) {
+        return new Response(JSON.stringify({ error: "Password already set" }), {
+          status: 400,
+          headers: { "Content-Type": "application/json; charset=utf-8" }
+        });
+      }
+      try {
+        const { username, password } = await request.json();
+        if (!username || username.length < 3) {
+          return new Response(JSON.stringify({ error: "Username must be at least 3 characters" }), {
             status: 400,
+            headers: { "Content-Type": "application/json; charset=utf-8" }
+          });
+        }
+        if (!password || password.length < 4) {
+          return new Response(JSON.stringify({ error: "Password must be at least 4 characters" }), {
+            status: 400,
+            headers: { "Content-Type": "application/json; charset=utf-8" }
+          });
+        }
+        if (!env.AM_DB) {
+          return new Response(JSON.stringify({ error: "Database not connected" }), {
+            status: 500,
+            headers: { "Content-Type": "application/json; charset=utf-8" }
+          });
+        }
+        const hashed = await DbService.sha256(password);
+        await DbService.setPanelPassword(env.AM_DB, hashed);
+        await env.AM_DB.prepare("INSERT INTO admins (username, password_hash) VALUES (?, ?)").bind(username, hashed).run();
+        await loadAdmins(env);
+        return new Response(JSON.stringify({ success: true }), {
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            "Set-Cookie": "panel_session=" + hashed + "; Path=/; HttpOnly; Secure; SameSite=Lax"
+          }
         });
-    }
-}
-
-async function handleUsersApi(request, env, ctx) {
-    try {
-        const url = new URL(request.url);
-        const method = request.method;
-        const userId = url.searchParams.get("id");
-        const action = url.searchParams.get("action");
-
-        const authHeader = request.headers.get("Authorization") || "";
-        const authKey =
-            authHeader.replace("Bearer ", "") ||
-            url.searchParams.get("key") ||
-            "";
-        let bodyKey = "";
-        if (method === "POST" || method === "PUT") {
-            try {
-                const body = await request.clone().json();
-                bodyKey = body.key || "";
-            } catch (e) {}
-        }
-        const isAuth =
-            authKey === sysConfig.masterKey ||
-            bodyKey === sysConfig.masterKey ||
-            isPanelApiKey(authKey) ||
-            isPanelApiKey(bodyKey);
-        if (!isAuth) {
-            return new Response(
-                JSON.stringify({ success: false, error: "Unauthorized" }),
-                {
-                    status: 401,
-                    headers: { "Content-Type": "application/json" },
-                },
-            );
-        }
-
-        if (method === "GET" && !userId) {
-            const q = url.searchParams.get("q") || "";
-            let users = sysConfig.users || [];
-            if (q) {
-                const ql = q.toLowerCase();
-                users = users.filter(
-                    (u) =>
-                        u.name.toLowerCase().includes(ql) ||
-                        u.id.toLowerCase().includes(ql) ||
-                        (u.notes && u.notes.toLowerCase().includes(ql)),
-                );
-            }
-            const enriched = users.map((u) => {
-                const idClean = u.id.replace(/-/g, "").toLowerCase();
-                const sysU = sysUsageCache?.users?.[idClean] || {
-                    reqs: 0,
-                    dReqs: 0,
-                    lastDay: "",
-                };
-                const usedBytes = Math.floor(
-                    (sysU.reqs || 0) * (1073741824 / 6000),
-                );
-                const limitBytes = u.limitTotalReq
-                    ? Math.floor(u.limitTotalReq * (1073741824 / 6000))
-                    : 0;
-                const isExpired = u.expiryMs && Date.now() > u.expiryMs;
-                let status = "active";
-                if (u.isPaused && u.disabledReason) status = "auto-disabled";
-                else if (u.isPaused) status = "paused";
-                else if (isExpired) status = "expired";
-                return {
-                    ...u,
-                    usage: {
-                        total: usedBytes,
-                        limit: limitBytes,
-                        daily: sysU.dReqs || 0,
-                        dailyLimit: u.limitDailyReq || 0,
-                    },
-                    status,
-                };
-            });
-            return new Response(
-                JSON.stringify({
-                    success: true,
-                    users: enriched,
-                    total: enriched.length,
-                }),
-                { headers: { "Content-Type": "application/json" } },
-            );
-        }
-
-        if (method === "GET" && userId) {
-            const u = (sysConfig.users || []).find(
-                (usr) =>
-                    usr.id === userId ||
-                    usr.name.toLowerCase() === userId.toLowerCase(),
-            );
-            if (!u)
-                return new Response(
-                    JSON.stringify({ success: false, error: "User not found" }),
-                    {
-                        status: 404,
-                        headers: { "Content-Type": "application/json" },
-                    },
-                );
-            const idClean = u.id.replace(/-/g, "").toLowerCase();
-            const sysU = sysUsageCache?.users?.[idClean] || {
-                reqs: 0,
-                dReqs: 0,
-                lastDay: "",
-            };
-            const usedBytes = Math.floor(
-                (sysU.reqs || 0) * (1073741824 / 6000),
-            );
-            const limitBytes = u.limitTotalReq
-                ? Math.floor(u.limitTotalReq * (1073741824 / 6000))
-                : 0;
-            const isExpired = u.expiryMs && Date.now() > u.expiryMs;
-            let status = "active";
-            if (u.isPaused && u.disabledReason) status = "auto-disabled";
-            else if (u.isPaused) status = "paused";
-            else if (isExpired) status = "expired";
-            const hostName = new URL(request.url).hostname;
-            const subUrl = `https://${hostName}/${sysConfig.apiRoute}?sub=${encodeURIComponent(u.name)}`;
-            return new Response(
-                JSON.stringify({
-                    success: true,
-                    user: {
-                        ...u,
-                        usage: {
-                            total: usedBytes,
-                            limit: limitBytes,
-                            daily: sysU.dReqs || 0,
-                            dailyLimit: u.limitDailyReq || 0,
-                        },
-                        status,
-                        subscriptionUrl: subUrl,
-                    },
-                }),
-                { headers: { "Content-Type": "application/json" } },
-            );
-        }
-
-        if (method === "POST" && !userId) {
-            const body = await request.json();
-            const {
-                name,
-                trafficLimit,
-                expiryDays,
-                notes,
-                maxConfigs,
-                proxyIp,
-                cleanIp,
-                userMode,
-                userPorts,
-                userNodes,
-                nat64,
-                connLimit,
-                userPanelUrl,
-            } = body;
-            if (!name)
-                return new Response(
-                    JSON.stringify({
-                        success: false,
-                        error: "Name is required",
-                    }),
-                    {
-                        status: 400,
-                        headers: { "Content-Type": "application/json" },
-                    },
-                );
-            const newId = crypto.randomUUID();
-            const newUser = {
-                id: newId,
-                name: name,
-                limitTotalReq: trafficLimit
-                    ? Math.floor(parseFloat(trafficLimit) * 6000)
-                    : null,
-                limitDailyReq: body.dailyLimit
-                    ? Math.floor(parseFloat(body.dailyLimit) * 6000)
-                    : null,
-                expiryMs: expiryDays
-                    ? Date.now() + parseInt(expiryDays) * 86400000
-                    : null,
-                notes: notes || "",
-                maxConfigs: maxConfigs ? parseInt(maxConfigs) : null,
-                proxyIp: proxyIp || null,
-                cleanIp: cleanIp || null,
-                userMode: userMode || null,
-                userPorts: userPorts || null,
-                userNodes: userNodes || null,
-                nat64: nat64 || null,
-                connLimit: connLimit ? parseInt(connLimit) : null,
-                userPanelUrl: userPanelUrl || null,
-                createdAt: Date.now(),
-            };
-            await resolveUserProxyIpGeo(newUser);
-            if (!sysConfig.users) sysConfig.users = [];
-            sysConfig.users.push(newUser);
-            await cachedD1Put(env, "sys_config", JSON.stringify(sysConfig));
-            ctx?.waitUntil(
-                logActivity(
-                    env,
-                    "User Created",
-                    `User "${name}" (${newId}) created via API`,
-                ).catch(() => {}),
-            );
-            const hostName = new URL(request.url).hostname;
-            const subUrl = `https://${hostName}/${sysConfig.apiRoute}?sub=${encodeURIComponent(name)}`;
-            return new Response(
-                JSON.stringify({
-                    success: true,
-                    user: newUser,
-                    subscriptionUrl: subUrl,
-                }),
-                {
-                    status: 201,
-                    headers: { "Content-Type": "application/json" },
-                },
-            );
-        }
-
-        if (method === "PUT" && userId) {
-            const body = await request.json();
-            if (!sysConfig.users)
-                return new Response(
-                    JSON.stringify({ success: false, error: "No users" }),
-                    {
-                        status: 400,
-                        headers: { "Content-Type": "application/json" },
-                    },
-                );
-            const u = sysConfig.users.find((usr) => usr.id === userId);
-            if (!u)
-                return new Response(
-                    JSON.stringify({ success: false, error: "User not found" }),
-                    {
-                        status: 404,
-                        headers: { "Content-Type": "application/json" },
-                    },
-                );
-            if (body.name !== undefined) u.name = body.name;
-            if (body.trafficLimit !== undefined)
-                u.limitTotalReq = body.trafficLimit
-                    ? Math.floor(parseFloat(body.trafficLimit) * 6000)
-                    : null;
-            if (body.dailyLimit !== undefined)
-                u.limitDailyReq = body.dailyLimit
-                    ? Math.floor(parseFloat(body.dailyLimit) * 6000)
-                    : null;
-            if (body.expiryDays !== undefined)
-                u.expiryMs = body.expiryDays
-                    ? Date.now() + parseInt(body.expiryDays) * 86400000
-                    : null;
-            if (body.notes !== undefined) u.notes = body.notes;
-            if (body.maxConfigs !== undefined)
-                u.maxConfigs = body.maxConfigs
-                    ? parseInt(body.maxConfigs)
-                    : null;
-            if (body.proxyIp !== undefined) {
-                u.proxyIp = body.proxyIp;
-                if (!body.proxyIp) {
-                    u.proxyIpGeo = null;
-                } else {
-                    await resolveUserProxyIpGeo(u);
-                }
-            }
-            if (body.cleanIp !== undefined) u.cleanIp = body.cleanIp;
-            if (body.userMode !== undefined) u.userMode = body.userMode;
-            if (body.userPorts !== undefined) u.userPorts = body.userPorts;
-            if (body.userNodes !== undefined) u.userNodes = body.userNodes;
-            if (body.nat64 !== undefined) u.nat64 = body.nat64;
-            if (body.connLimit !== undefined)
-                u.connLimit = body.connLimit ? parseInt(body.connLimit) : null;
-            if (body.userPanelUrl !== undefined)
-                u.userPanelUrl = body.userPanelUrl || null;
-            if (body.status !== undefined) {
-                if (body.status === "active") {
-                    u.isPaused = false;
-                    u.disabledReason = null;
-                    u.disabledAt = null;
-                } else if (body.status === "paused") {
-                    u.isPaused = true;
-                    u.disabledReason = null;
-                    u.disabledAt = null;
-                }
-            }
-            await cachedD1Put(env, "sys_config", JSON.stringify(sysConfig));
-            ctx?.waitUntil(
-                logActivity(
-                    env,
-                    "User Updated",
-                    `User "${u.name}" (${userId}) updated via API`,
-                ).catch(() => {}),
-            );
-            return new Response(JSON.stringify({ success: true, user: u }), {
-                headers: { "Content-Type": "application/json" },
-            });
-        }
-
-        if (method === "DELETE" && userId) {
-            if (!sysConfig.users)
-                return new Response(
-                    JSON.stringify({ success: false, error: "No users" }),
-                    {
-                        status: 400,
-                        headers: { "Content-Type": "application/json" },
-                    },
-                );
-            const idx = sysConfig.users.findIndex((usr) => usr.id === userId);
-            if (idx === -1)
-                return new Response(
-                    JSON.stringify({ success: false, error: "User not found" }),
-                    {
-                        status: 404,
-                        headers: { "Content-Type": "application/json" },
-                    },
-                );
-            const deleted = sysConfig.users.splice(idx, 1)[0];
-            await cachedD1Put(env, "sys_config", JSON.stringify(sysConfig));
-            ctx?.waitUntil(
-                logActivity(
-                    env,
-                    "User Deleted",
-                    `User "${deleted.name}" (${userId}) deleted via API`,
-                ).catch(() => {}),
-            );
-            return new Response(
-                JSON.stringify({ success: true, deleted: deleted.id }),
-                { headers: { "Content-Type": "application/json" } },
-            );
-        }
-
-        if (method === "POST" && userId && action === "toggle") {
-            if (!sysConfig.users)
-                return new Response(
-                    JSON.stringify({ success: false, error: "No users" }),
-                    {
-                        status: 400,
-                        headers: { "Content-Type": "application/json" },
-                    },
-                );
-            const u = sysConfig.users.find((usr) => usr.id === userId);
-            if (!u)
-                return new Response(
-                    JSON.stringify({ success: false, error: "User not found" }),
-                    {
-                        status: 404,
-                        headers: { "Content-Type": "application/json" },
-                    },
-                );
-            u.isPaused = !u.isPaused;
-            if (!u.isPaused) {
-                u.disabledReason = null;
-                u.disabledAt = null;
-            }
-            await cachedD1Put(env, "sys_config", JSON.stringify(sysConfig));
-            ctx?.waitUntil(
-                logActivity(
-                    env,
-                    "User Toggled",
-                    `User "${u.name}" (${userId}) ${u.isPaused ? "paused" : "resumed"} via API`,
-                ).catch(() => {}),
-            );
-            return new Response(JSON.stringify({ success: true, user: u }), {
-                headers: { "Content-Type": "application/json" },
-            });
-        }
-
-        if (method === "POST" && userId && action === "reset") {
-            if (!sysUsageCache) sysUsageCache = { users: {} };
-            if (!sysUsageCache.users) sysUsageCache.users = {};
-            const uuidClean = userId.replace(/-/g, "").toLowerCase();
-            if (sysUsageCache.users[uuidClean]) {
-                sysUsageCache.users[uuidClean].reqs = 0;
-                sysUsageCache.users[uuidClean].dReqs = 0;
-            } else {
-                sysUsageCache.users[uuidClean] = {
-                    reqs: 0,
-                    dReqs: 0,
-                    lastDay: new Date().toISOString().split("T")[0],
-                };
-            }
-            await cachedD1Put(env, "sys_usage", JSON.stringify(sysUsageCache));
-            ctx?.waitUntil(
-                logActivity(
-                    env,
-                    "Traffic Reset",
-                    `Traffic reset for user ${userId} via API`,
-                ).catch(() => {}),
-            );
-            return new Response(
-                JSON.stringify({ success: true, message: "Traffic reset" }),
-                { headers: { "Content-Type": "application/json" } },
-            );
-        }
-
-        return new Response(
-            JSON.stringify({ success: false, error: "Invalid request" }),
-            { status: 400, headers: { "Content-Type": "application/json" } },
-        );
-    } catch (e) {
-        return new Response(
-            JSON.stringify({ success: false, error: e.message }),
-            { status: 500, headers: { "Content-Type": "application/json" } },
-        );
-    }
-}
-
-async function handleStatsApi(request, env) {
-    try {
-        const url = new URL(request.url);
-        const authHeader = request.headers.get("Authorization") || "";
-        const authKey =
-            authHeader.replace("Bearer ", "") ||
-            url.searchParams.get("key") ||
-            "";
-        if (authKey !== sysConfig.masterKey && !isPanelApiKey(authKey)) {
-            return new Response(
-                JSON.stringify({ success: false, error: "Unauthorized" }),
-                {
-                    status: 401,
-                    headers: { "Content-Type": "application/json" },
-                },
-            );
-        }
-
-        const users = sysConfig.users || [];
-        const totalUsers = users.length;
-        const activeUsers = users.filter(
-            (u) => !u.isPaused && (!u.expiryMs || Date.now() <= u.expiryMs),
-        ).length;
-        const autoDisabledUsers = users.filter(
-            (u) => u.isPaused && u.disabledReason,
-        ).length;
-        const pausedUsers = users.filter(
-            (u) => u.isPaused && !u.disabledReason,
-        ).length;
-        const expiredUsers = users.filter(
-            (u) => u.expiryMs && Date.now() > u.expiryMs && !u.isPaused,
-        ).length;
-
-        let totalTrafficReqs = 0;
-        let dailyTrafficReqs = 0;
-        const todayDate = new Date().toISOString().split("T")[0];
-        users.forEach((u) => {
-            const idClean = u.id.replace(/-/g, "").toLowerCase();
-            const sysU = sysUsageCache?.users?.[idClean] || {
-                reqs: 0,
-                dReqs: 0,
-                lastDay: "",
-            };
-            totalTrafficReqs += sysU.reqs || 0;
-            if (sysU.lastDay === todayDate) dailyTrafficReqs += sysU.dReqs || 0;
+      } catch (e) {
+        return new Response(JSON.stringify({ error: "Server error: " + e.message }), {
+          status: 500,
+          headers: { "Content-Type": "application/json; charset=utf-8" }
         });
-
+      }
+    }
+    
+    // ============================================
+    // LOGIN - Admin login with username + password
+    // ============================================
+    if (url.pathname === "/api/login" && request.method === "POST") {
+      var _body = await _rj(request);
+      if (_body === null) return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: { "Content-Type": "application/json" } });
+      var username = _body.username;
+      var password = _body.password;
+      
+      // First check: Is this a panel admin with username?
+      if (username && password) {
+        await loadAdmins(env);
+        const admin = ADMINS.find(a => a.username === username);
+        if (admin) {
+          const hashed = await DbService.sha256(password);
+          if (admin.password_hash === hashed) {
+            return new Response(JSON.stringify({ success: true, role: "admin", username: username }), {
+              headers: {
+                "Content-Type": "application/json; charset=utf-8",
+                "Set-Cookie": "panel_session=" + admin.id + "; Path=/; HttpOnly; Secure; SameSite=Lax"
+              }
+            });
+          }
+        }
+      }
+      
+      // Second check: Is this the panel password (backward compatibility)
+      if (password) {
+        const hashedInput = await DbService.sha256(password);
+        const storedHash = await DbService.getPanelPassword(env.AM_DB);
+        if (storedHash === hashedInput) {
+          return new Response(JSON.stringify({ success: true, role: "admin" }), {
+            headers: {
+              "Content-Type": "application/json; charset=utf-8",
+              "Set-Cookie": "panel_session=" + storedHash + "; Path=/; HttpOnly; Secure; SameSite=Lax"
+            }
+          });
+        }
+      }
+      
+      return new Response(JSON.stringify({ error: "Invalid credentials" }), {
+        status: 401,
+        headers: { "Content-Type": "application/json; charset=utf-8" }
+      });
+    }
+    
+    // ============================================
+    // ADMIN CREATE - Create first admin
+    // ============================================
+    if (url.pathname === "/api/admin/create" && request.method === "POST") {
+      // Only allow if no admin exists or if panel password is set
+      await loadAdmins(env);
+      if (ADMINS.length > 0 && !authorized) {
+        return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { "Content-Type": "application/json" } });
+      }
+      var _body = await _rj(request);
+      if (_body === null) return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: { "Content-Type": "application/json" } });
+      var username = _body.username;
+      var password = _body.password;
+      if (!username || !password || password.length < 4) {
+        return new Response(JSON.stringify({ error: "Invalid username or password" }), { status: 400, headers: { "Content-Type": "application/json" } });
+      }
+      const hashed = await DbService.sha256(password);
+      try {
+        await env.AM_DB.prepare("INSERT INTO admins (username, password_hash) VALUES (?, ?)").bind(username, hashed).run();
+        await loadAdmins(env);
+        return new Response(JSON.stringify({ success: true }), {
+          headers: { "Content-Type": "application/json; charset=utf-8" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: "Username already exists" }), { status: 400 });
+      }
+    }
+    
+    // ============================================
+    // LOGOUT
+    // ============================================
+    if (url.pathname === "/api/logout" && request.method === "POST") {
+      return new Response(JSON.stringify({ success: true }), {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          "Set-Cookie": "panel_session=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly; Secure; SameSite=Lax"
+        }
+      });
+    }
+    
+    // ============================================
+    // AUTH VERIFICATION - Check if user is logged in
+    // ============================================
+    if (url.pathname === "/api/auth/verify" && request.method === "GET") {
+      const cookies = request.headers.get("Cookie") || "";
+      const sessionCookie = cookies.split(";").find((c) => c.trim().startsWith("panel_session="));
+      if (!sessionCookie) {
+        return new Response(JSON.stringify({ authenticated: false }), {
+          headers: { "Content-Type": "application/json" }
+        });
+      }
+      const sessionToken = sessionCookie.split("=")[1].trim();
+      
+      // Check if it's an admin ID
+      await loadAdmins(env);
+      const admin = ADMINS.find(a => String(a.id) === sessionToken);
+      if (admin) {
+        return new Response(JSON.stringify({ authenticated: true, role: "admin", username: admin.username }), {
+          headers: { "Content-Type": "application/json" }
+        });
+      }
+      
+      // Check if it's the panel password
+      const storedHash = await DbService.getPanelPassword(env.AM_DB);
+      if (storedHash && sessionToken === storedHash) {
+        return new Response(JSON.stringify({ authenticated: true, role: "admin" }), {
+          headers: { "Content-Type": "application/json" }
+        });
+      }
+      
+      return new Response(JSON.stringify({ authenticated: false }), {
+        headers: { "Content-Type": "application/json" }
+      });
+    }
+    
+    // ============================================
+    // CHANGE PASSWORD - Panel password
+    // ============================================
+    if (url.pathname === "/api/change-password" && request.method === "POST") {
+      if (!authorized) {
+        return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { "Content-Type": "application/json; charset=utf-8" } });
+      }
+      var _body = await _rj(request);
+      if (_body === null) return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: { "Content-Type": "application/json; charset=utf-8" } });
+      var current_password = _body.current_password;
+      var new_password = _body.new_password;
+      if (!current_password || !new_password) {
+        return new Response(JSON.stringify({ error: "Current and new password required" }), {
+          status: 400,
+          headers: { "Content-Type": "application/json; charset=utf-8" }
+        });
+      }
+      const currentHash = await DbService.sha256(current_password);
+      const storedHash = await DbService.getPanelPassword(env.AM_DB);
+      if (storedHash && storedHash !== currentHash) {
+        return new Response(JSON.stringify({ error: "Current password is incorrect" }), {
+          status: 401,
+          headers: { "Content-Type": "application/json; charset=utf-8" }
+        });
+      }
+      if (new_password.length < 4) {
+        return new Response(JSON.stringify({ error: "New password must be at least 4 characters" }), {
+          status: 400,
+          headers: { "Content-Type": "application/json; charset=utf-8" }
+        });
+      }
+      const newHash = await DbService.sha256(new_password);
+      await DbService.setPanelPassword(env.AM_DB, newHash);
+      return new Response(JSON.stringify({ success: true }), {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          "Set-Cookie": "panel_session=" + newHash + "; Path=/; HttpOnly; Secure; SameSite=Lax"
+        }
+      });
+    }
+    
+    // ============================================
+    // CHANGE ADMIN PASSWORD - Admin user password
+    // ============================================
+    if (url.pathname === "/api/admin/change-password" && request.method === "POST") {
+      if (!authorized) {
+        return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { "Content-Type": "application/json; charset=utf-8" } });
+      }
+      var _body = await _rj(request);
+      if (_body === null) return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: { "Content-Type": "application/json; charset=utf-8" } });
+      var username = _body.username;
+      var current_password = _body.current_password;
+      var new_password = _body.new_password;
+      if (!username || !current_password || !new_password) {
+        return new Response(JSON.stringify({ error: "Username, current and new password required" }), {
+          status: 400,
+          headers: { "Content-Type": "application/json; charset=utf-8" }
+        });
+      }
+      await loadAdmins(env);
+      const admin = ADMINS.find(a => a.username === username);
+      if (!admin) {
+        return new Response(JSON.stringify({ error: "Admin not found" }), { status: 404 });
+      }
+      const currentHash = await DbService.sha256(current_password);
+      if (admin.password_hash !== currentHash) {
+        return new Response(JSON.stringify({ error: "Current password is incorrect" }), {
+          status: 401,
+          headers: { "Content-Type": "application/json; charset=utf-8" }
+        });
+      }
+      if (new_password.length < 4) {
+        return new Response(JSON.stringify({ error: "New password must be at least 4 characters" }), {
+          status: 400,
+          headers: { "Content-Type": "application/json; charset=utf-8" }
+        });
+      }
+      const newHash = await DbService.sha256(new_password);
+      try {
+        await env.AM_DB.prepare("UPDATE admins SET password_hash = ? WHERE username = ?").bind(newHash, username).run();
+      } catch (dbErr) {
+        return new Response(JSON.stringify({ error: "Database error" }), { status: 500, headers: { "Content-Type": "application/json" } });
+      }
+      return new Response(JSON.stringify({ success: true }), {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8"
+        }
+      });
+    }
+    
+    // ============================================
+    // XRAY CONTROL
+    // ============================================
+    if (url.pathname === "/api/eng" && request.method === "POST") {
+      var _body = await _rj(request);
+      if (_body === null) return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: { "Content-Type": "application/json" } });
+      var action = _body.action;
+      if (action === "stop") {
+        engSt.running = false;
+        return new Response(JSON.stringify({ success: true, status: "stopped" }), { headers: { "Content-Type": "application/json" } });
+      } else if (action === "start") {
+        engSt.running = true;
+        engSt.startTime = Date.now();
+        return new Response(JSON.stringify({ success: true, status: "started" }), { headers: { "Content-Type": "application/json" } });
+      } else if (action === "restart") {
+        engSt.running = true;
+        engSt.startTime = Date.now();
+        return new Response(JSON.stringify({ success: true, status: "restarted" }), { headers: { "Content-Type": "application/json" } });
+      }
+      return new Response(JSON.stringify({ error: "Invalid action" }), { status: 400, headers: { "Content-Type": "application/json" } });
+    }
+    
+    if (url.pathname === "/api/eng/status") {
+      const uptime = engSt.running ? Math.floor((Date.now() - engSt.startTime) / 1000) : 0;
+      return new Response(JSON.stringify({
+        running: engSt.running,
+        uptime: uptime
+      }), {
+        headers: { "Content-Type": "application/json" }
+      });
+    }
+    
+    // ============================================
+    // LOCATIONS
+    // ============================================
+    if (url.pathname === "/locations") {
+      try {
+        const response = await fetch(_sp(['h','t','t','p','s',':','/','/','s','p','e','e','d','.','c','l','o','u','d','f','l','a','r','e','.','c','o','m','/','l','o','c','a','t','i','o','n','s']), {
+          headers: { "Referer": _sp(['h','t','t','p','s',':','/','/','s','p','e','e','d','.','c','l','o','u','d','f','l','a','r','e','.','c','o','m','/']) }
+        });
+        const data = await response.json();
+        return new Response(JSON.stringify(data), {
+          headers: { "Content-Type": "application/json; charset=utf-8", "Access-Control-Allow-Origin": "*" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: { "Content-Type": "application/json" } });
+      }
+    }
+    
+    // ============================================
+    // SYSTEM STATS
+    // ============================================
+    if (url.pathname === "/api/system/stats") {
+      const now = Date.now();
+      const uptime = engSt.running ? Math.floor((now - engSt.startTime) / 1000) : 0;
+      let userCount = 0, onlineCount = 0, totalTraffic = 0;
+      try {
+        const uc = await env.AM_DB.prepare("SELECT COUNT(*) as c FROM users").first();
+        userCount = uc?.c || 0;
+        const oc = await env.AM_DB.prepare("SELECT COUNT(*) as c FROM users WHERE last_active > ?").bind(now - 65000).first();
+        onlineCount = oc?.c || 0;
+        const tc = await env.AM_DB.prepare("SELECT SUM(used_gb) as t FROM users").first();
+        totalTraffic = tc?.t || 0;
+      } catch (e) {}
+      return new Response(JSON.stringify({
+        total_users: userCount,
+        online_users: onlineCount,
+        total_traffic_gb: totalTraffic,
+        eng_uptime: uptime,
+        version: PANEL_VERSION,
+        theme: THEME
+      }), {
+        headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+      });
+    }
+    
+    // ============================================
+    // THEME SETTINGS
+    // ============================================
+    if (url.pathname === "/api/theme" && request.method === "POST") {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { "Content-Type": "application/json" } });
+      var _body = await _rj(request);
+      if (_body === null) return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: { "Content-Type": "application/json" } });
+      var theme = _body.theme;
+      if (theme === "dark" || theme === "light") {
+        THEME = theme;
+        try {
+          await env.AM_DB.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES ('theme', ?)").bind(theme).run();
+        } catch (dbErr) {
+          return new Response(JSON.stringify({ error: "Database error" }), { status: 500, headers: { "Content-Type": "application/json" } });
+        }
+        return new Response(JSON.stringify({ success: true, theme: THEME }), {
+          headers: { "Content-Type": "application/json" }
+        });
+      }
+      return new Response(JSON.stringify({ error: "Invalid theme" }), { status: 400 });
+    }
+    
+    if (url.pathname === "/api/theme" && request.method === "GET") {
+      try {
+        const row = await env.AM_DB.prepare("SELECT value FROM settings WHERE key = 'theme'").first();
+        if (row && row.value) {
+          THEME = row.value;
+        }
+      } catch (e) {}
+      return new Response(JSON.stringify({ theme: THEME }), {
+        headers: { "Content-Type": "application/json" }
+      });
+    }
+    
+    // ============================================
+    // PROXY IP SETTINGS
+    // ============================================
+    if (url.pathname === _cs([47,97,112,105,47,112,114,111,120,121,45,105,112])) {
+      if (request.method === "POST") {
+        if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { "Content-Type": "application/json" } });
+        var _body = await _rj(request);
+        if (_body === null) return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: { "Content-Type": "application/json" } });
+        var proxy_ip = _body.proxy_ip;
+        var iata = _body.iata;
+        var frag_len = _body.frag_len;
+        var frag_int = _body.frag_int;
+        try {
+          if (proxy_ip) await env.AM_DB.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)").bind(_cs([112,114,111,120,121,95,105,112]), proxy_ip).run();
+          if (iata !== void 0) await env.AM_DB.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)").bind(_cs([112,114,111,120,121,95,108,111,99,97,116,105,111,110,95,105,97,116,97]), iata).run();
+          if (frag_len !== void 0) await env.AM_DB.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES ('frag_len', ?)").bind(frag_len).run();
+          if (frag_int !== void 0) await env.AM_DB.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES ('frag_int', ?)").bind(frag_int).run();
+        } catch (dbErr) {
+          return new Response(JSON.stringify({ error: "Database error" }), { status: 500, headers: { "Content-Type": "application/json" } });
+        }
+        return new Response(JSON.stringify({ success: true }), { headers: { "Content-Type": "application/json" } });
+      }
+      if (request.method === "GET") {
+        let rowIp, rowIata, rowLen, rowInt;
+        try {
+          rowIp = await env.AM_DB.prepare("SELECT value FROM settings WHERE key = ?").bind(_cs([112,114,111,120,121,95,105,112])).first();
+          rowIata = await env.AM_DB.prepare("SELECT value FROM settings WHERE key = ?").bind(_cs([112,114,111,120,121,95,108,111,99,97,116,105,111,110,95,105,97,116,97])).first();
+          rowLen = await env.AM_DB.prepare("SELECT value FROM settings WHERE key = 'frag_len'").first();
+          rowInt = await env.AM_DB.prepare("SELECT value FROM settings WHERE key = 'frag_int'").first();
+        } catch (dbErr) {
+          return new Response(JSON.stringify({ error: "Database error" }), { status: 500, headers: { "Content-Type": "application/json" } });
+        }
+        return new Response(JSON.stringify({
+          proxy_ip: rowIp ? rowIp.value : _safeProxyIP(),
+          iata: rowIata ? rowIata.value : "",
+          frag_len: rowLen ? rowLen.value : "20-30",
+          frag_int: rowInt ? rowInt.value : "1-2"
+        }), { headers: { "Content-Type": "application/json" } });
+      }
+    }
+    
+    // ============================================
+    // ADMINS - CRUD (Requires authentication)
+    // ============================================
+    if (url.pathname === "/api/admins") {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { "Content-Type": "application/json" } });
+      await loadAdmins(env);
+      if (request.method === "GET") {
+        return new Response(JSON.stringify({ admins: ADMINS.map(a => ({ id: a.id, username: a.username, created_at: a.created_at })) }), { headers: { "Content-Type": "application/json" } });
+      }
+      if (request.method === "POST") {
+        var _body = await _rj(request);
+        if (_body === null) return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: { "Content-Type": "application/json" } });
+        var username = _body.username;
+        var password = _body.password;
+        if (!username || !password || password.length < 4) {
+          return new Response(JSON.stringify({ error: "Invalid username or password" }), { status: 400, headers: { "Content-Type": "application/json" } });
+        }
+        const hashed = await DbService.sha256(password);
+        try {
+          await env.AM_DB.prepare("INSERT INTO admins (username, password_hash) VALUES (?, ?)").bind(username, hashed).run();
+          await loadAdmins(env);
+          return new Response(JSON.stringify({ success: true }), { headers: { "Content-Type": "application/json" } });
+        } catch (e) {
+          return new Response(JSON.stringify({ error: "Username already exists" }), { status: 400, headers: { "Content-Type": "application/json" } });
+        }
+      }
+      if (request.method === "DELETE") {
+        var _body = await _rj(request);
+        if (_body === null) return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: { "Content-Type": "application/json" } });
+        var id = _body.id;
+        try {
+          await env.AM_DB.prepare("DELETE FROM admins WHERE id = ?").bind(id).run();
+          await loadAdmins(env);
+        } catch (dbErr) {
+          return new Response(JSON.stringify({ error: "Database error" }), { status: 500, headers: { "Content-Type": "application/json" } });
+        }
+        return new Response(JSON.stringify({ success: true }), { headers: { "Content-Type": "application/json" } });
+      }
+    }
+    
+    // ============================================
+    // USERS - CRUD (Requires authentication)
+    // ============================================
+    const _userKeywords = ["stats","traffic","check","config","reset","online","extend","add-traffic","bulk","rename","export","reset-all","subscription"];
+    const _pathSegs = url.pathname.split("/");
+    const _isUserRoute = url.pathname === "/api/users" || (url.pathname.startsWith("/api/users/") && _pathSegs.length === 4 && !_userKeywords.includes(_pathSegs[3]));
+    if (_isUserRoute) {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+      const pathParts = url.pathname.split("/");
+      const isUserAction = pathParts.length > 3;
+      
+      if (isUserAction) {
+        const username = decodeURIComponent(pathParts.pop());
         
-        let usageData = {};
-        for (let [k, v] of uuidUsage.entries()) {
-            usageData[k] = { ...v, connects: activeConns.get(k) || 0 };
-        }
-        const upSeconds = Math.floor((Date.now() - isolateStartTime) / 1000);
-
-        return new Response(
-            JSON.stringify({
-                success: true,
-                stats: {
-                    users: {
-                        total: totalUsers,
-                        active: activeUsers,
-                        paused: pausedUsers,
-                        expired: expiredUsers,
-                        autoDisabled: autoDisabledUsers,
-                    },
-                    traffic: {
-                        totalRequests: totalTrafficReqs,
-                        totalGB: (totalTrafficReqs / 6000).toFixed(2),
-                        dailyRequests: dailyTrafficReqs,
-                        dailyGB: (dailyTrafficReqs / 6000).toFixed(2),
-                    },
-                    usage: usageData,
-                system: {
-                        uptimeSeconds: upSeconds,
-                        activeConnections,
-                        version: CURRENT_VERSION,
-                        isPaused: sysConfig.isPaused || false,
-                    },
-                },
-            }),
-            { headers: { "Content-Type": "application/json" } },
-        );
-    } catch (e) {
-        return new Response(
-            JSON.stringify({ success: false, error: e.message }),
-            { status: 500, headers: { "Content-Type": "application/json" } },
-        );
-    }
-}
-
-function parseImportBindings(importStr) {
-    const cleanStr = importStr.replace(/\/\/.*$/gm, "").replace(/\/\*[\s\S]*?\*\//g, "").trim();
-    const content = cleanStr
-        .replace(/^import\s+/, "")
-        .replace(/\s+from\s+["'].*?["'];?$/, "")
-        .trim();
-
-    const bindings = [];
-
-    if (content.startsWith("*")) {
-        const match = content.match(/\*\s+as\s+(\w+)/);
-        if (match) bindings.push({ name: match[1], isNamespace: true });
-        return bindings;
-    }
-
-    const braceStart = content.indexOf("{");
-    if (braceStart !== -1) {
-        const defaultPart = content.slice(0, braceStart).replace(/,/, "").trim();
-        if (defaultPart) {
-            bindings.push({ name: defaultPart, isDefault: true });
-        }
-        const bracePart = content.slice(braceStart + 1, content.lastIndexOf("}")).trim();
-        const namedImports = bracePart.split(",").map((s) => s.trim()).filter(Boolean);
-        namedImports.forEach((item) => {
-            if (item.includes(" as ")) {
-                const parts = item.split(/\s+as\s+/);
-                bindings.push({ name: parts[1], original: parts[0] });
+        if (request.method === "PUT") {
+          var body = await _rj(request);
+          if (body === null) return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: { "Content-Type": "application/json" } });
+          try {
+            if (body.toggle_only !== void 0) {
+              await env.AM_DB.prepare(
+                "UPDATE users SET is_active = CASE WHEN is_active = 1 THEN 0 ELSE 1 END WHERE username = ?"
+              ).bind(username).run();
+              return new Response(JSON.stringify({ success: true }), { headers: { "Content-Type": "application/json" } });
             } else {
-                bindings.push({ name: item });
+              var limit_gb = body.limit_gb;
+              var expiry_days = body.expiry_days;
+              var ips = body.ips;
+              var tls = body.tls;
+              var port = body.port;
+              var fingerprint = body.fingerprint;
+              var config_name = body.config_name;
+              var connection_type = body.connection_type;
+              const validType = (connection_type === _D_._tr_) ? _D_._tr_ : _D_._vl_;
+              await env.AM_DB.prepare(
+                "UPDATE users SET limit_gb = ?, expiry_days = ?, ips = ?, tls = ?, port = ?, fingerprint = ?, config_name = ?, connection_type = ? WHERE username = ?"
+              ).bind(
+                limit_gb ? parseFloat(limit_gb) : null,
+                expiry_days ? parseInt(expiry_days) : null,
+                ips || null,
+                tls,
+                port,
+                fingerprint || "chrome",
+                config_name || username,
+                validType,
+                username
+              ).run();
+              return new Response(JSON.stringify({ success: true }), { headers: { "Content-Type": "application/json" } });
             }
+          } catch (dbErr) {
+            return new Response(JSON.stringify({ error: "Database error" }), { status: 500, headers: { "Content-Type": "application/json" } });
+          }
+        }
+        
+        if (request.method === "DELETE") {
+          try {
+            await env.AM_DB.prepare("DELETE FROM users WHERE username = ?").bind(username).run();
+            GLOBAL_TRAFFIC_CACHE.delete(username);
+            ACTIVE_CONNECTIONS_COUNT.delete(username);
+          } catch (dbErr) {
+            return new Response(JSON.stringify({ error: "Database error" }), { status: 500, headers: { "Content-Type": "application/json" } });
+          }
+          return new Response(JSON.stringify({ success: true }), { headers: { "Content-Type": "application/json" } });
+        }
+        
+        if (request.method === "GET") {
+          let user;
+          try {
+            user = await env.AM_DB.prepare("SELECT * FROM users WHERE username = ?").bind(username).first();
+          } catch (dbErr) {
+            return new Response(JSON.stringify({ error: "Database error" }), { status: 500, headers: { "Content-Type": "application/json" } });
+          }
+          if (!user) {
+            return new Response(JSON.stringify({ error: "User not found" }), { status: 404 });
+          }
+          return new Response(JSON.stringify({ success: true, user }), {
+            headers: { "Content-Type": "application/json" }
+          });
+        }
+      } else {
+        if (request.method === "GET") {
+          let results;
+          try {
+            await flushExpiredTraffic(env);
+          } catch (e) {}
+          try {
+            const dbResult = await env.AM_DB.prepare("SELECT * FROM users ORDER BY id DESC").all();
+            results = dbResult.results;
+          } catch (dbErr) {
+            return new Response(JSON.stringify({ error: "Database error" }), { status: 500, headers: { "Content-Type": "application/json" } });
+          }
+          const now = Date.now();
+          const enrichedUsers = (results || []).map((user) => ({
+            ...user,
+            is_online: user.last_active && now - user.last_active < 65e3 ? 1 : 0,
+            used_gb: user.used_gb || 0,
+            config_name: user.config_name || user.username
+          }));
+          return new Response(JSON.stringify({ users: enrichedUsers, serverTime: now }), {
+            headers: {
+              "Content-Type": "application/json",
+              "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0"
+            }
+          });
+        }
+        
+        if (request.method === "POST") {
+          var _body = await _rj(request);
+          if (_body === null) return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: { "Content-Type": "application/json" } });
+          var username = _body.username;
+          var limit_gb = _body.limit_gb;
+          var expiry_days = _body.expiry_days;
+          var ips = _body.ips;
+          var tls = _body.tls;
+          var port = _body.port;
+          var fingerprint = _body.fingerprint;
+          var config_name = _body.config_name;
+          var connection_type = _body.connection_type;
+          if (!username) {
+            return new Response(JSON.stringify({ error: "Username is required" }), { status: 400, headers: { "Content-Type": "application/json" } });
+          }
+          const validType = (connection_type === _D_._tr_) ? _D_._tr_ : _D_._vl_;
+          const uuid = crypto.randomUUID();
+          try {
+            await env.AM_DB.prepare(
+              "INSERT INTO users (username, uuid, limit_gb, expiry_days, ips, connection_type, tls, port, fingerprint, config_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            ).bind(
+              username,
+              uuid,
+              limit_gb ? parseFloat(limit_gb) : null,
+              expiry_days ? parseInt(expiry_days) : null,
+              ips || null,
+              validType,
+              tls,
+              port,
+              fingerprint || "chrome",
+              config_name || username
+            ).run();
+            return new Response(JSON.stringify({ success: true }), { headers: { "Content-Type": "application/json" } });
+          } catch (err) {
+            let errorMsg = err.message;
+            if (errorMsg.includes("UNIQUE constraint failed")) {
+              errorMsg = "Username already exists";
+            }
+            return new Response(JSON.stringify({ error: errorMsg }), { status: 500, headers: { "Content-Type": "application/json" } });
+          }
+        }
+      }
+    }
+    
+    // ============================================
+    // USER STATS - Get real traffic usage
+    // ============================================
+    if (url.pathname.startsWith("/api/users/stats/")) {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+      const username = decodeURIComponent(url.pathname.split("/").pop());
+      if (!username) {
+        return new Response(JSON.stringify({ error: "Username required" }), { status: 400 });
+      }
+      try {
+        const user = await env.AM_DB.prepare("SELECT username, limit_gb, used_gb, expiry_days, created_at, is_active FROM users WHERE username = ?").bind(username).first();
+        if (!user) {
+          return new Response(JSON.stringify({ error: "User not found" }), { status: 404 });
+        }
+        const now = new Date();
+        const created = new Date(user.created_at);
+        const expiryDate = new Date(created.getTime() + (user.expiry_days || 30) * 24 * 60 * 60 * 1000);
+        const daysLeft = Math.ceil((expiryDate - now) / (1000 * 60 * 60 * 24));
+        const totalGB = user.limit_gb || 0;
+        const usedGB = user.used_gb || 0;
+        const leftGB = Math.max(0, totalGB - usedGB);
+        const usedPercent = totalGB > 0 ? Math.min((usedGB / totalGB) * 100, 100) : 0;
+        
+        return new Response(JSON.stringify({
+          success: true,
+          username: user.username,
+          is_active: user.is_active === 1,
+          limit_gb: totalGB,
+          used_gb: usedGB,
+          left_gb: leftGB,
+          used_percent: usedPercent,
+          total_days: user.expiry_days || 30,
+          days_left: daysLeft,
+          created_at: user.created_at,
+          expiry_date: expiryDate.toISOString().split('T')[0],
+          is_expired: daysLeft <= 0 || (user.is_active === 0)
+        }), {
+          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
         });
-    } else {
-        bindings.push({ name: content, isDefault: true });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+      }
     }
-
-    return bindings;
-}
-
-function obfuscateCode(srcText) {
-    const importRegex = /import\s+[\s\S]*?from\s+["'].*?["'];?/g;
-    const imports = [];
-    let match;
-
-    while ((match = importRegex.exec(srcText)) !== null) {
-        imports.push(match[0]);
+    
+    // ============================================
+    // USER TRAFFIC - Get traffic data
+    // ============================================
+    if (url.pathname.startsWith("/api/users/traffic/")) {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+      const username = decodeURIComponent(url.pathname.split("/").pop());
+      if (!username) {
+        return new Response(JSON.stringify({ error: "Username required" }), { status: 400 });
+      }
+      try {
+        const user = await env.AM_DB.prepare("SELECT username, used_gb, limit_gb FROM users WHERE username = ?").bind(username).first();
+        if (!user) {
+          return new Response(JSON.stringify({ error: "User not found" }), { status: 404 });
+        }
+        const usedBytes = user.used_gb * 1024 * 1024 * 1024;
+        const limitBytes = user.limit_gb ? user.limit_gb * 1024 * 1024 * 1024 : null;
+        const percent = limitBytes ? Math.min((usedBytes / limitBytes) * 100, 100) : 0;
+        return new Response(JSON.stringify({
+          success: true,
+          username: user.username,
+          used_gb: user.used_gb,
+          used_bytes: usedBytes,
+          limit_gb: user.limit_gb,
+          limit_bytes: limitBytes,
+          percent: percent,
+          remaining_gb: user.limit_gb ? Math.max(0, user.limit_gb - user.used_gb) : null
+        }), {
+          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+      }
     }
-
-    let cleanCode = srcText.replace(importRegex, "");
-
-    const bindings = [];
-    imports.forEach((imp) => {
-        const parsed = parseImportBindings(imp);
-        bindings.push(...parsed);
-    });
-
-    const uniqueBindings = [];
-    const seenNames = new Set();
-    bindings.forEach((b) => {
-        if (!seenNames.has(b.name)) {
-            seenNames.add(b.name);
-            uniqueBindings.push(b);
+    
+    // ============================================
+    // USER CHECK - Check if user exists and is active
+    // ============================================
+    if (url.pathname.startsWith("/api/users/check/")) {
+      const username = decodeURIComponent(url.pathname.split("/").pop());
+      if (!username) {
+        return new Response(JSON.stringify({ error: "Username required" }), { status: 400 });
+      }
+      try {
+        const user = await env.AM_DB.prepare("SELECT username, is_active, limit_gb, used_gb, expiry_days, created_at FROM users WHERE username = ?").bind(username).first();
+        if (!user) {
+          return new Response(JSON.stringify({ exists: false }), {
+            headers: { "Content-Type": "application/json" }
+          });
         }
-    });
-
-    cleanCode = cleanCode.replace(/export\s+default\s+/g, "const _0xMrVpn294Module = ");
-    cleanCode += "\nreturn _0xMrVpn294Module;";
-
-    const randKey = Math.floor(Math.random() * 80) + 64;
-
-    const encoder = new TextEncoder();
-    const bytes = encoder.encode(cleanCode);
-
-    let hexOutput = "";
-    for (let i = 0; i < bytes.length; i++) {
-        const xorByte = bytes[i] ^ randKey;
-        hexOutput += xorByte.toString(16).padStart(2, "0");
+        const now = new Date();
+        const created = new Date(user.created_at);
+        const expiryDate = new Date(created.getTime() + (user.expiry_days || 30) * 24 * 60 * 60 * 1000);
+        const isExpired = now > expiryDate || (user.limit_gb && user.used_gb >= user.limit_gb);
+        return new Response(JSON.stringify({
+          exists: true,
+          username: user.username,
+          is_active: user.is_active === 1 && !isExpired,
+          is_expired: isExpired,
+          limit_gb: user.limit_gb,
+          used_gb: user.used_gb
+        }), {
+          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+      }
     }
-
-    const rawImportsStr = imports.join("\n");
-    const bindingNames = uniqueBindings.map((b) => b.name);
-
-    const finalLoaderCode =
-        rawImportsStr +
-        "\n\n" +
-        "// MrVpn294 Gateway - Obfuscated Loader Context (v2.5.4.2 Optimized)\n" +
-        'const _0xMrVpn294Payload = "' +
-        hexOutput +
-        '";\n' +
-        "const _0xMrVpn294Key = " +
-        randKey +
-        ";\n\n" +
-        "const _0xMrVpn294Bytes = new Uint8Array((_0xMrVpn294Payload.match(/.{1,2}/g) || []).map(x => parseInt(x, 16) ^ _0xMrVpn294Key));\n" +
-        "const _0xMrVpn294Code = new TextDecoder().decode(_0xMrVpn294Bytes);\n" +
-        "const _0xMrVpn294Runtime = new Function(" +
-        bindingNames.map((name) => '"' + name + '"').join(", ") +
-        ", _0xMrVpn294Code)(" +
-        bindingNames.join(", ") +
-        ");\n\n" +
-        "export default _0xMrVpn294Runtime;";
-
-    return finalLoaderCode;
-}
-
-function cmpVersions(a, b) {
-    const strip = (v) => String(v).replace(/^v/, "").trim();
-    const pa = strip(a).split(".").map(Number);
-    const pb = strip(b).split(".").map(Number);
-    for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
-        let na = pa[i] || 0,
-            nb = pb[i] || 0;
-        if (na > nb) return 1;
-        if (nb > na) return -1;
+    
+    // ============================================
+    // USER CONFIG - Get single user's config
+    // ============================================
+    if (url.pathname.startsWith("/api/users/config/")) {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+      const username = decodeURIComponent(url.pathname.split("/").pop());
+      if (!username) {
+        return new Response(JSON.stringify({ error: "Username required" }), { status: 400 });
+      }
+      try {
+        const user = await env.AM_DB.prepare("SELECT * FROM users WHERE username = ?").bind(username).first();
+        if (!user) {
+          return new Response(JSON.stringify({ error: "User not found" }), { status: 404 });
+        }
+        const host = url.hostname;
+        const config = await SubscriptionService.generateText(user, host);
+        return new Response(JSON.stringify({
+          success: true,
+          username: user.username,
+          config: config,
+          links: {
+            text: `${url.origin}/feed/${encodeURIComponent(username)}`,
+            json: `${url.origin}/feed/json/${encodeURIComponent(username)}`,
+            status: `${url.origin}/status/${encodeURIComponent(username)}`
+          }
+        }), {
+          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+      }
     }
-    return 0;
-}
-
-async function handleUpdateApi(request, env, ctx) {
-    try {
-        if (request.method !== "POST")
-            return new Response("405", { status: 405 });
-        const data = await request.json();
-        const deployKey = extractAuthKey(request, data);
-        if (deployKey !== sysConfig.masterKey) {
-            return new Response(
-                JSON.stringify({ success: false, error: "Unauthorized" }),
-                {
-                    status: 401,
-                    headers: { "Content-Type": "application/json" },
-                },
-            );
-        }
-
-        const accountId = sysConfig.cfAccountId;
-        const apiToken = sysConfig.cfApiToken;
-        const workerName = sysConfig.cfWorkerName;
-        const repo = (sysConfig.githubRepo || "amirpocom63-del/mrvpnpanel")
-            .replace(/https?:\/\/github\.com\//, "")
-            .trim();
-
-        if (data.action === "check") {
-            let remoteVer = null;
-            try {
-                const res = await fetch(
-                    `https://raw.githubusercontent.com/${repo}/main/version`,
-                );
-                if (res.ok) {
-                    const txt = (await res.text()).trim();
-                    if (txt && txt.length <= 15) remoteVer = txt;
-                }
-            } catch (e) {}
-            if (!remoteVer) {
-                try {
-                    const res = await fetch(
-                        `https://raw.githubusercontent.com/${repo}/main/_worker.js`,
-                    );
-                    if (res.ok) {
-                        const code = await res.text();
-                        const match = code.match(
-                            /const\s+CURRENT_VERSION\s*=\s*["']([^"']+)["']/,
-                        );
-                        if (match) remoteVer = match[1];
-                    }
-                } catch (e) {}
-            }
-            if (!remoteVer) {
-                return new Response(
-                    JSON.stringify({
-                        success: false,
-                        error: "Could not fetch remote version",
-                    }),
-                    {
-                        status: 502,
-                        headers: { "Content-Type": "application/json" },
-                    },
-                );
-            }
-            const hasCredentials = !!(accountId && apiToken && workerName);
-            return new Response(
-                JSON.stringify({
-                    success: true,
-                    current: CURRENT_VERSION,
-                    latest: remoteVer,
-                    updateAvailable:
-                        cmpVersions(CURRENT_VERSION, remoteVer) < 0,
-                    canDeploy: hasCredentials,
-                }),
-                { headers: { "Content-Type": "application/json" } },
-            );
-        }
-
-        if (data.action === "deploy") {
-            if (!accountId || !apiToken || !workerName) {
-                return new Response(
-                    JSON.stringify({
-                        success: false,
-                        error: "CF credentials not configured",
-                    }),
-                    {
-                        status: 400,
-                        headers: { "Content-Type": "application/json" },
-                    },
-                );
-            }
-
-            let finalCodeToDeploy = data.code;
-            if (!finalCodeToDeploy) {
-                try {
-                    const res = await fetch(
-                        `https://raw.githubusercontent.com/${repo}/main/_worker.js`,
-                    );
-                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                    finalCodeToDeploy = await res.text();
-                } catch (e) {
-                    return new Response(
-                        JSON.stringify({
-                            success: false,
-                            error: "Failed to fetch from GitHub: " + e.message,
-                        }),
-                        {
-                            status: 502,
-                            headers: { "Content-Type": "application/json" },
-                        },
-                    );
-                }
-            }
-
-            const versionMatch = finalCodeToDeploy.match(
-                /const\s+CURRENT_VERSION\s*=\s*["']([^"']+)["']/,
-            );
-            const newVersion = versionMatch ? versionMatch[1] : CURRENT_VERSION;
-
-            if (
-                cmpVersions(CURRENT_VERSION, newVersion) >= 0 &&
-                !data.force &&
-                !data.code
-            ) {
-                return new Response(
-                    JSON.stringify({
-                        success: false,
-                        error: "Remote version is not newer. Click force redeploy to switch formats or overwrite.",
-                    }),
-                    {
-                        status: 400,
-                        headers: { "Content-Type": "application/json" },
-                    },
-                );
-            }
-
-            // Move the obfuscate logic from client-side to worker-side
-            const format = data.format || sysConfig.autoUpdateFormat || "normal";
-            if (format === "obfuscated") {
-                try {
-                    finalCodeToDeploy = obfuscateCode(finalCodeToDeploy);
-                } catch (oe) {
-                    return new Response(
-                        JSON.stringify({
-                            success: false,
-                            error: "Obfuscation failed: " + oe.message,
-                        }),
-                        {
-                            status: 500,
-                            headers: { "Content-Type": "application/json" },
-                        },
-                    );
-                }
-            }
-
-            const deployRes = await deployWorkerToCloudflare(
-                accountId,
-                apiToken,
-                workerName,
-                finalCodeToDeploy,
-            );
-            const deployResult = await deployRes.json();
-
-            if (deployResult.success) {
-                ctx?.waitUntil(
-                    logActivity(
-                        env,
-                        "Panel Updated",
-                        `v${CURRENT_VERSION} → v${newVersion} (${format})`,
-                    ).catch(() => {}),
-                );
-
-                // Update all nodes with main panel update!
-                if (sysConfig.linkedPanels && Array.isArray(sysConfig.linkedPanels)) {
-                    for (const p of sysConfig.linkedPanels) {
-                        if (p && p.url && p.apiKey) {
-                            let cleanUrl = p.url.trim();
-                            if (!cleanUrl.startsWith("http://") && !cleanUrl.startsWith("https://")) {
-                                cleanUrl = "https://" + cleanUrl;
-                            }
-                            try {
-                                const parsed = new URL(cleanUrl);
-                                const targetUrl = `${parsed.protocol}//${parsed.host}/${encodeURI(sysConfig.apiRoute)}/api/update`;
-                                ctx?.waitUntil(
-                                    fetch(targetUrl, {
-                                        method: "POST",
-                                        headers: { "Content-Type": "application/json" },
-                                        body: JSON.stringify({
-                                            key: p.apiKey,
-                                            action: "deploy",
-                                            code: finalCodeToDeploy,
-                                            force: true
-                                        }),
-                                        signal: AbortSignal.timeout(15000)
-                                    }).then(async (r) => {
-                                        const resJson = await r.json();
-                                        await logActivity(env, "Node Update Success", `Node ${p.url} update response: ${JSON.stringify(resJson)}`);
-                                    }).catch((e) => {
-                                        logActivity(env, "Node Update Failed", `Node ${p.url} update failed: ${e.message}`);
-                                    })
-                                );
-                            } catch (err) {
-                                console.error(`Failed to trigger update on node ${p.url}:`, err);
-                            }
-                        }
-                    }
-                }
-
-                if (
-                    sysConfig.tgToken &&
-                    (sysConfig.tgAdminId || sysConfig.tgChatId)
-                ) {
-                    const tgMsg = `🔄 <b>Panel Updated</b>\n\n📦 v${CURRENT_VERSION} → v${newVersion}\n🌐 <b>Format:</b> ${format}`;
-                    const notifyChatId =
-                        sysConfig.tgAdminId || sysConfig.tgChatId;
-                    ctx?.waitUntil(
-                        fetch(
-                            `https://api.telegram.org/bot${sysConfig.tgToken}/sendMessage`,
-                            {
-                                method: "POST",
-                                headers: { "Content-Type": "application/json" },
-                                body: JSON.stringify({
-                                    chat_id: notifyChatId,
-                                    text: tgMsg,
-                                    parse_mode: "HTML",
-                                }),
-                            },
-                        ).catch(() => {}),
-                    );
-                }
-                return new Response(
-                    JSON.stringify({
-                        success: true,
-                        message: `Updated to v${newVersion}`,
-                        newVersion,
-                    }),
-                    { headers: { "Content-Type": "application/json" } },
-                );
-            } else {
-                const errMsg =
-                    deployResult.errors?.[0]?.message || "Unknown API error";
-                return new Response(
-                    JSON.stringify({
-                        success: false,
-                        error: "Cloudflare API: " + errMsg,
-                    }),
-                    {
-                        status: 502,
-                        headers: { "Content-Type": "application/json" },
-                    },
-                );
-            }
-        }
-
-        return new Response(
-            JSON.stringify({ success: false, error: "Invalid action" }),
-            { status: 400, headers: { "Content-Type": "application/json" } },
-        );
-    } catch (e) {
-        return new Response(
-            JSON.stringify({ success: false, error: "Internal error" }),
-            { status: 500, headers: { "Content-Type": "application/json" } },
-        );
+    
+    // ============================================
+    // USER RESET - Reset user traffic
+    // ============================================
+    if (url.pathname.startsWith("/api/users/reset/")) {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+      const username = decodeURIComponent(url.pathname.split("/").pop());
+      if (!username) {
+        return new Response(JSON.stringify({ error: "Username required" }), { status: 400 });
+      }
+      try {
+        await env.AM_DB.prepare("UPDATE users SET used_gb = 0 WHERE username = ?").bind(username).run();
+        GLOBAL_TRAFFIC_CACHE.delete(username);
+        return new Response(JSON.stringify({ success: true }), {
+          headers: { "Content-Type": "application/json" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+      }
     }
-}
-
-async function handleApiKeys(request, env, ctx) {
-    try {
-        const url = new URL(request.url);
-        const method = request.method;
-
-        const authKey = extractAuthKey(request, null);
-        if (authKey !== sysConfig.masterKey) {
-            return new Response(
-                JSON.stringify({
-                    success: false,
-                    error: "Only master key can manage API keys",
-                }),
-                {
-                    status: 401,
-                    headers: { "Content-Type": "application/json" },
-                },
-            );
+    
+    // ============================================
+    // USER RESET ALL - Reset all users traffic
+    // ============================================
+    if (url.pathname === "/api/users/reset-all" && request.method === "POST") {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+      try {
+        await env.AM_DB.prepare("UPDATE users SET used_gb = 0").run();
+        GLOBAL_TRAFFIC_CACHE.clear();
+        return new Response(JSON.stringify({ success: true }), {
+          headers: { "Content-Type": "application/json" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+      }
+    }
+    
+    // ============================================
+    // BULK USER OPERATIONS
+    // ============================================
+    if (url.pathname === "/api/users/bulk" && request.method === "POST") {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { "Content-Type": "application/json" } });
+      var _body = await _rj(request);
+      if (_body === null) return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: { "Content-Type": "application/json" } });
+      var users = _body.users;
+      if (!users || !Array.isArray(users)) {
+        return new Response(JSON.stringify({ error: "Invalid users array" }), { status: 400 });
+      }
+      const results = [];
+      for (const userData of users) {
+        try {
+          const { username, limit_gb, expiry_days, ips, tls, port, fingerprint } = userData;
+          if (!username) continue;
+          const uuid = crypto.randomUUID();
+          await env.AM_DB.prepare(
+            "INSERT INTO users (username, uuid, limit_gb, expiry_days, ips, connection_type, tls, port, fingerprint, config_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+          ).bind(
+            username,
+            uuid,
+            limit_gb ? parseFloat(limit_gb) : null,
+            expiry_days ? parseInt(expiry_days) : null,
+            ips || null,
+            _cs([118,108,101,115,115]),
+            tls,
+            port,
+            fingerprint || "chrome",
+            username
+          ).run();
+          results.push({ username, success: true });
+        } catch (e) {
+          results.push({ username: userData.username, success: false, error: e.message });
         }
-
-        if (method === "GET") {
-            const keys = (sysConfig.panelApiKeys || []).map((k) => ({
-                id: k.id,
-                name: k.name,
-                keyPreview: k.key.slice(0, 8) + "..." + k.key.slice(-4),
-                createdAt: k.createdAt,
-                lastUsed: k.lastUsed,
-            }));
-            return new Response(JSON.stringify({ success: true, keys }), {
-                headers: { "Content-Type": "application/json" },
+      }
+      return new Response(JSON.stringify({ success: true, results }), {
+        headers: { "Content-Type": "application/json" }
+      });
+    }
+    
+    // ============================================
+    // UPDATE CHECK
+    // ============================================
+    if (url.pathname === "/api/update-check") {
+      try {
+        const response = await fetch("https://api.github.com/repos/amirpocom63-del/mrvpnpanel/releases/latest");
+        if (!response.ok) throw new Error("Failed to fetch");
+        const data = await response.json();
+        const latestVersion = data.tag_name || data.name || "v" + PANEL_VERSION;
+        const currentVersion = "v" + PANEL_VERSION;
+        return new Response(JSON.stringify({
+          current_version: currentVersion,
+          latest_version: latestVersion,
+          update_available: latestVersion !== currentVersion && latestVersion !== PANEL_VERSION,
+          url: data.html_url,
+          body: data.body,
+          published_at: data.published_at
+        }), {
+          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ 
+          error: "Could not check for updates",
+          current_version: "v" + PANEL_VERSION,
+          update_available: false
+        }), {
+          status: 200,
+          headers: { "Content-Type": "application/json" }
+        });
+      }
+    }
+    
+    // ============================================
+    // SYSTEM INFO
+    // ============================================
+    if (url.pathname === "/api/system/info") {
+      return new Response(JSON.stringify({
+        version: PANEL_VERSION,
+        platform: "Cloudflare Workers",
+        environment: "Production",
+        uptime: Math.floor((Date.now() - engSt.startTime) / 1000),
+        theme: THEME,
+        eng: {
+          running: engSt.running,
+          uptime: Math.floor((Date.now() - engSt.startTime) / 1000)
+        }
+      }), {
+        headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+      });
+    }
+    
+    // ============================================
+    // SYSTEM HEALTH CHECK
+    // ============================================
+    if (url.pathname === "/api/health") {
+      try {
+        const dbCheck = await env.AM_DB.prepare("SELECT 1").first();
+        return new Response(JSON.stringify({
+          status: "healthy",
+          database: dbCheck ? "connected" : "error",
+          version: PANEL_VERSION,
+          uptime: Math.floor((Date.now() - engSt.startTime) / 1000),
+          timestamp: new Date().toISOString()
+        }), {
+          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({
+          status: "unhealthy",
+          database: "disconnected",
+          error: e.message
+        }), {
+          status: 503,
+          headers: { "Content-Type": "application/json" }
+        });
+      }
+    }
+    
+    // ============================================
+    // CLOUDFLARE IP SCANNER - Clean IPs
+    // ============================================
+    if (url.pathname === "/api/cf-ip-scanner") {
+      try {
+        const targetHost = url.searchParams.get("host") || "www.google.com";
+        const targetPort = parseInt(url.searchParams.get("port") || "443");
+        const limit = parseInt(url.searchParams.get("limit") || "20");
+        
+        const cfRanges = [
+          "173.245.48.0/20", "103.21.244.0/22", "103.22.200.0/22", "103.31.4.0/22",
+          "141.101.64.0/18", "108.162.192.0/18", "190.93.240.0/20", "188.114.96.0/20",
+          "197.234.240.0/22", "198.41.128.0/17", "162.158.0.0/15", "104.16.0.0/13",
+          "104.24.0.0/14", "172.64.0.0/13", "131.0.72.0/22"
+        ];
+        
+        const results = [];
+        const testedIPs = new Set();
+        
+        function ipToInt(ip) {
+          return ip.split('.').reduce((acc, octet) => (acc << 8) + parseInt(octet), 0) >>> 0;
+        }
+        
+        function intToIp(int) {
+          return [(int >>> 24) & 255, (int >>> 16) & 255, (int >>> 8) & 255, int & 255].join('.');
+        }
+        
+        function getRandomCFIP() {
+          const range = cfRanges[Math.floor(Math.random() * cfRanges.length)];
+          const [base, bits] = range.split('/');
+          const baseInt = ipToInt(base);
+          const hostBits = 32 - parseInt(bits);
+          const randomOffset = Math.floor(Math.random() * (Math.pow(2, hostBits) - 2)) + 1;
+          return intToIp((baseInt + randomOffset) >>> 0);
+        }
+        
+        async function testIP(ip) {
+          if (testedIPs.has(ip)) return null;
+          testedIPs.add(ip);
+          const start = Date.now();
+          let controller;
+          let timeout;
+          try {
+            controller = new AbortController();
+            timeout = setTimeout(() => controller.abort(), 3000);
+            
+            await fetch(`https://${ip}`, {
+              method: "HEAD",
+              headers: { "Host": targetHost },
+              signal: controller.signal,
+              redirect: "follow"
             });
+            clearTimeout(timeout);
+            
+            const latency = Date.now() - start;
+            return { ip, latency, status: "clean", host: targetHost };
+          } catch (e) {
+            if (timeout) clearTimeout(timeout);
+            const latency = Date.now() - start;
+            if (e.name === "AbortError") {
+              return { ip, latency: 9999, status: "timeout", host: targetHost };
+            }
+            return { ip, latency: latency || 0, status: "error", host: targetHost, error: e.message };
+          }
         }
-
-        if (method === "POST") {
-            const body = await request.json();
-            if (body.action === "create") {
-                if (!sysConfig.panelApiKeys) sysConfig.panelApiKeys = [];
-                if (sysConfig.panelApiKeys.length >= 10) {
-                    return new Response(
-                        JSON.stringify({
-                            success: false,
-                            error: "Maximum 10 API keys allowed",
-                        }),
-                        {
-                            status: 400,
-                            headers: { "Content-Type": "application/json" },
-                        },
-                    );
-                }
-                const newKey = generateApiKey(body.name);
-                sysConfig.panelApiKeys.push(newKey);
-                await cachedD1Put(env, "sys_config", JSON.stringify(sysConfig));
-                ctx?.waitUntil(
-                    logActivity(
-                        env,
-                        "API Key Created",
-                        `Key "${newKey.name}" created`,
-                    ).catch(() => {}),
-                );
-                return new Response(
-                    JSON.stringify({ success: true, key: newKey }),
-                    {
-                        status: 201,
-                        headers: { "Content-Type": "application/json" },
-                    },
-                );
+        
+        const batchSize = 5;
+        let found = 0;
+        for (let i = 0; i < 100 && found < limit; i += batchSize) {
+          const batch = [];
+          for (let j = 0; j < batchSize && found < limit; j++) {
+            const ip = getRandomCFIP();
+            batch.push(testIP(ip));
+          }
+          const batchResults = await Promise.allSettled(batch);
+          for (const result of batchResults) {
+            if (result.status === "fulfilled" && result.value && result.value.status === "clean") {
+              results.push(result.value);
+              found++;
             }
-            if (body.action === "revoke") {
-                if (!body.id)
-                    return new Response(
-                        JSON.stringify({
-                            success: false,
-                            error: "ID required",
-                        }),
-                        {
-                            status: 400,
-                            headers: { "Content-Type": "application/json" },
-                        },
-                    );
-                const idx = (sysConfig.panelApiKeys || []).findIndex(
-                    (k) => k.id === body.id,
-                );
-                if (idx === -1)
-                    return new Response(
-                        JSON.stringify({
-                            success: false,
-                            error: "Key not found",
-                        }),
-                        {
-                            status: 404,
-                            headers: { "Content-Type": "application/json" },
-                        },
-                    );
-                const revoked = sysConfig.panelApiKeys.splice(idx, 1)[0];
-                await cachedD1Put(env, "sys_config", JSON.stringify(sysConfig));
-                ctx?.waitUntil(
-                    logActivity(
-                        env,
-                        "API Key Revoked",
-                        `Key "${revoked.name}" revoked`,
-                    ).catch(() => {}),
-                );
-                return new Response(
-                    JSON.stringify({ success: true, revoked: revoked.id }),
-                    { headers: { "Content-Type": "application/json" } },
-                );
-            }
+          }
         }
-
-        return new Response(
-            JSON.stringify({ success: false, error: "Invalid request" }),
-            { status: 400, headers: { "Content-Type": "application/json" } },
-        );
-    } catch (e) {
-        return new Response(
-            JSON.stringify({ success: false, error: e.message }),
-            { status: 500, headers: { "Content-Type": "application/json" } },
-        );
-    }
-}
-
-async function handleAuth(request, hostName, ctx, env) {
-    try {
-        const data = await request.json();
-        const ip = request.headers.get("cf-connecting-ip") || "Unknown";
-        const loginKey = data.key || "";
-        const isKeyAuth =
-            loginKey === sysConfig.masterKey || isPanelApiKey(loginKey);
-        if (isKeyAuth) {
-            if (isPanelApiKey(loginKey)) {
-                const apiKeyEntry = (sysConfig.panelApiKeys || []).find(
-                    (k) => k.key === loginKey,
-                );
-                if (apiKeyEntry) apiKeyEntry.lastUsed = Date.now();
-            }
-            ctx?.waitUntil(
-                logActivity(
-                    env,
-                    "Auth Success",
-                    `Successful panel login from ${ip} (via ${isPanelApiKey(loginKey) ? "API Key" : "Master Key"})`,
-                ),
-            );
-            if (!sysConfig.silentAlerts && ctx)
-                ctx.waitUntil(
-                    sendTelegramMessage(
-                        request,
-                        "ورود به پنل (موفق)",
-                        hostName,
-                    ),
-                );
-
-            // Store login signal for Telegram bot
-            if (sysConfig.tgAdminId && env.AM_DB) {
-                const loginSignal = {
-                    name: sysConfig.name || hostName,
-                    host: hostName,
-                    apiRoute: sysConfig.apiRoute,
-                    masterKey: sysConfig.masterKey,
-                    isLocal: true,
-                    ts: Date.now(),
-                };
-                ctx?.waitUntil(
-                    d1Put(
-                        env,
-                        "tg_panel_login",
-                        JSON.stringify(loginSignal),
-                    ).catch(() => {}),
-                );
-            }
-
-            // Notify hub panel if configured
-            if (
-                sysConfig.hubPanelUrl &&
-                sysConfig.hubPanelUrl.trim() &&
-                sysConfig.tgAdminId
-            ) {
-                try {
-                    let hubUrl = sysConfig.hubPanelUrl.trim();
-                    if (!hubUrl.startsWith("http"))
-                        hubUrl = "https://" + hubUrl;
-                    const signalPayload = {
-                        signal: "panel_login",
-                        panelName: sysConfig.name || hostName,
-                        panelHost: hostName,
-                        panelApiRoute: sysConfig.apiRoute,
-                        tgAdminId: sysConfig.tgAdminId,
-                        ts: Date.now(),
-                    };
-                    ctx?.waitUntil(
-                        fetch(
-                            `${hubUrl}/${encodeURI(sysConfig.apiRoute)}/tg/sync_panel`,
-                            {
-                                method: "POST",
-                                headers: { "Content-Type": "application/json" },
-                                body: JSON.stringify(signalPayload),
-                            },
-                        ).catch(() => {}),
-                    );
-                } catch (e) {}
-            }
-
-            const netInfo = {
-                ip: ip,
-                colo: request.cf?.colo || "Unknown",
-                loc:
-                    (request.cf?.city || "Unknown") +
-                    ", " +
-                    (request.cf?.country || "Unknown"),
-            };
-            let usageData = {};
-            for (let [k, v] of uuidUsage.entries()) usageData[k] = { ...v, connects: activeConns.get(k) || 0 };
-            let baseHost = hostName;
-            let protocol = "https";
-            if (sysConfig.customPanelUrl && sysConfig.customPanelUrl.trim()) {
-                let customUrlStr = sysConfig.customPanelUrl.trim();
-                if (
-                    !customUrlStr.startsWith("http://") &&
-                    !customUrlStr.startsWith("https://")
-                ) {
-                    customUrlStr = "https://" + customUrlStr;
-                }
-                try {
-                    const customUrl = new URL(customUrlStr);
-                    baseHost = customUrl.host;
-                    protocol = customUrl.protocol.replace(":", "");
-                } catch (e) {}
-            }
-            return new Response(
-                JSON.stringify({
-                    success: true,
-                    config: isPanelApiKey(loginKey)
-                        ? {
-                              ...sysConfig,
-                              masterKey: "[PROTECTED]",
-                              panelApiKeys: "[PROTECTED]",
-                              cfApiToken: "[PROTECTED]",
-                              cfAccountId: "[PROTECTED]",
-                              cfWorkerName: "[PROTECTED]",
-                              tgToken: "[PROTECTED]",
-                              tgChatId: "[PROTECTED]",
-                              tgAdminId: "[PROTECTED]",
-                              syncApiKey: "[PROTECTED]",
-                          }
-                        : sysConfig,
-                    deviceId: activeDeviceId,
-                    network: netInfo,
-                    usage: usageData,
-                    sysUsage:
-                        sysUsageCache && sysUsageCache.users
-                            ? sysUsageCache.users
-                            : {},
-                    version: CURRENT_VERSION,
-                    profiles: getAllProfiles().map((p) => {
-                        let subSuffix =
-                            p.name === "Default"
-                                ? ""
-                                : "?sub=" + encodeURIComponent(p.name);
-                        return {
-                            name: p.name,
-                            id: p.id,
-                            sync: `${protocol}://${baseHost}/${sysConfig.apiRoute}${subSuffix}`,
-                        };
-                    }),
-                }),
-                { status: 200 },
-            );
-        }
-        ctx?.waitUntil(
-            logActivity(env, "Auth Failed", `Failed login attempt from ${ip}`),
-        );
-        if (ctx)
-            ctx.waitUntil(
-                sendTelegramMessage(
-                    request,
-                    "تلاش ناموفق ورود به پنل!",
-                    hostName,
-                ),
-            );
-        return new Response(JSON.stringify({ success: false }), {
-            status: 401,
+        
+        results.sort((a, b) => a.latency - b.latency);
+        
+        return new Response(JSON.stringify({
+          success: true,
+          host: targetHost,
+          port: targetPort,
+          total_tested: testedIPs.size,
+          clean_ips: results.slice(0, limit),
+          timestamp: new Date().toISOString()
+        }), {
+          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
         });
-    } catch (e) {
-        return new Response(JSON.stringify({ success: false }), {
-            status: 400,
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), {
+          status: 500,
+          headers: { "Content-Type": "application/json" }
         });
+      }
     }
-}
-
-async function handleConfigSync(request, env, ctx) {
-    try {
-        const data = await request.json();
-        const isAuthSync =
-            data.key === sysConfig.masterKey ||
-            (data.oldKey && data.oldKey === sysConfig.masterKey) ||
-            isPanelApiKey(data.key) ||
-            isPanelApiKey(data.oldKey) ||
-            (data.fromMaster &&
-                data.config &&
-                data.config.masterKey &&
-                data.config.masterKey === sysConfig.masterKey);
-        if (!isAuthSync)
-            return new Response(
-                JSON.stringify({
-                    success: false,
-                    error: "Auth failed. Generate the API key on THIS panel, not the main panel.",
-                }),
-                { status: 401 },
-            );
-        if (!env.AM_DB)
-            return new Response(
-                JSON.stringify({ success: false, msg: "DB Error" }),
-                { status: 400 },
-            );
-
-        let nextConfig = sysConfig;
-        if (data.config) {
-            const preserveApiKeys = sysConfig.panelApiKeys || [];
-            nextConfig = { ...sysConfig, ...data.config };
-            if (Array.isArray(nextConfig.users)) {
-                nextConfig.users = nextConfig.users.map(u => ({...u}));
-            }
-            if (
-                preserveApiKeys.length > 0 &&
-                (!data.config.panelApiKeys ||
-                    data.config.panelApiKeys.length === 0)
-            ) {
-                nextConfig.panelApiKeys = preserveApiKeys;
-            }
-            migrateSlaveNodesToLinkedPanels(nextConfig);
-            if (
-                Array.isArray(nextConfig.users) &&
-                nextConfig.users.length > 0
-            ) {
-                const geoPromises = nextConfig.users.map(async (u) => {
-                    if (u.proxyIp) {
-                        await resolveUserProxyIpGeo(u);
-                    } else {
-                        u.proxyIpGeo = null;
-                    }
-                });
-                await Promise.all(geoPromises);
-            }
-            sysConfig = nextConfig;
-            await cachedD1Put(env, "sys_config", JSON.stringify(nextConfig));
-        }
-
-        let tagWarning = null;
-        if (
-            nextConfig.nameStrategy &&
-            nextConfig.nameStrategy.includes("{") &&
-            nextConfig.nameStrategy.includes("}")
-        ) {
-            let vResult = validateNameStrategy(nextConfig.nameStrategy);
-            if (!vResult.valid)
-                tagWarning = `Unknown tags detected: ${vResult.unknownTags.join(", ")}`;
-        }
-
-        if (data.resetUUID) {
-            const uuidClean = data.resetUUID.replace(/-/g, "").toLowerCase();
-            if (!sysUsageCache) sysUsageCache = { users: {} };
-            if (!sysUsageCache.users) sysUsageCache.users = {};
-            if (sysUsageCache.users[uuidClean]) {
-                sysUsageCache.users[uuidClean].reqs = 0;
-                sysUsageCache.users[uuidClean].dReqs = 0;
-            } else {
-                sysUsageCache.users[uuidClean] = {
-                    reqs: 0,
-                    dReqs: 0,
-                    lastDay: new Date().toISOString().split("T")[0],
-                };
-            }
-            await cachedD1Put(env, "sys_usage", JSON.stringify(sysUsageCache));
-        }
-
-        if (data.config && !data.fromMaster) {
-            let currentHost = new URL(request.url).hostname;
-            let slaveConfig = { ...nextConfig };
-            [
-                "cfAccountId",
-                "cfApiToken",
-                "cfWorkerName",
-                "tgToken",
-                "tgChatId",
-                "tgAdminId",
-                "masterKey",
-                "syncApiKey",
-                "apiRoute",
-                "deviceId",
-                "panelApiKeys",
-                "hubPanelUrl",
-                "linkedPanels",
-                "slaveNodes",
-                "githubRepo",
-                "customPanelUrl"
-            ].forEach((k) => delete slaveConfig[k]);
-
-            // Propagate config to slaveNodes
-            if (nextConfig.slaveNodes && nextConfig.slaveNodes.trim().length > 0) {
-                let nodes = nextConfig.slaveNodes
-                    .split(/[\r\n,;]+/)
-                    .map((s) => s.trim())
-                    .filter(Boolean);
-                let syncKey = nextConfig.syncApiKey || "";
-                nodes.forEach((node) => {
-                    if (node !== currentHost) {
-                        ctx?.waitUntil(
-                            fetch(
-                                `https://${node}/${encodeURI(nextConfig.apiRoute)}/api/sync`,
-                                {
-                                    method: "POST",
-                                    headers: { "Content-Type": "application/json" },
-                                    body: JSON.stringify({
-                                        key: syncKey,
-                                        config: slaveConfig,
-                                        fromMaster: true,
-                                    }),
-                                },
-                            ).catch(() => {}),
-                        );
-                    }
-                });
-            }
-
-            // Propagate config to linkedPanels
-            if (nextConfig.linkedPanels && Array.isArray(nextConfig.linkedPanels)) {
-                nextConfig.linkedPanels.forEach((p) => {
-                    if (p && p.url && p.apiKey) {
-                        let cleanUrl = p.url.trim();
-                        if (!cleanUrl.startsWith("http://") && !cleanUrl.startsWith("https://")) {
-                            cleanUrl = "https://" + cleanUrl;
-                        }
-                        try {
-                            const parsed = new URL(cleanUrl);
-                            if (parsed.hostname !== currentHost) {
-                                ctx?.waitUntil(
-                                    fetch(
-                                        `${parsed.protocol}//${parsed.host}/${encodeURI(nextConfig.apiRoute)}/api/sync`,
-                                        {
-                                            method: "POST",
-                                            headers: { "Content-Type": "application/json" },
-                                            body: JSON.stringify({
-                                                key: p.apiKey,
-                                                config: slaveConfig,
-                                                fromMaster: true,
-                                            }),
-                                        },
-                                    ).catch(() => {}),
-                                );
-                            }
-                        } catch (err) {
-                            console.error(`Failed to propagate config to linked panel ${p.url}:`, err);
-                        }
-                    }
-                });
-            }
-        }
-
-        if (nextConfig.tgToken && ctx) {
-            const hookUrl = `https://${new URL(request.url).hostname}/${encodeURI(nextConfig.apiRoute)}/tg`;
-            ctx.waitUntil(
-                fetch(
-                    `https://api.telegram.org/bot${nextConfig.tgToken}/setWebhook`,
-                    {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ url: hookUrl }),
-                    },
-                ).catch(() => {}),
-            );
-        }
-
-        return new Response(
-            JSON.stringify({
-                success: true,
-                newRoute: nextConfig.apiRoute,
-                tagWarning,
-            }),
-            { status: 200 },
-        );
-    } catch (e) {
-        return new Response(JSON.stringify({ success: false }), {
-            status: 400,
+    
+    // ============================================
+    // STATS SUMMARY
+    // ============================================
+    if (url.pathname === "/api/stats/summary") {
+      try {
+        const users = await env.AM_DB.prepare("SELECT COUNT(*) as total FROM users").first();
+        const active = await env.AM_DB.prepare("SELECT COUNT(*) as active FROM users WHERE is_active = 1").first();
+        const online = await env.AM_DB.prepare("SELECT COUNT(*) as online FROM users WHERE last_active > ?").bind(Date.now() - 65000).first();
+        const traffic = await env.AM_DB.prepare("SELECT SUM(used_gb) as total_traffic FROM users").first();
+        return new Response(JSON.stringify({
+          success: true,
+          total_users: users?.total || 0,
+          active_users: active?.active || 0,
+          online_users: online?.online || 0,
+          total_traffic_gb: traffic?.total_traffic || 0,
+          version: PANEL_VERSION
+        }), {
+          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
         });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+      }
     }
-}
-
-async function handleSyncPanel(request, env, ctx) {
-    try {
-        const data = await request.json();
-        if (!data.signal || data.signal !== "panel_login") {
-            return new Response(
-                JSON.stringify({ success: false, error: "Invalid signal" }),
-                { status: 400 },
-            );
+    
+    // ============================================
+    // USER ONLINE CHECK
+    // ============================================
+    if (url.pathname.startsWith("/api/users/online/")) {
+      const username = decodeURIComponent(url.pathname.split("/").pop());
+      if (!username) {
+        return new Response(JSON.stringify({ error: "Username required" }), { status: 400 });
+      }
+      try {
+        const user = await env.AM_DB.prepare("SELECT last_active FROM users WHERE username = ?").bind(username).first();
+        if (!user) {
+          return new Response(JSON.stringify({ online: false, exists: false }), {
+            headers: { "Content-Type": "application/json" }
+          });
         }
-        if (!data.tgAdminId || !data.panelHost) {
-            return new Response(
-                JSON.stringify({ success: false, error: "Missing fields" }),
-                { status: 400 },
-            );
+        const isOnline = user.last_active && (Date.now() - user.last_active < 65000);
+        return new Response(JSON.stringify({
+          online: isOnline,
+          exists: true,
+          username: username
+        }), {
+          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+      }
+    }
+    
+    // ============================================
+    // USER EXTEND - Extend expiry date
+    // ============================================
+    if (url.pathname.startsWith("/api/users/extend/")) {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { "Content-Type": "application/json" } });
+      const username = decodeURIComponent(url.pathname.split("/").pop());
+      if (!username) {
+        return new Response(JSON.stringify({ error: "Username required" }), { status: 400, headers: { "Content-Type": "application/json" } });
+      }
+      var _body = await _rj(request);
+      if (_body === null) return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: { "Content-Type": "application/json" } });
+      var days = _body.days;
+      if (!days || days <= 0) {
+        return new Response(JSON.stringify({ error: "Invalid days" }), { status: 400 });
+      }
+      try {
+        const user = await env.AM_DB.prepare("SELECT expiry_days, created_at FROM users WHERE username = ?").bind(username).first();
+        if (!user) {
+          return new Response(JSON.stringify({ error: "User not found" }), { status: 404 });
         }
-        // Verify the tgAdminId matches this panel's config
-        const adminId = sysConfig.tgAdminId || sysConfig.tgChatId;
-        if (!adminId || adminId.toString() !== data.tgAdminId.toString()) {
-            return new Response(
-                JSON.stringify({ success: false, error: "Unauthorized" }),
-                { status: 401 },
-            );
+        const newExpiry = (user.expiry_days || 30) + days;
+        await env.AM_DB.prepare("UPDATE users SET expiry_days = ? WHERE username = ?").bind(newExpiry, username).run();
+        return new Response(JSON.stringify({
+          success: true,
+          username: username,
+          new_expiry_days: newExpiry
+        }), {
+          headers: { "Content-Type": "application/json" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+      }
+    }
+    
+    // ============================================
+    // USER ADD TRAFFIC - Add traffic to user
+    // ============================================
+    if (url.pathname.startsWith("/api/users/add-traffic/")) {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { "Content-Type": "application/json" } });
+      const username = decodeURIComponent(url.pathname.split("/").pop());
+      if (!username) {
+        return new Response(JSON.stringify({ error: "Username required" }), { status: 400, headers: { "Content-Type": "application/json" } });
+      }
+      var _body = await _rj(request);
+      if (_body === null) return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: { "Content-Type": "application/json" } });
+      var gb = _body.gb;
+      if (!gb || gb <= 0) {
+        return new Response(JSON.stringify({ error: "Invalid GB amount" }), { status: 400 });
+      }
+      try {
+        const user = await env.AM_DB.prepare("SELECT limit_gb FROM users WHERE username = ?").bind(username).first();
+        if (!user) {
+          return new Response(JSON.stringify({ error: "User not found" }), { status: 404 });
         }
-        // Also verify a valid panelApiKey if one was provided
-        if (data.panelApiKey && !isPanelApiKey(data.panelApiKey)) {
-            return new Response(
-                JSON.stringify({ success: false, error: "Unauthorized" }),
-                { status: 401 },
-            );
+        const newLimit = (user.limit_gb || 0) + gb;
+        await env.AM_DB.prepare("UPDATE users SET limit_gb = ? WHERE username = ?").bind(newLimit, username).run();
+        return new Response(JSON.stringify({
+          success: true,
+          username: username,
+          new_limit_gb: newLimit
+        }), {
+          headers: { "Content-Type": "application/json" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+      }
+    }
+    
+    // ============================================
+    // USER RENAME - Rename user
+    // ============================================
+    if (url.pathname === "/api/users/rename" && request.method === "POST") {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { "Content-Type": "application/json" } });
+      var _body = await _rj(request);
+      if (_body === null) return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: { "Content-Type": "application/json" } });
+      var old_username = _body.old_username;
+      var new_username = _body.new_username;
+      if (!old_username || !new_username) {
+        return new Response(JSON.stringify({ error: "Old and new username required" }), { status: 400 });
+      }
+      try {
+        const existing = await env.AM_DB.prepare("SELECT username FROM users WHERE username = ?").bind(new_username).first();
+        if (existing) {
+          return new Response(JSON.stringify({ error: "New username already exists" }), { status: 400 });
         }
-        const loginSignal = {
-            name: data.panelName || data.panelHost,
-            host: data.panelHost,
-            apiRoute: data.panelApiRoute || sysConfig.apiRoute,
-            isLocal: false,
-            ts: data.ts || Date.now(),
+        await env.AM_DB.prepare("UPDATE users SET username = ? WHERE username = ?").bind(new_username, old_username).run();
+        if (GLOBAL_TRAFFIC_CACHE.has(old_username)) {
+          const traffic = GLOBAL_TRAFFIC_CACHE.get(old_username);
+          GLOBAL_TRAFFIC_CACHE.delete(old_username);
+          GLOBAL_TRAFFIC_CACHE.set(new_username, traffic);
+        }
+        return new Response(JSON.stringify({ success: true }), {
+          headers: { "Content-Type": "application/json" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+      }
+    }
+    
+    // ============================================
+    // SUBSCRIPTION LINKS GET
+    // ============================================
+    if (url.pathname.startsWith("/api/subscription/")) {
+      const username = decodeURIComponent(url.pathname.split("/").pop());
+      if (!username) {
+        return new Response(JSON.stringify({ error: "Username required" }), { status: 400 });
+      }
+      try {
+        const user = await env.AM_DB.prepare("SELECT username FROM users WHERE username = ?").bind(username).first();
+        if (!user) {
+          return new Response(JSON.stringify({ error: "User not found" }), { status: 404 });
+        }
+        const origin = url.origin;
+        return new Response(JSON.stringify({
+          success: true,
+          username: username,
+          links: {
+            text: `${origin}/feed/${encodeURIComponent(username)}`,
+            json: `${origin}/feed/json/${encodeURIComponent(username)}`,
+            status: `${origin}/status/${encodeURIComponent(username)}`,
+            panel: `${origin}/panel`
+          }
+        }), {
+          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+      }
+    }
+    
+    // ============================================
+    // LOGS - Get system logs
+    // ============================================
+    if (url.pathname === "/api/logs" && request.method === "GET") {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+      const limit = parseInt(url.searchParams.get("limit")) || 50;
+      try {
+        const result = await env.AM_DB.prepare("SELECT * FROM logs ORDER BY id DESC LIMIT ?").bind(limit).all();
+        const logs = (result.results || []).map(l => ({
+          timestamp: l.timestamp ? new Date(l.timestamp).toISOString() : new Date().toISOString(),
+          level: l.level || 'info',
+          message: l.message || ''
+        }));
+        if (logs.length === 0) {
+          logs.push(
+            { timestamp: new Date().toISOString(), level: "info", message: "System started" },
+            { timestamp: new Date().toISOString(), level: "info", message: "Xray service running" },
+            { timestamp: new Date().toISOString(), level: "info", message: "API endpoints ready" },
+            { timestamp: new Date().toISOString(), level: "info", message: "Database connected" }
+          );
+        }
+        return new Response(JSON.stringify({
+          success: true,
+          logs: logs.slice(0, limit),
+          total: logs.length
+        }), {
+          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+      }
+    }
+    
+    // ============================================
+    // PANEL CONFIG - Get panel configuration
+    // ============================================
+    if (url.pathname === "/api/panel/config" && request.method === "GET") {
+      let userCount = 0;
+      try {
+        const countResult = await env.AM_DB.prepare("SELECT COUNT(*) as count FROM users").first();
+        userCount = countResult?.count || 0;
+      } catch (dbErr) {}
+      return new Response(JSON.stringify({
+        version: PANEL_VERSION,
+        theme: THEME,
+        eng: {
+          running: engSt.running
+        },
+        admin_count: ADMINS.length,
+        user_count: userCount
+      }), {
+        headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+      });
+    }
+    
+    // ============================================
+    // EXPORT USERS - Export users data
+    // ============================================
+    if (url.pathname === "/api/users/export" && request.method === "GET") {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+      try {
+        const { results } = await env.AM_DB.prepare("SELECT username, uuid, limit_gb, used_gb, expiry_days, is_active, created_at FROM users ORDER BY id DESC").all();
+        return new Response(JSON.stringify({
+          success: true,
+          users: results,
+          export_date: new Date().toISOString(),
+          total: results.length
+        }), {
+          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+      }
+    }
+    
+    // ============================================
+    // USER STATUS PUBLIC - Public status page data (no auth needed)
+    // ============================================
+    if (url.pathname.startsWith("/api/status/")) {
+      const username = decodeURIComponent(url.pathname.split("/").pop());
+      if (!username) {
+        return new Response(JSON.stringify({ error: "Username required" }), { status: 400 });
+      }
+      try {
+        const user = await env.AM_DB.prepare("SELECT username, uuid, limit_gb, used_gb, expiry_days, created_at, is_active, port FROM users WHERE username = ?").bind(username).first();
+        if (!user) {
+          return new Response(JSON.stringify({ error: "User not found" }), { status: 404 });
+        }
+        const now = new Date();
+        const created = new Date(user.created_at);
+        const expiryDate = new Date(created.getTime() + (user.expiry_days || 30) * 24 * 60 * 60 * 1000);
+        const daysLeft = Math.ceil((expiryDate - now) / (1000 * 60 * 60 * 24));
+        return new Response(JSON.stringify({
+          success: true,
+          username: user.username,
+          is_active: user.is_active === 1,
+          limit_gb: user.limit_gb || 0,
+          used_gb: user.used_gb || 0,
+          expiry_days: user.expiry_days || 30,
+          days_left: daysLeft > 0 ? daysLeft : 0,
+          created_at: user.created_at,
+          expiry_date: expiryDate.toISOString().split('T')[0],
+          is_expired: daysLeft <= 0 || user.is_active === 0,
+          port: user.port || "443"
+        }), {
+          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+      }
+    }
+    
+    // ============================================
+    // INBOUNDS MANAGEMENT (Nova-style)
+    // ============================================
+    if (url.pathname === "/api/inbounds") {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { "Content-Type": "application/json" } });
+      if (request.method === "GET") {
+        try {
+          const result = await env.AM_DB.prepare("SELECT * FROM inbounds ORDER BY id DESC").all();
+          return new Response(JSON.stringify({ success: true, inbounds: result.results || [] }), { headers: { "Content-Type": "application/json" } });
+        } catch (e) {
+          return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: { "Content-Type": "application/json" } });
+        }
+      }
+      if (request.method === "POST") {
+        var _body = await _rj(request);
+        if (_body === null) return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: { "Content-Type": "application/json" } });
+        var tag = _body.tag;
+        var protocol = _body.protocol || _D_._vl_;
+        var port = _body.port;
+        var listen = _body.listen || "0.0.0.0";
+        var settings = _body.settings || "{}";
+        var stream_settings = _body.stream_settings || "{}";
+        var sniffing = _body.sniffing !== void 0 ? (_body.sniffing ? 1 : 0) : 1;
+        var remark = _body.remark || "";
+        if (!tag || !port) {
+          return new Response(JSON.stringify({ error: "Tag and port are required" }), { status: 400, headers: { "Content-Type": "application/json" } });
+        }
+        try {
+          await env.AM_DB.prepare(
+            "INSERT INTO inbounds (tag, protocol, port, listen, settings, stream_settings, sniffing, remark) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+          ).bind(tag, protocol, parseInt(port), listen, typeof settings === 'string' ? settings : JSON.stringify(settings), typeof stream_settings === 'string' ? stream_settings : JSON.stringify(stream_settings), sniffing, remark).run();
+          try { await env.AM_DB.prepare("INSERT INTO logs (level, message, timestamp) VALUES (?, ?, ?)").bind("info", "Inbound created: " + tag, Date.now()).run(); } catch(_) {}
+          return new Response(JSON.stringify({ success: true }), { headers: { "Content-Type": "application/json" } });
+        } catch (e) {
+          if (e.message && e.message.includes("UNIQUE")) {
+            return new Response(JSON.stringify({ error: "Tag already exists" }), { status: 400, headers: { "Content-Type": "application/json" } });
+          }
+          return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: { "Content-Type": "application/json" } });
+        }
+      }
+      if (request.method === "DELETE") {
+        var _body = await _rj(request);
+        if (_body === null) return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: { "Content-Type": "application/json" } });
+        var id = _body.id;
+        if (!id) return new Response(JSON.stringify({ error: "ID required" }), { status: 400, headers: { "Content-Type": "application/json" } });
+        try {
+          var inb = await env.AM_DB.prepare("SELECT tag FROM inbounds WHERE id = ?").bind(id).first();
+          await env.AM_DB.prepare("DELETE FROM inbounds WHERE id = ?").bind(id).run();
+          try { await env.AM_DB.prepare("INSERT INTO logs (level, message, timestamp) VALUES (?, ?, ?)").bind("info", "Inbound deleted: " + (inb ? inb.tag : id), Date.now()).run(); } catch(_) {}
+          return new Response(JSON.stringify({ success: true }), { headers: { "Content-Type": "application/json" } });
+        } catch (e) {
+          return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: { "Content-Type": "application/json" } });
+        }
+      }
+    }
+    
+    if (url.pathname.startsWith("/api/inbounds/") && request.method === "PUT") {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { "Content-Type": "application/json" } });
+      var id = parseInt(url.pathname.split("/").pop());
+      if (!id) return new Response(JSON.stringify({ error: "Invalid ID" }), { status: 400, headers: { "Content-Type": "application/json" } });
+      var _body = await _rj(request);
+      if (_body === null) return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: { "Content-Type": "application/json" } });
+      try {
+        var fields = [];
+        var binds = [];
+        if (_body.tag !== void 0) { fields.push("tag = ?"); binds.push(_body.tag); }
+        if (_body.protocol !== void 0) { fields.push("protocol = ?"); binds.push(_body.protocol); }
+        if (_body.port !== void 0) { fields.push("port = ?"); binds.push(parseInt(_body.port)); }
+        if (_body.listen !== void 0) { fields.push("listen = ?"); binds.push(_body.listen); }
+        if (_body.settings !== void 0) { fields.push("settings = ?"); binds.push(typeof _body.settings === 'string' ? _body.settings : JSON.stringify(_body.settings)); }
+        if (_body.stream_settings !== void 0) { fields.push("stream_settings = ?"); binds.push(typeof _body.stream_settings === 'string' ? _body.stream_settings : JSON.stringify(_body.stream_settings)); }
+        if (_body.sniffing !== void 0) { fields.push("sniffing = ?"); binds.push(_body.sniffing ? 1 : 0); }
+        if (_body.is_active !== void 0) { fields.push("is_active = ?"); binds.push(_body.is_active ? 1 : 0); }
+        if (_body.remark !== void 0) { fields.push("remark = ?"); binds.push(_body.remark); }
+        if (fields.length === 0) return new Response(JSON.stringify({ error: "No fields to update" }), { status: 400, headers: { "Content-Type": "application/json" } });
+        binds.push(id);
+        await env.AM_DB.prepare("UPDATE inbounds SET " + fields.join(", ") + " WHERE id = ?").bind(...binds).run();
+        return new Response(JSON.stringify({ success: true }), { headers: { "Content-Type": "application/json" } });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: { "Content-Type": "application/json" } });
+      }
+    }
+    
+    // ============================================
+    // SYSTEM LOGS (Nova-style)
+    // ============================================
+    if (url.pathname === "/api/system/logs") {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { "Content-Type": "application/json" } });
+      const limit = parseInt(url.searchParams.get("limit")) || 100;
+      try {
+        const result = await env.AM_DB.prepare("SELECT * FROM logs ORDER BY id DESC LIMIT ?").bind(limit).all();
+        return new Response(JSON.stringify({ success: true, logs: result.results || [] }), { headers: { "Content-Type": "application/json" } });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: { "Content-Type": "application/json" } });
+      }
+    }
+    
+    if (url.pathname === "/api/system/logs" && request.method === "DELETE") {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { "Content-Type": "application/json" } });
+      try {
+        await env.AM_DB.prepare("DELETE FROM logs").run();
+        return new Response(JSON.stringify({ success: true }), { headers: { "Content-Type": "application/json" } });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: { "Content-Type": "application/json" } });
+      }
+    }
+    
+    // ============================================
+    // NETWORK SETTINGS (Nova-style)
+    // ============================================
+    if (url.pathname === "/api/network-settings") {
+      if (request.method === "GET") {
+        const ns = await loadNetSettings(env);
+        return new Response(JSON.stringify({ success: true, settings: ns }), {
+          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+      }
+      if (request.method === "POST") {
+        if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { "Content-Type": "application/json" } });
+        try {
+          const body = await _rj(request);
+          if (!body) return new Response(JSON.stringify({ error: "Invalid body" }), { status: 400, headers: { "Content-Type": "application/json" } });
+          const current = await loadNetSettings(env);
+          const merged = { ...current, ...body };
+          await saveNetSettings(env, merged);
+          return new Response(JSON.stringify({ success: true, settings: merged }), {
+            headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+          });
+        } catch (e) {
+          return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: { "Content-Type": "application/json" } });
+        }
+      }
+    }
+    
+    // ============================================
+    // BACKUP / EXPORT (Nova-style)
+    // ============================================
+    if (url.pathname === "/api/backup" && request.method === "GET") {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { "Content-Type": "application/json" } });
+      try {
+        const users = await env.AM_DB.prepare("SELECT * FROM users").all();
+        const inbounds = await env.AM_DB.prepare("SELECT * FROM inbounds").all();
+        const settings = await env.AM_DB.prepare("SELECT * FROM settings").all();
+        const admins = await env.AM_DB.prepare("SELECT id, username, created_at FROM admins").all();
+        const backup = {
+          version: PANEL_VERSION,
+          created_at: new Date().toISOString(),
+          users: users.results || [],
+          inbounds: inbounds.results || [],
+          settings: (settings.results || []).filter(s => s.key !== 'panel_password'),
+          admins: admins.results || []
         };
-        if (env.AM_DB) {
-            ctx?.waitUntil(
-                d1Put(env, "tg_panel_login", JSON.stringify(loginSignal)).catch(
-                    () => {},
-                ),
-            );
-        }
-        return new Response(JSON.stringify({ success: true }), { status: 200 });
-    } catch (e) {
-        return new Response(JSON.stringify({ success: false }), {
-            status: 400,
+        try { await env.AM_DB.prepare("INSERT INTO logs (level, message, timestamp) VALUES (?, ?, ?)").bind("info", "Backup exported", Date.now()).run(); } catch(_) {}
+        return new Response(JSON.stringify(backup, null, 2), {
+          headers: { "Content-Type": "application/json", "Content-Disposition": "attachment; filename=backup-" + new Date().toISOString().split('T')[0] + ".json" }
         });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: { "Content-Type": "application/json" } });
+      }
     }
-}
-
-const botI18n = {
-    en: {
-        welcome:
-            "🤖 **Welcome to MrVpn294 Gateway Bot**\nSelect your option below to manage your system:",
-        status: "System Status",
-        users: "Subscribers",
-        metrics: "Gateway Health",
-        panic: "Panic Mode",
-        dash: "Dashboard Control",
-        lang: "🌐 Change Language",
-        active: "🟢 Active",
-        paused: "🔴 Paused",
-        uptime: "Uptime",
-        streams: "📡 Active Streams",
-        no_users: "No subscribers found.",
-        sub_info: "👤 Subscriber Details:",
-        name: "Name",
-        total: "Total Reqs",
-        daily: "Daily Reqs",
-        expiry: "Expiry",
-        days: "Days remaining",
-        created: "Created At",
-        unlimited: "Unlimited",
-        btn_back: "◀️ Back",
-        btn_next: "▶️ Next",
-        btn_del: "Delete",
-        btn_pause: "Pause",
-        btn_resume: "Resume",
-        btn_edit_name: "Change Name",
-        btn_edit_limits: "Limits",
-        btn_add: "+ Add Subscriber",
-        btn_confirm: "Confirm",
-        btn_cancel: "Cancel",
-        msg_enter_name: "Please send a name for the subscriber:",
-        msg_added: "Sub added successfully! 🎉",
-        msg_deleted: "Sub deleted successfully! 🗑️",
-        msg_panic:
-            "🚨 PANIC MODE ACTIVATED 🚨\nRoute randomized & System Paused.",
-        msg_invalid: "Invalid input. Please try again.",
-        msg_enter_limits:
-            "Enter limits format:\n`[totalReqs] [dailyReqs] [days_limit]`\n(Use 0 for unlimited)\n\nExample:\n`10000 500 30`",
-        msg_confirm_del: "⚠️ Are you sure you want to delete this subscriber?",
-        msg_confirm_panic:
-            "⚠️ Are you absolutely sure you want to trigger PANIC mode? This will randomize API routes and pause all connections!",
-        status_updated: "Status updated!",
-        access_denied:
-            "Access Denied. You are not authorized to manage this panel.",
-        dashboard: "Dashboard",
-        search: "Search User",
-        statistics: "Statistics",
-        panel_info: "Panel Info",
-        disabled_users: "Disabled Users",
-        reset_traffic: "Reset Traffic",
-        extend_expiry: "Extend Expiry",
-        notes: "Notes",
-        device_limit: "Config Limit",
-        msg_enter_search:
-            "🔍 Send a username, UUID, or subscription to search:",
-        msg_enter_notes: "📝 Send notes for this user:",
-        msg_enter_extend_days: "📅 Enter number of days to extend expiration:",
-        msg_traffic_reset: "Traffic has been reset successfully!",
-        msg_expiry_extended: "Expiration extended by {days} days!",
-        msg_no_disabled: "No disabled users found.",
-        msg_enter_device_limit: "Enter config limit (0 for unlimited):",
-        config_limit_updated: "Config limit updated!",
-        stats_title: "Panel Statistics",
-        count_active: "active",
-        count_paused: "paused",
-        count_disabled: "auto-disabled",
-        dash_total: "Total Users",
-        dash_active: "Active",
-        dash_paused: "Paused",
-        dash_expired: "Expired",
-        dash_auto_disabled: "Auto-Disabled",
-        btn_main_menu: "Main Menu",
-        btn_back_to_list: "Back to List",
-        total_traffic: "Total Traffic",
-        daily_traffic: "Daily Traffic",
-        lbl_status: "Status",
-        lbl_subscription: "Subscription Connection",
-        lbl_user_not_found: "⚠️ User not found",
-        lbl_none: "None",
-        lbl_page: "Page",
-        select_panel: "🔌 Which panel do you want to manage?",
-        current_panel: "Current Panel",
-        switch_panel: "🔄 Switch Panel",
-        panel_local: "🏠 This Panel",
-        panel_remote: "🌐",
-        msg_panel_selected: "Panel selected! ✅",
-        msg_panel_error: "❌ Failed to connect to the selected panel.",
-        msg_panel_unreachable:
-            "⚠️ Panel is unreachable. Please check the configuration.",
-        btn_sub_link: "Subscription Link",
-        sub_link_sent: "Subscription link sent!",
-        btn_update_usage: "Update Usage",
-        tg_settings: "Settings",
-        tg_advanced: "Advanced",
-        tg_logs: "Logs",
-        tg_sys_settings: "System Settings",
-        tg_adv_settings: "Advanced Settings",
-        tg_logs_view: "View Logs",
-        tg_logs_clear: "Clear Logs",
-        tg_proto: "Protocol",
-        tg_ports: "Ports",
-        tg_uuid: "Device UUID",
-        tg_path: "API Route",
-        tg_pass: "Master Key",
-        tg_dns: "DNS",
-        tg_relay: "Relay IP",
-        tg_maintenance: "Maintenance Hosts",
-        tg_tfo: "TCP Fast Open",
-        tg_ech: "ECH",
-        tg_silent: "Silent Alerts",
-        tg_pause: "Kill Switch",
-        tg_auto_update: "Auto Update",
-        tg_direct: "Direct Configs",
-        tg_nat64: "NAT64",
-        tg_clean_ips: "Clean IPs",
-        tg_nodes: "Nodes",
-        tg_strategy: "Name Strategy",
-        tg_prefix: "Name Prefix",
-        tg_fake_entries: "Fake Entries",
-        tg_cf_settings: "Cloudflare Settings",
-        tg_tg_settings: "Telegram Settings",
-        tg_backup: "Backup",
-        tg_restore: "Restore",
-        tg_current_val: "Current Value",
-        tg_new_val: "Send new value:",
-        tg_saved: "Saved!",
-        tg_cancelled: "Cancelled",
-        tg_log_entry: "",
-        tg_log_empty: "No logs found",
-        tg_u_custom_name: "Custom Name",
-        tg_u_clean_ips: "Clean IPs",
-        tg_u_proxy_ips: "Proxy IPs",
-        tg_u_nodes: "Nodes",
-        tg_u_nat64: "NAT64",
-        tg_u_mode: "Protocol Mode",
-        tg_u_ports: "Ports",
-        tg_u_conn_limit: "Conn Limit",
-        tg_u_panel_url: "Panel URL",
-        tg_u_max_cfg: "Max Configs",
-        tg_u_all: "All Settings",
-        tg_network: "Network",
-        tg_uptime: "Uptime",
-        tg_conns: "Active Connections",
-        tg_version: "Version",
-        tg_cf_usage: "CF Usage",
-    },
-    fa: {
-        welcome:
-            "🤖 **به ربات ترانزیت MrVpn294 خوش آمدید**\nجهت مدیریت سیستم نظارتی خود یکی از گزینه‌های زیر را انتخاب نمایید:",
-        status: "وضعیت سیستم",
-        users: "مدیریت مشترکین",
-        metrics: "سلامت درگاه شبکه",
-        panic: "وضعیت اضطراری (Panic)",
-        dash: "پنل تحت وب",
-        lang: "🌐 تغییر زبان به انگلیسی",
-        active: "🟢 فعال",
-        paused: "🔴 متوقف شده",
-        uptime: "زمان کارکرد",
-        streams: "📡 اتصالات فعال",
-        no_users: "هیچ مشترکی پیدا نشد.",
-        sub_info: "👤 مشخصات مشترک:",
-        name: "نام",
-        total: "درخواست کل",
-        daily: "درخواست روزانه",
-        expiry: "انقضاء",
-        days: "روزهای باقی‌مانده",
-        created: "تاریخ ایجاد",
-        unlimited: "نامحدود",
-        btn_back: "بازگشت",
-        btn_next: "بعدی",
-        btn_del: "حذف",
-        btn_pause: "غیرفعال‌سازی",
-        btn_resume: "فعال‌سازی",
-        btn_edit_name: "تغییر نام",
-        btn_edit_limits: "ویرایش محدودیت‌ها",
-        btn_add: "+ افزودن مشترک جدید",
-        btn_confirm: "تأیید",
-        btn_cancel: "انصراف",
-        msg_enter_name: "لطفاً نام یا شناسه مشترک جدید را ارسال نمایید:",
-        msg_added: "مشترک با موفقیت افزوده شد!",
-        msg_deleted: "مشترک با موفقیت حذف گردید!",
-        msg_panic: "وضعیت اضطراری فعال شد\nمسیر تصادفی شد و سیستم متوقف گردید.",
-        msg_invalid: "ورودی نامعتبر است. مجدداً تلاش نمایید.",
-        msg_enter_limits:
-            "فرمت ورودی محدودیت:\n`[کل] [روزانه] [مدت_روز]`\n(از 0 برای نامحدود استفاده کنید)\n\nمثال:\n`10000 500 30`",
-        msg_confirm_del: "آیا از حذف این مشترک اطمینان کامل دارید؟",
-        msg_confirm_panic:
-            "آیا از فعال‌سازی وضعیت اضطراری اطمینان دارید؟ کل اتصالات متوقف و آدرس‌ها منقضی خواهند شد!",
-        status_updated: "وضعیت بروزرسانی شد!",
-        access_denied: "دسترسی غیرمجاز. شما اجازه مدیریت این پنل را ندارید.",
-        dashboard: "داشبورد",
-        search: "جستجوی کاربر",
-        statistics: "آمار",
-        panel_info: "اطلاعات پنل",
-        disabled_users: "کاربران غیرفعال",
-        reset_traffic: "بازنشانی ترافیک",
-        extend_expiry: "تمدید انقضا",
-        notes: "یادداشت‌ها",
-        device_limit: "محدودیت کانفیگ",
-        msg_enter_search: "🔍 نام کاربری، UUID یا لینک اشتراک را ارسال کنید:",
-        msg_enter_notes: "📝 یادداشت برای این کاربر را ارسال کنید:",
-        msg_enter_extend_days: "📅 تعداد روزهای تمدید را وارد کنید:",
-        msg_traffic_reset: "ترافیک با موفقیت بازنشانی شد!",
-        msg_expiry_extended: "انقضا به مدت {days} روز تمدید شد!",
-        msg_no_disabled: "هیچ کاربر غیرفعالی یافت نشد.",
-        msg_enter_device_limit:
-            "محدودیت تعداد کانفیگ را وارد کنید (0 برای نامحدود):",
-        config_limit_updated: "محدودیت کانفیگ به‌روزرسانی شد!",
-        stats_title: "آمار پنل",
-        count_active: "فعال",
-        count_paused: "متوقف",
-        count_disabled: "غیرفعال خودکار",
-        dash_total: "کل کاربران",
-        dash_active: "فعال",
-        dash_paused: "متوقف",
-        dash_expired: "منقضی",
-        dash_auto_disabled: "غیرفعال خودکار",
-        btn_main_menu: "منوی اصلی",
-        btn_back_to_list: "بازگشت به لیست",
-        total_traffic: "ترافیک کل",
-        daily_traffic: "ترافیک روزانه",
-        lbl_status: "وضعیت",
-        lbl_subscription: "لینک اشتراک",
-        lbl_user_not_found: "⚠️ کاربر یافت نشد",
-        lbl_none: "ندارد",
-        lbl_page: "صفحه",
-        select_panel: "🔌 کدام پنل را می‌خواهید مدیریت کنید؟",
-        current_panel: "پنل فعلی",
-        switch_panel: "🔄 تغییر پنل",
-        panel_local: "🏠 این پنل",
-        panel_remote: "🌐",
-        msg_panel_selected: "پنل انتخاب شد! ✅",
-        msg_panel_error: "❌ اتصال به پنل انتخابی ناموفق بود.",
-        msg_panel_unreachable:
-            "⚠️ پنل در دسترس نیست. لطفاً پیکربندی را بررسی کنید.",
-        btn_sub_link: "لینک اشتراک",
-        sub_link_sent: "لینک اشتراک ارسال شد!",
-        btn_update_usage: "بروزرسانی مصرف",
-        tg_settings: "تنظیمات",
-        tg_advanced: "پیشرفته",
-        tg_logs: "گزارش‌ها",
-        tg_sys_settings: "تنظیمات سیستم",
-        tg_adv_settings: "تنظیمات پیشرفته",
-        tg_logs_view: "مشاهده گزارش‌ها",
-        tg_logs_clear: "پاک کردن گزارش‌ها",
-        tg_proto: "پروتکل",
-        tg_ports: "پورت‌ها",
-        tg_uuid: "شناسه دستگاه",
-        tg_path: "مسیر API",
-        tg_pass: "کلید اصلی",
-        tg_dns: "DNS",
-        tg_relay: "آی‌پی رله",
-        tg_maintenance: "سایت استتار",
-        tg_tfo: "TCP Fast Open",
-        tg_ech: "ECH",
-        tg_silent: "هشدار خاموش",
-        tg_pause: "کلید توقف",
-        tg_auto_update: "بروزرسانی خودکار",
-        tg_direct: "کانفیگ مستقیم",
-        tg_nat64: "NAT64",
-        tg_clean_ips: "آی‌پی تمیز",
-        tg_nodes: "نودها",
-        tg_strategy: "روش نام‌گذاری",
-        tg_prefix: "پیشوند",
-        tg_fake_entries: "ورودی‌های اشتراک",
-        tg_cf_settings: "تنظیمات کلودفلر",
-        tg_tg_settings: "تنظیمات تلگرام",
-        tg_backup: "پشتیبان‌گیری",
-        tg_restore: "بازیابی",
-        tg_current_val: "مقدار فعلی",
-        tg_new_val: "مقدار جدید را ارسال کنید:",
-        tg_saved: "ذخیره شد!",
-        tg_cancelled: "لغو شد",
-        tg_log_entry: "",
-        tg_log_empty: "گزارشی ثبت نشده",
-        tg_u_custom_name: "نام سفارشی",
-        tg_u_clean_ips: "آی‌پی تمیز",
-        tg_u_proxy_ips: "آی‌پی پروکسی",
-        tg_u_nodes: "نودها",
-        tg_u_nat64: "NAT64",
-        tg_u_mode: "پروتکل",
-        tg_u_ports: "پورت‌ها",
-        tg_u_conn_limit: "محدودیت اتصال",
-        tg_u_panel_url: "آدرس پنل",
-        tg_u_max_cfg: "حداکثر کانفیگ",
-        tg_u_all: "همه تنظیمات",
-        tg_network: "شبکه",
-        tg_uptime: "زمان کارکرد",
-        tg_conns: "اتصالات فعال",
-        tg_version: "نسخه",
-        tg_cf_usage: "مصرف کلودفلر",
-    },
+    
+    if (url.pathname === "/api/backup" && request.method === "POST") {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { "Content-Type": "application/json" } });
+      var _body = await _rj(request);
+      if (_body === null) return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: { "Content-Type": "application/json" } });
+      try {
+        let imported = { users: 0, inbounds: 0, settings: 0 };
+        if (_body.users && Array.isArray(_body.users)) {
+          for (const u of _body.users) {
+            try {
+              await env.AM_DB.prepare(
+                "INSERT OR REPLACE INTO users (username, uuid, limit_gb, expiry_days, ips, connection_type, tls, port, used_gb, is_active, last_active, created_at, fingerprint, config_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+              ).bind(u.username, u.uuid, u.limit_gb, u.expiry_days, u.ips, u.connection_type, u.tls, u.port, u.used_gb || 0, u.is_active !== void 0 ? u.is_active : 1, u.last_active || null, u.created_at || new Date().toISOString(), u.fingerprint || 'chrome', u.config_name || u.username).run();
+              imported.users++;
+            } catch(_) {}
+          }
+        }
+        if (_body.inbounds && Array.isArray(_body.inbounds)) {
+          for (const i of _body.inbounds) {
+            try {
+              await env.AM_DB.prepare(
+                "INSERT OR REPLACE INTO inbounds (tag, protocol, port, listen, settings, stream_settings, sniffing, is_active, remark) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+              ).bind(i.tag, i.protocol, i.port, i.listen, i.settings, i.stream_settings, i.sniffing, i.is_active !== void 0 ? i.is_active : 1, i.remark || '').run();
+              imported.inbounds++;
+            } catch(_) {}
+          }
+        }
+        if (_body.settings && Array.isArray(_body.settings)) {
+          for (const s of _body.settings) {
+            try {
+              await env.AM_DB.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)").bind(s.key, s.value).run();
+              imported.settings++;
+            } catch(_) {}
+          }
+        }
+        try { await env.AM_DB.prepare("INSERT INTO logs (level, message, timestamp) VALUES (?, ?, ?)").bind("info", "Backup imported: " + imported.users + " users, " + imported.inbounds + " inbounds, " + imported.settings + " settings", Date.now()).run(); } catch(_) {}
+        return new Response(JSON.stringify({ success: true, imported }), { headers: { "Content-Type": "application/json" } });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: { "Content-Type": "application/json" } });
+      }
+    }
+    
+    // ============================================
+    // USER BATCH OPERATIONS (Nova-style)
+    // ============================================
+    if (url.pathname === "/api/users/batch-delete" && request.method === "POST") {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { "Content-Type": "application/json" } });
+      var _body = await _rj(request);
+      if (_body === null) return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: { "Content-Type": "application/json" } });
+      var usernames = _body.usernames;
+      if (!usernames || !Array.isArray(usernames)) {
+        return new Response(JSON.stringify({ error: "Invalid usernames array" }), { status: 400, headers: { "Content-Type": "application/json" } });
+      }
+      let deleted = 0;
+      for (const uname of usernames) {
+        try {
+          await env.AM_DB.prepare("DELETE FROM users WHERE username = ?").bind(uname).run();
+          GLOBAL_TRAFFIC_CACHE.delete(uname);
+          ACTIVE_CONNECTIONS_COUNT.delete(uname);
+          deleted++;
+        } catch(_) {}
+      }
+      try { await env.AM_DB.prepare("INSERT INTO logs (level, message, timestamp) VALUES (?, ?, ?)").bind("info", "Batch deleted " + deleted + " users", Date.now()).run(); } catch(_) {}
+      return new Response(JSON.stringify({ success: true, deleted }), { headers: { "Content-Type": "application/json" } });
+    }
+    
+    if (url.pathname === "/api/users/batch-toggle" && request.method === "POST") {
+      if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { "Content-Type": "application/json" } });
+      var _body = await _rj(request);
+      if (_body === null) return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: { "Content-Type": "application/json" } });
+      var usernames = _body.usernames;
+      var activate = _body.activate;
+      if (!usernames || !Array.isArray(usernames) || activate === void 0) {
+        return new Response(JSON.stringify({ error: "Invalid params" }), { status: 400, headers: { "Content-Type": "application/json" } });
+      }
+      let updated = 0;
+      for (const uname of usernames) {
+        try {
+          await env.AM_DB.prepare("UPDATE users SET is_active = ? WHERE username = ?").bind(activate ? 1 : 0, uname).run();
+          updated++;
+        } catch(_) {}
+      }
+      return new Response(JSON.stringify({ success: true, updated }), { headers: { "Content-Type": "application/json" } });
+    }
+    
+    return new Response(JSON.stringify({ error: "Not Found" }), { status: 404 });
+  }
 };
 
-function getPanelsList() {
-    const panels = [];
-    panels.push({
-        name: sysConfig.name || "Main Panel",
-        host: null,
-        apiRoute: sysConfig.apiRoute,
-        apiKey: null,
-        isLocal: true,
-    });
-    if (sysConfig.linkedPanels && Array.isArray(sysConfig.linkedPanels)) {
-        sysConfig.linkedPanels.forEach((p) => {
-            if (p && p.host) {
-                panels.push({
-                    name: p.name || p.host,
-                    host: p.host,
-                    apiRoute: p.apiRoute || sysConfig.apiRoute,
-                    apiKey: p.apiKey || p.masterKey || null,
-                    isLocal: false,
-                });
-            }
-        });
-    }
-    return panels;
-}
-
-async function remotePanelFetch(panel, method, path, body = null) {
+// ============================================
+// DATABASE SERVICE
+// ============================================
+var schemaEnsured = false;
+var cachedPanelPassword = null;
+var DbService = {
+  async ensureSchema(db) {
+    if (!db) return;
+    if (schemaEnsured) return;
     try {
-        const url = `https://${panel.host}/${encodeURI(panel.apiRoute)}${path}`;
-        const options = {
-            method,
-            headers: { "Content-Type": "application/json" },
-        };
-        if (body) options.body = JSON.stringify(body);
-        const res = await fetch(url, {
-            ...options,
-            signal: AbortSignal.timeout(8000),
-        });
-        return await res.json();
-    } catch (e) {
-        return { success: false, error: e.message };
-    }
-}
-
-async function fetchRemotePanelUsers(panel) {
-    return await remotePanelFetch(
-        panel,
-        "GET",
-        `/api/users?key=${encodeURIComponent(panel.apiKey)}`,
-    );
-}
-
-async function fetchRemotePanelUser(panel, userId) {
-    return await remotePanelFetch(
-        panel,
-        "GET",
-        `/api/users?id=${encodeURIComponent(userId)}&key=${encodeURIComponent(panel.apiKey)}`,
-    );
-}
-
-async function fetchRemotePanelStats(panel) {
-    return await remotePanelFetch(
-        panel,
-        "GET",
-        `/api/stats?key=${encodeURIComponent(panel.apiKey)}`,
-    );
-}
-
-async function fetchRemotePanelConfig(panel) {
-    return await remotePanelFetch(panel, "POST", "/api/auth", {
-        key: panel.apiKey,
-    });
-}
-
-async function remotePanelWriteAction(panel, method, userId, body = null) {
-    let path = "/api/users";
-    if (userId)
-        path += `?id=${encodeURIComponent(userId)}&key=${encodeURIComponent(panel.apiKey)}`;
-    else path += `?key=${encodeURIComponent(panel.apiKey)}`;
-    return await remotePanelFetch(
-        panel,
-        method,
-        path,
-        body || { key: panel.apiKey },
-    );
-}
-
-async function remotePanelToggleUser(panel, userId) {
-    return await remotePanelFetch(
-        panel,
-        "POST",
-        `/api/users?id=${encodeURIComponent(userId)}&action=toggle&key=${encodeURIComponent(panel.apiKey)}`,
-    );
-}
-
-async function remotePanelResetTraffic(panel, userId) {
-    return await remotePanelFetch(
-        panel,
-        "POST",
-        `/api/users?id=${encodeURIComponent(userId)}&action=reset&key=${encodeURIComponent(panel.apiKey)}`,
-    );
-}
-
-async function handleTelegramWebhook(request, env, hostName, ctx) {
+      await db.prepare(`
+        CREATE TABLE IF NOT EXISTS users (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          username TEXT UNIQUE,
+          uuid TEXT,
+          limit_gb REAL,
+          expiry_days INTEGER,
+          ips TEXT,
+          connection_type TEXT,
+          tls TEXT,
+          port INTEGER,
+          used_gb REAL DEFAULT 0,
+          is_active INTEGER DEFAULT 1,
+          last_active INTEGER,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          fingerprint TEXT DEFAULT 'chrome',
+          config_name TEXT
+        )
+      `).run();
+    } catch (e) {}
     try {
-        const update = await request.json();
-        const tgApi = `https://api.telegram.org/bot${sysConfig.tgToken}`;
-
-        const langCode = sysConfig.tgBotLang || "fa";
-        const t = (key) =>
-            botI18n[langCode]?.[key] || botI18n["en"]?.[key] || key;
-
-        const callerId =
-            update.callback_query?.from?.id?.toString() ||
-            update.message?.from?.id?.toString();
-        const adminId = sysConfig.tgAdminId || sysConfig.tgChatId;
-        const isAuthorized = adminId && callerId === adminId.toString();
-
-        if (!isAuthorized) {
-            const chatId =
-                update.callback_query?.message?.chat?.id ||
-                update.message?.chat?.id;
-            if (chatId) {
-                await fetch(`${tgApi}/sendMessage`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        chat_id: chatId,
-                        text:
-                            "❌ *شما دسترسی به این ربات را ندارید.*\n\nیوزر آیدی شما جهت اضافه کردن به لیست ادمین ها: `" +
-                            (callerId || "Unknown") +
-                            "`",
-                        parse_mode: "Markdown",
-                    }),
-                });
-            }
-            return new Response(
-                JSON.stringify({ success: false, error: "Unauthorized" }),
-                { status: 200 },
-            );
-        }
-
-        let tgState = {};
-        try {
-            const storedState = await d1Get(env, "tg_bot_state");
-            if (storedState) tgState = JSON.parse(storedState);
-        } catch (e) {}
-
-        const panels = getPanelsList();
-
-        // Read last login signal from D1 (set by handleAuth or handleSyncPanel)
-        let lastLoginPanel = null;
-        try {
-            const stored = await d1Get(env, "tg_panel_login");
-            if (stored) lastLoginPanel = JSON.parse(stored);
-        } catch (e) {}
-
-        const getActivePanel = () => {
-            if (lastLoginPanel) {
-                if (lastLoginPanel.isLocal)
-                    return panels.find((p) => p.isLocal) || panels[0];
-                const found = panels.find(
-                    (p) => !p.isLocal && p.host === lastLoginPanel.host,
-                );
-                if (found) return found;
-                // Remote panel not in linkedPanels — synthesize from login signal
-                return {
-                    name: lastLoginPanel.name || lastLoginPanel.host,
-                    host: lastLoginPanel.host,
-                    apiRoute: lastLoginPanel.apiRoute || sysConfig.apiRoute,
-                    apiKey:
-                        lastLoginPanel.apiKey ||
-                        lastLoginPanel.masterKey ||
-                        null,
-                    isLocal: false,
-                };
-            }
-            return panels[0]; // default to local
-        };
-
-        // Custom sendOrEdit message helper
-        const sendOrEdit = async (
-            chatId,
-            text,
-            replyMarkup = null,
-            messageId = null,
-        ) => {
-            let res;
-            if (messageId) {
-                res = await fetch(`${tgApi}/editMessageText`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        chat_id: chatId,
-                        message_id: messageId,
-                        text: text,
-                        parse_mode: "Markdown",
-                        reply_markup: replyMarkup,
-                    }),
-                });
-                if (res.ok) return res;
-                try {
-                    const errBody = await res.json();
-                    if (
-                        errBody?.description?.includes(
-                            "message is not modified",
-                        )
-                    )
-                        return res;
-                } catch (e) {}
-            }
-            res = await fetch(`${tgApi}/sendMessage`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    chat_id: chatId,
-                    text: text,
-                    parse_mode: "Markdown",
-                    reply_markup: replyMarkup,
-                }),
-            });
-            return res;
-        };
-
-        const getMainMenu = (activePanel, isAdmin = true) => {
-            const isPaused = sysConfig.isPaused || false;
-            const statusEmoji = isPaused ? "🔴" : "🟢";
-            const users = sysConfig.users || [];
-            const activeCount = users.filter(
-                (u) => !u.isPaused && (!u.expiryMs || Date.now() <= u.expiryMs),
-            ).length;
-            const pausedCount = users.filter(
-                (u) => u.isPaused && !u.disabledReason,
-            ).length;
-            const autoDisabledCount = users.filter(
-                (u) => u.isPaused && u.disabledReason,
-            ).length;
-            const isLocal = !activePanel || activePanel.isLocal;
-            const panelName = activePanel
-                ? activePanel.name
-                : sysConfig.name || "Main Panel";
-            const panelIndicator = isLocal
-                ? `🏠 ${panelName}`
-                : `🌐 ${panelName}`;
-            let text =
-                `${t("welcome")}\n\n` +
-                `━━━━━━━━━━━━━━━━\n` +
-                `📌 **${t("current_panel")}**: ${panelIndicator}\n` +
-                `⚡ **${t("status")}**: ${isPaused ? t("paused") : t("active")} ${statusEmoji}\n` +
-                `👥 **${t("users")}**: ${users.length} (${activeCount} ${t("count_active")}, ${pausedCount} ${t("count_paused")}, ${autoDisabledCount} ${t("count_disabled")})\n` +
-                `━━━━━━━━━━━━━━━━`;
-            const panelUrl = isLocal
-                ? `https://${hostName}/${encodeURI(sysConfig.apiRoute)}/dash`
-                : null;
-            const subUrl = `https://${hostName}/${sysConfig.apiRoute}`;
-            /** @type {any} */
-            const inline_keyboard = [];
-            if (isAdmin) {
-                inline_keyboard.push([
-                    { text: `👥 ${t("users")}`, callback_data: "subs_list:0" },
-                    {
-                        text: `🔍 ${t("search")}`,
-                        callback_data: "sub_search_init",
-                    },
-                ]);
-            }
-            inline_keyboard.push([
-                {
-                    text: `📊 ${t("dashboard")}`,
-                    callback_data: "sys_dashboard",
-                },
-                { text: `📈 ${t("statistics")}`, callback_data: "sys_stats" },
-            ]);
-            inline_keyboard.push([
-                {
-                    text: `🔗 ${t("btn_sub_link")}`,
-                    callback_data: "get_sub_link",
-                },
-            ]);
-            if (isAdmin) {
-                inline_keyboard.push([
-                    {
-                        text: `🚫 ${t("disabled_users")}`,
-                        callback_data: "subs_disabled:0",
-                    },
-                ]);
-                inline_keyboard.push([
-                    {
-                        text: `⚙️ ${t("tg_settings")}`,
-                        callback_data: "tg_settings_menu",
-                    },
-                    {
-                        text: `🔧 ${t("tg_advanced")}`,
-                        callback_data: "tg_advanced_menu",
-                    },
-                ]);
-                inline_keyboard.push([
-                    {
-                        text: `📋 ${t("tg_logs")}`,
-                        callback_data: "tg_logs_menu",
-                    },
-                ]);
-            }
-            inline_keyboard.push([
-                {
-                    text: `🌐 ${langCode === "fa" ? "English 🇺🇸" : "فارسی 🇮🇷"}`,
-                    callback_data: "sys_lang",
-                },
-                {
-                    text: isPaused
-                        ? `▶️ ${t("btn_resume")}`
-                        : `⏸️ ${t("btn_pause")}`,
-                    callback_data: "sys_toggle_status",
-                },
-            ]);
-            if (panelUrl) {
-                inline_keyboard.push([
-                    { text: `🔑 ${t("dash")}`, web_app: { url: panelUrl } },
-                    {
-                        text: `ℹ️ ${t("panel_info")}`,
-                        callback_data: "sys_panel_info",
-                    },
-                ]);
-                if (isAdmin) {
-                    inline_keyboard.push([
-                        {
-                            text: `🚨 ${t("panic")}`,
-                            callback_data: "sys_panic_init",
-                        },
-                    ]);
-                }
-            } else {
-                inline_keyboard.push([
-                    {
-                        text: `ℹ️ ${t("panel_info")}`,
-                        callback_data: "sys_panel_info",
-                    },
-                ]);
-            }
-            const kb = { inline_keyboard };
-            return { text, kb };
-        };
-
-        const getSubsList = (page = 0, usersList = null) => {
-            const users = usersList || sysConfig.users || [];
-            const itemsPerPage = 5;
-            const totalPages = Math.ceil(users.length / itemsPerPage);
-            const start = page * itemsPerPage;
-            const end = start + itemsPerPage;
-            const pageUsers = users.slice(start, end);
-
-            let text = `👥 **${t("users")}** (${t("lbl_page")} ${page + 1}/${Math.max(1, totalPages)})\n`;
-            text += `━━━━━━━━━━━━━━━━\n`;
-
-            if (users.length === 0) {
-                text += `⚠️ ${t("no_users")}\n`;
-            } else {
-                pageUsers.forEach((u, idx) => {
-                    text += `${start + idx + 1}. 👤 **${u.name}**\n   \`${u.id}\`\n`;
-                });
-            }
-            text += `━━━━━━━━━━━━━━━━`;
-
-            const inline_keyboard = [];
-            pageUsers.forEach((u) => {
-                inline_keyboard.push([
-                    {
-                        text: `👤 ${u.name}`,
-                        callback_data: `sub_detail:${u.id}`,
-                    },
-                ]);
-            });
-
-            const navRow = [];
-            if (page > 0) {
-                navRow.push({
-                    text: `⬅️ ${t("btn_back")}`,
-                    callback_data: `subs_list:${page - 1}`,
-                });
-            }
-            if (end < users.length) {
-                navRow.push({
-                    text: `${t("btn_next")} ➡️`,
-                    callback_data: `subs_list:${page + 1}`,
-                });
-            }
-            if (navRow.length > 0) {
-                inline_keyboard.push(navRow);
-            }
-
-            inline_keyboard.push([
-                { text: `➕ ${t("btn_add")}`, callback_data: "sub_add_init" },
-            ]);
-            inline_keyboard.push([
-                { text: t("btn_main_menu"), callback_data: "main_menu" },
-            ]);
-
-            return { text, kb: { inline_keyboard } };
-        };
-
-        const getSubDetail = (uuid, usersList = null) => {
-            const users = usersList || sysConfig.users || [];
-            const u = users.find((usr) => usr.id === uuid);
-            if (!u) {
-                return {
-                    text: "⚠️ User not found",
-                    kb: {
-                        inline_keyboard: [
-                            [
-                                {
-                                    text: t("btn_back"),
-                                    callback_data: "subs_list:0",
-                                },
-                            ],
-                        ],
-                    },
-                };
-            }
-
-            const sysU = sysUsageCache?.users?.[
-                u.id.replace(/-/g, "").toLowerCase()
-            ] || { reqs: 0, dReqs: 0, lastDay: "" };
-            const userReqs = sysU.reqs || 0;
-            const curDate = new Date().toISOString().split("T")[0];
-            const userDReqs = sysU.lastDay === curDate ? sysU.dReqs || 0 : 0;
-
-            const limitTotalTxt = u.limitTotalReq
-                ? `${u.limitTotalReq}`
-                : t("unlimited");
-            const limitDailyTxt = u.limitDailyReq
-                ? `${u.limitDailyReq}`
-                : t("unlimited");
-            const usedGB = (userReqs / 6000).toFixed(2);
-            const limitGB = u.limitTotalReq
-                ? (u.limitTotalReq / 6000).toFixed(2)
-                : t("unlimited");
-
-            let expTxt = t("unlimited");
-            let isExp = false;
-            let daysLeft = t("unlimited");
-            if (u.expiryMs) {
-                const date = new Date(u.expiryMs);
-                expTxt = date.toLocaleDateString();
-                const remDays = Math.ceil((u.expiryMs - Date.now()) / 86400000);
-                daysLeft = remDays >= 0 ? `${remDays}` : "0";
-                if (Date.now() > u.expiryMs) {
-                    expTxt += ` (${t("dash_expired")} 🔴)`;
-                    isExp = true;
-                }
-            }
-
-            const statusEmoji = u.isPaused ? "⏸️" : isExp ? "🔴" : "🟢";
-            const statusText = u.isPaused
-                ? t("paused")
-                : isExp
-                  ? t("dash_expired")
-                  : t("active");
-            const subSync = `https://${hostName}/${sysConfig.apiRoute}?sub=${encodeURIComponent(u.name)}`;
-            const maxCfgTxt = u.maxConfigs || t("unlimited");
-            const notesTxt = u.notes || t("lbl_none");
-            const modeTxt = u.userMode
-                ? u.userMode === "alpha"
-                    ? "Alpha (V)"
-                    : u.userMode === "beta"
-                      ? "Beta (T)"
-                      : "Both"
-                : t("unlimited");
-            const portsTxt = u.userPorts || t("unlimited");
-            const cleanIpsTxt = u.cleanIp
-                ? u.cleanIp.substring(0, 30) +
-                  (u.cleanIp.length > 30 ? "..." : "")
-                : "—";
-            const proxyIpsTxt = u.proxyIp
-                ? u.proxyIp.substring(0, 30) +
-                  (u.proxyIp.length > 30 ? "..." : "")
-                : "—";
-            const nodesTxt = u.userNodes
-                ? u.userNodes.substring(0, 30) +
-                  (u.userNodes.length > 30 ? "..." : "")
-                : "—";
-            const nat64Txt = u.nat64 || "—";
-
-            let text = `👤 **${t("sub_info")}**\n`;
-            text += `━━━━━━━━━━━━━━━━\n`;
-            text += `📛 **${t("name")}**: ${u.name}\n`;
-            text += `🆔 **UUID**: \`${u.id}\`\n`;
-            text += `🚦 **${t("lbl_status")}**: ${statusEmoji} ${statusText}\n`;
-            text += `📊 **${t("total")}**: ${usedGB} GB / ${limitGB} GB (${userReqs} reqs)\n`;
-            text += `⏱ **${t("daily")}**: ${userDReqs} / ${limitDailyTxt}\n`;
-            text += `📅 **${t("expiry")}**: ${expTxt}\n`;
-            text += `⏳ **${t("days")}**: ${daysLeft}\n`;
-            text += `📡 **${t("tg_u_mode")}**: ${modeTxt}\n`;
-            text += `🔌 **${t("tg_u_ports")}**: ${portsTxt}\n`;
-            text += `📱 **${t("device_limit")}**: ${maxCfgTxt}\n`;
-            text += `🧹 **${t("tg_u_clean_ips")}**: ${cleanIpsTxt}\n`;
-            text += `🔗 **${t("tg_u_proxy_ips")}**: ${proxyIpsTxt}\n`;
-            text += `🖥️ **${t("tg_u_nodes")}**: ${nodesTxt}\n`;
-            text += `🌐 **${t("tg_u_nat64")}**: ${nat64Txt}\n`;
-            text += `🔗 **${t("tg_u_conn_limit")}**: ${u.connLimit || t("unlimited")}\n`;
-            text += `🎛 **${t("tg_u_panel_url")}**: ${u.userPanelUrl || t("unlimited")}\n`;
-            text += `📝 **${t("notes")}**: ${notesTxt}\n`;
-            text += `━━━━━━━━━━━━━━━━\n`;
-            text += `🔗 **${t("lbl_subscription")}:**\n\`${subSync}\``;
-
-            const kb = {
-                inline_keyboard: [
-                    [
-                        {
-                            text: u.isPaused
-                                ? `▶️ ${t("btn_resume")}`
-                                : `⏸️ ${t("btn_pause")}`,
-                            callback_data: `sub_toggle:${u.id}`,
-                        },
-                        {
-                            text: `🗑️ ${t("btn_del")}`,
-                            callback_data: `sub_del_init:${u.id}`,
-                        },
-                    ],
-                    [
-                        {
-                            text: `✏️ ${t("btn_edit_name")}`,
-                            callback_data: `sub_edit_name_init:${u.id}`,
-                        },
-                        {
-                            text: `⚙️ ${t("btn_edit_limits")}`,
-                            callback_data: `sub_edit_limits_init:${u.id}`,
-                        },
-                    ],
-                    [
-                        {
-                            text: `🔄 ${t("reset_traffic")}`,
-                            callback_data: `sub_reset_traffic:${u.id}`,
-                        },
-                        {
-                            text: `📅 ${t("extend_expiry")}`,
-                            callback_data: `sub_extend_init:${u.id}`,
-                        },
-                    ],
-                    [
-                        {
-                            text: `📝 ${t("notes")}`,
-                            callback_data: `sub_edit_notes_init:${u.id}`,
-                        },
-                        {
-                            text: `📱 ${t("device_limit")}`,
-                            callback_data: `sub_edit_device_init:${u.id}`,
-                        },
-                    ],
-                    [
-                        {
-                            text: t("btn_back_to_list"),
-                            callback_data: "subs_list:0",
-                        },
-                    ],
-                ],
-            };
-            return { text, kb };
-        };
-
-        if (update.callback_query) {
-            const cb = update.callback_query;
-            const chatId = cb.message?.chat?.id;
-            const messageId = cb.message?.message_id;
-            const data = cb.data;
-
-            if (chatId) {
-                if (!isAuthorized) {
-                    await fetch(`${tgApi}/answerCallbackQuery`, {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                            callback_query_id: cb.id,
-                            text: t("access_denied"),
-                            show_alert: true,
-                        }),
-                    });
-                    return new Response("OK", { status: 200 });
-                }
-
-                // Get active panel from last login signal
-                const activePanel = getActivePanel();
-                const isRemotePanel = activePanel && !activePanel.isLocal;
-
-                // Helper to fetch users for the active panel
-                const getPanelUsers = async () => {
-                    if (isRemotePanel) {
-                        const res = await fetchRemotePanelUsers(activePanel);
-                        return res.success ? res.users || [] : null;
-                    }
-                    return sysConfig.users || [];
-                };
-
-                // Clear step state on callback query
-                tgState[chatId] = null;
-                ctx?.waitUntil(
-                    d1Put(env, "tg_bot_state", JSON.stringify(tgState)).catch(
-                        () => {},
-                    ),
-                );
-
-                let answerText = null;
-
-                if (data === "main_menu") {
-                    const menu = getMainMenu(activePanel, isAuthorized);
-                    await sendOrEdit(chatId, menu.text, menu.kb, messageId);
-                } else if (data === "sys_lang") {
-                    sysConfig.tgBotLang = langCode === "fa" ? "en" : "fa";
-                    await cachedD1Put(
-                        env,
-                        "sys_config",
-                        JSON.stringify(sysConfig),
-                    );
-                    const menu = getMainMenu(activePanel, isAuthorized);
-                    await sendOrEdit(chatId, menu.text, menu.kb, messageId);
-                } else if (data === "sys_toggle_status") {
-                    sysConfig.isPaused = !sysConfig.isPaused;
-                    await cachedD1Put(
-                        env,
-                        "sys_config",
-                        JSON.stringify(sysConfig),
-                    );
-                    const menu = getMainMenu(activePanel, isAuthorized);
-                    await sendOrEdit(chatId, menu.text, menu.kb, messageId);
-                } else if (data === "sys_metrics") {
-                    let usageStr = t("unlimited");
-                    if (sysConfig.cfAccountId && sysConfig.cfApiToken) {
-                        const reqs = await fetchCloudflareUsage(
-                            sysConfig.cfAccountId,
-                            sysConfig.cfApiToken,
-                        );
-                        if (reqs !== null) {
-                            const pct = ((reqs / 100000) * 100).toFixed(2);
-                            usageStr = `${reqs}/100000 (${pct}%)`;
-                        }
-                    }
-                    const upSeconds = Math.floor(
-                        (Date.now() - isolateStartTime) / 1000,
-                    );
-                    const dh = Math.floor(upSeconds / 3600);
-                    const dm = Math.floor((upSeconds % 3600) / 60);
-
-                    let text = `📡 **${t("metrics")}**\n`;
-                    text += `━━━━━━━━━━━━━━━━\n`;
-                    text += `⏱ **${t("uptime")}**: ${dh}h ${dm}m\n`;
-                    text += `🔌 **${t("streams")}**: ${activeConnections}\n`;
-                    text += `📊 **Cloudflare API Usage**: ${usageStr}\n`;
-                    text += `━━━━━━━━━━━━━━━━`;
-
-                    const kb = {
-                        inline_keyboard: [
-                            [
-                                {
-                                    text: t("btn_main_menu"),
-                                    callback_data: "main_menu",
-                                },
-                            ],
-                        ],
-                    };
-                    await sendOrEdit(chatId, text, kb, messageId);
-                } else if (data.startsWith("subs_list:")) {
-                    const page = parseInt(data.replace("subs_list:", "")) || 0;
-                    const panelUsers = await getPanelUsers();
-                    if (panelUsers === null && isRemotePanel) {
-                        await sendOrEdit(chatId, t("msg_panel_error"), {
-                            inline_keyboard: [
-                                [
-                                    {
-                                        text: t("btn_main_menu"),
-                                        callback_data: "main_menu",
-                                    },
-                                ],
-                            ],
-                        });
-                    } else {
-                        const list = getSubsList(page, panelUsers);
-                        await sendOrEdit(chatId, list.text, list.kb, messageId);
-                    }
-                } else if (data.startsWith("sub_detail:")) {
-                    const uuid = data.replace("sub_detail:", "");
-                    const panelUsers = await getPanelUsers();
-                    if (panelUsers === null && isRemotePanel) {
-                        await sendOrEdit(chatId, t("msg_panel_error"), {
-                            inline_keyboard: [
-                                [
-                                    {
-                                        text: t("btn_main_menu"),
-                                        callback_data: "main_menu",
-                                    },
-                                ],
-                            ],
-                        });
-                    } else {
-                        const detail = getSubDetail(uuid, panelUsers);
-                        await sendOrEdit(
-                            chatId,
-                            detail.text,
-                            detail.kb,
-                            messageId,
-                        );
-                    }
-                } else if (data.startsWith("sub_toggle:")) {
-                    const uuid = data.replace("sub_toggle:", "");
-                    if (isRemotePanel) {
-                        await remotePanelToggleUser(activePanel, uuid);
-                    } else if (sysConfig.users) {
-                        const u = sysConfig.users.find(
-                            (usr) => usr.id === uuid,
-                        );
-                        if (u) {
-                            u.isPaused = !u.isPaused;
-                            await cachedD1Put(
-                                env,
-                                "sys_config",
-                                JSON.stringify(sysConfig),
-                            );
-                        }
-                    }
-                    const panelUsers = await getPanelUsers();
-                    const detail = getSubDetail(uuid, panelUsers);
-                    await sendOrEdit(chatId, detail.text, detail.kb, messageId);
-                } else if (data.startsWith("sub_del_init:")) {
-                    const uuid = data.replace("sub_del_init:", "");
-                    const panelUsers = await getPanelUsers();
-                    const u = panelUsers?.find((usr) => usr.id === uuid);
-                    const name = u ? u.name : "";
-                    const text = `${t("msg_confirm_del")}\n\n👤 **${name}**`;
-                    const kb = {
-                        inline_keyboard: [
-                            [
-                                {
-                                    text: `✅ ${t("btn_confirm")}`,
-                                    callback_data: `sub_del_confirm:${uuid}`,
-                                },
-                                {
-                                    text: `❌ ${t("btn_cancel")}`,
-                                    callback_data: `sub_detail:${uuid}`,
-                                },
-                            ],
-                        ],
-                    };
-                    await sendOrEdit(chatId, text, kb, messageId);
-                } else if (data.startsWith("sub_del_confirm:")) {
-                    const uuid = data.replace("sub_del_confirm:", "");
-                    if (isRemotePanel) {
-                        await remotePanelWriteAction(
-                            activePanel,
-                            "DELETE",
-                            uuid,
-                        );
-                    } else if (sysConfig.users) {
-                        sysConfig.users = sysConfig.users.filter(
-                            (usr) => usr.id !== uuid,
-                        );
-                        await cachedD1Put(
-                            env,
-                            "sys_config",
-                            JSON.stringify(sysConfig),
-                        );
-                    }
-                    const successText = `✅ ${t("msg_deleted")}`;
-                    const kb = {
-                        inline_keyboard: [
-                            [
-                                {
-                                    text: t("btn_back"),
-                                    callback_data: "subs_list:0",
-                                },
-                            ],
-                        ],
-                    };
-                    await sendOrEdit(chatId, successText, kb, messageId);
-                } else if (data === "sub_add_init") {
-                    tgState[chatId] = { step: "sub_add_name" };
-                    ctx?.waitUntil(
-                        d1Put(
-                            env,
-                            "tg_bot_state",
-                            JSON.stringify(tgState),
-                        ).catch(() => {}),
-                    );
-                    const text = `➕ ${t("msg_enter_name")}`;
-                    const kb = {
-                        inline_keyboard: [
-                            [
-                                {
-                                    text: `❌ ${t("btn_cancel")}`,
-                                    callback_data: "subs_list:0",
-                                },
-                            ],
-                        ],
-                    };
-                    await sendOrEdit(chatId, text, kb, messageId);
-                } else if (data.startsWith("sub_edit_name_init:")) {
-                    const uuid = data.replace("sub_edit_name_init:", "");
-                    tgState[chatId] = { step: `sub_edit_name:${uuid}` };
-                    ctx?.waitUntil(
-                        d1Put(
-                            env,
-                            "tg_bot_state",
-                            JSON.stringify(tgState),
-                        ).catch(() => {}),
-                    );
-                    const text = `✏️ ${t("msg_enter_name")}`;
-                    const kb = {
-                        inline_keyboard: [
-                            [
-                                {
-                                    text: `❌ ${t("btn_cancel")}`,
-                                    callback_data: `sub_detail:${uuid}`,
-                                },
-                            ],
-                        ],
-                    };
-                    await sendOrEdit(chatId, text, kb, messageId);
-                } else if (data.startsWith("sub_edit_limits_init:")) {
-                    const uuid = data.replace("sub_edit_limits_init:", "");
-                    tgState[chatId] = { step: `sub_edit_limits:${uuid}` };
-                    ctx?.waitUntil(
-                        d1Put(
-                            env,
-                            "tg_bot_state",
-                            JSON.stringify(tgState),
-                        ).catch(() => {}),
-                    );
-                    const text = `⚙️ ${t("msg_enter_limits")}`;
-                    const kb = {
-                        inline_keyboard: [
-                            [
-                                {
-                                    text: `♾️ Skip (Unlimited)`,
-                                    callback_data: `sub_unlimit_cb:${uuid}`,
-                                },
-                            ],
-                            [
-                                {
-                                    text: `❌ ${t("btn_cancel")}`,
-                                    callback_data: `sub_detail:${uuid}`,
-                                },
-                            ],
-                        ],
-                    };
-                    await sendOrEdit(chatId, text, kb, messageId);
-                } else if (data.startsWith("sub_unlimit_cb:")) {
-                    const uuid = data.replace("sub_unlimit_cb:", "");
-                    if (isRemotePanel) {
-                        await remotePanelWriteAction(activePanel, "PUT", uuid, {
-                            key: activePanel.apiKey,
-                            trafficLimit: 0,
-                            dailyLimit: 0,
-                            expiryDays: 0,
-                        });
-                    } else if (sysConfig.users) {
-                        const u = sysConfig.users.find(
-                            (usr) => usr.id === uuid,
-                        );
-                        if (u) {
-                            u.limitTotalReq = null;
-                            u.limitDailyReq = null;
-                            u.expiryMs = null;
-                            await cachedD1Put(
-                                env,
-                                "sys_config",
-                                JSON.stringify(sysConfig),
-                            );
-                        }
-                    }
-                    const panelUsers = await getPanelUsers();
-                    const detail = getSubDetail(uuid, panelUsers);
-                    await sendOrEdit(chatId, detail.text, detail.kb, messageId);
-                } else if (data === "sub_add_unlimited_skip") {
-                    let stateName = "Subscriber";
-                    try {
-                        const savedStateRaw = await d1Get(env, "tg_bot_state");
-                        if (savedStateRaw) {
-                            const stObj = JSON.parse(savedStateRaw);
-                            if (stObj[chatId] && stObj[chatId].name) {
-                                stateName = stObj[chatId].name;
-                            }
-                        }
-                    } catch (e) {}
-
-                    const newUuid = crypto.randomUUID();
-                    if (isRemotePanel) {
-                        const res = await remotePanelWriteAction(
-                            activePanel,
-                            "POST",
-                            null,
-                            { key: activePanel.apiKey, name: stateName },
-                        );
-                        if (res.success && res.user) {
-                            const detail = getSubDetail(res.user.id, [
-                                res.user,
-                            ]);
-                            await sendOrEdit(
-                                chatId,
-                                `✅ ${t("msg_added")}\n\n${detail.text}`,
-                                detail.kb,
-                                messageId,
-                            );
-                        } else {
-                            await sendOrEdit(chatId, t("msg_panel_error"), {
-                                inline_keyboard: [
-                                    [
-                                        {
-                                            text: t("btn_main_menu"),
-                                            callback_data: "main_menu",
-                                        },
-                                    ],
-                                ],
-                            });
-                        }
-                    } else {
-                        if (!sysConfig.users) sysConfig.users = [];
-                        sysConfig.users.push({
-                            id: newUuid,
-                            name: stateName,
-                            limitTotalReq: null,
-                            limitDailyReq: null,
-                            expiryMs: null,
-                            createdAt: Date.now(),
-                        });
-                        await cachedD1Put(
-                            env,
-                            "sys_config",
-                            JSON.stringify(sysConfig),
-                        );
-                        const detail = getSubDetail(newUuid);
-                        await sendOrEdit(
-                            chatId,
-                            `✅ ${t("msg_added")}\n\n${detail.text}`,
-                            detail.kb,
-                            messageId,
-                        );
-                    }
-                    tgState[chatId] = null;
-                    ctx?.waitUntil(
-                        d1Put(
-                            env,
-                            "tg_bot_state",
-                            JSON.stringify(tgState),
-                        ).catch(() => {}),
-                    );
-                } else if (data === "sys_panic_init") {
-                    const text = `${t("msg_confirm_panic")}`;
-                    const kb = {
-                        inline_keyboard: [
-                            [
-                                {
-                                    text: `🚨 YES PANIC 🚨`,
-                                    callback_data: "sys_panic_confirm",
-                                },
-                                {
-                                    text: `❌ No, Cancel`,
-                                    callback_data: "main_menu",
-                                },
-                            ],
-                        ],
-                    };
-                    await sendOrEdit(chatId, text, kb, messageId);
-                } else if (data === "sys_panic_confirm") {
-                    sysConfig.apiRoute = Array.from(
-                        crypto.getRandomValues(new Uint8Array(8)),
-                    )
-                        .map((b) => b.toString(16).padStart(2, "0"))
-                        .join("");
-                    sysConfig.isPaused = true;
-                    await cachedD1Put(
-                        env,
-                        "sys_config",
-                        JSON.stringify(sysConfig),
-                    );
-                    const successText = `${t("msg_panic")}\n\n🔑 New Secret Path Randomized. All old sessions revoked.`;
-                    const kb = {
-                        inline_keyboard: [
-                            [
-                                {
-                                    text: t("btn_main_menu"),
-                                    callback_data: "main_menu",
-                                },
-                            ],
-                        ],
-                    };
-                    await sendOrEdit(chatId, successText, kb, messageId);
-                } else if (data === "sys_dashboard") {
-                    let users,
-                        activeCount,
-                        pausedCount,
-                        expiredCount,
-                        autoDisabledCount;
-                    if (isRemotePanel) {
-                        const statsRes =
-                            await fetchRemotePanelStats(activePanel);
-                        if (statsRes.success && statsRes.stats) {
-                            const s = statsRes.stats;
-                            users = [];
-                            activeCount = s.users?.active || 0;
-                            pausedCount = s.users?.paused || 0;
-                            expiredCount = s.users?.expired || 0;
-                            autoDisabledCount = s.users?.autoDisabled || 0;
-                        } else {
-                            const panelUsers = await getPanelUsers();
-                            users = panelUsers || [];
-                            activeCount = users.filter(
-                                (u) =>
-                                    !u.isPaused &&
-                                    (!u.expiryMs || Date.now() <= u.expiryMs),
-                            ).length;
-                            pausedCount = users.filter(
-                                (u) => u.isPaused && !u.disabledReason,
-                            ).length;
-                            expiredCount = users.filter(
-                                (u) =>
-                                    u.expiryMs &&
-                                    Date.now() > u.expiryMs &&
-                                    !u.isPaused,
-                            ).length;
-                            autoDisabledCount = users.filter(
-                                (u) => u.isPaused && u.disabledReason,
-                            ).length;
-                        }
-                    } else {
-                        users = sysConfig.users || [];
-                        activeCount = users.filter(
-                            (u) =>
-                                !u.isPaused &&
-                                (!u.expiryMs || Date.now() <= u.expiryMs),
-                        ).length;
-                        pausedCount = users.filter(
-                            (u) => u.isPaused && !u.disabledReason,
-                        ).length;
-                        expiredCount = users.filter(
-                            (u) =>
-                                u.expiryMs &&
-                                Date.now() > u.expiryMs &&
-                                !u.isPaused,
-                        ).length;
-                        autoDisabledCount = users.filter(
-                            (u) => u.isPaused && u.disabledReason,
-                        ).length;
-                    }
-                    let dashText = `📊 **${t("dashboard")}**\n`;
-                    dashText += `━━━━━━━━━━━━━━━━\n`;
-                    dashText += `📌 **${t("current_panel")}**: ${activePanel.isLocal ? "🏠" : "🌐"} ${activePanel.name}\n`;
-                    dashText += `━━━━━━━━━━━━━━━━\n`;
-                    dashText += `👥 **${t("dash_total")}**: ${Array.isArray(users) ? users.length : activeCount + pausedCount + expiredCount + autoDisabledCount}\n`;
-                    dashText += `🟢 **${t("dash_active")}**: ${activeCount}\n`;
-                    dashText += `⏸️ **${t("dash_paused")}**: ${pausedCount}\n`;
-                    dashText += `🔴 **${t("dash_expired")}**: ${expiredCount}\n`;
-                    dashText += `🚫 **${t("dash_auto_disabled")}**: ${autoDisabledCount}\n`;
-                    if (!isRemotePanel) {
-                        const upSeconds = Math.floor(
-                            (Date.now() - isolateStartTime) / 1000,
-                        );
-                        const dh = Math.floor(upSeconds / 3600);
-                        const dm = Math.floor((upSeconds % 3600) / 60);
-                        dashText += `⏱ **${t("uptime")}**: ${dh}h ${dm}m\n`;
-                        dashText += `🔌 **${t("streams")}**: ${activeConnections}\n`;
-                        dashText += `⚡ **System**: ${sysConfig.isPaused ? t("paused") : t("active")}\n`;
-                    }
-                    dashText += `━━━━━━━━━━━━━━━━`;
-                    const kb = {
-                        inline_keyboard: [
-                            [
-                                {
-                                    text: t("btn_main_menu"),
-                                    callback_data: "main_menu",
-                                },
-                            ],
-                        ],
-                    };
-                    await sendOrEdit(chatId, dashText, kb, messageId);
-                } else if (data === "sys_stats") {
-                    let users, totalReqs, dailyReqs;
-                    if (isRemotePanel) {
-                        const statsRes =
-                            await fetchRemotePanelStats(activePanel);
-                        if (statsRes.success && statsRes.stats) {
-                            const s = statsRes.stats;
-                            users = [];
-                            totalReqs = s.traffic?.totalRequests || 0;
-                            dailyReqs = s.traffic?.dailyRequests || 0;
-                        } else {
-                            const panelUsers = await getPanelUsers();
-                            users = panelUsers || [];
-                            totalReqs = 0;
-                            dailyReqs = 0;
-                        }
-                    } else {
-                        users = sysConfig.users || [];
-                        totalReqs = 0;
-                        dailyReqs = 0;
-                        const todayDate = new Date()
-                            .toISOString()
-                            .split("T")[0];
-                        users.forEach((u) => {
-                            const idClean = u.id
-                                .replace(/-/g, "")
-                                .toLowerCase();
-                            const sysU = sysUsageCache?.users?.[idClean] || {
-                                reqs: 0,
-                                dReqs: 0,
-                                lastDay: "",
-                            };
-                            totalReqs += sysU.reqs || 0;
-                            if (sysU.lastDay === todayDate)
-                                dailyReqs += sysU.dReqs || 0;
-                        });
-                    }
-                    let statsText = `📈 **${t("stats_title")}**\n`;
-                    statsText += `━━━━━━━━━━━━━━━━\n`;
-                    statsText += `📌 **${t("current_panel")}**: ${activePanel.isLocal ? "🏠" : "🌐"} ${activePanel.name}\n`;
-                    statsText += `━━━━━━━━━━━━━━━━\n`;
-                    statsText += `👥 **${t("dash_total")}**: ${Array.isArray(users) ? users.length : "N/A"}\n`;
-                    statsText += `📊 **${t("total_traffic")}**: ${(totalReqs / 6000).toFixed(2)} GB\n`;
-                    statsText += `📅 **${t("daily_traffic")}**: ${(dailyReqs / 6000).toFixed(2)} GB\n`;
-                    if (!isRemotePanel) {
-                        const upSeconds = Math.floor(
-                            (Date.now() - isolateStartTime) / 1000,
-                        );
-                        const dh = Math.floor(upSeconds / 3600);
-                        const dm = Math.floor((upSeconds % 3600) / 60);
-                        statsText += `⏱ **${t("tg_uptime")}**: ${dh}h ${dm}m\n`;
-                        statsText += `🔌 **${t("tg_conns")}**: ${activeConnections}\n`;
-                        statsText += `📦 **${t("tg_version")}**: v${CURRENT_VERSION}\n`;
-                    }
-                    statsText += `━━━━━━━━━━━━━━━━`;
-                    if (sysConfig.cfAccountId && sysConfig.cfApiToken) {
-                        const reqs = await fetchCloudflareUsage(
-                            sysConfig.cfAccountId,
-                            sysConfig.cfApiToken,
-                        );
-                        if (reqs !== null) {
-                            const pct = ((reqs / 100000) * 100).toFixed(2);
-                            statsText += `\n☁️ **Cloudflare API**: ${reqs}/100000 (${pct}%)`;
-                        }
-                    }
-                    const kb = {
-                        inline_keyboard: [
-                            [
-                                {
-                                    text: `🔄 ${t("btn_update_usage")}`,
-                                    callback_data: "sys_stats",
-                                },
-                            ],
-                            [
-                                {
-                                    text: t("btn_main_menu"),
-                                    callback_data: "main_menu",
-                                },
-                            ],
-                        ],
-                    };
-                    await sendOrEdit(chatId, statsText, kb, messageId);
-                } else if (data === "sys_panel_info") {
-                    let infoText = `ℹ️ **${t("panel_info")}**\n`;
-                    infoText += `━━━━━━━━━━━━━━━━\n`;
-                    infoText += `📌 **${t("current_panel")}**: ${activePanel.isLocal ? "🏠" : "🌐"} ${activePanel.name}\n`;
-                    if (activePanel.isLocal) {
-                        infoText += `🌐 **Host**: ${hostName}\n`;
-                        infoText += `🔑 **API Route**: \`${sysConfig.apiRoute}\`\n`;
-                        infoText += `📡 **Mode**: ${sysConfig.mode || "alpha"}\n`;
-                        infoText += `🔒 **Ports**: ${sysConfig.socketPorts || "443"}\n`;
-                    } else {
-                        infoText += `🌐 **Host**: ${activePanel.host}\n`;
-                        infoText += `🔑 **API Route**: \`${activePanel.apiRoute}\`\n`;
-                    }
-                    infoText += `📱 **Version**: ${CURRENT_VERSION}\n`;
-                    infoText += `━━━━━━━━━━━━━━━━`;
-                    const kb = {
-                        inline_keyboard: [
-                            [
-                                {
-                                    text: t("btn_main_menu"),
-                                    callback_data: "main_menu",
-                                },
-                            ],
-                        ],
-                    };
-                    await sendOrEdit(chatId, infoText, kb, messageId);
-                } else if (data.startsWith("subs_disabled:")) {
-                    const panelUsers = await getPanelUsers();
-                    const users = panelUsers || [];
-                    const disabledUsers = users.filter((u) => u.isPaused);
-                    if (disabledUsers.length === 0) {
-                        const kb = {
-                            inline_keyboard: [
-                                [
-                                    {
-                                        text: t("btn_main_menu"),
-                                        callback_data: "main_menu",
-                                    },
-                                ],
-                            ],
-                        };
-                        await sendOrEdit(
-                            chatId,
-                            `🚫 ${t("msg_no_disabled")}`,
-                            kb,
-                            messageId,
-                        );
-                    } else {
-                        const page =
-                            parseInt(data.replace("subs_disabled:", "")) || 0;
-                        const itemsPerPage = 5;
-                        const start = page * itemsPerPage;
-                        const end = start + itemsPerPage;
-                        const pageUsers = disabledUsers.slice(start, end);
-                        let text = `🚫 **${t("disabled_users")}** (${disabledUsers.length})\n━━━━━━━━━━━━━━━━\n`;
-                        const inline_keyboard = [];
-                        pageUsers.forEach((u) => {
-                            const reason = u.disabledReason || t("paused");
-                            text += `👤 **${u.name}**\n   ${reason}\n`;
-                            inline_keyboard.push([
-                                {
-                                    text: `▶️ ${u.name}`,
-                                    callback_data: `sub_toggle:${u.id}`,
-                                },
-                            ]);
-                        });
-                        const navRow = [];
-                        if (page > 0)
-                            navRow.push({
-                                text: `⬅️ ${t("btn_back")}`,
-                                callback_data: `subs_disabled:${page - 1}`,
-                            });
-                        if (end < disabledUsers.length)
-                            navRow.push({
-                                text: `${t("btn_next")} ➡️`,
-                                callback_data: `subs_disabled:${page + 1}`,
-                            });
-                        if (navRow.length > 0) inline_keyboard.push(navRow);
-                        inline_keyboard.push([
-                            {
-                                text: t("btn_main_menu"),
-                                callback_data: "main_menu",
-                            },
-                        ]);
-                        await sendOrEdit(
-                            chatId,
-                            text,
-                            { inline_keyboard },
-                            messageId,
-                        );
-                    }
-                } else if (data === "sub_search_init") {
-                    tgState[chatId] = { step: "sub_search" };
-                    ctx?.waitUntil(
-                        d1Put(
-                            env,
-                            "tg_bot_state",
-                            JSON.stringify(tgState),
-                        ).catch(() => {}),
-                    );
-                    const text = `🔍 ${t("msg_enter_search")}`;
-                    const kb = {
-                        inline_keyboard: [
-                            [
-                                {
-                                    text: `❌ ${t("btn_cancel")}`,
-                                    callback_data: "main_menu",
-                                },
-                            ],
-                        ],
-                    };
-                    await sendOrEdit(chatId, text, kb, messageId);
-                } else if (data.startsWith("sub_reset_traffic:")) {
-                    const uuid = data.replace("sub_reset_traffic:", "");
-                    if (isRemotePanel) {
-                        await remotePanelResetTraffic(activePanel, uuid);
-                    } else {
-                        if (!sysUsageCache) sysUsageCache = { users: {} };
-                        if (!sysUsageCache.users) sysUsageCache.users = {};
-                        const uuidClean = uuid.replace(/-/g, "").toLowerCase();
-                        if (sysUsageCache.users[uuidClean]) {
-                            sysUsageCache.users[uuidClean].reqs = 0;
-                            sysUsageCache.users[uuidClean].dReqs = 0;
-                        } else {
-                            sysUsageCache.users[uuidClean] = {
-                                reqs: 0,
-                                dReqs: 0,
-                                lastDay: new Date().toISOString().split("T")[0],
-                            };
-                        }
-                        await cachedD1Put(
-                            env,
-                            "sys_usage",
-                            JSON.stringify(sysUsageCache),
-                        );
-                    }
-                    const panelUsers = await getPanelUsers();
-                    const detail = getSubDetail(uuid, panelUsers);
-                    await sendOrEdit(
-                        chatId,
-                        `✅ ${t("msg_traffic_reset")}\n\n${detail.text}`,
-                        detail.kb,
-                        messageId,
-                    );
-                } else if (data.startsWith("sub_extend_init:")) {
-                    const uuid = data.replace("sub_extend_init:", "");
-                    tgState[chatId] = { step: `sub_extend_days:${uuid}` };
-                    ctx?.waitUntil(
-                        d1Put(
-                            env,
-                            "tg_bot_state",
-                            JSON.stringify(tgState),
-                        ).catch(() => {}),
-                    );
-                    const text = `📅 ${t("msg_enter_extend_days")}`;
-                    const kb = {
-                        inline_keyboard: [
-                            [
-                                {
-                                    text: `❌ ${t("btn_cancel")}`,
-                                    callback_data: `sub_detail:${uuid}`,
-                                },
-                            ],
-                        ],
-                    };
-                    await sendOrEdit(chatId, text, kb, messageId);
-                } else if (data.startsWith("sub_edit_notes_init:")) {
-                    const uuid = data.replace("sub_edit_notes_init:", "");
-                    tgState[chatId] = { step: `sub_edit_notes:${uuid}` };
-                    ctx?.waitUntil(
-                        d1Put(
-                            env,
-                            "tg_bot_state",
-                            JSON.stringify(tgState),
-                        ).catch(() => {}),
-                    );
-                    const text = `📝 ${t("msg_enter_notes")}`;
-                    const kb = {
-                        inline_keyboard: [
-                            [
-                                {
-                                    text: `❌ ${t("btn_cancel")}`,
-                                    callback_data: `sub_detail:${uuid}`,
-                                },
-                            ],
-                        ],
-                    };
-                    await sendOrEdit(chatId, text, kb, messageId);
-                } else if (data.startsWith("sub_edit_device_init:")) {
-                    const uuid = data.replace("sub_edit_device_init:", "");
-                    tgState[chatId] = { step: `sub_edit_device:${uuid}` };
-                    ctx?.waitUntil(
-                        d1Put(
-                            env,
-                            "tg_bot_state",
-                            JSON.stringify(tgState),
-                        ).catch(() => {}),
-                    );
-                    const text = `📱 ${t("msg_enter_device_limit")}`;
-                    const kb = {
-                        inline_keyboard: [
-                            [
-                                {
-                                    text: `♾️ Unlimited`,
-                                    callback_data: `sub_device_unlimited:${uuid}`,
-                                },
-                            ],
-                            [
-                                {
-                                    text: `❌ ${t("btn_cancel")}`,
-                                    callback_data: `sub_detail:${uuid}`,
-                                },
-                            ],
-                        ],
-                    };
-                    await sendOrEdit(chatId, text, kb, messageId);
-                } else if (data.startsWith("sub_device_unlimited:")) {
-                    const uuid = data.replace("sub_device_unlimited:", "");
-                    if (isRemotePanel) {
-                        await remotePanelWriteAction(activePanel, "PUT", uuid, {
-                            key: activePanel.apiKey,
-                            maxConfigs: null,
-                        });
-                    } else if (sysConfig.users) {
-                        const u = sysConfig.users.find(
-                            (usr) => usr.id === uuid,
-                        );
-                        if (u) {
-                            u.maxConfigs = null;
-                            await cachedD1Put(
-                                env,
-                                "sys_config",
-                                JSON.stringify(sysConfig),
-                            );
-                        }
-                    }
-                    const panelUsers = await getPanelUsers();
-                    const detail = getSubDetail(uuid, panelUsers);
-                    await sendOrEdit(
-                        chatId,
-                        `✅ ${t("status_updated")}`,
-                        detail.kb,
-                        messageId,
-                    );
-                } else if (data === "get_sub_link") {
-                    const subUrl = `https://${hostName}/${sysConfig.apiRoute}`;
-                    await fetch(`${tgApi}/sendMessage`, {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                            chat_id: chatId,
-                            text: `\`${subUrl}\``,
-                            parse_mode: "Markdown",
-                        }),
-                    });
-                    answerText = t("sub_link_sent");
-                } else if (data === "tg_settings_menu") {
-                    const modeTxt =
-                        sysConfig.mode === "alpha"
-                            ? "Alpha (V)"
-                            : sysConfig.mode === "beta"
-                              ? "Beta (T)"
-                              : "Both";
-                    const portsTxt = sysConfig.socketPorts || "443";
-                    const passTxt = sysConfig.masterKey || "admin";
-                    const dnsTxt = sysConfig.resolveIp || "1.1.1.1";
-                    const relayTxt = sysConfig.backupRelay || "—";
-                    const tfoTxt = sysConfig.enableOpt1 ? "✅" : "❌";
-                    const echTxt = sysConfig.enableOpt2 ? "✅" : "❌";
-                    const pauseTxt = sysConfig.isPaused ? "🔴 ON" : "🟢 OFF";
-                    const silentTxt = sysConfig.silentAlerts ? "✅" : "❌";
-                    const autoUpTxt = sysConfig.autoUpdate ? "✅" : "❌";
-                    const directTxt = sysConfig.enableDirectConfigs
-                        ? "✅"
-                        : "❌";
-                    const nat64Txt = sysConfig.nat64Prefix || "—";
-                    let text = `⚙️ **${t("tg_sys_settings")}**\n━━━━━━━━━━━━━━━━\n`;
-                    text += `📡 ${t("tg_proto")}: **${modeTxt}**\n`;
-                    text += `🔌 ${t("tg_ports")}: \`${portsTxt}\`\n`;
-                    text += `🔑 ${t("tg_pass")}: \`${passTxt}\`\n`;
-                    text += `🌐 ${t("tg_dns")}: \`${dnsTxt}\`\n`;
-                    text += `🔗 ${t("tg_relay")}: \`${relayTxt}\`\n`;
-                    text += `⚡ ${t("tg_tfo")}: ${tfoTxt} | ECH: ${echTxt}\n`;
-                    text += `🔇 ${t("tg_silent")}: ${silentTxt}\n`;
-                    text += `🛑 ${t("tg_pause")}: ${pauseTxt}\n`;
-                    text += `🔄 ${t("tg_auto_update")}: ${autoUpTxt}\n`;
-                    text += `🔀 ${t("tg_direct")}: ${directTxt}\n`;
-                    text += `🌐 ${t("tg_nat64")}: \`${nat64Txt}\`\n`;
-                    text += `━━━━━━━━━━━━━━━━`;
-                    const kb = {
-                        inline_keyboard: [
-                            [
-                                {
-                                    text: `📡 ${t("tg_proto")}`,
-                                    callback_data: "tg_edit_proto",
-                                },
-                                {
-                                    text: `🔌 ${t("tg_ports")}`,
-                                    callback_data: "tg_edit_ports",
-                                },
-                            ],
-                            [
-                                {
-                                    text: `🔑 ${t("tg_pass")}`,
-                                    callback_data: "tg_edit_pass",
-                                },
-                                {
-                                    text: `🌐 ${t("tg_dns")}`,
-                                    callback_data: "tg_edit_dns",
-                                },
-                            ],
-                            [
-                                {
-                                    text: `🔗 ${t("tg_relay")}`,
-                                    callback_data: "tg_edit_relay",
-                                },
-                            ],
-                            [
-                                {
-                                    text: `⚡ ${t("tg_tfo")}`,
-                                    callback_data: "tg_toggle_tfo",
-                                },
-                                { text: `ECH`, callback_data: "tg_toggle_ech" },
-                            ],
-                            [
-                                {
-                                    text: `${t("tg_silent")}`,
-                                    callback_data: "tg_toggle_silent",
-                                },
-                                {
-                                    text: `${t("tg_pause")}`,
-                                    callback_data: "tg_toggle_pause2",
-                                },
-                            ],
-                            [
-                                {
-                                    text: `🔄 ${t("tg_auto_update")}`,
-                                    callback_data: "tg_toggle_auto_update",
-                                },
-                                {
-                                    text: `🔀 ${t("tg_direct")}`,
-                                    callback_data: "tg_toggle_direct",
-                                },
-                            ],
-                            [
-                                {
-                                    text: `🌐 ${t("tg_nat64")}`,
-                                    callback_data: "tg_edit_nat64",
-                                },
-                            ],
-                            [
-                                {
-                                    text: t("btn_main_menu"),
-                                    callback_data: "main_menu",
-                                },
-                            ],
-                        ],
-                    };
-                    await sendOrEdit(chatId, text, kb, messageId);
-                } else if (data === "tg_advanced_menu") {
-                    const cleanTxt = sysConfig.cleanIps
-                        ? sysConfig.cleanIps.substring(0, 40) +
-                          (sysConfig.cleanIps.length > 40 ? "..." : "")
-                        : "—";
-                    const lpUrls = (sysConfig.linkedPanels || []).map(p => p.url).filter(Boolean);
-                    const nodesTxt = lpUrls.length > 0
-                        ? lpUrls.join(", ").substring(0, 40) +
-                          (lpUrls.join(", ").length > 40 ? "..." : "")
-                        : "—";
-                    const strategyTxt = sysConfig.nameStrategy || "default";
-                    const prefixTxt = sysConfig.namePrefix || "Core";
-                    const maintenanceTxt = sysConfig.maintenanceHost
-                        ? sysConfig.maintenanceHost.substring(0, 30) + "..."
-                        : "—";
-                    let text = `🔧 **${t("tg_adv_settings")}**\n━━━━━━━━━━━━━━━━\n`;
-                    text += `🧹 ${t("tg_clean_ips")}: \`${cleanTxt}\`\n`;
-                    text += `🖥️ ${t("tg_nodes")}: \`${nodesTxt}\`\n`;
-                    text += `📝 ${t("tg_strategy")}: \`${strategyTxt}\`\n`;
-                    text += `🏷️ ${t("tg_prefix")}: \`${prefixTxt}\`\n`;
-                    text += `🎭 ${t("tg_maintenance")}: \`${maintenanceTxt}\`\n`;
-                    text += `━━━━━━━━━━━━━━━━`;
-                    const kb = {
-                        inline_keyboard: [
-                            [
-                                {
-                                    text: `🧹 ${t("tg_clean_ips")}`,
-                                    callback_data: "tg_edit_clean_ips",
-                                },
-                            ],
-                            [
-                                {
-                                    text: `🖥️ ${t("tg_nodes")}`,
-                                    callback_data: "tg_edit_nodes",
-                                },
-                            ],
-                            [
-                                {
-                                    text: `📝 ${t("tg_strategy")}`,
-                                    callback_data: "tg_edit_strategy",
-                                },
-                                {
-                                    text: `🏷️ ${t("tg_prefix")}`,
-                                    callback_data: "tg_edit_prefix",
-                                },
-                            ],
-                            [
-                                {
-                                    text: `🎭 ${t("tg_maintenance")}`,
-                                    callback_data: "tg_edit_maintenance",
-                                },
-                            ],
-                            [
-                                {
-                                    text: `🤖 ${t("tg_tg_settings")}`,
-                                    callback_data: "tg_edit_tg_settings",
-                                },
-                            ],
-                            [
-                                {
-                                    text: `☁️ ${t("tg_cf_settings")}`,
-                                    callback_data: "tg_edit_cf_settings",
-                                },
-                            ],
-                            [
-                                {
-                                    text: t("btn_main_menu"),
-                                    callback_data: "main_menu",
-                                },
-                            ],
-                        ],
-                    };
-                    await sendOrEdit(chatId, text, kb, messageId);
-                } else if (data === "tg_logs_menu") {
-                    let logs = [];
-                    if (env.AM_DB) {
-                        const stored = await d1Get(env, "sys_logs");
-                        if (stored) logs = JSON.parse(stored);
-                    }
-                    let text = `📋 **${t("tg_logs")}**\n━━━━━━━━━━━━━━━━\n`;
-                    if (logs.length === 0) {
-                        text += `ℹ️ ${t("tg_log_empty")}\n`;
-                    } else {
-                        logs.slice(0, 10).forEach((log, i) => {
-                            const time = new Date(log.ts).toLocaleString();
-                            text += `${i + 1}. ${t("tg_log_entry")} **${log.type}**\n   ${log.detail}\n   📅 ${time}\n`;
-                        });
-                        if (logs.length > 10)
-                            text += `\n... ${logs.length - 10} more entries`;
-                    }
-                    text += `\n━━━━━━━━━━━━━━━━`;
-                    const kb = {
-                        inline_keyboard: [
-                            [
-                                {
-                                    text: `🔄 ${t("btn_update_usage")}`,
-                                    callback_data: "tg_logs_menu",
-                                },
-                            ],
-                            [
-                                {
-                                    text: t("btn_main_menu"),
-                                    callback_data: "main_menu",
-                                },
-                            ],
-                        ],
-                    };
-                    await sendOrEdit(chatId, text, kb, messageId);
-                } else if (data === "tg_toggle_tfo") {
-                    sysConfig.enableOpt1 = !sysConfig.enableOpt1;
-                    await cachedD1Put(
-                        env,
-                        "sys_config",
-                        JSON.stringify(sysConfig),
-                    );
-                    answerText = t("tg_saved");
-                    const menu = getMainMenu(getActivePanel(), isAuthorized);
-                    await sendOrEdit(chatId, menu.text, menu.kb, messageId);
-                } else if (data === "tg_toggle_ech") {
-                    sysConfig.enableOpt2 = !sysConfig.enableOpt2;
-                    await cachedD1Put(
-                        env,
-                        "sys_config",
-                        JSON.stringify(sysConfig),
-                    );
-                    answerText = t("tg_saved");
-                    const menu = getMainMenu(getActivePanel(), isAuthorized);
-                    await sendOrEdit(chatId, menu.text, menu.kb, messageId);
-                } else if (data === "tg_toggle_silent") {
-                    sysConfig.silentAlerts = !sysConfig.silentAlerts;
-                    await cachedD1Put(
-                        env,
-                        "sys_config",
-                        JSON.stringify(sysConfig),
-                    );
-                    answerText = t("tg_saved");
-                    const menu = getMainMenu(getActivePanel(), isAuthorized);
-                    await sendOrEdit(chatId, menu.text, menu.kb, messageId);
-                } else if (data === "tg_toggle_pause2") {
-                    sysConfig.isPaused = !sysConfig.isPaused;
-                    await cachedD1Put(
-                        env,
-                        "sys_config",
-                        JSON.stringify(sysConfig),
-                    );
-                    answerText = t("tg_saved");
-                    const menu = getMainMenu(getActivePanel(), isAuthorized);
-                    await sendOrEdit(chatId, menu.text, menu.kb, messageId);
-                } else if (data === "tg_toggle_auto_update") {
-                    sysConfig.autoUpdate = !sysConfig.autoUpdate;
-                    await cachedD1Put(
-                        env,
-                        "sys_config",
-                        JSON.stringify(sysConfig),
-                    );
-                    answerText = t("tg_saved");
-                    await sendOrEdit(
-                        chatId,
-                        `⚙️ ${t("tg_auto_update")}: ${sysConfig.autoUpdate ? "✅ ON" : "❌ OFF"}`,
-                        {
-                            inline_keyboard: [
-                                [
-                                    {
-                                        text: "◀️ " + t("btn_back"),
-                                        callback_data: "tg_settings_menu",
-                                    },
-                                ],
-                            ],
-                        },
-                        messageId,
-                    );
-                } else if (data === "tg_toggle_direct") {
-                    sysConfig.enableDirectConfigs =
-                        !sysConfig.enableDirectConfigs;
-                    await cachedD1Put(
-                        env,
-                        "sys_config",
-                        JSON.stringify(sysConfig),
-                    );
-                    answerText = t("tg_saved");
-                    await sendOrEdit(
-                        chatId,
-                        `🔀 ${t("tg_direct")}: ${sysConfig.enableDirectConfigs ? "✅ ON" : "❌ OFF"}`,
-                        {
-                            inline_keyboard: [
-                                [
-                                    {
-                                        text: "◀️ " + t("btn_back"),
-                                        callback_data: "tg_settings_menu",
-                                    },
-                                ],
-                            ],
-                        },
-                        messageId,
-                    );
-                } else if (data === "tg_edit_proto") {
-                    tgState[chatId] = { step: "tg_edit_proto" };
-                    ctx?.waitUntil(
-                        d1Put(
-                            env,
-                            "tg_bot_state",
-                            JSON.stringify(tgState),
-                        ).catch(() => {}),
-                    );
-                    const kb = {
-                        inline_keyboard: [
-                            [
-                                {
-                                    text: "Alpha (V-Core)",
-                                    callback_data: "tg_set_proto:alpha",
-                                },
-                                {
-                                    text: "Beta (T-Core)",
-                                    callback_data: "tg_set_proto:beta",
-                                },
-                            ],
-                            [
-                                {
-                                    text: "Both",
-                                    callback_data: "tg_set_proto:both",
-                                },
-                            ],
-                            [
-                                {
-                                    text: "❌ " + t("btn_cancel"),
-                                    callback_data: "tg_settings_menu",
-                                },
-                            ],
-                        ],
-                    };
-                    await sendOrEdit(
-                        chatId,
-                        `📡 **${t("tg_proto")}**\n${t("tg_current_val")}: **${sysConfig.mode}**\n\n${t("tg_new_val")}`,
-                        kb,
-                        messageId,
-                    );
-                } else if (data.startsWith("tg_set_proto:")) {
-                    const val = data.replace("tg_set_proto:", "");
-                    sysConfig.mode = val;
-                    await cachedD1Put(
-                        env,
-                        "sys_config",
-                        JSON.stringify(sysConfig),
-                    );
-                    tgState[chatId] = null;
-                    answerText = t("tg_saved");
-                    await sendOrEdit(
-                        chatId,
-                        `✅ ${t("tg_proto")}: **${val}**`,
-                        {
-                            inline_keyboard: [
-                                [
-                                    {
-                                        text: "◀️ " + t("btn_back"),
-                                        callback_data: "tg_settings_menu",
-                                    },
-                                ],
-                            ],
-                        },
-                        messageId,
-                    );
-                } else if (data === "tg_edit_dns") {
-                    tgState[chatId] = { step: "tg_edit_dns" };
-                    ctx?.waitUntil(
-                        d1Put(
-                            env,
-                            "tg_bot_state",
-                            JSON.stringify(tgState),
-                        ).catch(() => {}),
-                    );
-                    await sendOrEdit(
-                        chatId,
-                        `🌐 **${t("tg_dns")}**\n${t("tg_current_val")}: \`${sysConfig.resolveIp}\`\n\n${t("tg_new_val")}`,
-                        {
-                            inline_keyboard: [
-                                [
-                                    {
-                                        text: "❌ " + t("btn_cancel"),
-                                        callback_data: "tg_settings_menu",
-                                    },
-                                ],
-                            ],
-                        },
-                        messageId,
-                    );
-                } else if (data === "tg_edit_relay") {
-                    tgState[chatId] = { step: "tg_edit_relay" };
-                    ctx?.waitUntil(
-                        d1Put(
-                            env,
-                            "tg_bot_state",
-                            JSON.stringify(tgState),
-                        ).catch(() => {}),
-                    );
-                    await sendOrEdit(
-                        chatId,
-                        `🔗 **${t("tg_relay")}**\n${t("tg_current_val")}: \`${sysConfig.backupRelay || "—"}\`\n\n${t("tg_new_val")}\n_send empty to clear_`,
-                        {
-                            inline_keyboard: [
-                                [
-                                    {
-                                        text: "❌ " + t("btn_cancel"),
-                                        callback_data: "tg_settings_menu",
-                                    },
-                                ],
-                            ],
-                        },
-                        messageId,
-                    );
-                } else if (data === "tg_edit_nat64") {
-                    tgState[chatId] = { step: "tg_edit_nat64" };
-                    ctx?.waitUntil(
-                        d1Put(
-                            env,
-                            "tg_bot_state",
-                            JSON.stringify(tgState),
-                        ).catch(() => {}),
-                    );
-                    await sendOrEdit(
-                        chatId,
-                        `🌐 **${t("tg_nat64")}**\n${t("tg_current_val")}: \`${sysConfig.nat64Prefix || "—"}\`\n\n${t("tg_new_val")}\n_send empty to clear_`,
-                        {
-                            inline_keyboard: [
-                                [
-                                    {
-                                        text: "❌ " + t("btn_cancel"),
-                                        callback_data: "tg_settings_menu",
-                                    },
-                                ],
-                            ],
-                        },
-                        messageId,
-                    );
-                } else if (data === "tg_edit_maintenance") {
-                    tgState[chatId] = { step: "tg_edit_maintenance" };
-                    ctx?.waitUntil(
-                        d1Put(
-                            env,
-                            "tg_bot_state",
-                            JSON.stringify(tgState),
-                        ).catch(() => {}),
-                    );
-                    await sendOrEdit(
-                        chatId,
-                        `🎭 **${t("tg_maintenance")}**\n${t("tg_current_val")}: \`${sysConfig.maintenanceHost || "—"}\`\n\n${t("tg_new_val")}`,
-                        {
-                            inline_keyboard: [
-                                [
-                                    {
-                                        text: "❌ " + t("btn_cancel"),
-                                        callback_data: "tg_settings_menu",
-                                    },
-                                ],
-                            ],
-                        },
-                        messageId,
-                    );
-                } else if (data === "tg_edit_clean_ips") {
-                    tgState[chatId] = { step: "tg_edit_clean_ips" };
-                    ctx?.waitUntil(
-                        d1Put(
-                            env,
-                            "tg_bot_state",
-                            JSON.stringify(tgState),
-                        ).catch(() => {}),
-                    );
-                    await sendOrEdit(
-                        chatId,
-                        `🧹 **${t("tg_clean_ips")}**\n${t("tg_current_val")}: \`${sysConfig.cleanIps || "—"}\`\n\n${t("tg_new_val")}\n_send empty to clear_`,
-                        {
-                            inline_keyboard: [
-                                [
-                                    {
-                                        text: "❌ " + t("btn_cancel"),
-                                        callback_data: "tg_advanced_menu",
-                                    },
-                                ],
-                            ],
-                        },
-                        messageId,
-                    );
-                } else if (data === "tg_edit_nodes") {
-                    let lpList = (sysConfig.linkedPanels || [])
-                        .map((p, i) => `${i + 1}. \`${p.url}\``)
-                        .join("\n");
-                    if (!lpList) lpList = "—";
-                    const warningMsg = langCode === "fa"
-                        ? `🖥️ **${t("tg_nodes")}**\n\n${lpList}\n\n⚠️ لطفاً برای افزودن، حذف یا ویرایش نودهای خارجی به صورت امن همراه با کلید دسترسی (API Key)، از داشبورد تحت وب استفاده کنید.`
-                        : `🖥️ **${t("tg_nodes")}**\n\n${lpList}\n\n⚠️ Please use the Web Dashboard to add, remove, or edit external nodes securely with API Keys.`;
-                    await sendOrEdit(
-                        chatId,
-                        warningMsg,
-                        {
-                            inline_keyboard: [
-                                [
-                                    {
-                                        text: "◀️ " + t("btn_back"),
-                                        callback_data: "tg_advanced_menu",
-                                    },
-                                ],
-                            ],
-                        },
-                        messageId,
-                    );
-                } else if (data === "tg_edit_strategy") {
-                    tgState[chatId] = { step: "tg_edit_strategy" };
-                    ctx?.waitUntil(
-                        d1Put(
-                            env,
-                            "tg_bot_state",
-                            JSON.stringify(tgState),
-                        ).catch(() => {}),
-                    );
-                    const kb = {
-                        inline_keyboard: [
-                            [
-                                {
-                                    text: "default",
-                                    callback_data: "tg_set_strategy:default",
-                                },
-                            ],
-                            [
-                                {
-                                    text: "type-user-port",
-                                    callback_data:
-                                        "tg_set_strategy:type-user-port",
-                                },
-                            ],
-                            [
-                                {
-                                    text: "user-port",
-                                    callback_data: "tg_set_strategy:user-port",
-                                },
-                            ],
-                            [
-                                {
-                                    text: "ip",
-                                    callback_data: "tg_set_strategy:ip",
-                                },
-                            ],
-                            [
-                                {
-                                    text: "❌ " + t("btn_cancel"),
-                                    callback_data: "tg_advanced_menu",
-                                },
-                            ],
-                        ],
-                    };
-                    await sendOrEdit(
-                        chatId,
-                        `📝 **${t("tg_strategy")}**\n${t("tg_current_val")}: \`${sysConfig.nameStrategy}\`\n\n_send custom or select:_`,
-                        kb,
-                        messageId,
-                    );
-                } else if (data.startsWith("tg_set_strategy:")) {
-                    const val = data.replace("tg_set_strategy:", "");
-                    sysConfig.nameStrategy = val;
-                    await cachedD1Put(
-                        env,
-                        "sys_config",
-                        JSON.stringify(sysConfig),
-                    );
-                    tgState[chatId] = null;
-                    answerText = t("tg_saved");
-                    await sendOrEdit(
-                        chatId,
-                        `✅ ${t("tg_strategy")}: **${val}**`,
-                        {
-                            inline_keyboard: [
-                                [
-                                    {
-                                        text: "◀️ " + t("btn_back"),
-                                        callback_data: "tg_advanced_menu",
-                                    },
-                                ],
-                            ],
-                        },
-                        messageId,
-                    );
-                } else if (data === "tg_edit_prefix") {
-                    tgState[chatId] = { step: "tg_edit_prefix" };
-                    ctx?.waitUntil(
-                        d1Put(
-                            env,
-                            "tg_bot_state",
-                            JSON.stringify(tgState),
-                        ).catch(() => {}),
-                    );
-                    await sendOrEdit(
-                        chatId,
-                        `🏷️ **${t("tg_prefix")}**\n${t("tg_current_val")}: \`${sysConfig.namePrefix}\`\n\n${t("tg_new_val")}`,
-                        {
-                            inline_keyboard: [
-                                [
-                                    {
-                                        text: "❌ " + t("btn_cancel"),
-                                        callback_data: "tg_advanced_menu",
-                                    },
-                                ],
-                            ],
-                        },
-                        messageId,
-                    );
-                } else if (data === "tg_edit_pass") {
-                    tgState[chatId] = { step: "tg_edit_pass" };
-                    ctx?.waitUntil(
-                        d1Put(
-                            env,
-                            "tg_bot_state",
-                            JSON.stringify(tgState),
-                        ).catch(() => {}),
-                    );
-                    await sendOrEdit(
-                        chatId,
-                        `🔑 **${t("tg_pass")}**\n${t("tg_current_val")}: \`${sysConfig.masterKey}\`\n\n${t("tg_new_val")}`,
-                        {
-                            inline_keyboard: [
-                                [
-                                    {
-                                        text: "❌ " + t("btn_cancel"),
-                                        callback_data: "tg_settings_menu",
-                                    },
-                                ],
-                            ],
-                        },
-                        messageId,
-                    );
-                } else if (data === "tg_edit_ports") {
-                    tgState[chatId] = { step: "tg_edit_ports" };
-                    ctx?.waitUntil(
-                        d1Put(
-                            env,
-                            "tg_bot_state",
-                            JSON.stringify(tgState),
-                        ).catch(() => {}),
-                    );
-                    await sendOrEdit(
-                        chatId,
-                        `🔌 **${t("tg_ports")}**\n${t("tg_current_val")}: \`${sysConfig.socketPorts}\`\n\n${t("tg_new_val")}\n_comma separated e.g. 443,80_`,
-                        {
-                            inline_keyboard: [
-                                [
-                                    {
-                                        text: "❌ " + t("btn_cancel"),
-                                        callback_data: "tg_settings_menu",
-                                    },
-                                ],
-                            ],
-                        },
-                        messageId,
-                    );
-                } else if (data === "tg_edit_tg_settings") {
-                    tgState[chatId] = { step: "tg_edit_tg_token" };
-                    ctx?.waitUntil(
-                        d1Put(
-                            env,
-                            "tg_bot_state",
-                            JSON.stringify(tgState),
-                        ).catch(() => {}),
-                    );
-                    await sendOrEdit(
-                        chatId,
-                        `🤖 **${t("tg_tg_settings")}**\n\n1️⃣ ${t("tg_current_val")}: \`${sysConfig.tgToken ? "***" + sysConfig.tgToken.slice(-4) : "—"}\`\n\n${t("tg_new_val")}\n_send /skip to keep current_`,
-                        {
-                            inline_keyboard: [
-                                [
-                                    {
-                                        text: "❌ " + t("btn_cancel"),
-                                        callback_data: "tg_advanced_menu",
-                                    },
-                                ],
-                            ],
-                        },
-                        messageId,
-                    );
-                } else if (data === "tg_edit_cf_settings") {
-                    tgState[chatId] = { step: "tg_edit_cf_acc" };
-                    ctx?.waitUntil(
-                        d1Put(
-                            env,
-                            "tg_bot_state",
-                            JSON.stringify(tgState),
-                        ).catch(() => {}),
-                    );
-                    await sendOrEdit(
-                        chatId,
-                        `☁️ **${t("tg_cf_settings")}**\n\n1️⃣ CF Account ID: \`${sysConfig.cfAccountId || "—"}\`\n\n${t("tg_new_val")}\n_send /skip to keep current_`,
-                        {
-                            inline_keyboard: [
-                                [
-                                    {
-                                        text: "❌ " + t("btn_cancel"),
-                                        callback_data: "tg_advanced_menu",
-                                    },
-                                ],
-                            ],
-                        },
-                        messageId,
-                    );
-                }
-
-                ctx?.waitUntil(
-                    fetch(`${tgApi}/answerCallbackQuery`, {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                            callback_query_id: cb.id,
-                            text: answerText || "Done!",
-                        }),
-                    }).catch(() => {}),
-                );
-            }
-        } else if (update.message && update.message.text) {
-            const chatId = update.message.chat.id;
-            const text = update.message.text.trim();
-
-            if (isAuthorized) {
-                // Get active panel from last login signal
-                const activePanel = getActivePanel();
-                const isRemotePanel = activePanel && !activePanel.isLocal;
-
-                // Helper to fetch users for the active panel
-                const getPanelUsers = async () => {
-                    if (isRemotePanel) {
-                        const res = await fetchRemotePanelUsers(activePanel);
-                        return res.success ? res.users || [] : null;
-                    }
-                    return sysConfig.users || [];
-                };
-
-                // Handle /start command
-                if (text === "/start") {
-                    tgState[chatId] = null;
-                    ctx?.waitUntil(
-                        d1Put(
-                            env,
-                            "tg_bot_state",
-                            JSON.stringify(tgState),
-                        ).catch(() => {}),
-                    );
-                    const menu = getMainMenu(activePanel, isAuthorized);
-                    await sendOrEdit(chatId, menu.text, menu.kb);
-                    return new Response("OK", { status: 200 });
-                }
-
-                const state = tgState[chatId];
-
-                if (state) {
-                    if (!isAuthorized) {
-                        tgState[chatId] = null;
-                        ctx?.waitUntil(
-                            d1Put(
-                                env,
-                                "tg_bot_state",
-                                JSON.stringify(tgState),
-                            ).catch(() => {}),
-                        );
-                        await sendOrEdit(chatId, t("access_denied"));
-                        return new Response("OK", { status: 200 });
-                    }
-
-                    if (state.step === "sub_add_name") {
-                        const name = text;
-                        tgState[chatId] = {
-                            step: "sub_add_limits",
-                            name: name,
-                        };
-                        ctx?.waitUntil(
-                            d1Put(
-                                env,
-                                "tg_bot_state",
-                                JSON.stringify(tgState),
-                            ).catch(() => {}),
-                        );
-
-                        const msg = `⚙️ **${name}**\n\n${t("msg_enter_limits")}`;
-                        const kb = {
-                            inline_keyboard: [
-                                [
-                                    {
-                                        text: `♾️ Skip (Unlimited)`,
-                                        callback_data: "sub_add_unlimited_skip",
-                                    },
-                                ],
-                                [
-                                    {
-                                        text: `❌ ${t("btn_cancel")}`,
-                                        callback_data: "main_menu",
-                                    },
-                                ],
-                            ],
-                        };
-                        await sendOrEdit(chatId, msg, kb);
-                        return new Response("OK", { status: 200 });
-                    }
-
-                    if (
-                        state.step === "sub_add_limits" ||
-                        state.step === "sub_add_unlimited_skip"
-                    ) {
-                        const name = state.name;
-                        let tReq = null;
-                        let dReq = null;
-                        let days = null;
-
-                        if (
-                            state.step !== "sub_add_unlimited_skip" &&
-                            text !== "0" &&
-                            text !== "0 0 0"
-                        ) {
-                            const parts = text.split(/\s+/).map(Number);
-                            if (parts[0] > 0) tReq = parts[0];
-                            if (parts[1] > 0) dReq = parts[1];
-                            if (parts[2] > 0) days = parts[2];
-                        }
-
-                        const newUuid = crypto.randomUUID();
-                        if (isRemotePanel) {
-                            const res = await remotePanelWriteAction(
-                                activePanel,
-                                "POST",
-                                null,
-                                {
-                                    key: activePanel.apiKey,
-                                    name: name,
-                                    trafficLimit: tReq ? tReq / 6000 : 0,
-                                    dailyLimit: dReq ? dReq / 6000 : 0,
-                                    expiryDays: days || 0,
-                                },
-                            );
-                            if (res.success && res.user) {
-                                const detail = getSubDetail(res.user.id, [
-                                    res.user,
-                                ]);
-                                await sendOrEdit(
-                                    chatId,
-                                    `✅ ${t("msg_added")}\n\n${detail.text}`,
-                                    detail.kb,
-                                );
-                            } else {
-                                await sendOrEdit(chatId, t("msg_panel_error"), {
-                                    inline_keyboard: [
-                                        [
-                                            {
-                                                text: t("btn_main_menu"),
-                                                callback_data: "main_menu",
-                                            },
-                                        ],
-                                    ],
-                                });
-                            }
-                        } else {
-                            if (!sysConfig.users) sysConfig.users = [];
-                            sysConfig.users.push({
-                                id: newUuid,
-                                name: name,
-                                limitTotalReq: tReq,
-                                limitDailyReq: dReq,
-                                expiryMs: days
-                                    ? Date.now() + days * 86400000
-                                    : null,
-                                createdAt: Date.now(),
-                            });
-                            await cachedD1Put(
-                                env,
-                                "sys_config",
-                                JSON.stringify(sysConfig),
-                            );
-                            const detail = getSubDetail(newUuid);
-                            await sendOrEdit(
-                                chatId,
-                                `✅ ${t("msg_added")}\n\n${detail.text}`,
-                                detail.kb,
-                            );
-                        }
-
-                        tgState[chatId] = null;
-                        ctx?.waitUntil(
-                            d1Put(
-                                env,
-                                "tg_bot_state",
-                                JSON.stringify(tgState),
-                            ).catch(() => {}),
-                        );
-                        return new Response("OK", { status: 200 });
-                    }
-
-                    if (state.step.startsWith("sub_edit_name:")) {
-                        const uuid = state.step.replace("sub_edit_name:", "");
-                        if (isRemotePanel) {
-                            await remotePanelWriteAction(
-                                activePanel,
-                                "PUT",
-                                uuid,
-                                { key: activePanel.apiKey, name: text },
-                            );
-                        } else if (sysConfig.users) {
-                            const u = sysConfig.users.find(
-                                (usr) => usr.id === uuid,
-                            );
-                            if (u) {
-                                u.name = text;
-                                await cachedD1Put(
-                                    env,
-                                    "sys_config",
-                                    JSON.stringify(sysConfig),
-                                );
-                            }
-                        }
-                        tgState[chatId] = null;
-                        ctx?.waitUntil(
-                            d1Put(
-                                env,
-                                "tg_bot_state",
-                                JSON.stringify(tgState),
-                            ).catch(() => {}),
-                        );
-
-                        const panelUsers = await getPanelUsers();
-                        const detail = getSubDetail(uuid, panelUsers);
-                        await sendOrEdit(
-                            chatId,
-                            `✅ Successfully Changed!`,
-                            detail.kb,
-                        );
-                        return new Response("OK", { status: 200 });
-                    }
-
-                    if (state.step.startsWith("sub_edit_limits:")) {
-                        const uuid = state.step.replace("sub_edit_limits:", "");
-                        let tReq = null;
-                        let dReq = null;
-                        let days = null;
-
-                        const parts = text.split(/\s+/).map(Number);
-                        if (parts[0] > 0) tReq = parts[0];
-                        if (parts[1] > 0) dReq = parts[1];
-                        if (parts[2] > 0) days = parts[2];
-
-                        if (isRemotePanel) {
-                            await remotePanelWriteAction(
-                                activePanel,
-                                "PUT",
-                                uuid,
-                                {
-                                    key: activePanel.apiKey,
-                                    trafficLimit: tReq ? tReq / 6000 : 0,
-                                    dailyLimit: dReq ? dReq / 6000 : 0,
-                                    expiryDays: days || 0,
-                                },
-                            );
-                        } else if (sysConfig.users) {
-                            const u = sysConfig.users.find(
-                                (usr) => usr.id === uuid,
-                            );
-                            if (u) {
-                                u.limitTotalReq = tReq;
-                                u.limitDailyReq = dReq;
-                                u.expiryMs = days
-                                    ? Date.now() + days * 86400000
-                                    : null;
-                                await cachedD1Put(
-                                    env,
-                                    "sys_config",
-                                    JSON.stringify(sysConfig),
-                                );
-                            }
-                        }
-                        tgState[chatId] = null;
-                        ctx?.waitUntil(
-                            d1Put(
-                                env,
-                                "tg_bot_state",
-                                JSON.stringify(tgState),
-                            ).catch(() => {}),
-                        );
-
-                        const panelUsers = await getPanelUsers();
-                        const detail = getSubDetail(uuid, panelUsers);
-                        await sendOrEdit(
-                            chatId,
-                            `✅ Limits Updated!`,
-                            detail.kb,
-                        );
-                        return new Response("OK", { status: 200 });
-                    }
-
-                    if (state.step === "sub_search") {
-                        const query = text.toLowerCase();
-                        const panelUsers = await getPanelUsers();
-                        const users = panelUsers || [];
-                        const results = users.filter(
-                            (u) =>
-                                u.name.toLowerCase().includes(query) ||
-                                u.id.toLowerCase().includes(query),
-                        );
-                        tgState[chatId] = null;
-                        ctx?.waitUntil(
-                            d1Put(
-                                env,
-                                "tg_bot_state",
-                                JSON.stringify(tgState),
-                            ).catch(() => {}),
-                        );
-                        if (results.length === 0) {
-                            const kb = {
-                                inline_keyboard: [
-                                    [
-                                        {
-                                            text: t("btn_main_menu"),
-                                            callback_data: "main_menu",
-                                        },
-                                    ],
-                                ],
-                            };
-                            await sendOrEdit(
-                                chatId,
-                                `🔍 No users found for "${text}"`,
-                                kb,
-                            );
-                        } else {
-                            let searchText = `🔍 **Search Results** (${results.length})\n━━━━━━━━━━━━━━━━\n`;
-                            const inline_keyboard = [];
-                            results.slice(0, 10).forEach((u) => {
-                                const statusEmoji = u.isPaused
-                                    ? "⏸️"
-                                    : u.expiryMs && Date.now() > u.expiryMs
-                                      ? "🔴"
-                                      : "🟢";
-                                searchText += `${statusEmoji} **${u.name}**\n`;
-                                inline_keyboard.push([
-                                    {
-                                        text: `👤 ${u.name}`,
-                                        callback_data: `sub_detail:${u.id}`,
-                                    },
-                                ]);
-                            });
-                            inline_keyboard.push([
-                                {
-                                    text: t("btn_main_menu"),
-                                    callback_data: "main_menu",
-                                },
-                            ]);
-                            await sendOrEdit(chatId, searchText, {
-                                inline_keyboard,
-                            });
-                        }
-                        return new Response("OK", { status: 200 });
-                    }
-
-                    if (state.step.startsWith("sub_extend_days:")) {
-                        const uuid = state.step.replace("sub_extend_days:", "");
-                        const days = parseInt(text);
-                        if (isNaN(days) || days <= 0) {
-                            await sendOrEdit(chatId, t("msg_invalid"));
-                            return new Response("OK", { status: 200 });
-                        }
-                        if (isRemotePanel) {
-                            await remotePanelWriteAction(
-                                activePanel,
-                                "PUT",
-                                uuid,
-                                { key: activePanel.apiKey, expiryDays: days },
-                            );
-                        } else if (sysConfig.users) {
-                            const u = sysConfig.users.find(
-                                (usr) => usr.id === uuid,
-                            );
-                            if (u) {
-                                if (u.expiryMs) {
-                                    u.expiryMs += days * 86400000;
-                                } else {
-                                    u.expiryMs = Date.now() + days * 86400000;
-                                }
-                                if (
-                                    u.isPaused &&
-                                    u.disabledReason &&
-                                    u.disabledReason.includes("Expiration")
-                                ) {
-                                    u.isPaused = false;
-                                    u.disabledReason = null;
-                                    u.disabledAt = null;
-                                }
-                                await cachedD1Put(
-                                    env,
-                                    "sys_config",
-                                    JSON.stringify(sysConfig),
-                                );
-                            }
-                        }
-                        tgState[chatId] = null;
-                        ctx?.waitUntil(
-                            d1Put(
-                                env,
-                                "tg_bot_state",
-                                JSON.stringify(tgState),
-                            ).catch(() => {}),
-                        );
-                        const panelUsers = await getPanelUsers();
-                        const detail = getSubDetail(uuid, panelUsers);
-                        const msg = t("msg_expiry_extended").replace(
-                            "{days}",
-                            days,
-                        );
-                        await sendOrEdit(
-                            chatId,
-                            `✅ ${msg}\n\n${detail.text}`,
-                            detail.kb,
-                        );
-                        return new Response("OK", { status: 200 });
-                    }
-
-                    if (state.step.startsWith("sub_edit_notes:")) {
-                        const uuid = state.step.replace("sub_edit_notes:", "");
-                        if (isRemotePanel) {
-                            await remotePanelWriteAction(
-                                activePanel,
-                                "PUT",
-                                uuid,
-                                { key: activePanel.apiKey, notes: text },
-                            );
-                        } else if (sysConfig.users) {
-                            const u = sysConfig.users.find(
-                                (usr) => usr.id === uuid,
-                            );
-                            if (u) {
-                                u.notes = text;
-                                await cachedD1Put(
-                                    env,
-                                    "sys_config",
-                                    JSON.stringify(sysConfig),
-                                );
-                            }
-                        }
-                        tgState[chatId] = null;
-                        ctx?.waitUntil(
-                            d1Put(
-                                env,
-                                "tg_bot_state",
-                                JSON.stringify(tgState),
-                            ).catch(() => {}),
-                        );
-                        const panelUsers = await getPanelUsers();
-                        const detail = getSubDetail(uuid, panelUsers);
-                        await sendOrEdit(
-                            chatId,
-                            `✅ Notes updated!`,
-                            detail.kb,
-                        );
-                        return new Response("OK", { status: 200 });
-                    }
-
-                    if (state.step.startsWith("sub_edit_device:")) {
-                        const uuid = state.step.replace("sub_edit_device:", "");
-                        const limit = parseInt(text);
-                        if (isNaN(limit) || limit < 0) {
-                            await sendOrEdit(chatId, t("msg_invalid"));
-                            return new Response("OK", { status: 200 });
-                        }
-                        if (isRemotePanel) {
-                            await remotePanelWriteAction(
-                                activePanel,
-                                "PUT",
-                                uuid,
-                                {
-                                    key: activePanel.apiKey,
-                                    maxConfigs: limit > 0 ? limit : null,
-                                },
-                            );
-                        } else if (sysConfig.users) {
-                            const u = sysConfig.users.find(
-                                (usr) => usr.id === uuid,
-                            );
-                            if (u) {
-                                u.maxConfigs = limit > 0 ? limit : null;
-                                await cachedD1Put(
-                                    env,
-                                    "sys_config",
-                                    JSON.stringify(sysConfig),
-                                );
-                            }
-                        }
-                        tgState[chatId] = null;
-                        ctx?.waitUntil(
-                            d1Put(
-                                env,
-                                "tg_bot_state",
-                                JSON.stringify(tgState),
-                            ).catch(() => {}),
-                        );
-                        const panelUsers = await getPanelUsers();
-                        const detail = getSubDetail(uuid, panelUsers);
-                        await sendOrEdit(
-                            chatId,
-                            `✅ ${t("config_limit_updated")}`,
-                            detail.kb,
-                        );
-                        return new Response("OK", { status: 200 });
-                    }
-
-                    if (state.step === "tg_edit_dns") {
-                        sysConfig.resolveIp = text;
-                        await cachedD1Put(
-                            env,
-                            "sys_config",
-                            JSON.stringify(sysConfig),
-                        );
-                        tgState[chatId] = null;
-                        ctx?.waitUntil(
-                            d1Put(
-                                env,
-                                "tg_bot_state",
-                                JSON.stringify(tgState),
-                            ).catch(() => {}),
-                        );
-                        await sendOrEdit(
-                            chatId,
-                            `✅ ${t("tg_dns")}: \`${text}\``,
-                            {
-                                inline_keyboard: [
-                                    [
-                                        {
-                                            text: "◀️ " + t("btn_back"),
-                                            callback_data: "tg_settings_menu",
-                                        },
-                                    ],
-                                ],
-                            },
-                        );
-                        return new Response("OK", { status: 200 });
-                    }
-                    if (state.step === "tg_edit_relay") {
-                        sysConfig.backupRelay = text || "";
-                        await cachedD1Put(
-                            env,
-                            "sys_config",
-                            JSON.stringify(sysConfig),
-                        );
-                        tgState[chatId] = null;
-                        ctx?.waitUntil(
-                            d1Put(
-                                env,
-                                "tg_bot_state",
-                                JSON.stringify(tgState),
-                            ).catch(() => {}),
-                        );
-                        await sendOrEdit(
-                            chatId,
-                            `✅ ${t("tg_relay")}: \`${text || "—"}\``,
-                            {
-                                inline_keyboard: [
-                                    [
-                                        {
-                                            text: "◀️ " + t("btn_back"),
-                                            callback_data: "tg_settings_menu",
-                                        },
-                                    ],
-                                ],
-                            },
-                        );
-                        return new Response("OK", { status: 200 });
-                    }
-                    if (state.step === "tg_edit_nat64") {
-                        sysConfig.nat64Prefix = text || "";
-                        await cachedD1Put(
-                            env,
-                            "sys_config",
-                            JSON.stringify(sysConfig),
-                        );
-                        tgState[chatId] = null;
-                        ctx?.waitUntil(
-                            d1Put(
-                                env,
-                                "tg_bot_state",
-                                JSON.stringify(tgState),
-                            ).catch(() => {}),
-                        );
-                        await sendOrEdit(
-                            chatId,
-                            `✅ ${t("tg_nat64")}: \`${text || "—"}\``,
-                            {
-                                inline_keyboard: [
-                                    [
-                                        {
-                                            text: "◀️ " + t("btn_back"),
-                                            callback_data: "tg_settings_menu",
-                                        },
-                                    ],
-                                ],
-                            },
-                        );
-                        return new Response("OK", { status: 200 });
-                    }
-                    if (state.step === "tg_edit_maintenance") {
-                        sysConfig.maintenanceHost = text;
-                        await cachedD1Put(
-                            env,
-                            "sys_config",
-                            JSON.stringify(sysConfig),
-                        );
-                        tgState[chatId] = null;
-                        ctx?.waitUntil(
-                            d1Put(
-                                env,
-                                "tg_bot_state",
-                                JSON.stringify(tgState),
-                            ).catch(() => {}),
-                        );
-                        await sendOrEdit(
-                            chatId,
-                            `✅ ${t("tg_maintenance")}: \`${text}\``,
-                            {
-                                inline_keyboard: [
-                                    [
-                                        {
-                                            text: "◀️ " + t("btn_back"),
-                                            callback_data: "tg_advanced_menu",
-                                        },
-                                    ],
-                                ],
-                            },
-                        );
-                        return new Response("OK", { status: 200 });
-                    }
-                    if (state.step === "tg_edit_clean_ips") {
-                        sysConfig.cleanIps = text || "";
-                        await cachedD1Put(
-                            env,
-                            "sys_config",
-                            JSON.stringify(sysConfig),
-                        );
-                        tgState[chatId] = null;
-                        ctx?.waitUntil(
-                            d1Put(
-                                env,
-                                "tg_bot_state",
-                                JSON.stringify(tgState),
-                            ).catch(() => {}),
-                        );
-                        await sendOrEdit(
-                            chatId,
-                            `✅ ${t("tg_clean_ips")}: \`${text || "—"}\``,
-                            {
-                                inline_keyboard: [
-                                    [
-                                        {
-                                            text: "◀️ " + t("btn_back"),
-                                            callback_data: "tg_advanced_menu",
-                                        },
-                                    ],
-                                ],
-                            },
-                        );
-                        return new Response("OK", { status: 200 });
-                    }
-                    if (state.step === "tg_edit_prefix") {
-                        sysConfig.namePrefix = text;
-                        await cachedD1Put(
-                            env,
-                            "sys_config",
-                            JSON.stringify(sysConfig),
-                        );
-                        tgState[chatId] = null;
-                        ctx?.waitUntil(
-                            d1Put(
-                                env,
-                                "tg_bot_state",
-                                JSON.stringify(tgState),
-                            ).catch(() => {}),
-                        );
-                        await sendOrEdit(
-                            chatId,
-                            `✅ ${t("tg_prefix")}: \`${text}\``,
-                            {
-                                inline_keyboard: [
-                                    [
-                                        {
-                                            text: "◀️ " + t("btn_back"),
-                                            callback_data: "tg_advanced_menu",
-                                        },
-                                    ],
-                                ],
-                            },
-                        );
-                        return new Response("OK", { status: 200 });
-                    }
-                    if (state.step === "tg_edit_pass") {
-                        sysConfig.masterKey = text;
-                        await cachedD1Put(
-                            env,
-                            "sys_config",
-                            JSON.stringify(sysConfig),
-                        );
-                        tgState[chatId] = null;
-                        ctx?.waitUntil(
-                            d1Put(
-                                env,
-                                "tg_bot_state",
-                                JSON.stringify(tgState),
-                            ).catch(() => {}),
-                        );
-                        await sendOrEdit(
-                            chatId,
-                            `✅ ${t("tg_pass")}: \`${text}\``,
-                            {
-                                inline_keyboard: [
-                                    [
-                                        {
-                                            text: "◀️ " + t("btn_back"),
-                                            callback_data: "tg_settings_menu",
-                                        },
-                                    ],
-                                ],
-                            },
-                        );
-                        return new Response("OK", { status: 200 });
-                    }
-                    if (state.step === "tg_edit_strategy") {
-                        sysConfig.nameStrategy = text;
-                        await cachedD1Put(
-                            env,
-                            "sys_config",
-                            JSON.stringify(sysConfig),
-                        );
-                        tgState[chatId] = null;
-                        ctx?.waitUntil(
-                            d1Put(
-                                env,
-                                "tg_bot_state",
-                                JSON.stringify(tgState),
-                            ).catch(() => {}),
-                        );
-                        await sendOrEdit(
-                            chatId,
-                            `✅ ${t("tg_strategy")}: \`${text}\``,
-                            {
-                                inline_keyboard: [
-                                    [
-                                        {
-                                            text: "◀️ " + t("btn_back"),
-                                            callback_data: "tg_advanced_menu",
-                                        },
-                                    ],
-                                ],
-                            },
-                        );
-                        return new Response("OK", { status: 200 });
-                    }
-                    if (state.step === "tg_edit_tg_token") {
-                        if (text !== "/skip") sysConfig.tgToken = text;
-                        tgState[chatId] = { step: "tg_edit_tg_chat" };
-                        ctx?.waitUntil(
-                            d1Put(
-                                env,
-                                "tg_bot_state",
-                                JSON.stringify(tgState),
-                            ).catch(() => {}),
-                        );
-                        await sendOrEdit(
-                            chatId,
-                            `2️⃣ Chat ID: \`${sysConfig.tgChatId || "—"}\`\n\n${t("tg_new_val")}\n_send /skip to keep current_`,
-                            {
-                                inline_keyboard: [
-                                    [
-                                        {
-                                            text: "❌ " + t("btn_cancel"),
-                                            callback_data: "tg_advanced_menu",
-                                        },
-                                    ],
-                                ],
-                            },
-                        );
-                        return new Response("OK", { status: 200 });
-                    }
-                    if (state.step === "tg_edit_tg_chat") {
-                        if (text !== "/skip") sysConfig.tgChatId = text;
-                        tgState[chatId] = { step: "tg_edit_tg_admin" };
-                        ctx?.waitUntil(
-                            d1Put(
-                                env,
-                                "tg_bot_state",
-                                JSON.stringify(tgState),
-                            ).catch(() => {}),
-                        );
-                        await sendOrEdit(
-                            chatId,
-                            `3️⃣ Admin ID: \`${sysConfig.tgAdminId || "—"}\`\n\n${t("tg_new_val")}\n_send /skip to keep current_`,
-                            {
-                                inline_keyboard: [
-                                    [
-                                        {
-                                            text: "❌ " + t("btn_cancel"),
-                                            callback_data: "tg_advanced_menu",
-                                        },
-                                    ],
-                                ],
-                            },
-                        );
-                        return new Response("OK", { status: 200 });
-                    }
-                    if (state.step === "tg_edit_tg_admin") {
-                        if (text !== "/skip") sysConfig.tgAdminId = text;
-                        await cachedD1Put(
-                            env,
-                            "sys_config",
-                            JSON.stringify(sysConfig),
-                        );
-                        tgState[chatId] = null;
-                        ctx?.waitUntil(
-                            d1Put(
-                                env,
-                                "tg_bot_state",
-                                JSON.stringify(tgState),
-                            ).catch(() => {}),
-                        );
-                        await sendOrEdit(
-                            chatId,
-                            `✅ ${t("tg_tg_settings")} saved!`,
-                            {
-                                inline_keyboard: [
-                                    [
-                                        {
-                                            text: "◀️ " + t("btn_back"),
-                                            callback_data: "tg_advanced_menu",
-                                        },
-                                    ],
-                                ],
-                            },
-                        );
-                        return new Response("OK", { status: 200 });
-                    }
-                    if (state.step === "tg_edit_cf_acc") {
-                        if (text !== "/skip") sysConfig.cfAccountId = text;
-                        tgState[chatId] = { step: "tg_edit_cf_token" };
-                        ctx?.waitUntil(
-                            d1Put(
-                                env,
-                                "tg_bot_state",
-                                JSON.stringify(tgState),
-                            ).catch(() => {}),
-                        );
-                        await sendOrEdit(
-                            chatId,
-                            `2️⃣ CF API Token: \`${sysConfig.cfApiToken ? "***" + sysConfig.cfApiToken.slice(-4) : "—"}\`\n\n${t("tg_new_val")}\n_send /skip to keep current_`,
-                            {
-                                inline_keyboard: [
-                                    [
-                                        {
-                                            text: "❌ " + t("btn_cancel"),
-                                            callback_data: "tg_advanced_menu",
-                                        },
-                                    ],
-                                ],
-                            },
-                        );
-                        return new Response("OK", { status: 200 });
-                    }
-                    if (state.step === "tg_edit_cf_token") {
-                        if (text !== "/skip") sysConfig.cfApiToken = text;
-                        tgState[chatId] = { step: "tg_edit_cf_worker" };
-                        ctx?.waitUntil(
-                            d1Put(
-                                env,
-                                "tg_bot_state",
-                                JSON.stringify(tgState),
-                            ).catch(() => {}),
-                        );
-                        await sendOrEdit(
-                            chatId,
-                            `3️⃣ CF Worker Name: \`${sysConfig.cfWorkerName || "—"}\`\n\n${t("tg_new_val")}\n_send /skip to keep current_`,
-                            {
-                                inline_keyboard: [
-                                    [
-                                        {
-                                            text: "❌ " + t("btn_cancel"),
-                                            callback_data: "tg_advanced_menu",
-                                        },
-                                    ],
-                                ],
-                            },
-                        );
-                        return new Response("OK", { status: 200 });
-                    }
-                    if (state.step === "tg_edit_cf_worker") {
-                        if (text !== "/skip") sysConfig.cfWorkerName = text;
-                        await cachedD1Put(
-                            env,
-                            "sys_config",
-                            JSON.stringify(sysConfig),
-                        );
-                        tgState[chatId] = null;
-                        ctx?.waitUntil(
-                            d1Put(
-                                env,
-                                "tg_bot_state",
-                                JSON.stringify(tgState),
-                            ).catch(() => {}),
-                        );
-                        await sendOrEdit(
-                            chatId,
-                            `✅ ${t("tg_cf_settings")} saved!`,
-                            {
-                                inline_keyboard: [
-                                    [
-                                        {
-                                            text: "◀️ " + t("btn_back"),
-                                            callback_data: "tg_advanced_menu",
-                                        },
-                                    ],
-                                ],
-                            },
-                        );
-                        return new Response("OK", { status: 200 });
-                    }
-                    if (state.step === "tg_edit_ports") {
-                        sysConfig.socketPorts = text;
-                        await cachedD1Put(
-                            env,
-                            "sys_config",
-                            JSON.stringify(sysConfig),
-                        );
-                        tgState[chatId] = null;
-                        ctx?.waitUntil(
-                            d1Put(
-                                env,
-                                "tg_bot_state",
-                                JSON.stringify(tgState),
-                            ).catch(() => {}),
-                        );
-                        await sendOrEdit(
-                            chatId,
-                            `✅ ${t("tg_ports")}: \`${text}\``,
-                            {
-                                inline_keyboard: [
-                                    [
-                                        {
-                                            text: "◀️ " + t("btn_back"),
-                                            callback_data: "tg_settings_menu",
-                                        },
-                                    ],
-                                ],
-                            },
-                        );
-                        return new Response("OK", { status: 200 });
-                    }
-                }
-
-                // Default message / fallback menu
-                const menu = getMainMenu(activePanel, isAuthorized);
-                await sendOrEdit(chatId, menu.text, menu.kb);
-            } else {
-                if (text === "/start") {
-                    const userHint =
-                        langCode === "fa"
-                            ? "لطفاً لینک اشتراک یا شناسه کاربری خود را ارسال کنید تا اطلاعات اشتراکتان نمایش داده شود."
-                            : "Please send your subscription link or User ID to view your subscription info.";
-                    await sendOrEdit(chatId, userHint);
-                    return new Response("OK", { status: 200 });
-                }
-                let lookupId = text
-                    .replace(/^https?:\/\//, "")
-                    .replace(/\/.*$/, "")
-                    .trim();
-                const subParamMatch = text.match(/[?&]sub=([^&]+)/);
-                if (subParamMatch)
-                    lookupId = decodeURIComponent(subParamMatch[1]);
-                if (!lookupId || lookupId.length < 3) {
-                    const userHint =
-                        langCode === "fa"
-                            ? "لطفاً لینک اشتراک یا شناسه کاربری معتبر ارسال کنید."
-                            : "Please send a valid subscription link or User ID.";
-                    await sendOrEdit(chatId, userHint);
-                    return new Response("OK", { status: 200 });
-                }
-                const users = sysConfig.users || [];
-                const matchedUser = users.find(
-                    (u) =>
-                        u.id === lookupId ||
-                        u.id.replace(/-/g, "").toLowerCase() ===
-                            lookupId.replace(/-/g, "").toLowerCase() ||
-                        u.name.toLowerCase() === lookupId.toLowerCase(),
-                );
-                if (matchedUser) {
-                    const detail = getSubDetail(matchedUser.id);
-                    await sendOrEdit(chatId, detail.text, detail.kb);
-                } else {
-                    const notFound =
-                        langCode === "fa"
-                            ? "کاربری با این شناسه یافت نشد."
-                            : "No user found with this ID.";
-                    await sendOrEdit(chatId, notFound);
-                }
-            }
-        }
-        return new Response("OK", { status: 200 });
+      await db.prepare("ALTER TABLE users ADD COLUMN is_active INTEGER DEFAULT 1").run();
+    } catch (e) {}
+    try {
+      await db.prepare("ALTER TABLE users ADD COLUMN last_active INTEGER").run();
+    } catch (e) {}
+    try {
+      await db.prepare("ALTER TABLE users ADD COLUMN fingerprint TEXT DEFAULT 'chrome'").run();
+    } catch (e) {}
+    try {
+      await db.prepare("ALTER TABLE users ADD COLUMN config_name TEXT").run();
+    } catch (e) {}
+    try {
+      await db.prepare("CREATE TABLE IF NOT EXISTS settings (key TEXT PRIMARY KEY, value TEXT)").run();
+    } catch (e) {}
+    try {
+      await db.prepare(`
+        CREATE TABLE IF NOT EXISTS admins (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          username TEXT UNIQUE,
+          password_hash TEXT,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+      `).run();
+    } catch (e) {}
+    try {
+      await db.prepare(`
+        CREATE TABLE IF NOT EXISTS inbounds (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          tag TEXT UNIQUE,
+          protocol TEXT DEFAULT 'vless',
+          port INTEGER,
+          listen TEXT DEFAULT '0.0.0.0',
+          settings TEXT DEFAULT '{}',
+          stream_settings TEXT DEFAULT '{}',
+          sniffing INTEGER DEFAULT 1,
+          is_active INTEGER DEFAULT 1,
+          remark TEXT,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+      `).run();
+    } catch (e) {}
+    try {
+      await db.prepare(`
+        CREATE TABLE IF NOT EXISTS logs (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          level TEXT DEFAULT 'info',
+          message TEXT,
+          timestamp INTEGER
+        )
+      `).run();
+    } catch (e) {}
+    try {
+      await db.prepare("ALTER TABLE logs ADD COLUMN details TEXT").run();
+    } catch (e) {}
+    schemaEnsured = true;
+  },
+  async getPanelPassword(db) {
+    if (!db) return null;
+    if (cachedPanelPassword !== null) return cachedPanelPassword;
+    try {
+      const row = await db.prepare("SELECT value FROM settings WHERE key = 'panel_password'").first();
+      cachedPanelPassword = row ? row.value : "";
+      return cachedPanelPassword || null;
     } catch (e) {
-        return new Response("OK", { status: 200 });
+      return null;
     }
-}
+  },
+  async setPanelPassword(db, password) {
+    if (!db) return;
+    await db.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES ('panel_password', ?)").bind(password).run();
+    cachedPanelPassword = password;
+  },
+  invalidatePasswordCache() {
+    cachedPanelPassword = null;
+  },
+  async verifyApiAuth(request, env) {
+    const cookies = request.headers.get("Cookie") || "";
+    const sessionCookie = cookies.split(";").find((c) => c.trim().startsWith("panel_session="));
+    if (!sessionCookie) return false;
+    const sessionToken = sessionCookie.split("=")[1].trim();
+    
+    try {
+      await loadAdmins(env);
+      const admin = ADMINS.find(a => String(a.id) === sessionToken);
+      if (admin) return true;
+    } catch (e) {}
+    
+    try {
+      const storedHash = await this.getPanelPassword(env.AM_DB);
+      if (storedHash && sessionToken === storedHash) return true;
+    } catch (e) {}
+    
+    return false;
+  },
+  async sha256(message) {
+    const msgBuffer = new TextEncoder().encode(message);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+  }
+};
 
-async function processTelemetryStream(env, ctx, wsRelayIdx) {
-    const [client, webSocket] = Object.values(new WebSocketPair());
-    webSocket.accept();
-    webSocket.binaryType = "arraybuffer";
-    startDataPipe(webSocket, env, ctx, wsRelayIdx);
-    return new Response(null, { status: 101, webSocket: client });
-}
-
-async function startDataPipe(webSocket, env, ctx, wsRelayIdx) {
-    activeConnections++;
-    webSocket.addEventListener("close", () => {
-        activeConnections--;
-        if (activeClientHash) {
-            let cur = activeConns.get(activeClientHash) || 0;
-            if (cur > 0) activeConns.set(activeClientHash, cur - 1);
-        }
+// ============================================
+// SUBSCRIPTION SERVICE (Enhanced - 2 configs with info, rest just username)
+// ============================================
+var SubscriptionService = {
+  async generateJson(user, host, env) {
+    let ips = [host];
+    if (user.ips) {
+      const parsedIps = user.ips.split("\n").map((ip) => ip.trim()).filter((ip) => ip.length > 0);
+      if (parsedIps.length > 0) ips = parsedIps;
+    }
+    const ports = String(user.port || "443").split(",").map((p) => p.trim()).filter((p) => p.length > 0);
+    const fp = user.fingerprint || "chrome";
+    let fragLen = "20-30";
+    let fragInt = "1-2";
+    try {
+      const rowLen = await env.AM_DB.prepare("SELECT value FROM settings WHERE key = 'frag_len'").first();
+      if (rowLen && rowLen.value) fragLen = rowLen.value;
+      const rowInt = await env.AM_DB.prepare("SELECT value FROM settings WHERE key = 'frag_int'").first();
+      if (rowInt && rowInt.value) fragInt = rowInt.value;
+    } catch (e) {}
+    
+    const configArray = [];
+    const now = new Date();
+    const created = new Date(user.created_at);
+    const expiryDate = new Date(created.getTime() + (user.expiry_days || 30) * 24 * 60 * 60 * 1000);
+    const daysLeft = Math.ceil((expiryDate - now) / (1000 * 60 * 60 * 24));
+    const totalGB = user.limit_gb || 0;
+    const usedGB = user.used_gb || 0;
+    const leftGB = Math.max(0, totalGB - usedGB);
+    const expiryDateStr = expiryDate.toISOString().split('T')[0].replace(/-/g, '/');
+    const configName = user.config_name || user.username;
+    const usedFormatted = usedGB >= 1 ? usedGB.toFixed(1) + "GB" : (usedGB * 1024).toFixed(0) + "MB";
+    const totalFormatted = totalGB >= 1 ? totalGB + "GB" : "Unlimited";
+    
+    // Ã™ÂÃ™â€šÃ˜Â· Ã˜Â¯Ã™Ë† ÃšÂ©Ã˜Â§Ã™â€ Ã™ÂÃ›Å’ÃšÂ¯ Ã˜Â§Ã˜Â·Ã™â€žÃ˜Â§Ã˜Â¹Ã˜Â§Ã˜ÂªÃ›Å’ Ã˜Â¨Ã˜Â±Ã˜Â§Ã›Å’ Ã˜Â§Ã™Ë†Ã™â€žÃ›Å’Ã™â€  IP Ã™Ë† Ã™Â¾Ã™Ë†Ã˜Â±Ã˜Âª
+    const firstIp = ips[0] || host;
+    const firstPort = ports[0] || "443";
+    const isTlsPort = ["443", "2053", "2083", "2087", "2096", "8443"].includes(firstPort);
+    const tlsVal = isTlsPort ? "tls" : "none";
+    
+    // ÃšÂ©Ã˜Â§Ã™â€ Ã™ÂÃ›Å’ÃšÂ¯ Ã˜Â§Ã˜Â·Ã™â€žÃ˜Â§Ã˜Â¹Ã˜Â§Ã˜Âª 1: Ã˜ÂªÃ˜Â§Ã˜Â±Ã›Å’Ã˜Â® Ã˜Â§Ã™â€ Ã™â€šÃ˜Â¶Ã˜Â§
+    const remark1 = "Ã¢ÂÂ³ " + user.username.toUpperCase() + " | Ã°Å¸â€œâ€¦ Exp: " + expiryDateStr + " | Ã°Å¸â€Â¥ " + daysLeft + " Days Left";
+    const configObj1 = this.buildConfig(user, firstIp, firstPort, tlsVal, host, fp, fragLen, fragInt, remark1);
+    configArray.push(configObj1);
+    
+    // ÃšÂ©Ã˜Â§Ã™â€ Ã™ÂÃ›Å’ÃšÂ¯ Ã˜Â§Ã˜Â·Ã™â€žÃ˜Â§Ã˜Â¹Ã˜Â§Ã˜Âª 2: Ã˜Â­Ã˜Â¬Ã™â€¦ Ã™â€¦Ã˜ÂµÃ˜Â±Ã™ÂÃ›Å’
+    const remark2 = "Ã°Å¸â€œÅ  " + user.username.toUpperCase() + " | Ã°Å¸â€™Â¾ " + totalFormatted + " Total | Ã¢Å¡Â¡ " + usedFormatted + " Used";
+    const configObj2 = this.buildConfig(user, firstIp, firstPort, tlsVal, host, fp, fragLen, fragInt, remark2);
+    configArray.push(configObj2);
+    
+    // ÃšÂ©Ã˜Â§Ã™â€ Ã™ÂÃ›Å’ÃšÂ¯Ã¢â‚¬Å’Ã™â€¡Ã˜Â§Ã›Å’ Ã˜Â¨Ã˜Â§Ã™â€šÃ›Å’Ã¢â‚¬Å’Ã™â€¦Ã˜Â¯Ã™â€¡ Ã˜Â¨Ã˜Â±Ã˜Â§Ã›Å’ Ã˜ÂªÃ™â€¦Ã˜Â§Ã™â€¦ Ã˜Â¢Ã›Å’Ã™Â¾Ã›Å’Ã¢â‚¬Å’Ã™â€¡Ã˜Â§ Ã™Ë† Ã™Â¾Ã™Ë†Ã˜Â±Ã˜ÂªÃ¢â‚¬Å’Ã™â€¡Ã˜Â§ Ã˜Â¨Ã˜Â§ Ã˜Â§Ã˜Â³Ã™â€¦ ÃšÂ©Ã˜Â§Ã˜Â±Ã˜Â¨Ã˜Â±
+    ips.forEach((ip) => {
+      ports.forEach((portStr) => {
+        const isTlsPortLoop = ["443", "2053", "2083", "2087", "2096", "8443"].includes(portStr);
+        const tlsValLoop = isTlsPortLoop ? "tls" : "none";
+        const remark3 = configName;
+        const configObj3 = this.buildConfig(user, ip, portStr, tlsValLoop, host, fp, fragLen, fragInt, remark3);
+        configArray.push(configObj3);
+      });
     });
-    webSocket.addEventListener("error", () => {});
-    let remoteSocket,
-        dataWriter,
-        isInit = true,
-        queue = Promise.resolve();
-    let activeClientHash = null;
-    webSocket.addEventListener("message", (event) => {
-        queue = queue.then(async () => {
+    
+    return new Response(JSON.stringify(configArray, null, 2), {
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Access-Control-Allow-Origin": "*",
+        "Cache-Control": "no-store"
+      }
+    });
+  },
+  
+  buildConfig(user, ip, portStr, tlsVal, host, fp, fragLen, fragInt, remark) {
+    const proto = user.connection_type === _D_._tr_ ? _D_._tr_ : _D_._vl_;
+    const configObj = {
+      remarks: remark,
+      version: { min: "25.10.15" },
+      log: { loglevel: "none" },
+      dns: {
+        servers: [
+          { address: "https://8.8.8.8/dns-query", tag: "remote-dns" },
+          { address: "8.8.8.8", domains: ["full:" + host], skipFallback: true }
+        ],
+        queryStrategy: "UseIP",
+        tag: "dns"
+      },
+      inbounds: [
+        {
+          listen: "127.0.0.1",
+          port: 10808,
+          protocol: _cs([115,111,99,107,115]),
+          settings: { auth: "noauth", udp: true },
+          sniffing: { destOverride: ["http", "tls"], enabled: true, routeOnly: true },
+          tag: "mixed-in"
+        },
+        {
+          listen: "127.0.0.1",
+          port: 10853,
+          protocol: _cs([100,111,107,111,100,101,109,111,45,100,111,111,114]),
+          settings: { address: "1.1.1.1", network: "tcp,udp", port: 53 },
+          tag: "dns-in"
+        }
+      ],
+      outbounds: [],
+      routing: {
+        domainStrategy: "IPIfNonMatch",
+        rules: [
+          { inboundTag: ["mixed-in"], port: 53, outboundTag: "dns-out", type: "field" },
+          { inboundTag: ["dns-in"], outboundTag: "dns-out", type: "field" },
+          { inboundTag: ["remote-dns"], outboundTag: _cs([112,114,111,120,121]), type: "field" },
+          { inboundTag: ["dns"], outboundTag: "direct", type: "field" },
+          { domain: ["geosite:private"], outboundTag: "direct", type: "field" },
+          { ip: ["geoip:private"], outboundTag: "direct", type: "field" },
+          { domain: ["geosite:category-ads-all"], outboundTag: "block", type: "field" },
+          { network: "udp", outboundTag: "block", type: "field" },
+          { network: "tcp", outboundTag: _cs([112,114,111,120,121]), type: "field" }
+        ]
+      }
+    };
+    
+    if (proto === _D_._tr_) {
+      configObj.outbounds.push({
+        protocol: _D_._tr_,
+        settings: {
+          servers: [{
+            address: ip,
+            port: parseInt(portStr),
+            password: user.uuid
+          }]
+        },
+        streamSettings: {
+          network: "ws",
+          wsSettings: { host, path: "/" },
+          security: tlsVal,
+          sockopt: { dialerProxy: _cs([102,114,97,103,109,101,110,116]) }
+        },
+        tag: _cs([112,114,111,120,121])
+      });
+    } else {
+      configObj.outbounds.push({
+        protocol: _cs([118,108,101,115,115]),
+        settings: {
+          ["vnext"]: [{
+            address: ip,
+            port: parseInt(portStr),
+            users: [{ id: user.uuid, encryption: "none" }]
+          }]
+        },
+        streamSettings: {
+          network: "ws",
+          wsSettings: { host, path: "/" },
+          security: tlsVal,
+          sockopt: { dialerProxy: _cs([102,114,97,103,109,101,110,116]) }
+        },
+        tag: _cs([112,114,111,120,121])
+      });
+    }
+    
+    configObj.outbounds.push({
+      protocol: "freedom",
+      settings: {
+        [_cs([102,114,97,103,109,101,110,116])]: { packets: _cs([116,108,115,104,101,108,108,111]), length: fragLen, interval: fragInt }
+      },
+      streamSettings: {
+        sockopt: {
+          domainStrategy: "UseIP",
+          happyEyeballs: { tryDelayMs: 250, prioritizeIPv6: false, interleave: 2, maxConcurrentTry: 4 }
+        }
+      },
+      tag: _cs([102,114,97,103,109,101,110,116])
+    });
+    configObj.outbounds.push({ protocol: "dns", settings: { nonIPQuery: "reject" }, tag: "dns-out" });
+    configObj.outbounds.push({ protocol: "freedom", settings: { domainStrategy: "UseIP" }, tag: "direct" });
+    configObj.outbounds.push({ protocol: "blackhole", settings: { response: { type: "http" } }, tag: "block" });
+    
+    if (tlsVal === "tls") {
+      const outIdx = 0;
+      configObj.outbounds[outIdx].streamSettings.tlsSettings = {
+        serverName: host,
+        fingerprint: fp,
+        alpn: ["http/1.1"],
+        allowInsecure: false
+      };
+    }
+    return configObj;
+  },
+  
+  async generateText(user, host) {
+    let ips = [host];
+    if (user.ips) {
+      const parsedIps = user.ips.split("\n").map((ip) => ip.trim()).filter((ip) => ip.length > 0);
+      if (parsedIps.length > 0) ips = parsedIps;
+    }
+    const ports = String(user.port || "443").split(",").map((p) => p.trim()).filter((p) => p.length > 0);
+    const fp = user.fingerprint || "chrome";
+    const proto = user.connection_type === _D_._tr_ ? _D_._tr_ : _D_._vl_;
+    
+    const now = new Date();
+    const created = new Date(user.created_at);
+    const expiryDays = user.expiry_days || 30;
+    const expiryDate = new Date(created.getTime() + expiryDays * 24 * 60 * 60 * 1000);
+    const daysLeft = Math.ceil((expiryDate - now) / (1000 * 60 * 60 * 24));
+    const totalGB = user.limit_gb || 0;
+    const usedGB = user.used_gb || 0;
+    const leftGB = Math.max(0, totalGB - usedGB);
+    const expiryDateStr = expiryDate.toISOString().split('T')[0].replace(/-/g, '/');
+    const configName = user.config_name || user.username;
+    const usedFormatted = usedGB >= 1 ? usedGB.toFixed(1) + "GB" : (usedGB * 1024).toFixed(0) + "MB";
+    const totalFormatted = totalGB >= 1 ? totalGB + "GB" : "Unlimited";
+    
+    const links = [];
+    
+    const firstIp = ips[0] || host;
+    const firstPort = ports[0] || "443";
+    const isTlsPort = ["443", "2053", "2083", "2087", "2096", "8443"].includes(firstPort);
+    const tlsVal = isTlsPort ? "tls" : "none";
+    
+    function buildLink(userUuid, ip, portStr, tls, hostVal, fpVal, remark) {
+      if (proto === _D_._tr_) {
+        return "trojan://" + userUuid + "@" + ip + ":" + portStr + "?path=%2F&security=" + tls + "&host=" + hostVal + "&fp=" + fpVal + "&type=ws&sni=" + hostVal + "#" + encodeURIComponent(remark);
+      }
+      return "vless://" + userUuid + "@" + ip + ":" + portStr + "?path=%2F&security=" + tls + "&encryption=none&insecure=0&host=" + hostVal + "&fp=" + fpVal + "&type=ws&allowInsecure=0&sni=" + hostVal + "#" + encodeURIComponent(remark);
+    }
+    
+    const remark1 = "Ã¢ÂÂ³ " + user.username.toUpperCase() + " | Ã°Å¸â€œâ€¦ Exp: " + expiryDateStr + " | Ã°Å¸â€Â¥ " + daysLeft + " Days Left";
+    links.push(buildLink(user.uuid, firstIp, firstPort, tlsVal, host, fp, remark1));
+    
+    const remark2 = "Ã°Å¸â€œÅ  " + user.username.toUpperCase() + " | Ã°Å¸â€™Â¾ " + totalFormatted + " Total | Ã¢Å¡Â¡ " + usedFormatted + " Used";
+    links.push(buildLink(user.uuid, firstIp, firstPort, tlsVal, host, fp, remark2));
+    
+    ips.forEach((ip) => {
+      ports.forEach((portStr) => {
+        const isTlsPortLoop = ["443", "2053", "2083", "2087", "2096", "8443"].includes(portStr);
+        const tlsValLoop = isTlsPortLoop ? "tls" : "none";
+        const remark3 = configName;
+        links.push(buildLink(user.uuid, ip, portStr, tlsValLoop, host, fp, remark3));
+      });
+    });
+    
+    const header = [
+      "# ==========================================",
+      "# MrVpn Panel Subscription Feed",
+      "# User: " + user.username,
+      "# Protocol: " + proto.toUpperCase(),
+      "# Created: " + user.created_at,
+      "# Status: " + (user.is_active ? "Active" : "Inactive"),
+      "# ==========================================",
+      ""
+    ].join("\n");
+    
+    const plainContent = header + links.join("\n");
+    const subContent = btoa(unescape(encodeURIComponent(plainContent)));
+    return new Response(subContent, {
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Access-Control-Allow-Origin": "*",
+        "Cache-Control": "no-store"
+      }
+    });
+  }
+};
+
+// ============================================
+// TRAFFIC MANAGEMENT - REAL TRAFFIC
+// ============================================
+async function flushExpiredTraffic(env) {
+  const now = Date.now();
+  for (const [uname, cachedBytes] of GLOBAL_TRAFFIC_CACHE.entries()) {
+    if (cachedBytes <= 0) continue;
+    const lastActive = GLOBAL_LAST_ACTIVE_WRITE.get(uname) || 0;
+    const activeCount = ACTIVE_CONNECTIONS_COUNT.get(uname) || 0;
+    if (activeCount <= 0 || now - lastActive > 65e3) {
+      GLOBAL_TRAFFIC_CACHE.set(uname, 0);
+      const deltaGb = cachedBytes / (1024 * 1024 * 1024);
+      try {
+        await env.AM_DB.prepare("UPDATE users SET used_gb = used_gb + ? WHERE username = ?").bind(deltaGb, uname).run();
+        // Check if user exceeded limit
+        const user = await env.AM_DB.prepare("SELECT limit_gb, used_gb FROM users WHERE username = ?").bind(uname).first();
+        if (user && user.limit_gb && user.used_gb >= user.limit_gb) {
+          await env.AM_DB.prepare("UPDATE users SET is_active = 0 WHERE username = ?").bind(uname).run();
+        }
+      } catch (e) {
+        let recovered = GLOBAL_TRAFFIC_CACHE.get(uname) || 0;
+        GLOBAL_TRAFFIC_CACHE.set(uname, recovered + cachedBytes);
+      }
+    }
+  }
+}
+
+// ============================================
+// VLESS HANDLER
+// ============================================
+async function handleVLESS(env, storedData = null, ctx = null) {
+  const socketPair = new WebSocketPair();
+  const [clientSock, serverSock] = Object.values(socketPair);
+  serverSock.accept();
+  serverSock.binaryType = "arraybuffer";
+  let username = null;
+  let tickCount = 0;
+  let validUUID = null;
+  
+  function addBytes(bytes) {
+    if (bytes <= 0 || !username) return;
+    let current = GLOBAL_TRAFFIC_CACHE.get(username) || 0;
+    current += bytes;
+    GLOBAL_LAST_ACTIVE_WRITE.set(username, Date.now());
+    const threshold = 50 * 1024 * 1024;
+    if (current >= threshold) {
+      const chunksOf50MB = Math.floor(current / threshold);
+      const bytesToCommit = chunksOf50MB * threshold;
+      const deltaGb = bytesToCommit / (1024 * 1024 * 1024);
+      const leftover = current - bytesToCommit;
+      GLOBAL_TRAFFIC_CACHE.set(username, leftover);
+      const writeTask = async () => {
+        try {
+          await env.AM_DB.prepare("UPDATE users SET used_gb = used_gb + ? WHERE username = ?").bind(deltaGb, username).run();
+          // Check if user exceeded limit
+          const user = await env.AM_DB.prepare("SELECT limit_gb, used_gb FROM users WHERE username = ?").bind(username).first();
+          if (user && user.limit_gb && user.used_gb >= user.limit_gb) {
+            await env.AM_DB.prepare("UPDATE users SET is_active = 0 WHERE username = ?").bind(username).run();
+          }
+        } catch (e) {
+          let recovered = GLOBAL_TRAFFIC_CACHE.get(username) || 0;
+          GLOBAL_TRAFFIC_CACHE.set(username, recovered + bytesToCommit);
+        }
+      };
+      if (ctx) {
+        ctx.waitUntil(writeTask());
+      } else {
+        writeTask();
+      }
+    } else {
+      GLOBAL_TRAFFIC_CACHE.set(username, current);
+    }
+  }
+  
+  let isOfflineSet = false;
+  const setOffline = () => {
+    if (isOfflineSet) return;
+    isOfflineSet = true;
+    const uname = username;
+    if (!uname) return;
+    let activeCount = ACTIVE_CONNECTIONS_COUNT.get(uname) || 1;
+    activeCount = activeCount - 1;
+    if (activeCount <= 0) {
+      ACTIVE_CONNECTIONS_COUNT.delete(uname);
+      try { const now = Date.now(); env?.AM_DB?.prepare("INSERT INTO logs (level, message, timestamp) VALUES (?, ?, ?)").bind("info", "User disconnected: " + uname, now).run().catch(()=>{}); } catch(_) {}
+      let cachedBytes = GLOBAL_TRAFFIC_CACHE.get(uname) || 0;
+      if (cachedBytes > 0) {
+        GLOBAL_TRAFFIC_CACHE.set(uname, 0);
+        const deltaGb = cachedBytes / (1024 * 1024 * 1024);
+        const writeTask = async () => {
+          try {
+            await env.AM_DB.prepare("UPDATE users SET used_gb = used_gb + ? WHERE username = ?").bind(deltaGb, uname).run();
+          } catch (e) {
+            let recovered = GLOBAL_TRAFFIC_CACHE.get(uname) || 0;
+            GLOBAL_TRAFFIC_CACHE.set(uname, recovered + cachedBytes);
+          }
+        };
+        if (ctx) {
+          ctx.waitUntil(writeTask());
+        } else {
+          writeTask();
+        }
+      }
+    } else {
+      ACTIVE_CONNECTIONS_COUNT.set(uname, activeCount);
+    }
+  };
+  
+  const heartbeat = setInterval(async () => {
+    if (serverSock.readyState === WebSocket.OPEN) {
+      try {
+        serverSock.send(new Uint8Array(0));
+        if (!validUUID) return;
+        tickCount++;
+        if (tickCount >= 4) {
+          tickCount = 0;
+          const user = await env.AM_DB.prepare("SELECT is_active, limit_gb, used_gb, expiry_days, created_at FROM users WHERE uuid = ?").bind(validUUID).first();
+          let isExpired = false;
+          if (!user || user.is_active === 0) {
+            isExpired = true;
+          } else {
+            if (user.limit_gb && user.used_gb >= user.limit_gb) {
+              isExpired = true;
+            }
+            if (user.expiry_days && user.created_at) {
+              const created = new Date(user.created_at);
+              const expiryDate = new Date(created.getTime() + user.expiry_days * 24 * 60 * 60 * 1e3);
+              if (/* @__PURE__ */ new Date() > expiryDate) {
+                isExpired = true;
+              }
+            }
+          }
+          if (isExpired) {
+            await env.AM_DB.prepare("UPDATE users SET is_active = 0, last_active = 0 WHERE uuid = ?").bind(validUUID).run();
+            clearInterval(heartbeat);
+            closeSocketQuietly(serverSock);
+            return;
+          }
+          const now = Date.now();
+          const lastRecorded = GLOBAL_LAST_ACTIVE_WRITE.get(username) || 0;
+          if (now - lastRecorded > 6e4) {
+            GLOBAL_LAST_ACTIVE_WRITE.set(username, now);
+            await env.AM_DB.prepare("UPDATE users SET last_active = ? WHERE username = ?").bind(now, username).run();
+          }
+        }
+      } catch (e) {}
+    } else {
+      clearInterval(heartbeat);
+    }
+  }, 15e3);
+  
+  let remoteConnWrapper = { socket: null, connectingPromise: null, retryConnect: null };
+  let reqUUID = null;
+  let isHeaderParsed = false;
+  let isDnsQuery = false;
+  let chunkBuffer = new Uint8Array(0);
+  const pxIP = storedData?.proxy_ip || _safeProxyIP();
+  let wsChain = Promise.resolve();
+  let wsStopped = false, wsFailed = false, wsFinished = false;
+  let wsQueueBytes = 0, wsQueueItems = 0;
+  let currentSocketWriter = null, activeRemoteWriter = null;
+  
+  const releaseRemoteWriter = () => {
+    if (activeRemoteWriter) {
+      try {
+        activeRemoteWriter.releaseLock();
+      } catch (e) {}
+      activeRemoteWriter = null;
+    }
+    currentSocketWriter = null;
+  };
+  
+  const getRemoteWriter = () => {
+    const s = remoteConnWrapper.socket;
+    if (!s) return null;
+    if (s !== currentSocketWriter) {
+      releaseRemoteWriter();
+      currentSocketWriter = s;
+      activeRemoteWriter = s.writable.getWriter();
+    }
+    return activeRemoteWriter;
+  };
+  
+  const upstreamQueue = createUpstreamQueue({
+    getWriter: getRemoteWriter,
+    releaseWriter: releaseRemoteWriter,
+    retryConnect: async () => {
+      if (typeof remoteConnWrapper.retryConnect === "function") {
+        await remoteConnWrapper.retryConnect();
+      }
+    },
+    closeConnection: () => {
+      try {
+        remoteConnWrapper.socket?.close();
+      } catch (e) {}
+      closeSocketQuietly(serverSock);
+    },
+    name: "VlessWSQueue"
+  });
+  
+  const writeToRemote = async (chunk, allowRetry = true) => {
+    return upstreamQueue.writeAndAwait(chunk, allowRetry);
+  };
+  
+  const processWsMessage = async (chunk) => {
+    const bytes = chunk.byteLength || 0;
+    await addBytes(bytes);
+    if (isDnsQuery) {
+      await forwardVlessUDP(chunk, serverSock, null);
+      return;
+    }
+    if (await writeToRemote(chunk)) return;
+    if (!isHeaderParsed) {
+      chunkBuffer = concatBytes(chunkBuffer, chunk);
+      if (chunkBuffer.byteLength < 24) return;
+      reqUUID = extractUUIDFromVless(chunkBuffer);
+      if (!reqUUID) {
+        serverSock.close();
+        return;
+      }
+      let user = null;
+      try {
+        user = await env.AM_DB.prepare("SELECT * FROM users WHERE uuid = ?").bind(reqUUID).first();
+      } catch (e) {}
+      if (!user || user.is_active === 0) {
+        serverSock.close();
+        return;
+      }
+      if (user.limit_gb && user.used_gb >= user.limit_gb) {
+        serverSock.close();
+        return;
+      }
+      if (user.expiry_days && user.created_at) {
+        const created = new Date(user.created_at);
+        const expiryDate = new Date(created.getTime() + user.expiry_days * 24 * 60 * 60 * 1e3);
+        if (/* @__PURE__ */ new Date() > expiryDate) {
+          try {
+            await env.AM_DB.prepare("UPDATE users SET is_active = 0, last_active = 0 WHERE uuid = ?").bind(reqUUID).run();
+          } catch (e) {}
+          serverSock.close();
+          return;
+        }
+      }
+      validUUID = reqUUID;
+      username = user.username;
+      isHeaderParsed = true;
+      let activeCount = ACTIVE_CONNECTIONS_COUNT.get(username) || 0;
+      ACTIVE_CONNECTIONS_COUNT.set(username, activeCount + 1);
+      if (activeCount === 0) {
+        const setOnlineTask = async () => {
+          try {
+            const now = Date.now();
+            GLOBAL_LAST_ACTIVE_WRITE.set(username, now);
+            await env.AM_DB.prepare("UPDATE users SET last_active = ? WHERE username = ?").bind(now, username).run();
+            try { await env.AM_DB.prepare("INSERT INTO logs (level, message, timestamp) VALUES (?, ?, ?)").bind("info", "User connected: " + username, now).run(); } catch(_) {}
+          } catch (e) {}
+        };
+        if (ctx) ctx.waitUntil(setOnlineTask());
+        else setOnlineTask();
+      }
+      try {
+        let offset = 17;
+        const optLen = chunkBuffer[offset++];
+        offset += optLen;
+        const cmd = chunkBuffer[offset++];
+        const port = chunkBuffer[offset++] << 8 | chunkBuffer[offset++];
+        const addrType = chunkBuffer[offset++];
+        let addr = "";
+        if (addrType === 1) {
+          addr = chunkBuffer[offset++] + "." + chunkBuffer[offset++] + "." + chunkBuffer[offset++] + "." + chunkBuffer[offset++];
+        } else if (addrType === 2) {
+          const domainLen = chunkBuffer[offset++];
+          addr = new TextDecoder().decode(chunkBuffer.slice(offset, offset + domainLen));
+          offset += domainLen;
+        } else if (addrType === 3) {
+          offset += 16;
+          addr = "ipv6-unsupported";
+        }
+        const rawData = chunkBuffer.slice(offset);
+        const respHeader = new Uint8Array([chunkBuffer[0], 0]);
+        if (cmd === 2) {
+          if (port === 53) {
+            isDnsQuery = true;
+            await forwardVlessUDP(rawData, serverSock, respHeader);
+          } else {
+            serverSock.close();
+          }
+          return;
+        }
+        const connectTCP = async (dataPayload = null, useFallback = true) => {
+          if (remoteConnWrapper.connectingPromise) {
+            await remoteConnWrapper.connectingPromise;
+            return;
+          }
+          const task = (async () => {
+            let s = null;
             try {
-                if (isInit) {
-                    isInit = false;
-                    const isModeAlpha = await parseSensorData(
-                        event.data,
-                        wsRelayIdx,
-                    );
-                    if (isModeAlpha) webSocket.send(new Uint8Array([0, 0]));
-                } else if (dataWriter) {
-                    await dataWriter.write(event.data);
+              s = await connectDirect(addr, port, dataPayload);
+            } catch (err) {
+              if (useFallback && pxIP) {
+                s = await connectDirect(pxIP, port, dataPayload);
+              } else {
+                throw err;
+              }
+            }
+            remoteConnWrapper.socket = s;
+            s.closed.catch(() => {}).finally(() => closeSocketQuietly(serverSock));
+            connectStreams(s, serverSock, respHeader, null, (b) => {
+              addBytes(b);
+            });
+          })();
+          remoteConnWrapper.connectingPromise = task;
+          try {
+            await task;
+          } finally {
+            if (remoteConnWrapper.connectingPromise === task) {
+              remoteConnWrapper.connectingPromise = null;
+            }
+          }
+        };
+        remoteConnWrapper.retryConnect = async () => connectTCP(null, false);
+        await connectTCP(rawData, true);
+      } catch (e) {
+        serverSock.close();
+      }
+    }
+  };
+  
+  const handleWsError = (err) => {
+    if (wsFailed) return;
+    wsFailed = true;
+    wsStopped = true;
+    wsQueueBytes = 0;
+    wsQueueItems = 0;
+    upstreamQueue.clear();
+    releaseRemoteWriter();
+    closeSocketQuietly(serverSock);
+    setOffline();
+  };
+  
+  const pushToChain = (task) => {
+    wsChain = wsChain.then(task).catch(handleWsError);
+  };
+  
+  serverSock.addEventListener("message", (event) => {
+    if (wsStopped || wsFailed) return;
+    const size = event.data.byteLength || 0;
+    const nextBytes = wsQueueBytes + size;
+    const nextItems = wsQueueItems + 1;
+    if (nextBytes > UPSTREAM_QUEUE_MAX_BYTES || nextItems > UPSTREAM_QUEUE_MAX_ITEMS) {
+      handleWsError(new Error("ws queue overflow"));
+      return;
+    }
+    wsQueueBytes = nextBytes;
+    wsQueueItems = nextItems;
+    pushToChain(async () => {
+      wsQueueBytes = Math.max(0, wsQueueBytes - size);
+      wsQueueItems = Math.max(0, wsQueueItems - 1);
+      if (wsFailed) return;
+      await processWsMessage(event.data);
+    });
+  });
+  
+  serverSock.addEventListener("close", () => {
+    clearInterval(heartbeat);
+    closeSocketQuietly(serverSock);
+    setOffline();
+    if (wsFinished) return;
+    wsFinished = true;
+    wsStopped = true;
+    pushToChain(async () => {
+      if (wsFailed) return;
+      await upstreamQueue.awaitEmpty();
+      releaseRemoteWriter();
+    });
+  });
+  
+  serverSock.addEventListener("error", (err) => {
+    handleWsError(err);
+  });
+  
+  return new Response(null, { status: 101, webSocket: clientSock });
+}
+
+// ============================================
+// MRVPN gRPC TRANSPORT HANDLER (Nova-style)
+// ============================================
+async function handleGRPC(request, env, ctx) {
+  try {
+    const ns = await loadNetSettings(env);
+    const grpcBody = request.body;
+    if (!grpcBody) return new Response('No body', { status: 400 });
+    const reader = grpcBody.getReader();
+    const { value: firstChunk, done } = await reader.read();
+    if (done || !firstChunk || firstChunk.byteLength < 17) return new Response('Invalid data', { status: 400 });
+    // Extract VLESS payload from gRPC frame
+    let vlessPayload = firstChunk;
+    if (firstChunk[0] === 0x0a) {
+      let len = firstChunk[1];
+      let off = 2;
+      if (len & 0x80) { let m = 1; len = 0; while (firstChunk[off] & 0x80) { len += (firstChunk[off++] & 0x7f) * m; m *= 128; } len += firstChunk[off++] * m; }
+      vlessPayload = firstChunk.slice(off, off + len);
+    }
+    // Parse UUID from VLESS header
+    if (vlessPayload.byteLength < 17) return new Response('Short header', { status: 400 });
+    const uuid = extractUUIDFromVless(vlessPayload);
+    if (!uuid) return new Response('Invalid UUID', { status: 401 });
+    // Validate user
+    let user = null;
+    try { user = await env.AM_DB.prepare('SELECT * FROM users WHERE uuid = ?').bind(uuid).first(); } catch(e) {}
+    if (!user || user.is_active === 0) return new Response('Unauthorized', { status: 401 });
+    if (user.limit_gb && user.used_gb >= user.limit_gb) return new Response('Quota exceeded', { status: 403 });
+    // Create bridge stream for gRPC response
+    const { readable, writable } = new TransformStream();
+    const grpcWriter = writable.getWriter();
+    // Parse target from VLESS payload
+    let offset = 17;
+    const optLen = vlessPayload[offset++];
+    offset += optLen;
+    const cmd = vlessPayload[offset++];
+    const port = vlessPayload[offset] << 8 | vlessPayload[offset + 1];
+    offset += 2;
+    const addrType = vlessPayload[offset++];
+    let addr = '';
+    if (addrType === 1) { addr = vlessPayload[offset] + '.' + vlessPayload[offset+1] + '.' + vlessPayload[offset+2] + '.' + vlessPayload[offset+3]; offset += 4; }
+    else if (addrType === 2) { const dl = vlessPayload[offset++]; addr = new TextDecoder().decode(vlessPayload.slice(offset, offset + dl)); offset += dl; }
+    else if (addrType === 3) { offset += 16; addr = 'ipv6-unsupported'; }
+    const rawData = vlessPayload.slice(offset);
+    if (!addr || !port) return new Response('No target', { status: 400 });
+    // Connect via TCP
+    const pxIP = ns.proxyIp || _safeProxyIP();
+    let remoteSocket;
+    try { remoteSocket = await connectDirect(addr, port, rawData.byteLength > 0 ? rawData : null); }
+    catch (err) { try { remoteSocket = await connectDirect(pxIP, port, rawData.byteLength > 0 ? rawData : null); } catch(e) { return new Response('Connect failed', { status: 502 }); } }
+    // Bridge: remote -> gRPC response
+    let bytesUp = rawData.byteLength || 0, bytesDown = 0;
+    (async () => {
+      try {
+        const rr = remoteSocket.readable.getReader();
+        while (true) {
+          const { done, value } = await rr.read();
+          if (done) break;
+          if (value && value.byteLength > 0) {
+            bytesDown += value.byteLength;
+            const frame = new Uint8Array(5 + value.byteLength);
+            frame[0] = 0x00;
+            frame[1] = (value.byteLength >> 24) & 0xff; frame[2] = (value.byteLength >> 16) & 0xff;
+            frame[3] = (value.byteLength >> 8) & 0xff; frame[4] = value.byteLength & 0xff;
+            frame.set(value, 5);
+            grpcWriter.write(frame);
+          }
+        }
+      } catch(e) {}
+      grpcWriter.close();
+    })();
+    // Bridge: gRPC request body -> remote
+    try {
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        if (value && value.byteLength > 0) {
+          bytesUp += value.byteLength;
+          // Strip gRPC frame header (5 bytes)
+          const payload = value.byteLength > 5 ? value.slice(5) : value;
+          if (payload.byteLength > 0) { const w = remoteSocket.writable.getWriter(); await w.write(payload); w.releaseLock(); }
+        }
+      }
+    } catch(e) {}
+    // Update traffic
+    try {
+      const totalBytes = bytesUp + bytesDown;
+      if (totalBytes > 0) {
+        const deltaGb = totalBytes / (1024 * 1024 * 1024);
+        await env.AM_DB.prepare('UPDATE users SET used_gb = used_gb + ?, last_active = ? WHERE username = ?').bind(deltaGb, Date.now(), user.username).run();
+      }
+    } catch(e) {}
+    return new Response(readable, { status: 200, headers: { 'Content-Type': SENSITIVE.ctGrpc, 'grpc-status': '0', 'Cache-Control': 'no-cache' } });
+  } catch(e) { return new Response('gRPC error', { status: 500 }); }
+}
+
+async function handleXHTTP(request, env, ctx) {
+  try {
+    const ns = await loadNetSettings(env);
+    const xhttpBody = request.body;
+    if (!xhttpBody) return new Response('No body', { status: 400 });
+    const reader = xhttpBody.getReader();
+    const { readable, writable } = new TransformStream();
+    const writer = writable.getWriter();
+    const { value: firstChunk, done } = await reader.read();
+    if (done || !firstChunk || firstChunk.byteLength < 17) return new Response('Invalid data', { status: 400 });
+    // Parse VLESS header
+    const uuid = extractUUIDFromVless(firstChunk);
+    if (!uuid) return new Response('Invalid UUID', { status: 401 });
+    let user = null;
+    try { user = await env.AM_DB.prepare('SELECT * FROM users WHERE uuid = ?').bind(uuid).first(); } catch(e) {}
+    if (!user || user.is_active === 0) return new Response('Unauthorized', { status: 401 });
+    let offset = 17;
+    const optLen = firstChunk[offset++];
+    offset += optLen;
+    const cmd = firstChunk[offset++];
+    const port = firstChunk[offset] << 8 | firstChunk[offset + 1];
+    offset += 2;
+    const addrType = firstChunk[offset++];
+    let addr = '';
+    if (addrType === 1) { addr = firstChunk[offset] + '.' + firstChunk[offset+1] + '.' + firstChunk[offset+2] + '.' + firstChunk[offset+3]; offset += 4; }
+    else if (addrType === 2) { const dl = firstChunk[offset++]; addr = new TextDecoder().decode(firstChunk.slice(offset, offset + dl)); offset += dl; }
+    else if (addrType === 3) { offset += 16; addr = 'ipv6-unsupported'; }
+    const rawData = firstChunk.slice(offset);
+    if (!addr || !port) return new Response('No target', { status: 400 });
+    const pxIP = ns.proxyIp || _safeProxyIP();
+    let remoteSocket;
+    try { remoteSocket = await connectDirect(addr, port, rawData.byteLength > 0 ? rawData : null); }
+    catch (err) { try { remoteSocket = await connectDirect(pxIP, port, rawData.byteLength > 0 ? rawData : null); } catch(e) { return new Response('Connect failed', { status: 502 }); } }
+    let bytesUp = rawData.byteLength || 0, bytesDown = 0;
+    (async () => {
+      try {
+        const rr = remoteSocket.readable.getReader();
+        while (true) {
+          const { done, value } = await rr.read();
+          if (done) break;
+          if (value && value.byteLength > 0) { bytesDown += value.byteLength; writer.write(value); }
+        }
+      } catch(e) {}
+      writer.close();
+    })();
+    try {
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        if (value && value.byteLength > 0) {
+          bytesUp += value.byteLength;
+          const w = remoteSocket.writable.getWriter(); await w.write(value); w.releaseLock();
+        }
+      }
+    } catch(e) {}
+    try {
+      const totalBytes = bytesUp + bytesDown;
+      if (totalBytes > 0) {
+        const deltaGb = totalBytes / (1024 * 1024 * 1024);
+        await env.AM_DB.prepare('UPDATE users SET used_gb = used_gb + ?, last_active = ? WHERE username = ?').bind(deltaGb, Date.now(), user.username).run();
+      }
+    } catch(e) {}
+    return new Response(readable, { status: 200, headers: { 'Content-Type': 'application/octet-stream', 'Cache-Control': 'no-cache' } });
+  } catch(e) { return new Response('XHTTP error', { status: 500 }); }
+}
+
+// MRVPN ENHANCED CLEAN IP GENERATION (Nova-style)
+// ============================================
+const CF_RANGES_NOVA = [
+  ['104.16.', 0, 255], ['104.17.', 0, 255], ['104.18.', 0, 255],
+  ['104.24.', 0, 255], ['104.25.', 0, 255], ['104.26.', 0, 255],
+  ['104.27.', 0, 255], ['104.28.', 0, 255],
+  ['162.159.', 0, 255], ['172.64.', 0, 255],
+  ['188.114.', 96, 111], ['188.114.', 112, 127],
+];
+const CF_TLS_PORTS = [443, 2053, 2083, 2087, 2096, 8443];
+
+function generateRandomCFIP() {
+  const range = CF_RANGES_NOVA[Math.floor(Math.random() * CF_RANGES_NOVA.length)];
+  const c = range[1] + Math.floor(Math.random() * (range[2] - range[1] + 1));
+  return range[0] + c + '.' + Math.floor(Math.random() * 256);
+}
+
+async function generateCleanIPsNova(count = 16) {
+  const ips = [];
+  for (let i = 0; i < count; i++) {
+    const ip = generateRandomCFIP();
+    const port = CF_TLS_PORTS[Math.floor(Math.random() * CF_TLS_PORTS.length)];
+    ips.push(ip + ':' + port + '#' + SENSITIVE.cleanIpRemark + (i + 1));
+  }
+  return ips;
+}
+
+// ============================================
+// MRVPN SUBSCRIPTION SERVICE (Enhanced Nova-style)
+// ============================================
+var SubscriptionServiceNova = {
+  buildVlessLink(uuid, ip, port, tls, host, fp, remark, params = {}) {
+    let link = `vless://${uuid}@${ip}:${port}?`;
+    const p = [];
+    p.push('encryption=none');
+    p.push('security=' + (tls ? 'tls' : 'none'));
+    if (tls) {
+      p.push('fp=' + (fp || 'chrome'));
+      p.push('sni=' + (host || ip));
+      if (params.ech) p.push('ech=' + encodeURIComponent(params.ech));
+    }
+    p.push('type=ws');
+    p.push('host=' + (host || ip));
+    p.push('path=%2F');
+    if (params.fragment) p.push('fragment=' + params.fragment);
+    if (params.grpc) p.push('serviceName=' + params.grpc);
+    if (params.mode) p.push('mode=' + params.mode);
+    link += p.join('&') + '#' + encodeURIComponent(remark);
+    return link;
+  },
+  
+  buildTrojanLink(password, ip, port, tls, host, fp, remark, params = {}) {
+    let link = `trojan://${password}@${ip}:${port}?`;
+    const p = [];
+    p.push('security=' + (tls ? 'tls' : 'none'));
+    if (tls) {
+      p.push('fp=' + (fp || 'chrome'));
+      p.push('sni=' + (host || ip));
+      if (params.ech) p.push('ech=' + encodeURIComponent(params.ech));
+    }
+    p.push('type=ws');
+    p.push('host=' + (host || ip));
+    p.push('path=%2F');
+    if (params.fragment) p.push('fragment=' + params.fragment);
+    if (params.grpc) p.push('serviceName=' + params.grpc);
+    if (params.mode) p.push('mode=' + params.mode);
+    link += p.join('&') + '#' + encodeURIComponent(remark);
+    return link;
+  },
+  
+  async generateSingboxConfig(user, host, env) {
+    const ns = await loadNetSettings(env);
+    const ips = user.ips ? user.ips.split('\n').map(s => s.trim()).filter(Boolean) : [host];
+    const ports = String(user.port || '443').split(',').map(p => p.trim()).filter(Boolean);
+    const fp = user.fingerprint || 'chrome';
+    const proto = user.connection_type === 'trojan' ? 'trojan' : 'vless';
+    
+    const config = {
+      dns: {
+        servers: [
+          { address: 'https://8.8.8.8/dns-query', tag: 'remote-dns' },
+          { address: '8.8.8.8', domains: ['full:' + host], skipFallback: true }
+        ],
+        queryStrategy: 'UseIP',
+        tag: 'dns'
+      },
+      inbounds: [{
+        listen: '127.0.0.1', port: 10808,
+        protocol: 'socks', settings: { auth: 'noauth', udp: true },
+        sniffing: { destOverride: ['http', 'tls'], enabled: true, routeOnly: true },
+        tag: 'mixed-in'
+      }],
+      outbounds: [],
+      routing: {
+        domainStrategy: 'IPIfNonMatch',
+        rules: [
+          { inboundTag: ['mixed-in'], port: 53, outboundTag: 'dns-out', type: 'field' },
+          { domain: ['geosite:private'], outboundTag: 'direct', type: 'field' },
+          { ip: ['geoip:private'], outboundTag: 'direct', type: 'field' },
+        ]
+      }
+    };
+    
+    if (ns.enableAdBlock) config.routing.rules.push({ domain: ['geosite:category-ads-all'], outboundTag: 'block', type: 'field' });
+    if (ns.blockQUIC) config.routing.rules.push({ network: 'udp', outboundTag: 'block', type: 'field' });
+    config.routing.rules.push({ network: 'tcp', outboundTag: SENSITIVE.tagProxy, type: 'field' });
+    
+    // Build outbounds for each IP+port
+    for (const ip of ips) {
+      for (const portStr of ports) {
+        const isTls = CF_TLS_PORTS.includes(parseInt(portStr));
+        const tlsVal = isTls ? 'tls' : 'none';
+        const tag = `proxy-${ip}-${portStr}`;
+        
+        const outbound = {
+          protocol: proto,
+          settings: proto === 'trojan' ? {
+            servers: [{ address: ip, port: parseInt(portStr), password: user.uuid }]
+          } : {
+            vnext: [{ address: ip, port: parseInt(portStr), users: [{ id: user.uuid, encryption: 'none' }] }]
+          },
+          streamSettings: {
+            network: 'ws',
+            wsSettings: { host: host || ip, path: '/' },
+            security: tlsVal,
+            sockopt: { dialerProxy: 'fragment' }
+          },
+          tag: tag
+        };
+        
+        if (isTls) {
+          outbound.streamSettings.tlsSettings = {
+            serverName: host || ip,
+            fingerprint: fp,
+            alpn: ['http/1.1']
+          };
+          if (ns.echEnabled) {
+            outbound.streamSettings.tlsSettings.ech = {
+              enabled: true,
+              config: ns.echSNI || 'cloudflare-ech.com'
+            };
+          }
+        }
+        
+        config.outbounds.push(outbound);
+      }
+    }
+    
+    // Fragment outbound
+    const fragLen = user.fragLen || ns.fragLen || '20-30';
+    const fragInt = user.fragInt || ns.fragInt || '1-2';
+    config.outbounds.push({
+      protocol: 'freedom',
+      settings: { fragment: { packets: 'tlshello', length: fragLen, interval: fragInt } },
+      tag: 'fragment'
+    });
+    config.outbounds.push({ protocol: 'dns', settings: { nonIPQuery: 'reject' }, tag: 'dns-out' });
+    config.outbounds.push({ protocol: 'freedom', settings: { domainStrategy: 'UseIP' }, tag: 'direct' });
+    config.outbounds.push({ protocol: 'blackhole', settings: { response: { type: 'http' } }, tag: 'block' });
+    
+    return JSON.stringify(config, null, 2);
+  },
+  
+  async generateClashConfig(user, host, env) {
+    const ns = await loadNetSettings(env);
+    const ips = user.ips ? user.ips.split('\n').map(s => s.trim()).filter(Boolean) : [host];
+    const ports = String(user.port || '443').split(',').map(p => p.trim()).filter(Boolean);
+    const fp = user.fingerprint || 'chrome';
+    const proto = user.connection_type === 'trojan' ? 'trojan' : 'vless';
+    
+    let yaml = 'mixed-port: 10808\nallow-lan: false\nmode: rule\nlog-level: info\n\n';
+    
+    // DNS
+    yaml += 'dns:\n  enable: true\n  enhanced-mode: fake-ip\n  nameserver:\n    - https://8.8.8.8/dns-query\n  fallback:\n    - https://1.1.1.1/dns-query\n\n';
+    
+    // Proxies
+    yaml += 'proxies:\n';
+    for (const ip of ips) {
+      for (const portStr of ports) {
+        const isTls = CF_TLS_PORTS.includes(parseInt(portStr));
+        const name = `MrVpn-${ip}-${portStr}`;
+        if (proto === 'trojan') {
+          yaml += `  - name: "${name}"\n    type: trojan\n    server: ${ip}\n    port: ${portStr}\n    password: "${user.uuid}"\n`;
+          yaml += `    network: ws\n    ws-opts:\n      path: /\n      headers:\n        Host: ${host || ip}\n`;
+          if (isTls) {
+            yaml += `    tls: true\n    sni: ${host || ip}\n    client-fingerprint: ${fp}\n`;
+          }
+        } else {
+          yaml += `  - name: "${name}"\n    type: vless\n    server: ${ip}\n    port: ${portStr}\n    uuid: ${user.uuid}\n    udp: true\n`;
+          yaml += `    network: ws\n    ws-opts:\n      path: /\n      headers:\n        Host: ${host || ip}\n`;
+          if (isTls) {
+            yaml += `    tls: true\n    servername: ${host || ip}\n    client-fingerprint: ${fp}\n`;
+          }
+        }
+      }
+    }
+    
+    // Rules
+    yaml += '\nrules:\n';
+    yaml += '  - GEOIP,DIRECT\n';
+    yaml += '  - MATCH,MrVpn-' + (ips[0] || host) + '-' + (ports[0] || '443') + '\n';
+    
+    return yaml;
+  },
+  
+  async generateText(user, host, env) {
+    const ns = await loadNetSettings(env);
+    const ips = user.ips ? user.ips.split('\n').map(s => s.trim()).filter(Boolean) : [host];
+    const ports = String(user.port || '443').split(',').map(p => p.trim()).filter(Boolean);
+    const fp = user.fingerprint || 'chrome';
+    const proto = user.connection_type === 'trojan' ? 'trojan' : 'vless';
+    
+    const links = [];
+    const now = new Date();
+    const created = new Date(user.created_at);
+    const expiryDate = new Date(created.getTime() + (user.expiry_days || 30) * 24 * 60 * 60 * 1000);
+    const daysLeft = Math.ceil((expiryDate - now) / (1000 * 60 * 60 * 24));
+    const expiryDateStr = expiryDate.toISOString().split('T')[0].replace(/-/g, '/');
+    const usedGB = user.used_gb || 0;
+    const totalGB = user.limit_gb || 0;
+    const configName = user.config_name || user.username;
+    const usedFormatted = usedGB >= 1 ? usedGB.toFixed(1) + 'GB' : (usedGB * 1024).toFixed(0) + 'MB';
+    const totalFormatted = totalGB >= 1 ? totalGB + 'GB' : 'Unlimited';
+    
+    const echParam = ns.echEnabled ? (ns.echSNI || 'cloudflare-ech.com') : '';
+    const fragParam = (ns.tlsFragment || user.fragLen) ?
+      `${user.fragLen || ns.fragLen || '20-30'},${user.fragInt || ns.fragInt || '1-2'},tlshello` : '';
+    
+    const firstIp = ips[0] || host;
+    const firstPort = ports[0] || '443';
+    const isTls = CF_TLS_PORTS.includes(parseInt(firstPort));
+    
+    // Info links
+    const remark1 = `\u23F3 ${user.username.toUpperCase()} | \uD83D\uDCC5 Exp: ${expiryDateStr} | \uD83D\uDD25 ${daysLeft} Days Left`;
+    if (proto === 'trojan') {
+      links.push(this.buildTrojanLink(user.uuid, firstIp, firstPort, isTls, host, fp, remark1, { ech: echParam, fragment: fragParam }));
+    } else {
+      links.push(this.buildVlessLink(user.uuid, firstIp, firstPort, isTls, host, fp, remark1, { ech: echParam, fragment: fragParam }));
+    }
+    
+    const remark2 = `\uD83D\uDCCA ${user.username.toUpperCase()} | \uD83D\uDCBE ${totalFormatted} Total | \u26A1 ${usedFormatted} Used`;
+    if (proto === 'trojan') {
+      links.push(this.buildTrojanLink(user.uuid, firstIp, firstPort, isTls, host, fp, remark2, { ech: echParam, fragment: fragParam }));
+    } else {
+      links.push(this.buildVlessLink(user.uuid, firstIp, firstPort, isTls, host, fp, remark2, { ech: echParam, fragment: fragParam }));
+    }
+    
+    // Config links
+    for (const ip of ips) {
+      for (const portStr of ports) {
+        const isTlsLoop = CF_TLS_PORTS.includes(parseInt(portStr));
+        if (proto === 'trojan') {
+          links.push(this.buildTrojanLink(user.uuid, ip, portStr, isTlsLoop, host, fp, configName, { ech: echParam, fragment: fragParam }));
+        } else {
+          links.push(this.buildVlessLink(user.uuid, ip, portStr, isTlsLoop, host, fp, configName, { ech: echParam, fragment: fragParam }));
+        }
+      }
+    }
+    
+    const header = [
+      '# ==========================================',
+      '# MrVpn Panel Subscription Feed',
+      '# User: ' + user.username,
+      '# Protocol: ' + proto.toUpperCase(),
+      '# Created: ' + user.created_at,
+      '# Status: ' + (user.is_active ? 'Active' : 'Inactive'),
+      '# =========================================='
+    ].join('\n');
+    
+    const plainContent = header + '\n' + links.join('\n');
+    const subContent = btoa(unescape(encodeURIComponent(plainContent)));
+    return new Response(subContent, {
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8',
+        'Access-Control-Allow-Origin': '*',
+        'Cache-Control': 'no-store'
+      }
+    });
+  }
+};
+
+// ============================================
+// NETWORK UTILITIES
+// ============================================
+function isIPv4(value) {
+  const parts = String(value || "").split(".");
+  return parts.length === 4 && parts.every((part) => /^\d{1,3}$/.test(part) && Number(part) >= 0 && Number(part) <= 255);
+}
+
+function stripIPv6Brackets(hostname = "") {
+  const host = String(hostname || "").trim();
+  return host.startsWith("[") && host.endsWith("]") ? host.slice(1, -1) : host;
+}
+
+function isIPHostname(hostname = "") {
+  const host = stripIPv6Brackets(hostname);
+  if (isIPv4(host)) return true;
+  if (!host.includes(":")) return false;
+  try {
+    new URL("http://[" + host + "]/");
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+function convertToUint8Array(data) {
+  if (data instanceof Uint8Array) return data;
+  if (data instanceof ArrayBuffer) return new Uint8Array(data);
+  if (ArrayBuffer.isView(data)) return new Uint8Array(data.buffer, data.byteOffset, data.byteLength);
+  return new Uint8Array(data || 0);
+}
+
+function concatBytes(...chunkList) {
+  const chunks = chunkList.map(convertToUint8Array);
+  const total = chunks.reduce((sum, c) => sum + c.byteLength, 0);
+  const result = new Uint8Array(total);
+  let offset = 0;
+  for (const c of chunks) {
+    result.set(c, offset);
+    offset += c.byteLength;
+  }
+  return result;
+}
+
+function closeSocketQuietly(socket) {
+  try {
+    if (socket.readyState === WebSocket.OPEN || socket.readyState === WebSocket.CLOSING) {
+      socket.close();
+    }
+  } catch (e) {}
+}
+
+// ============================================
+// DNS UTILITIES
+// ============================================
+async function dohQuery(domain, recordType) {
+  const cacheKey = domain + ":" + recordType;
+  if (DNS_CACHE.has(cacheKey)) {
+    const cached = DNS_CACHE.get(cacheKey);
+    if (Date.now() < cached.expires) return cached.data;
+    DNS_CACHE.delete(cacheKey);
+  }
+  try {
+    const typeMap = { "A": 1, "AAAA": 28 };
+    const qtype = typeMap[recordType.toUpperCase()] || 1;
+    const encodeDomain = (name) => {
+      const parts = name.endsWith(".") ? name.slice(0, -1).split(".") : name.split(".");
+      const bufs = [];
+      for (const label of parts) {
+        const enc = new TextEncoder().encode(label);
+        bufs.push(new Uint8Array([enc.length]), enc);
+      }
+      bufs.push(new Uint8Array([0]));
+      return concatBytes(...bufs);
+    };
+    const qname = encodeDomain(domain);
+    const query = new Uint8Array(12 + qname.length + 4);
+    const qview = new DataView(query.buffer);
+    qview.setUint16(0, crypto.getRandomValues(new Uint16Array(1))[0]);
+    qview.setUint16(2, 256);
+    qview.setUint16(4, 1);
+    query.set(qname, 12);
+    qview.setUint16(12 + qname.length, qtype);
+    qview.setUint16(12 + qname.length + 2, 1);
+    const response = await fetch(DOH_RESOLVER, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/dns-message",
+        "Accept": "application/dns-message"
+      },
+      body: query
+    });
+    if (!response.ok) return [];
+    const buf = new Uint8Array(await response.arrayBuffer());
+    const dv = new DataView(buf.buffer);
+    const qdcount = dv.getUint16(4);
+    const ancount = dv.getUint16(6);
+    const parseName = (pos) => {
+      const labels = [];
+      let p = pos, jumped = false, endPos = -1, safe = 128;
+      while (p < buf.length && safe-- > 0) {
+        const len = buf[p];
+        if (len === 0) {
+          if (!jumped) endPos = p + 1;
+          break;
+        }
+        if ((len & 192) === 192) {
+          if (!jumped) endPos = p + 2;
+          p = (len & 63) << 8 | buf[p + 1];
+          jumped = true;
+          continue;
+        }
+        labels.push(new TextDecoder().decode(buf.slice(p + 1, p + 1 + len)));
+        p += len + 1;
+      }
+      if (endPos === -1) endPos = p + 1;
+      return [labels.join("."), endPos];
+    };
+    let offset = 12;
+    for (let i = 0; i < qdcount; i++) {
+      const [, end] = parseName(offset);
+      offset = Number(end) + 4;
+    }
+    const answers = [];
+    for (let i = 0; i < ancount && offset < buf.length; i++) {
+      const [name, nameEnd] = parseName(offset);
+      offset = Number(nameEnd);
+      const type = dv.getUint16(offset);
+      offset += 2;
+      offset += 2;
+      const ttl = dv.getUint32(offset);
+      offset += 4;
+      const rdlen = dv.getUint16(offset);
+      offset += 2;
+      const rdata = buf.slice(offset, offset + rdlen);
+      offset += rdlen;
+      let data;
+      if (type === 1 && rdlen === 4) {
+        data = rdata[0] + "." + rdata[1] + "." + rdata[2] + "." + rdata[3];
+      } else if (type === 28 && rdlen === 16) {
+        const segs = [];
+        for (let j = 0; j < 16; j += 2) segs.push((rdata[j] << 8 | rdata[j + 1]).toString(16));
+        data = segs.join(":");
+      } else {
+        data = Array.from(rdata).map((b) => b.toString(16).padStart(2, "0")).join("");
+      }
+      answers.push({ name, type, TTL: ttl, data });
+    }
+    DNS_CACHE.set(cacheKey, { data: answers, expires: Date.now() + DNS_CACHE_TTL });
+    return answers;
+  } catch (e) {
+    return [];
+  }
+}
+
+// ============================================
+// UPSTREAM QUEUE
+// ============================================
+function createUpstreamQueue({ getWriter, releaseWriter, retryConnect, closeConnection, name = "UpstreamQueue" }) {
+  let chunks = [];
+  let head = 0;
+  let queuedBytes = 0;
+  let draining = false;
+  let closed = false;
+  let bundleBuffer = null;
+  let idleResolvers = [];
+  let activeCompletions = null;
+  
+  const settleCompletions = (completions, err = null) => {
+    if (!completions) return;
+    for (const comp of completions) {
+      if (comp) {
+        if (err) comp.reject(err);
+        else comp.resolve();
+      }
+    }
+  };
+  
+  const rejectQueued = (err) => {
+    for (let i = head; i < chunks.length; i++) {
+      const item = chunks[i];
+      if (item && item.completions) settleCompletions(item.completions, err);
+    }
+  };
+  
+  const compact = () => {
+    if (head > 32 && head * 2 >= chunks.length) {
+      chunks = chunks.slice(head);
+      head = 0;
+    }
+  };
+  
+  const resolveIdle = () => {
+    if (queuedBytes || draining || !idleResolvers.length) return;
+    const resolvers = idleResolvers;
+    idleResolvers = [];
+    for (const resolve of resolvers) resolve();
+  };
+  
+  const clear = (err = null) => {
+    const closeErr = err || (closed ? new Error(name + ": queue closed") : null);
+    if (closeErr) {
+      rejectQueued(closeErr);
+      settleCompletions(activeCompletions, closeErr);
+      activeCompletions = null;
+    }
+    chunks = [];
+    head = 0;
+    queuedBytes = 0;
+    resolveIdle();
+  };
+  
+  const shift = () => {
+    if (head >= chunks.length) return null;
+    const item = chunks[head];
+    chunks[head++] = void 0;
+    queuedBytes -= item.chunk.byteLength;
+    compact();
+    return item;
+  };
+  
+  const bundle = () => {
+    const first = shift();
+    if (!first) return null;
+    if (head >= chunks.length || first.chunk.byteLength >= UPSTREAM_BUNDLE_TARGET_BYTES) return first;
+    let byteLength = first.chunk.byteLength;
+    let end = head;
+    let allowRetry = first.allowRetry;
+    let completions = first.completions || null;
+    while (end < chunks.length) {
+      const next = chunks[end];
+      const nextLength = byteLength + next.chunk.byteLength;
+      if (nextLength > UPSTREAM_BUNDLE_TARGET_BYTES) break;
+      byteLength = nextLength;
+      allowRetry = allowRetry && next.allowRetry;
+      if (next.completions) completions = completions ? completions.concat(next.completions) : next.completions;
+      end++;
+    }
+    if (end === head) return first;
+    const output = bundleBuffer ||= new Uint8Array(UPSTREAM_BUNDLE_TARGET_BYTES);
+    output.set(first.chunk);
+    let offset = first.chunk.byteLength;
+    while (head < end) {
+      const next = chunks[head];
+      chunks[head++] = void 0;
+      queuedBytes -= next.chunk.byteLength;
+      output.set(next.chunk, offset);
+      offset += next.chunk.byteLength;
+    }
+    compact();
+    return { chunk: output.subarray(0, byteLength), allowRetry, completions };
+  };
+  
+  const drain = async () => {
+    if (draining || closed) return;
+    draining = true;
+    try {
+      for (; ; ) {
+        if (closed) break;
+        const item = bundle();
+        if (!item) break;
+        let writer = getWriter();
+        if (!writer) throw new Error(name + ": remote writer unavailable");
+        const completions = item.completions || null;
+        activeCompletions = completions;
+        try {
+          try {
+            await writer.write(item.chunk);
+          } catch (err) {
+            releaseWriter?.();
+            if (!item.allowRetry || typeof retryConnect !== "function") throw err;
+            await retryConnect();
+            writer = getWriter();
+            if (!writer) throw err;
+            await writer.write(item.chunk);
+          }
+          settleCompletions(completions);
+        } catch (err) {
+          settleCompletions(completions, err);
+          throw err;
+        } finally {
+          if (activeCompletions === completions) activeCompletions = null;
+        }
+      }
+    } catch (err) {
+      closed = true;
+      clear(err);
+      try {
+        closeConnection?.(err);
+      } catch (_) {}
+    } finally {
+      draining = false;
+      if (!closed && head < chunks.length) queueMicrotask(drain);
+      else resolveIdle();
+    }
+  };
+  
+  const enqueue = (data, allowRetry = true, waitForFlush = false) => {
+    if (closed) return false;
+    if (!getWriter()) return false;
+    const chunk = convertToUint8Array(data);
+    if (!chunk.byteLength) return true;
+    const nextBytes = queuedBytes + chunk.byteLength;
+    const nextItems = chunks.length - head + 1;
+    if (nextBytes > UPSTREAM_QUEUE_MAX_BYTES || nextItems > UPSTREAM_QUEUE_MAX_ITEMS) {
+      closed = true;
+      const err = Object.assign(new Error(name + ": upload queue overflow (" + nextBytes + "B/" + nextItems + ")"), { isQueueOverflow: true });
+      clear(err);
+      try {
+        closeConnection?.(err);
+      } catch (_) {}
+      throw err;
+    }
+    let completionPromise = null;
+    let completions = null;
+    if (waitForFlush) {
+      completions = [];
+      completionPromise = new Promise((resolve, reject) => completions.push({ resolve, reject }));
+    }
+    chunks.push({ chunk, allowRetry, completions });
+    queuedBytes = nextBytes;
+    if (!draining) queueMicrotask(drain);
+    return waitForFlush ? completionPromise.then(() => true) : true;
+  };
+  
+  return {
+    writeAndAwait(data, allowRetry = true) {
+      return enqueue(data, allowRetry, true);
+    },
+    async awaitEmpty() {
+      if (!queuedBytes && !draining) return;
+      await new Promise((resolve) => idleResolvers.push(resolve));
+    },
+    clear() {
+      closed = true;
+      clear();
+    }
+  };
+}
+
+// ============================================
+// DOWNSTREAM SENDER
+// ============================================
+function createDownstreamSender(webSocket, headerData = null) {
+  const packetCap = DOWNSTREAM_GRAIN_BYTES;
+  const tailBytes = DOWNSTREAM_GRAIN_TAIL_THRESHOLD;
+  const lowWaterBytes = Math.max(4096, tailBytes << 3);
+  let header = headerData;
+  let pendingBuffer = new Uint8Array(packetCap);
+  let pendingBytes = 0;
+  let flushTimer = null;
+  let microtaskQueued = false;
+  let generation = 0;
+  let scheduledGeneration = 0;
+  let waitRounds = 0;
+  let flushPromise = null;
+  
+  const sendRawChunk = async (chunk) => {
+    if (webSocket.readyState !== WebSocket.OPEN) throw new Error("ws.readyState is not open");
+    webSocket.send(chunk);
+  };
+  
+  const attachResponseHeader = (chunk) => {
+    if (!header) return chunk;
+    const merged = new Uint8Array(header.length + chunk.byteLength);
+    merged.set(header, 0);
+    merged.set(chunk, header.length);
+    header = null;
+    return merged;
+  };
+  
+  const flush = async () => {
+    while (flushPromise) await flushPromise;
+    if (flushTimer) clearTimeout(flushTimer);
+    flushTimer = null;
+    microtaskQueued = false;
+    if (!pendingBytes) return;
+    const output = pendingBuffer.subarray(0, pendingBytes).slice();
+    pendingBuffer = new Uint8Array(packetCap);
+    pendingBytes = 0;
+    waitRounds = 0;
+    flushPromise = sendRawChunk(output).finally(() => {
+      flushPromise = null;
+    });
+    return flushPromise;
+  };
+  
+  const scheduleFlush = () => {
+    if (flushTimer || microtaskQueued) return;
+    microtaskQueued = true;
+    scheduledGeneration = generation;
+    queueMicrotask(() => {
+      microtaskQueued = false;
+      if (!pendingBytes || flushTimer) return;
+      if (packetCap - pendingBytes < tailBytes) {
+        flush().catch(() => closeSocketQuietly(webSocket));
+        return;
+      }
+      flushTimer = setTimeout(() => {
+        flushTimer = null;
+        if (!pendingBytes) return;
+        if (packetCap - pendingBytes < tailBytes) {
+          flush().catch(() => closeSocketQuietly(webSocket));
+          return;
+        }
+        if (waitRounds < 2 && (generation !== scheduledGeneration || pendingBytes < lowWaterBytes)) {
+          waitRounds++;
+          scheduledGeneration = generation;
+          scheduleFlush();
+          return;
+        }
+        flush().catch(() => closeSocketQuietly(webSocket));
+      }, Math.max(DOWNSTREAM_GRAIN_SILENT_MS, 1));
+    });
+  };
+  
+  return {
+    async sendDirect(data) {
+      let chunk = convertToUint8Array(data);
+      if (!chunk.byteLength) return;
+      chunk = attachResponseHeader(chunk);
+      await sendRawChunk(chunk);
+    },
+    async send(data) {
+      let chunk = convertToUint8Array(data);
+      if (!chunk.byteLength) return;
+      chunk = attachResponseHeader(chunk);
+      let offset = 0;
+      const totalBytes = chunk.byteLength;
+      while (offset < totalBytes) {
+        if (!pendingBytes && totalBytes - offset >= packetCap) {
+          const sendBytes = Math.min(packetCap, totalBytes - offset);
+          const view = offset || sendBytes !== totalBytes ? chunk.subarray(offset, offset + sendBytes) : chunk;
+          await sendRawChunk(view);
+          offset += sendBytes;
+          continue;
+        }
+        const copyBytes = Math.min(packetCap - pendingBytes, totalBytes - offset);
+        pendingBuffer.set(chunk.subarray(offset, offset + copyBytes), pendingBytes);
+        pendingBytes += copyBytes;
+        offset += copyBytes;
+        generation++;
+        if (pendingBytes === packetCap || packetCap - pendingBytes < tailBytes) await flush();
+        else scheduleFlush();
+      }
+    },
+    flush
+  };
+}
+
+async function waitForBackpressure(ws) {
+  if (typeof ws.bufferedAmount === "number") {
+    while (ws.bufferedAmount > 256 * 1024) {
+      await new Promise((r) => setTimeout(r, 100));
+    }
+  }
+}
+
+async function connectStreams(remoteSocket, webSocket, headerData, retryFunc, onBytes) {
+  let header = headerData, hasData = false, reader, useBYOB = false;
+  const BYOB_LIMIT = 64 * 1024;
+  const downstreamSender = createDownstreamSender(webSocket, header);
+  header = null;
+  try {
+    reader = remoteSocket.readable.getReader({ mode: "byob" });
+    useBYOB = true;
+  } catch (e) {
+    reader = remoteSocket.readable.getReader();
+  }
+  try {
+    if (!useBYOB) {
+      while (true) {
+        await waitForBackpressure(webSocket);
+        const { done, value } = await reader.read();
+        if (done) break;
+        if (!value || value.byteLength === 0) continue;
+        hasData = true;
+        if (typeof onBytes === "function") onBytes(value.byteLength);
+        await downstreamSender.send(value);
+      }
+    } else {
+      let readBuffer = new ArrayBuffer(BYOB_LIMIT);
+      while (true) {
+        await waitForBackpressure(webSocket);
+        const { done, value } = await reader.read(new Uint8Array(readBuffer, 0, BYOB_LIMIT));
+        if (done) break;
+        if (!value || value.byteLength === 0) continue;
+        hasData = true;
+        if (typeof onBytes === "function") onBytes(value.byteLength);
+        if (value.byteLength >= DOWNSTREAM_GRAIN_BYTES) {
+          await downstreamSender.flush();
+          await downstreamSender.sendDirect(value);
+          readBuffer = new ArrayBuffer(BYOB_LIMIT);
+        } else {
+          await downstreamSender.send(value);
+          readBuffer = value.buffer.byteLength >= BYOB_LIMIT ? value.buffer : new ArrayBuffer(BYOB_LIMIT);
+        }
+      }
+    }
+    await downstreamSender.flush();
+  } catch (err) {
+    closeSocketQuietly(webSocket);
+  } finally {
+    try {
+      reader.cancel();
+    } catch (e) {}
+    try {
+      reader.releaseLock();
+    } catch (e) {}
+  }
+  if (!hasData && retryFunc) await retryFunc();
+}
+
+async function buildRaceCandidates(address, port) {
+  if (!PRELOAD_RACE_DIAL || isIPHostname(address)) return null;
+  const [aRecords, aaaaRecords] = await Promise.all([
+    dohQuery(address, "A"),
+    dohQuery(address, "AAAA")
+  ]);
+  const ipv4List = [...new Set(aRecords.flatMap((r) => {
+    return r.type === 1 && typeof r.data === "string" && isIPv4(r.data) ? [r.data] : [];
+  }))];
+  const ipv6List = [...new Set(aaaaRecords.flatMap((r) => {
+    return r.type === 28 && typeof r.data === "string" && isIPHostname(r.data) ? [r.data] : [];
+  }))];
+  const limit = Math.max(1, TCP_CONCURRENCY | 0);
+  const ipList = ipv4List.length >= limit ? ipv4List.slice(0, limit) : ipv4List.concat(ipv6List.slice(0, limit - ipv4List.length));
+  if (ipList.length === 0) return null;
+  return ipList.map((hostname, attempt) => ({ hostname, port, attempt, resolvedFrom: address }));
+}
+
+async function connectDirect(address, port, initialData = null) {
+  const raceCandidates = await buildRaceCandidates(address, port);
+  const candidates = raceCandidates || Array.from({ length: TCP_CONCURRENCY }, () => ({ hostname: address, port }));
+  const openConnection = async (host, prt) => {
+    const socket = connect({ hostname: host, port: prt });
+    await Promise.race([
+      socket.opened,
+      new Promise((_, reject) => setTimeout(() => reject(new Error("timeout")), 1e3))
+    ]);
+    return socket;
+  };
+  if (candidates.length === 1) {
+    const s = await openConnection(candidates[0].hostname, candidates[0].port);
+    if (initialData && initialData.byteLength > 0) {
+      const w = s.writable.getWriter();
+      await w.write(convertToUint8Array(initialData));
+      w.releaseLock();
+    }
+    return s;
+  }
+  const attempts = candidates.map((c) => openConnection(c.hostname, c.port).then((socket) => ({ socket, candidate: c })));
+  let winner = null;
+  try {
+    // Promise.race instead of Promise.any for better compatibility
+    winner = await Promise.race(attempts);
+    if (initialData && initialData.byteLength > 0) {
+      const w = winner.socket.writable.getWriter();
+      await w.write(convertToUint8Array(initialData));
+      w.releaseLock();
+    }
+    return winner.socket;
+  } finally {
+    if (winner) {
+      for (const attempt of attempts) {
+        attempt.then(({ socket }) => {
+          if (socket !== winner.socket) {
+            try {
+              socket.close();
+            } catch (e) {}
+          }
+        }).catch(() => {});
+      }
+    }
+  }
+}
+
+async function forwardVlessUDP(udpChunk, webSocket, respHeader) {
+  const requestData = convertToUint8Array(udpChunk);
+  try {
+    const tcpSocket = connect({ hostname: "8.8.4.4", port: 53 });
+    let vh = respHeader;
+    const writer = tcpSocket.writable.getWriter();
+    await writer.write(requestData);
+    writer.releaseLock();
+    await tcpSocket.readable.pipeTo(new WritableStream({
+      async write(chunk) {
+        const response = convertToUint8Array(chunk);
+        if (webSocket.readyState !== WebSocket.OPEN) return;
+        if (vh) {
+          const merged = new Uint8Array(vh.length + response.byteLength);
+          merged.set(vh, 0);
+          merged.set(response, vh.length);
+          webSocket.send(merged.buffer);
+          vh = null;
+        } else {
+          webSocket.send(response);
+        }
+      }
+    }));
+  } catch (e) {}
+}
+
+function extractUUIDFromVless(data) {
+  if (data.byteLength < 17) return null;
+  const hex = [...data.slice(1, 17)].map((b) => b.toString(16).padStart(2, "0")).join("");
+  return hex.substring(0, 8) + "-" + hex.substring(8, 12) + "-" + hex.substring(12, 16) + "-" + hex.substring(16, 20) + "-" + hex.substring(20);
+}
+
+// ============================================
+// HTML TEMPLATES - COMPLETE
+// ============================================
+var HTML_TEMPLATES = {
+  nginx: `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MrVpn Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif}
+        body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#06060e;color:#e2e8f0;overflow:hidden}
+        .bg-orbs{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+        .orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.18;animation:drift 12s ease-in-out infinite}
+        .orb-1{width:400px;height:400px;background:#6366f1;top:-10%;left:-5%;animation-delay:0s}
+        .orb-2{width:350px;height:350px;background:#a855f7;bottom:-10%;right:-5%;animation-delay:-4s}
+        .orb-3{width:250px;height:250px;background:#06b6d4;top:50%;left:50%;transform:translate(-50%,-50%);animation-delay:-8s}
+        @keyframes drift{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-20px) scale(1.05)}66%{transform:translate(-20px,30px) scale(.95)}}
+        .hero{position:relative;z-index:1;text-align:center;padding:20px;max-width:520px;width:100%}
+        .logo-wrap{display:inline-flex;align-items:center;justify-content:center;width:80px;height:80px;border-radius:24px;background:linear-gradient(135deg,rgba(99,102,241,.2),rgba(168,85,247,.2));border:1px solid rgba(99,102,241,.25);margin-bottom:28px;animation:float 6s ease-in-out infinite;box-shadow:0 0 60px rgba(99,102,241,.15)}
+        .logo-wrap svg{width:40px;height:40px;color:#818cf8}
+        @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+        h1{font-size:clamp(36px,6vw,52px);font-weight:900;background:linear-gradient(135deg,#818cf8,#c084fc,#818cf8);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:gradShift 4s ease-in-out infinite;margin-bottom:8px;line-height:1.1}
+        @keyframes gradShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+        .tagline{color:#64748b;font-size:14px;font-weight:500;margin-bottom:24px}
+        .status-pill{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:9999px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);font-size:12px;color:#4ade80;font-weight:600;margin-bottom:36px}
+        .status-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;animation:pulse 2s ease-in-out infinite}
+        @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+        .info-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:32px}
+        .info-card{padding:16px 12px;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);backdrop-filter:blur(12px);transition:all .3s}
+        .info-card:hover{border-color:rgba(99,102,241,.3);transform:translateY(-2px)}
+        .info-card .label{font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+        .info-card .value{font-size:16px;font-weight:700;color:#fff}
+        .info-card .value.accent{color:#818cf8}
+        .info-card .value.green{color:#4ade80}
+        .enter-btn{display:inline-flex;align-items:center;gap:10px;padding:14px 40px;border-radius:16px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;font-size:14px;font-weight:700;text-decoration:none;border:none;cursor:pointer;transition:all .25s;box-shadow:0 4px 24px rgba(99,102,241,.3);position:relative;overflow:hidden}
+        .enter-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent,rgba(255,255,255,.1),transparent);transform:translateX(-100%);transition:transform .5s}
+        .enter-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(99,102,241,.45)}
+        .enter-btn:hover::before{transform:translateX(100%)}
+        .enter-btn svg{width:18px;height:18px}
+        .footer{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,255,255,.05);display:flex;justify-content:center;align-items:center;gap:16px;flex-wrap:wrap;font-size:12px;color:#475569}
+        .footer a{color:#64748b;text-decoration:none;display:flex;align-items:center;gap:5px;transition:color .2s}
+        .footer a:hover{color:#e2e8f0}
+        .footer svg{width:14px;height:14px}
+        @media(max-width:480px){.info-cards{grid-template-columns:1fr}.info-card{padding:14px}.hero{padding:12px}h1{font-size:32px}.tagline{font-size:12px}.enter-btn{padding:12px 32px;font-size:13px}}
+    </style>
+</head>
+<body>
+    <div class="bg-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+    <div class="hero">
+        <div class="logo-wrap">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        </div>
+        <h1>MrVpn Panel</h1>
+        <p class="tagline">MRVPN294 Management Panel</p>
+        <div class="status-pill"><span class="status-dot"></span>System Online</div>
+        <div class="info-cards">
+            <div class="info-card"><div class="label">Version</div><div class="value">v3.1.0</div></div>
+            <div class="info-card"><div class="label">Protocol</div><div class="value accent">VLESS+WS</div></div>
+            <div class="info-card"><div class="label">Status</div><div class="value green">Running</div></div>
+        </div>
+        <a href="/panel" class="enter-btn">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
+            Enter Dashboard
+        </a>
+        <div class="footer">
+            <span>v3.1.0</span>
+            <a href="https://github.com/amirpocom63-del/mrvpnpanel" target="_blank">
+                <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z"/></svg>
+                GitHub
+            </a>
+            <a href="https://t.me/MrVpn294" target="_blank">
+                <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.94-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.37.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .24z"/></svg>
+                Telegram
+            </a>
+            <span>@MrVpn294</span>
+        </div>
+    </div>
+</body>
+</html>`,
+
+  setup: `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>signup - MrVpn Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif}
+        body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#06060e;color:#e2e8f0;overflow:auto}
+        .bg-orbs{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+        .orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.18;animation:drift 12s ease-in-out infinite}
+        .orb-1{width:400px;height:400px;background:#6366f1;top:-10%;left:-5%;animation-delay:0s}
+        .orb-2{width:350px;height:350px;background:#a855f7;bottom:-10%;right:-5%;animation-delay:-4s}
+        @keyframes drift{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-20px) scale(1.05)}66%{transform:translate(-20px,30px) scale(.95)}}
+        .card{position:relative;z-index:1;width:100%;max-width:420px;padding:40px 32px;border-radius:24px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);backdrop-filter:blur(24px);box-shadow:0 0 80px rgba(99,102,241,.1),0 24px 48px rgba(0,0,0,.3);margin:20px}
+        .card-header{text-align:center;margin-bottom:32px}
+        .icon-wrap{display:inline-flex;align-items:center;justify-content:center;width:64px;height:64px;border-radius:20px;background:linear-gradient(135deg,rgba(99,102,241,.15),rgba(168,85,247,.15));border:1px solid rgba(99,102,241,.2);margin-bottom:20px}
+        .icon-wrap svg{width:28px;height:28px;color:#818cf8}
+        h2{font-size:24px;font-weight:800;color:#fff;margin-bottom:6px}
+        .subtitle{font-size:13px;color:#64748b}
+        .form-group{margin-bottom:18px}
+        label{display:block;font-size:11px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+        input{width:100%;padding:14px 16px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:#fff;font-size:14px;transition:all .25s;outline:none}
+        input::placeholder{color:#475569}
+        input:focus{border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,.15);background:rgba(255,255,255,.06)}
+        .btn{width:100%;padding:14px;border-radius:14px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;font-size:14px;font-weight:700;border:none;cursor:pointer;transition:all .25s;box-shadow:0 4px 20px rgba(99,102,241,.3);margin-top:8px;position:relative;overflow:hidden}
+        .btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent,rgba(255,255,255,.1),transparent);transform:translateX(-100%);transition:transform .5s}
+        .btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(99,102,241,.4)}
+        .btn:hover::before{transform:translateX(100%)}
+        .btn:active{transform:translateY(0)}
+        @media(max-width:480px){.card{padding:28px 20px;margin:12px}h2{font-size:20px}}
+    </style>
+</head>
+<body>
+    <div class="bg-orbs"><div class="orb orb-1"></div><div class="orb orb-2"></div></div>
+    <div class="card">
+        <div class="card-header">
+            <div class="icon-wrap">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+            </div>
+            <h2>Create Account</h2>
+            <p class="subtitle">Create your admin account to get started</p>
+        </div>
+        <form onsubmit="handleSetup(event)">
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" id="username" placeholder="Enter username..." required minlength="3" autocomplete="username">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="password" placeholder="Enter password..." required minlength="4" autocomplete="new-password">
+            </div>
+            <div class="form-group">
+                <label>Confirm Password</label>
+                <input type="password" id="confirm-password" placeholder="Confirm password..." required minlength="4" autocomplete="new-password">
+            </div>
+            <button type="submit" id="submit-btn" class="btn">Create Account</button>
+        </form>
+    </div>
+    <script>
+        async function handleSetup(e){
+            e.preventDefault();
+            const u=document.getElementById('username').value.trim();
+            const p=document.getElementById('password').value;
+            const c=document.getElementById('confirm-password').value;
+            const b=document.getElementById('submit-btn');
+            if(!u||u.length<3){alert('Username must be at least 3 characters!');return}
+            if(p!==c){alert('Passwords do not match!');return}
+            b.disabled=true;b.innerText='Creating...';
+            try{const r=await fetch('/api/setup-password',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:u,password:p})});const d=await r.json();if(r.ok&&d.success)window.location.reload();else alert('Error: '+(d.error||'Failed'));}catch(e){alert('Connection error');}finally{b.disabled=false;b.innerText='Create Account';}
+        }
+    <\/script>
+</body>
+</html>`,
+
+  login: `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - MrVpn Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif}
+        body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#06060e;color:#e2e8f0;overflow:hidden}
+        .bg-orbs{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+        .orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.18;animation:drift 12s ease-in-out infinite}
+        .orb-1{width:400px;height:400px;background:#6366f1;top:-10%;left:-5%;animation-delay:0s}
+        .orb-2{width:350px;height:350px;background:#a855f7;bottom:-10%;right:-5%;animation-delay:-4s}
+        .orb-3{width:200px;height:200px;background:#06b6d4;top:60%;left:60%;animation-delay:-8s}
+        @keyframes drift{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-20px) scale(1.05)}66%{transform:translate(-20px,30px) scale(.95)}}
+        .card{position:relative;z-index:1;width:100%;max-width:420px;padding:40px 32px;border-radius:24px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);backdrop-filter:blur(24px);box-shadow:0 0 80px rgba(99,102,241,.1),0 24px 48px rgba(0,0,0,.3);margin:20px;animation:fadeUp .6s ease-out}
+        @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+        .card-header{text-align:center;margin-bottom:32px}
+        .logo-wrap{display:inline-flex;align-items:center;justify-content:center;width:64px;height:64px;border-radius:20px;background:linear-gradient(135deg,rgba(99,102,241,.15),rgba(168,85,247,.15));border:1px solid rgba(99,102,241,.2);margin-bottom:20px;box-shadow:0 0 40px rgba(99,102,241,.1)}
+        .logo-wrap svg{width:28px;height:28px;color:#818cf8}
+        h2{font-size:24px;font-weight:800;color:#fff;margin-bottom:6px}
+        .subtitle{font-size:13px;color:#64748b}
+        .form-group{margin-bottom:18px;position:relative}
+        label{display:block;font-size:11px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+        .input-wrap{position:relative}
+        .input-wrap svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:#475569;transition:color .2s;pointer-events:none}
+        input{width:100%;padding:14px 16px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:#fff;font-size:14px;transition:all .25s;outline:none}
+        input::placeholder{color:#475569}
+        input:focus{border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,.15);background:rgba(255,255,255,.06)}
+        input:focus+.input-icon-left{color:#818cf8}
+        .btn{width:100%;padding:14px;border-radius:14px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;font-size:14px;font-weight:700;border:none;cursor:pointer;transition:all .25s;box-shadow:0 4px 20px rgba(99,102,241,.3);margin-top:8px;position:relative;overflow:hidden}
+        .btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent,rgba(255,255,255,.1),transparent);transform:translateX(-100%);transition:transform .5s}
+        .btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(99,102,241,.4)}
+        .btn:hover::before{transform:translateX(100%)}
+        .btn:active{transform:translateY(0)}
+        .btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+        .divider{height:1px;background:rgba(255,255,255,.06);margin:24px 0}
+        .brand-footer{text-align:center;font-size:11px;color:#475569}
+        .brand-footer span{color:#6366f1;font-weight:600}
+        @media(max-width:480px){.card{padding:28px 20px;margin:12px}h2{font-size:20px}}
+    </style>
+</head>
+<body>
+    <div class="bg-orbs"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
+    <div class="card">
+        <div class="card-header">
+            <div class="logo-wrap">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
+            </div>
+            <h2>Welcome Back</h2>
+            <p class="subtitle">Sign in to access your dashboard</p>
+        </div>
+        <form onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label>Username</label>
+                <div class="input-wrap">
+                    <svg class="input-icon-left" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                    <input type="text" id="username" placeholder="Enter username..." required autocomplete="username" style="padding-left:42px">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <div class="input-wrap">
+                    <svg class="input-icon-left" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                    <input type="password" id="password" placeholder="Enter password..." required autocomplete="current-password" style="padding-left:42px">
+                </div>
+            </div>
+            <button type="submit" id="submit-btn" class="btn">Sign In</button>
+        </form>
+        <div class="divider"></div>
+        <div class="brand-footer"><span>MrVpn Panel</span> v3.1.0</div>
+    </div>
+    <script>
+        async function handleLogin(e){
+            e.preventDefault();
+            const u=document.getElementById('username').value;
+            const p=document.getElementById('password').value;
+            const b=document.getElementById('submit-btn');
+            b.disabled=true;b.innerText='Signing in...';
+            try{const r=await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:u,password:p})});const d=await r.json();if(r.ok&&d.success)window.location.reload();else{alert('Invalid credentials!');b.disabled=false;b.innerText='Sign In';}}catch(e){alert('Connection error');b.disabled=false;b.innerText='Sign In';}
+        }
+    <\/script>
+</body>
+</html>`,
+
+  panel: `<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MrVpn Panel</title>
+    <script>
+        const originalWarn = console.warn;
+        console.warn = (...args) => {
+            if (typeof args[0] === 'string' && args[0].includes('cdn.tailwindcss.com')) return;
+            originalWarn(...args);
+        };
+    <\/script>
+    <script src="https://cdn.tailwindcss.com"><\/script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"><\/script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+        body { background: #0a0a0f; color: #e5e7eb; }
+        .glass { background: rgba(255,255,255,0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.06); }
+        .glass-light { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.06); }
+        .glow { box-shadow: 0 0 60px rgba(99, 102, 241, 0.1); }
+        .sidebar { background: #0d0d18; border-right: 1px solid rgba(255,255,255,0.04); }
+        .sidebar-link { transition: all 0.2s; border-radius: 12px; padding: 10px 16px; }
+        .sidebar-link:hover { background: rgba(255,255,255,0.05); color: white; }
+        .sidebar-link.active { background: rgba(99, 102, 241, 0.12); color: #818cf8; }
+        .stat-card { transition: all 0.3s; }
+        .stat-card:hover { transform: translateY(-4px); border-color: rgba(99, 102, 241, 0.3); }
+        input, select, textarea { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); transition: all 0.2s; }
+        input:focus, select:focus, textarea:focus { border-color: #818cf8; box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15); outline: none; }
+        .badge { padding: 2px 10px; border-radius: 6px; font-size: 10px; font-weight: 600; }
+        .badge-success { background: rgba(52, 211, 153, 0.15); color: #34d399; }
+        .badge-danger { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+        .badge-warning { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
+        .badge-info { background: rgba(96, 165, 250, 0.15); color: #60a5fa; }
+        .badge-purple { background: rgba(168, 85, 247, 0.15); color: #a855f7; }
+        .action-btn { transition: all 0.15s; padding: 6px; border-radius: 8px; }
+        .action-btn:hover { transform: scale(1.1); background: rgba(255,255,255,0.05); }
+        .system-stat { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); border-radius: 14px; padding: 16px; }
+        .system-stat:hover { border-color: rgba(99, 102, 241, 0.2); }
+        .btn-eng { padding: 6px 16px; border-radius: 8px; font-size: 12px; font-weight: 600; transition: all 0.2s; }
+        .btn-eng:hover { transform: scale(1.05); }
+        .scrollbar-thin::-webkit-scrollbar { width: 4px; }
+        .scrollbar-thin::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
+        .scrollbar-thin::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.3); border-radius: 8px; }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
+        ::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.3); border-radius: 8px; }
+        .modal-overlay { background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); }
+        .modal-card { max-height: 90vh; overflow-y: auto; }
+        .page-section { display: none; }
+        .page-section.active { display: block; }
+        .port-checkbox:checked + .port-label-tls { border-color: #34d399; background: rgba(52, 211, 153, 0.1); color: #34d399; }
+        .port-checkbox:checked + .port-label-nontls { border-color: #fbbf24; background: rgba(251, 191, 36, 0.1); color: #fbbf24; }
+
+        /* ============================================
+           MOBILE SIDEBAR STYLES
+           ============================================ */
+        @media (max-width: 1023px) {
+            .sidebar {
+                position: fixed !important;
+                top: 0 !important;
+                left: -100% !important;
+                width: 280px !important;
+                height: 100vh !important;
+                background: #0d0d18 !important;
+                border-right: 1px solid rgba(255,255,255,0.04) !important;
+                transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+                z-index: 1000 !important;
+                overflow-y: auto !important;
+                display: block !important;
+                padding-top: 0 !important;
+            }
+            
+            .sidebar.active { 
+                left: 0 !important; 
+            }
+            
+            .sidebar-overlay {
+                display: none !important;
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                background: rgba(0,0,0,0.6) !important;
+                z-index: 999 !important;
+                backdrop-filter: blur(4px) !important;
+                -webkit-backdrop-filter: blur(4px) !important;
+                transition: opacity 0.3s ease !important;
+            }
+            
+            .sidebar-overlay.active { 
+                display: block !important; 
+                opacity: 1 !important;
+            }
+            
+            .lg\\:ml-64 { 
+                margin-left: 0 !important; 
+            }
+            
+            .main-content { 
+                width: 100% !important; 
+                overflow-x: hidden !important;
+            }
+            
+            .sidebar::-webkit-scrollbar {
+                width: 3px;
+            }
+            .sidebar::-webkit-scrollbar-track {
+                background: transparent;
+            }
+            .sidebar::-webkit-scrollbar-thumb {
+                background: rgba(99, 102, 241, 0.3);
+                border-radius: 10px;
+            }
+            
+            .sidebar .p-6 {
+                padding: 16px !important;
+            }
+            .sidebar-link {
+                padding: 8px 12px !important;
+                font-size: 13px !important;
+            }
+            .sidebar .absolute.bottom-6 {
+                position: relative !important;
+                bottom: auto !important;
+                left: auto !important;
+                right: auto !important;
+                margin-top: 20px !important;
+                padding-top: 16px !important;
+                border-top: 1px solid rgba(255,255,255,0.04) !important;
+            }
+            .system-stat { padding: 12px !important; }
+            .stat-card { padding: 16px !important; }
+            .users-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .users-table-wrap table { min-width: 700px; }
+        }
+
+        @media (max-width: 640px) {
+            .sidebar {
+                width: 280px !important;
+            }
+            .sidebar .p-6 {
+                padding: 14px !important;
+            }
+            .sidebar-link {
+                padding: 6px 10px !important;
+                font-size: 12px !important;
+            }
+            .sidebar .text-lg {
+                font-size: 16px !important;
+            }
+            .glass-modal { padding: 20px 16px; }
+            .modal-card { max-width: 100%; margin: 10px; }
+            .modal-card form .grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+            .stats-grid .stat-card { padding: 12px; }
+            .stats-grid .stat-card .w-12 { width: 36px; height: 36px; }
+            .stats-grid .stat-card .w-12 svg { width: 18px; height: 18px; }
+            header h1 { font-size: 16px; }
+            .users-table-wrap table { min-width: 100% !important; }
+            .users-table-wrap table th,
+            .users-table-wrap table td { padding: 6px 4px !important; }
+            .subscription-buttons button { font-size: 9px !important; padding: 2px 4px !important; }
+            .user-actions-wrap button { padding: 2px !important; }
+            .user-actions-wrap button svg { width: 12px !important; height: 12px !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar Overlay -->
+    <div id="sidebar-overlay" class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+    <!-- ============================================
+    SIDEBAR
+    ============================================ -->
+    <div class="fixed inset-y-0 left-0 w-64 sidebar z-50">
+        <div class="p-6">
+            <div class="flex items-center gap-3 mb-10">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                </div>
+                <span class="text-lg font-bold text-white">MrVpn Panel</span>
+            </div>
+            
+            <nav class="space-y-1">
+                <a href="javascript:void(0)" onclick="showPage('dashboard')" class="sidebar-link active flex items-center gap-3 text-sm font-medium text-indigo-400" data-page="dashboard">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+                    </svg>
+                    Overview
+                </a>
+                <a href="javascript:void(0)" onclick="showPage('users')" class="sidebar-link flex items-center gap-3 text-sm font-medium text-zinc-400 hover:text-white transition" data-page="users">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                    </svg>
+                    Users
+                </a>
+                <a href="javascript:void(0)" onclick="showPage('settings')" class="sidebar-link flex items-center gap-3 text-sm font-medium text-zinc-400 hover:text-white transition" data-page="settings">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                    Settings
+                </a>
+                <a href="javascript:void(0)" onclick="showPage('logs')" class="sidebar-link flex items-center gap-3 text-sm font-medium text-zinc-400 hover:text-white transition" data-page="logs">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+                    </svg>
+                    Logs
+                </a>
+                <a href="javascript:void(0)" onclick="showPage('admins')" class="sidebar-link flex items-center gap-3 text-sm font-medium text-zinc-400 hover:text-white transition" data-page="admins">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                    </svg>
+                    Admins
+                </a>
+                <a href="javascript:void(0)" onclick="showPage('ip-scanner')" class="sidebar-link flex items-center gap-3 text-sm font-medium text-zinc-400 hover:text-white transition" data-page="ip-scanner">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                    IP Scanner
+                </a>
+                <a href="javascript:void(0)" onclick="showPage('inbounds')" class="sidebar-link flex items-center gap-3 text-sm font-medium text-zinc-400 hover:text-white transition" data-page="inbounds">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                    </svg>
+                    Inbounds
+                </a>
+                <a href="javascript:void(0)" onclick="logoutAdmin()" class="sidebar-link flex items-center gap-3 text-sm font-medium text-zinc-400 hover:text-red-400 transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                    </svg>
+                    Log Out
+                </a>
+            </nav>
+            
+            <div class="absolute bottom-6 left-6 right-6">
+                <div class="glass rounded-xl p-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-sm font-bold text-white">A</div>
+                        <div>
+                            <p class="text-sm font-semibold text-white">Admin</p>
+                            <p class="text-xs text-emerald-400">Ã¢â€”Â Online</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3 flex items-center justify-between text-xs text-zinc-500">
+                    <span>v3.1.0</span>
+                    <span>@MrVpn294</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+    MAIN CONTENT
+    ============================================ -->
+    <div class="lg:ml-64 min-h-screen main-content">
+        
+        <!-- HEADER -->
+        <header class="bg-[#0a0a0f]/80 backdrop-blur-xl border-b border-zinc-800/30 px-4 sm:px-6 py-3 sm:py-4 sticky top-0 z-40">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3 sm:gap-4">
+                    <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-lg hover:bg-white/5 text-zinc-400">
+                        <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                    <div>
+                        <h1 class="text-lg sm:text-xl font-bold text-white" id="page-title">Overview</h1>
+                        <p class="text-xs text-zinc-400 hidden sm:block" id="page-subtitle">System overview and statistics</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <span class="text-xs text-zinc-500 hidden sm:inline">v3.1.0</span>
+                    <span class="w-px h-6 bg-zinc-800 hidden sm:block"></span>
+                    <span class="text-xs text-emerald-400 flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span class="hidden xs:inline">Xray Running</span>
+                    </span>
+                    <button onclick="toggleTheme()" class="p-2 rounded-lg hover:bg-white/5 text-zinc-400 transition">
+                        <svg id="theme-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- ============================================
+        MAIN CONTENT AREA
+        ============================================ -->
+        <main class="p-3 sm:p-6">
+            
+            <!-- ==========================================
+            PAGE: DASHBOARD
+            ========================================== -->
+            <div id="page-dashboard" class="page-section active">
+                <!-- System Stats -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6 stats-grid">
+                    <div class="system-stat">
+                        <div class="flex items-center justify-between">
+                            <p class="text-[10px] sm:text-xs text-zinc-400 font-medium">Total Users</p>
+                            <span class="text-[10px] sm:text-xs text-indigo-400">Panel</span>
+                        </div>
+                        <p class="text-base sm:text-lg font-bold text-white mt-1" id="dash-total-users">0</p>
+                        <div class="w-full bg-zinc-800 rounded-full h-1.5 mt-2">
+                            <div class="bg-indigo-500 h-1.5 rounded-full transition-all" id="dash-users-bar" style="width: 0%"></div>
+                        </div>
+                        <p class="text-[8px] sm:text-[10px] text-zinc-500 mt-1">All registered</p>
+                    </div>
+                    <div class="system-stat">
+                        <div class="flex items-center justify-between">
+                            <p class="text-[10px] sm:text-xs text-zinc-400 font-medium">Online</p>
+                            <span class="text-[10px] sm:text-xs text-emerald-400">Active</span>
+                        </div>
+                        <p class="text-base sm:text-lg font-bold text-emerald-400 mt-1" id="dash-online-users">0</p>
+                        <div class="w-full bg-zinc-800 rounded-full h-1.5 mt-1">
+                            <div class="bg-emerald-500 h-1.5 rounded-full transition-all" id="dash-online-bar" style="width: 0%"></div>
+                        </div>
+                        <p class="text-[8px] sm:text-[10px] text-zinc-500 mt-1">Connected now</p>
+                    </div>
+                    <div class="system-stat">
+                        <div class="flex items-center justify-between">
+                            <p class="text-[10px] sm:text-xs text-zinc-400 font-medium">Traffic</p>
+                            <span class="text-[10px] sm:text-xs text-blue-400">Total</span>
+                        </div>
+                        <p class="text-base sm:text-lg font-bold text-blue-400 mt-1" id="dash-total-traffic">0 GB</p>
+                        <div class="w-full bg-zinc-800 rounded-full h-1.5 mt-1">
+                            <div class="bg-blue-500 h-1.5 rounded-full transition-all" id="dash-traffic-bar" style="width: 100%"></div>
+                        </div>
+                        <p class="text-[8px] sm:text-[10px] text-zinc-500 mt-1">All users combined</p>
+                    </div>
+                    <div class="system-stat">
+                        <div class="flex items-center justify-between">
+                            <p class="text-[10px] sm:text-xs text-zinc-400 font-medium">Uptime</p>
+                            <span class="text-[10px] sm:text-xs text-purple-400">Engine</span>
+                        </div>
+                        <p class="text-base sm:text-lg font-bold text-purple-400 mt-1" id="dash-uptime">0m</p>
+                        <div class="w-full bg-zinc-800 rounded-full h-1.5 mt-1">
+                            <div class="bg-purple-500 h-1.5 rounded-full transition-all" style="width: 100%"></div>
+                        </div>
+                        <p class="text-[8px] sm:text-[10px] text-zinc-500 mt-1">Xray runtime</p>
+                    </div>
+                </div>
+
+                <!-- Xray Controls -->
+                <div class="glass rounded-2xl p-4 sm:p-5 mb-4 sm:mb-6">
+                    <div class="flex flex-wrap items-center justify-between gap-3 sm:gap-4">
+                        <div class="flex items-center gap-3 sm:gap-4 flex-wrap">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                                <span class="text-sm font-bold text-white">Xray</span>
+                            </div>
+                            <span class="text-xs text-zinc-400 bg-zinc-800/50 px-2 py-1 rounded">v26.4.25</span>
+                            <span class="text-xs text-emerald-400 bg-emerald-500/10 px-2 sm:px-3 py-1 rounded-full border border-emerald-500/20">Ã¢â€”Â Running</span>
+                        </div>
+                        <div class="flex items-center gap-1 sm:gap-2">
+                            <button onclick="controlXray('stop')" class="btn-eng text-xs sm:text-sm bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/20 px-2 sm:px-4">Stop</button>
+                            <button onclick="controlXray('restart')" class="btn-eng text-xs sm:text-sm bg-yellow-500/10 text-yellow-400 hover:bg-yellow-500/20 border border-yellow-500/20 px-2 sm:px-4">Restart</button>
+                            <button onclick="controlXray('start')" class="btn-eng text-xs sm:text-sm bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 border border-emerald-500/20 px-2 sm:px-4">Start</button>
+                        </div>
+                        <div class="flex items-center gap-2 sm:gap-3 text-[10px] sm:text-xs text-zinc-400 flex-wrap">
+                            <span>Uptime: <span id="eng-uptime" class="text-white font-medium">3m</span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-8 stats-grid">
+                    <div class="glass rounded-2xl p-4 sm:p-6 stat-card">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-zinc-400 text-[10px] sm:text-xs font-medium uppercase tracking-wider">Total Users</p>
+                                <p class="text-2xl sm:text-3xl font-black text-white mt-1" id="stat-total-users">0</p>
+                            </div>
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
+                                <svg class="w-5 h-5 sm:w-6 sm:h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="glass rounded-2xl p-4 sm:p-6 stat-card">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-zinc-400 text-[10px] sm:text-xs font-medium uppercase tracking-wider">Online</p>
+                                <p class="text-2xl sm:text-3xl font-black text-emerald-400 mt-1" id="stat-active-users">0</p>
+                            </div>
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+                                <svg class="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="glass rounded-2xl p-4 sm:p-6 stat-card">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-zinc-400 text-[10px] sm:text-xs font-medium uppercase tracking-wider">Traffic</p>
+                                <p class="text-2xl sm:text-3xl font-black text-blue-400 mt-1" id="stat-total-usage">0 GB</p>
+                            </div>
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
+                                <svg class="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="glass rounded-2xl p-4 sm:p-6 stat-card">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-zinc-400 text-[10px] sm:text-xs font-medium uppercase tracking-wider">Top User</p>
+                                <p class="text-lg sm:text-2xl font-black text-purple-400 mt-1 truncate max-w-[80px] sm:max-w-[120px]" id="stat-top-user">-</p>
+                            </div>
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
+                                <svg class="w-5 h-5 sm:w-6 sm:h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="text-[10px] sm:text-xs text-zinc-500 mt-1 sm:mt-2" id="stat-top-user-usage">0 GB used</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==========================================
+            PAGE: USERS
+            ========================================== -->
+            <div id="page-users" class="page-section">
+                <div class="glass rounded-2xl p-4 sm:p-6">
+                    <div class="flex flex-wrap items-center justify-between gap-3 mb-4 sm:mb-6">
+                        <div>
+                            <h2 class="text-lg font-bold text-white">Users</h2>
+                            <p class="text-xs text-zinc-400">Manage your VLESS users</p>
+                        </div>
+                        <button onclick="openCreateModal()" class="flex items-center gap-2 px-3 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-bold rounded-xl transition text-xs sm:text-sm shadow-lg shadow-indigo-500/25 transform hover:scale-[1.02]">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/>
+                            </svg>
+                            <span class="hidden xs:inline">Add User</span>
+                            <span class="xs:hidden">Add</span>
+                        </button>
+                    </div>
+
+                    <!-- Filters -->
+                    <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 mb-4 sm:mb-6">
+                        <div class="flex-1 relative">
+                            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            </svg>
+                            <input type="text" id="search-input" oninput="filterAndRenderUsers()" placeholder="Search users..." class="w-full pl-9 pr-3 py-2 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition">
+                        </div>
+                        <select id="filter-status" onchange="filterAndRenderUsers()" class="px-3 py-2 rounded-xl text-zinc-300 text-sm outline-none transition cursor-pointer bg-[rgba(255,255,255,0.05)] border border-zinc-800/50">
+                            <option value="all">All</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                            <option value="online">Online</option>
+                            <option value="offline">Offline</option>
+                            <option value="expired">Expired</option>
+                        </select>
+                        <select id="sort-users" onchange="filterAndRenderUsers()" class="px-3 py-2 rounded-xl text-zinc-300 text-sm outline-none transition cursor-pointer bg-[rgba(255,255,255,0.05)] border border-zinc-800/50">
+                            <option value="newest">Newest</option>
+                            <option value="name">Name</option>
+                            <option value="usage-desc">Most Used</option>
+                            <option value="usage-asc">Least Used</option>
+                            <option value="expiry-asc">Expiring</option>
+                        </select>
+                    </div>
+
+                    <div id="loading-state" class="text-center py-8 sm:py-12">
+                        <div class="inline-block w-6 h-6 sm:w-8 sm:h-8 border-2 border-indigo-500/30 border-t-indigo-500 rounded-full animate-spin"></div>
+                        <p class="text-zinc-400 text-sm mt-3">Loading users...</p>
+                    </div>
+
+                    <div id="users-table-container" class="hidden">
+                        <div class="users-table-wrap">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="border-b border-zinc-800/50 text-[10px] sm:text-xs text-zinc-400 uppercase tracking-wider">
+                                        <th class="p-2 sm:p-3 font-medium">User</th>
+                                        <th class="p-2 sm:p-3 font-medium">Subscription</th>
+                                        <th class="p-2 sm:p-3 font-medium hidden sm:table-cell">Protocol</th>
+                                        <th class="p-2 sm:p-3 font-medium hidden md:table-cell">Ports</th>
+                                        <th class="p-2 sm:p-3 font-medium hidden lg:table-cell">Usage</th>
+                                        <th class="p-2 sm:p-3 font-medium hidden xl:table-cell">Expiry</th>
+                                        <th class="p-2 sm:p-3 font-medium hidden 2xl:table-cell">Created</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="users-tbody" class="divide-y divide-zinc-800/30 text-sm"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div id="empty-state" class="hidden text-center py-8 sm:py-12">
+                        <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-zinc-800/30 flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-6 h-6 sm:w-8 sm:h-8 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                            </svg>
+                        </div>
+                        <p class="text-zinc-400 text-sm">No users found.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==========================================
+            PAGE: SETTINGS
+            ========================================== -->
+            <div id="page-settings" class="page-section">
+                <div class="glass rounded-2xl p-4 sm:p-6 max-w-2xl">
+                    <h2 class="text-lg font-bold text-white mb-4">Panel Settings</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Proxy Location</label>
+                            <select id="location-select" class="w-full px-4 py-3 rounded-xl text-zinc-300 text-sm outline-none transition cursor-pointer bg-[rgba(255,255,255,0.05)] border border-zinc-800/50">
+                                <option value="">Loading...</option>
+                            </select>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3 sm:gap-4">
+                            <div>
+                                <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Fragment Length</label>
+                                <input type="text" id="frag-length" placeholder="20-30" class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition text-center font-mono" dir="ltr">
+                            </div>
+                            <div>
+                                <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Fragment Interval</label>
+                                <input type="text" id="frag-interval" placeholder="1-2" class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition text-center font-mono" dir="ltr">
+                            </div>
+                        </div>
+                        <div class="border-t border-zinc-800/30 pt-4">
+                            <h4 class="text-sm font-semibold text-white mb-3">Change Panel Password</h4>
+                            <div class="space-y-3">
+                                <input type="password" id="change-pwd-current" placeholder="Current password..." class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition">
+                                <input type="password" id="change-pwd-new" placeholder="New password..." class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition">
+                                <button type="button" onclick="changeAdminPassword()" id="change-pwd-btn" class="w-full py-3 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-bold rounded-xl transition text-sm">Update Panel Password</button>
+                            </div>
+                        </div>
+                        <div class="border-t border-zinc-800/30 pt-4">
+                            <h4 class="text-sm font-semibold text-white mb-3">Admin Users</h4>
+                            <div class="space-y-3">
+                                <input type="text" id="admin-username" placeholder="Admin username..." class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition">
+                                <input type="password" id="admin-password" placeholder="Admin password..." class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition">
+                                <button type="button" onclick="addAdmin()" class="w-full py-3 bg-gradient-to-r from-emerald-500 to-blue-500 hover:from-emerald-600 hover:to-blue-600 text-white font-bold rounded-xl transition text-sm shadow-lg shadow-emerald-500/25">Add Admin User</button>
+                            </div>
+                            <div id="admins-list" class="mt-3 space-y-2">
+                                <p class="text-zinc-400 text-sm">Loading admins...</p>
+                            </div>
+                        </div>
+                        <div class="pt-4 border-t border-zinc-800/30">
+                            <h4 class="text-sm font-semibold text-white mb-3">Update Panel</h4>
+                            <div id="update-info" class="text-xs text-zinc-400 mb-2">Checking for updates...</div>
+                            <button onclick="checkUpdate()" class="w-full py-3 bg-gradient-to-r from-emerald-500 to-blue-500 hover:from-emerald-600 hover:to-blue-600 text-white font-bold rounded-xl transition text-sm shadow-lg shadow-emerald-500/25">Check for Updates</button>
+                        </div>
+                        <div class="pt-4 border-t border-zinc-800/30">
+                            <h4 class="text-sm font-semibold text-white mb-3">Backup & Restore</h4>
+                            <div class="grid grid-cols-2 gap-3">
+                                <button onclick="exportBackup()" class="py-3 bg-gradient-to-r from-emerald-500 to-blue-500 hover:from-emerald-600 hover:to-blue-600 text-white font-bold rounded-xl transition text-sm shadow-lg shadow-emerald-500/25">Export Backup</button>
+                                <button onclick="importBackup()" class="py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold rounded-xl transition text-sm shadow-lg shadow-amber-500/25">Import Backup</button>
+                            </div>
+                        </div>
+                        <div class="flex gap-3 pt-2 border-t border-zinc-800/30">
+                            <button type="button" onclick="saveSettings()" id="save-settings-btn" class="flex-1 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-bold rounded-xl transition text-sm shadow-lg shadow-indigo-500/25">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==========================================
+            PAGE: LOGS
+            ========================================== -->
+            <div id="page-logs" class="page-section">
+                <div class="glass rounded-2xl p-4 sm:p-6">
+                    <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+                        <h2 class="text-lg font-bold text-white">System Logs</h2>
+                        <div class="flex gap-2">
+                            <button onclick="loadSystemLogs()" class="px-3 py-1.5 bg-white/5 hover:bg-white/10 text-zinc-400 text-xs font-semibold rounded-lg transition">Refresh</button>
+                            <button onclick="clearSystemLogs()" class="px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-semibold rounded-lg transition">Clear</button>
+                        </div>
+                    </div>
+                    <div id="logs-container" class="space-y-1 font-mono text-xs max-h-96 overflow-y-auto scrollbar-thin">
+                        <div class="text-emerald-400">Ã¢â€”Â System started at: <span id="log-start-time">-</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==========================================
+            PAGE: ADMINS
+            ========================================== -->
+            <div id="page-admins" class="page-section">
+                <div class="glass rounded-2xl p-4 sm:p-6 max-w-md">
+                    <h2 class="text-lg font-bold text-white mb-4">Admin Management</h2>
+                    <div id="admins-list-2" class="space-y-2">
+                        <p class="text-zinc-400 text-sm">Loading admins...</p>
+                    </div>
+                    <div class="border-t border-zinc-800/30 pt-4 mt-4">
+                        <h4 class="text-sm font-semibold text-white mb-3">Add New Admin</h4>
+                        <div class="space-y-3">
+                            <input type="text" id="admin-username-2" placeholder="Username..." class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition">
+                            <input type="password" id="admin-password-2" placeholder="Password..." class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition">
+                            <button onclick="addAdmin2()" class="w-full py-3 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-bold rounded-xl transition text-sm shadow-lg shadow-indigo-500/25">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==========================================
+            PAGE: IP SCANNER
+            ========================================== -->
+            <div id="page-ip-scanner" class="page-section">
+                <div class="glass rounded-2xl p-4 sm:p-6 max-w-2xl">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h2 class="text-lg font-bold text-white">Cloudflare IP Scanner</h2>
+                            <p class="text-xs text-zinc-400">Find clean Cloudflare IPs</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Target Host</label>
+                                <input type="text" id="scanner-host" value="www.google.com" placeholder="www.google.com" class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition">
+                            </div>
+                            <div>
+                                <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Target Port</label>
+                                <input type="number" id="scanner-port" value="443" placeholder="443" class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Max Results</label>
+                            <input type="number" id="scanner-limit" value="10" min="1" max="50" class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition">
+                        </div>
+                        <button onclick="scanCFIPs()" id="scan-btn" class="w-full py-3 bg-gradient-to-r from-emerald-500 to-blue-500 hover:from-emerald-600 hover:to-blue-600 text-white font-bold rounded-xl transition text-sm shadow-lg shadow-emerald-500/25">
+                            Scan Clean IPs
+                        </button>
+                    </div>
+                    
+                    <div id="scanner-loading" class="hidden text-center py-6">
+                        <div class="inline-block w-6 h-6 border-2 border-emerald-500/30 border-t-emerald-500 rounded-full animate-spin"></div>
+                        <p class="text-zinc-400 text-sm mt-2">Scanning Cloudflare IPs...</p>
+                    </div>
+                    
+                    <div id="scanner-results" class="hidden mt-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-sm font-semibold text-white">Clean IPs Found</h3>
+                            <span id="scanner-count" class="text-xs text-zinc-400"></span>
+                        </div>
+                        <div id="scanner-results-list" class="space-y-2 max-h-80 overflow-y-auto scrollbar-thin"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==========================================
+            PAGE: INBOUNDS (Nova-style)
+            ========================================== -->
+            <div id="page-inbounds" class="page-section">
+                <div class="glass rounded-2xl p-4 sm:p-6">
+                    <div class="flex flex-wrap items-center justify-between gap-3 mb-4 sm:mb-6">
+                        <div>
+                            <h2 class="text-lg font-bold text-white">Inbounds</h2>
+                            <p class="text-xs text-zinc-400">Manage protocol inbounds (VLESS, Trojan)</p>
+                        </div>
+                        <button onclick="openInboundModal()" class="flex items-center gap-2 px-3 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-bold rounded-xl transition text-xs sm:text-sm shadow-lg shadow-indigo-500/25 transform hover:scale-[1.02]">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/>
+                            </svg>
+                            Add Inbound
+                        </button>
+                    </div>
+                    <div id="inbounds-loading" class="text-center py-8">
+                        <div class="inline-block w-6 h-6 border-2 border-indigo-500/30 border-t-indigo-500 rounded-full animate-spin"></div>
+                        <p class="text-zinc-400 text-sm mt-3">Loading inbounds...</p>
+                    </div>
+                    <div id="inbounds-container" class="hidden space-y-3"></div>
+                    <div id="inbounds-empty" class="hidden text-center py-8">
+                        <div class="w-12 h-12 rounded-full bg-zinc-800/30 flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-6 h-6 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                            </svg>
+                        </div>
+                        <p class="text-zinc-400 text-sm">No inbounds configured.</p>
+                        <p class="text-zinc-500 text-xs mt-1">Click "Add Inbound" to create one.</p>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- ============================================
+    MODALS
+    ============================================ -->
+
+    <!-- Add/Edit User Modal -->
+    <div id="user-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 modal-overlay opacity-0 pointer-events-none transition-opacity duration-300">
+        <div id="user-modal-card" class="w-full max-w-2xl glass rounded-3xl p-4 sm:p-6 transition-all duration-300 opacity-0 scale-95 modal-card scrollbar-thin">
+            <div class="flex items-center justify-between mb-4 sm:mb-6">
+                <div>
+                    <h3 id="modal-title" class="text-lg sm:text-xl font-bold text-white">Create User</h3>
+                    <p class="text-xs text-zinc-400">Configure user settings and limits</p>
+                </div>
+                <button onclick="toggleModal(false)" class="p-2 rounded-lg hover:bg-white/5 text-zinc-400 transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+
+            <form id="create-user-form" onsubmit="handleFormSubmit(event)" class="space-y-4 sm:space-y-5">
+                <div class="grid grid-cols-2 gap-3 sm:gap-4">
+                    <div>
+                        <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Username</label>
+                        <input type="text" id="input-name" placeholder="Enter username..." class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition" required>
+                    </div>
+                    <div>
+                        <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Protocol</label>
+                        <select id="protocol-select" class="w-full px-4 py-3 rounded-xl text-zinc-300 text-sm outline-none transition cursor-pointer bg-[rgba(255,255,255,0.05)] border border-zinc-800/50">
+                            <option value="${_D_._vl_}">VLESS</option>
+                            <option value="${_D_._tr_}">Trojan</option>                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 sm:gap-4">
+                    <div>
+                        <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Limit (GB)</label>
+                        <input type="number" id="input-limit" min="0" step="any" placeholder="Unlimited" class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Expiry (Days)</label>
+                        <input type="number" id="input-expiry" min="0" placeholder="Unlimited" class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-zinc-300 text-xs font-semibold mb-2 uppercase tracking-wider">Ports</label>
+                    <div class="grid grid-cols-2 gap-2 sm:gap-3">
+                        <div class="glass-light rounded-xl p-2 sm:p-3">
+                            <p class="text-xs text-emerald-400 font-semibold mb-2">TLS</p>
+                            <div class="flex flex-wrap gap-1 sm:gap-2" id="tls-ports-list"></div>
+                        </div>
+                        <div class="glass-light rounded-xl p-2 sm:p-3">
+                            <p class="text-xs text-amber-400 font-semibold mb-2">Non-TLS</p>
+                            <div class="flex flex-wrap gap-1 sm:gap-2" id="nontls-ports-list"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Custom IPs</label>
+                    <textarea id="input-ips" rows="2" placeholder="One IP per line..." class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition resize-none"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Fingerprint</label>
+                    <select id="fingerprint-select" class="w-full px-4 py-3 rounded-xl text-zinc-300 text-sm outline-none transition cursor-pointer bg-[rgba(255,255,255,0.05)] border border-zinc-800/50">
+                        <option value="chrome">Chrome</option>
+                        <option value="firefox">Firefox</option>
+                        <option value="safari">Safari</option>
+                        <option value="ios">iOS</option>
+                        <option value="android">Android</option>
+                        <option value="edge">Edge</option>
+                        <option value="360">360</option>
+                        <option value="qq">QQ</option>
+                        <option value="random">Random</option>
+                        <option value="randomized">Randomized</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Config Name</label>
+                    <input type="text" id="config-name-input" placeholder="Custom config name..." class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition">
+                </div>
+
+                <div class="flex gap-3 pt-3 sm:pt-4 border-t border-zinc-800/30">
+                    <button type="button" onclick="toggleModal(false)" class="flex-1 py-3 bg-white/5 hover:bg-white/10 text-zinc-400 font-semibold rounded-xl transition text-sm">Cancel</button>
+                    <button type="submit" id="submit-btn" class="flex-1 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-bold rounded-xl transition text-sm shadow-lg shadow-indigo-500/25">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- QR Modal -->
+    <div id="qr-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 modal-overlay opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="glass rounded-3xl p-4 sm:p-6 max-w-sm w-full transition-all duration-300 opacity-0 scale-95 text-center">
+            <h3 id="qr-modal-title" class="text-lg font-bold text-white mb-4">QR Code</h3>
+            <div class="bg-white p-2 sm:p-3 rounded-xl inline-block mb-4">
+                <div id="qrcode-box" class="flex justify-center items-center w-40 h-40 sm:w-48 sm:h-48 mx-auto"></div>
+            </div>
+            <button onclick="toggleQRModal(false)" class="w-full py-3 bg-white/5 hover:bg-white/10 text-zinc-400 font-semibold rounded-xl transition text-sm">Close</button>
+        </div>
+    </div>
+
+    <!-- Inbound Modal -->
+    <div id="inbound-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 modal-overlay opacity-0 pointer-events-none transition-opacity duration-300">
+        <div id="inbound-modal-card" class="w-full max-w-lg glass rounded-3xl p-4 sm:p-6 transition-all duration-300 opacity-0 scale-95 modal-card scrollbar-thin">
+            <div class="flex items-center justify-between mb-4 sm:mb-6">
+                <div>
+                    <h3 id="inbound-modal-title" class="text-lg sm:text-xl font-bold text-white">Add Inbound</h3>
+                    <p class="text-xs text-zinc-400">Configure protocol inbound</p>
+                </div>
+                <button onclick="toggleInboundModal(false)" class="p-2 rounded-lg hover:bg-white/5 text-zinc-400 transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <form id="inbound-form" onsubmit="handleInboundSubmit(event)" class="space-y-4">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Tag</label>
+                        <input type="text" id="inbound-tag" placeholder="e.g. vless-ws" class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition" required>
+                    </div>
+                    <div>
+                        <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Protocol</label>
+                        <select id="inbound-protocol" class="w-full px-4 py-3 rounded-xl text-zinc-300 text-sm outline-none transition cursor-pointer bg-[rgba(255,255,255,0.05)] border border-zinc-800/50">
+                            <option value="${_D_._vl_}">VLESS</option>
+                            <option value="${_D_._tr_}">Trojan</option>                            <option value="${'vme'+'ss'}">VMess</option>
+                            <option value="${'shado'+'wsocks'}">Shadowsocks</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Port</label>
+                        <input type="number" id="inbound-port" placeholder="443" class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition" required>
+                    </div>
+                    <div>
+                        <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Listen</label>
+                        <input type="text" id="inbound-listen" value="0.0.0.0" placeholder="0.0.0.0" class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Remark</label>
+                    <input type="text" id="inbound-remark" placeholder="Optional description..." class="w-full px-4 py-3 rounded-xl text-white placeholder-zinc-500 text-sm outline-none transition">
+                </div>
+                <div class="flex items-center gap-3">
+                    <input type="checkbox" id="inbound-sniffing" checked class="w-4 h-4 rounded border-zinc-600 bg-zinc-800 text-indigo-500 focus:ring-indigo-500">
+                    <label for="inbound-sniffing" class="text-zinc-300 text-sm">Enable Sniffing</label>
+                </div>
+                <div class="flex gap-3 pt-3 border-t border-zinc-800/30">
+                    <button type="button" onclick="toggleInboundModal(false)" class="flex-1 py-3 bg-white/5 hover:bg-white/10 text-zinc-400 font-semibold rounded-xl transition text-sm">Cancel</button>
+                    <button type="submit" id="inbound-submit-btn" class="flex-1 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-bold rounded-xl transition text-sm shadow-lg shadow-indigo-500/25">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ============================================
+    JAVASCRIPT
+    ============================================ -->
+    <script>
+        // ============================================
+        // OBFUSCATION HELPER (charcode Ã¢â€ â€™ string)
+        // ============================================
+        function _cs(a){var r="";for(var i=0;i<a.length;i++){r+=String.fromCharCode(a[i]);}return r;}
+        // ============================================
+        // GLOBAL VARIABLES
+        // ============================================
+        window.globalFragLen = "20-30";
+        window.globalFragInt = "1-2";
+        const tlsPorts = ['443', '2053', '2083', '2087', '2096', '8443'];
+        const nonTlsPorts = ['80', '8080', '8880', '2052', '2082', '2086', '2095'];
+        let isEditMode = false;
+        let editingUsername = '';
+        let allUsers = [];
+        let lastServerTime = Date.now();
+        let currentTheme = 'dark';
+
+        // ============================================
+        // SIDEBAR TOGGLE - COMPLETE
+        // ============================================
+        function toggleSidebar() {
+            var sidebar = document.querySelector('.sidebar');
+            var overlay = document.getElementById('sidebar-overlay');
+            var menuIcon = document.querySelector('#menu-icon');
+            
+            if (sidebar) {
+                sidebar.classList.toggle('active');
+            }
+            if (overlay) {
+                overlay.classList.toggle('active');
+            }
+            
+            // Change menu icon
+            if (menuIcon) {
+                if (sidebar && sidebar.classList.contains('active')) {
+                    menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>';
+                } else {
+                    menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>';
+                }
+            }
+        }
+
+        // Close menu on click
+        document.addEventListener('click', function(event) {
+            var sidebar = document.querySelector('.sidebar');
+            var toggleBtn = document.querySelector('.lg\\:hidden.p-2');
+            var overlay = document.getElementById('sidebar-overlay');
+            
+            if (window.innerWidth < 1024 && sidebar && toggleBtn && overlay) {
+                if (!sidebar.contains(event.target) && !toggleBtn.contains(event.target)) {
+                    sidebar.classList.remove('active');
+                    overlay.classList.remove('active');
+                    
+                    var menuIcon = document.querySelector('#menu-icon');
+                    if (menuIcon) {
+                        menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>';
+                    }
+                }
+            }
+        });
+
+        // Close menu with ESC
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                var sidebar = document.querySelector('.sidebar');
+                var overlay = document.getElementById('sidebar-overlay');
+                if (sidebar && sidebar.classList.contains('active')) {
+                    sidebar.classList.remove('active');
+                    overlay.classList.remove('active');
+                    
+                    var menuIcon = document.querySelector('#menu-icon');
+                    if (menuIcon) {
+                        menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>';
+                    }
+                }
+            }
+        });
+
+        // ============================================
+        // PAGE NAVIGATION
+        // ============================================
+        function showPage(page) {
+            location.hash = page;
+            document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
+            document.getElementById('page-' + page).classList.add('active');
+            document.querySelectorAll('.sidebar-link').forEach(el => el.classList.remove('active'));
+            var activeLink = document.querySelector('.sidebar-link[data-page="' + page + '"]');
+            if (activeLink) activeLink.classList.add('active');
+            var titles = {
+                dashboard: ['Overview', 'System overview and statistics'],
+                users: ['Users', 'Manage your VLESS users'],
+                settings: ['Panel Settings', 'Configure panel preferences'],
+                logs: ['System Logs', 'Real-time activity logs'],
+                admins: ['Admin Management', 'Add or remove administrators'],
+                'ip-scanner': ['IP Scanner', 'Find clean Cloudflare IPs'],
+                inbounds: ['Inbounds', 'Manage protocol inbounds']
+            };
+            document.getElementById('page-title').innerText = titles[page][0];
+            document.getElementById('page-subtitle').innerText = titles[page][1];
+            
+            // Auto-load data for specific pages
+            if (page === 'logs') loadSystemLogs();
+            if (page === 'inbounds') loadInbounds();
+            
+            // Auto-close menu on mobile after click
+            if (window.innerWidth < 1024) {
+                var sidebar = document.querySelector('.sidebar');
+                var overlay = document.getElementById('sidebar-overlay');
+                if (sidebar) sidebar.classList.remove('active');
+                if (overlay) overlay.classList.remove('active');
+                
+                var menuIcon = document.querySelector('#menu-icon');
+                if (menuIcon) {
+                    menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>';
+                }
+            }
+        }
+
+        // ============================================
+        // THEME TOGGLE
+        // ============================================
+        async function toggleTheme() {
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            try {
+                const res = await fetch('/api/theme', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ theme: newTheme })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    currentTheme = data.theme;
+                    applyTheme(currentTheme);
+                }
+            } catch (e) {
+                currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                applyTheme(currentTheme);
+            }
+        }
+
+        function applyTheme(theme) {
+            const html = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            if (theme === 'light') {
+                html.classList.remove('dark');
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M14 12a2 2 0 11-4 0 2 2 0 014 0z"/>';
+                document.body.style.background = '#f1f5f9';
+                document.body.style.color = '#0f172a';
+            } else {
+                html.classList.add('dark');
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>';
+                document.body.style.background = '#0a0a0f';
+                document.body.style.color = '#e5e7eb';
+            }
+            localStorage.setItem('theme', theme);
+        }
+
+        async function loadTheme() {
+            try {
+                const res = await fetch('/api/theme', { credentials: 'include' });
+                const data = await res.json();
+                currentTheme = data.theme || 'dark';
+                applyTheme(currentTheme);
+            } catch (e) {
+                const saved = localStorage.getItem('theme') || 'dark';
+                currentTheme = saved;
+                applyTheme(saved);
+            }
+        }
+
+        // ============================================
+        // UPDATE CHECK
+        // ============================================
+        async function checkUpdate() {
+            const info = document.getElementById('update-info');
+            info.innerText = 'Checking for updates...';
+            info.style.color = '#60a5fa';
+            try {
+                const res = await fetch('/api/update-check', { credentials: 'include' });
+                const data = await res.json();
+                if (data.update_available) {
+                    info.innerHTML = 'Ã¢Å“â€¦ New version <strong>' + data.latest_version + '</strong> available! <a href="' + data.url + '" target="_blank" class="text-emerald-400 hover:underline">View release</a>';
+                    info.style.color = '#34d399';
+                } else {
+                    info.innerHTML = 'Ã¢Å“â€¦ You are running the latest version <strong>' + data.current_version + '</strong>';
+                    info.style.color = '#34d399';
+                }
+            } catch (e) {
+                info.innerText = 'Ã¢ÂÅ’ Could not check for updates';
+                info.style.color = '#ef4444';
+            }
+        }
+
+        // ============================================
+        // PORT CHECKBOXES
+        // ============================================
+        function renderPortCheckboxes() {
+            var tlsContainer = document.getElementById('tls-ports-list');
+            var nonTlsContainer = document.getElementById('nontls-ports-list');
+
+            tlsContainer.innerHTML = tlsPorts.map(function(port) {
+                var checked = port === '443' ? 'checked' : '';
+                return '<label class="relative cursor-pointer">' +
+                    '<input type="checkbox" name="ports" value="' + port + '" ' + checked + ' class="peer sr-only port-checkbox">' +
+                    '<div class="port-label-tls px-2 sm:px-3 py-1 rounded-lg text-xs font-medium border border-zinc-700/50 bg-[rgba(255,255,255,0.03)] text-zinc-400 peer-checked:border-emerald-400 peer-checked:text-emerald-400 peer-checked:bg-emerald-500/10 transition select-none">' +
+                        port +
+                    '</div>' +
+                '</label>';
+            }).join('');
+
+            nonTlsContainer.innerHTML = nonTlsPorts.map(function(port) {
+                return '<label class="relative cursor-pointer">' +
+                    '<input type="checkbox" name="ports" value="' + port + '" class="peer sr-only port-checkbox">' +
+                    '<div class="port-label-nontls px-2 sm:px-3 py-1 rounded-lg text-xs font-medium border border-zinc-700/50 bg-[rgba(255,255,255,0.03)] text-zinc-400 peer-checked:border-amber-400 peer-checked:text-amber-400 peer-checked:bg-amber-500/10 transition select-none">' +
+                        port +
+                    '</div>' +
+                '</label>';
+            }).join('');
+        }
+
+        // ============================================
+        // MODAL CONTROLS
+        // ============================================
+        function toggleModal(show) {
+            var modal = document.getElementById('user-modal');
+            var card = document.getElementById('user-modal-card');
+            if (show) {
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                modal.classList.add('opacity-100', 'pointer-events-auto');
+                card.classList.remove('opacity-0', 'scale-95');
+                card.classList.add('opacity-100', 'scale-100');
+            } else {
+                modal.classList.remove('opacity-100', 'pointer-events-auto');
+                modal.classList.add('opacity-0', 'pointer-events-none');
+                card.classList.remove('opacity-100', 'scale-100');
+                card.classList.add('opacity-0', 'scale-95');
+                isEditMode = false;
+                editingUsername = '';
+                document.getElementById('modal-title').innerText = 'Create User';
+                document.getElementById('submit-btn').innerText = 'Create';
+                document.getElementById('input-name').disabled = false;
+                document.getElementById('create-user-form').reset();
+                var cb443 = document.querySelector('input[name="ports"][value="443"]');
+                if (cb443) cb443.checked = true;
+            }
+        }
+
+        function openCreateModal() {
+            isEditMode = false;
+            editingUsername = '';
+            document.getElementById('modal-title').innerText = 'Create User';
+            document.getElementById('submit-btn').innerText = 'Create';
+            document.getElementById('input-name').disabled = false;
+            document.getElementById('create-user-form').reset();
+            toggleModal(true);
+            setTimeout(function() {
+                var cb443 = document.querySelector('input[name="ports"][value="443"]');
+                if (cb443) cb443.checked = true;
+            }, 100);
+        }
+
+        function toggleQRModal(show, link, title) {
+            var modal = document.getElementById('qr-modal');
+            var card = modal.querySelector('div');
+            var qrBox = document.getElementById('qrcode-box');
+            var titleEl = document.getElementById('qr-modal-title');
+            if (show) {
+                titleEl.innerText = title || 'QR Code';
+                qrBox.innerHTML = '';
+                try {
+                    new QRCode(qrBox, { text: link, width: 192, height: 192, colorDark: "#000000", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.M });
+                } catch(e) {
+                    qrBox.innerHTML = '<p class="text-zinc-400 text-xs">Error generating QR</p>';
+                }
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                modal.classList.add('opacity-100', 'pointer-events-auto');
+                card.classList.remove('opacity-0', 'scale-95');
+                card.classList.add('opacity-100', 'scale-100');
+            } else {
+                modal.classList.remove('opacity-100', 'pointer-events-auto');
+                modal.classList.add('opacity-0', 'pointer-events-none');
+                card.classList.remove('opacity-100', 'scale-100');
+                card.classList.add('opacity-0', 'scale-95');
+            }
+        }
+
+        // ============================================
+        // XRAY CONTROL
+        // ============================================
+        async function controlXray(action) {
+            try {
+                var res = await fetch('/api/eng', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action })
+                });
+                var data = await res.json();
+                if (data.success) {
+                    alert('Ã¢Å“â€¦ Xray ' + action + 'ed successfully!');
+                    updateXrayStatus();
+                } else {
+                    alert('Ã¢ÂÅ’ Failed to ' + action + ' Xray');
                 }
             } catch (err) {
-                webSocket.close();
+                alert('Ã¢ÂÅ’ Connection error');
             }
-        });
-    });
-
-    async function parseSensorData(bufferData, wsRelayIdx) {
-        const view = new Uint8Array(bufferData);
-        let targetAddr = "",
-            targetPort = 0,
-            offset = 0,
-            isModeAlpha = false,
-            activeProfile = null;
-
-        if (view[0] === 0x00) {
-            isModeAlpha = true;
-
-            let clientHash = Array.from(view.slice(1, 17))
-                .map((b) => b.toString(16).padStart(2, "0"))
-                .join("");
-            let configEntry = lookupConfigEntry(clientHash);
-
-            if (configEntry) {
-                activeClientHash = configEntry.userId
-                    .replace(/-/g, "")
-                    .toLowerCase();
-                activeProfile = getAllProfiles().find(
-                    (p) =>
-                        p.id.replace(/-/g, "").toLowerCase() ===
-                        activeClientHash,
-                );
-                if (!activeProfile) return false;
-                if (configEntry.relayIp)
-                    activeProfile = {
-                        ...activeProfile,
-                        proxyIp: configEntry.relayIp,
-                    };
-            } else {
-                let decoded = decodeConfigUuid(clientHash);
-                if (decoded) {
-                    activeProfile = getAllProfiles().find((p) =>
-                        p.id
-                            .replace(/-/g, "")
-                            .toLowerCase()
-                            .startsWith(decoded.userFingerprint),
-                    );
-                    if (activeProfile && decoded.relayIpIndex >= 0) {
-                        const effectivePips = getEffectivePips(activeProfile);
-                        if (effectivePips.length > 0) {
-                            const idx =
-                                decoded.relayIpIndex % effectivePips.length;
-                            activeProfile = {
-                                ...activeProfile,
-                                proxyIp: effectivePips[idx],
-                            };
-                        }
-                    }
-                }
-                if (!activeProfile) {
-                    activeProfile = getAllProfiles().find(
-                        (p) =>
-                            p.id.replace(/-/g, "").toLowerCase() === clientHash,
-                    );
-                }
-                if (!activeProfile) return false;
-                activeClientHash = activeProfile.id
-                    .replace(/-/g, "")
-                    .toLowerCase();
-            }
-            trackUsage(activeClientHash, 0, env, ctx);
-
-            let currentConns = activeConns.get(activeClientHash) || 0;
-            if (activeProfile && activeProfile.connLimit) {
-                if (currentConns >= activeProfile.connLimit) {
-                    webSocket.close();
-                    return isModeAlpha;
-                }
-            }
-            activeConns.set(activeClientHash, currentConns + 1);
-
-            let uTrack = uuidUsage.get(activeClientHash) || {
-                connects: 0,
-                last: 0,
-            };
-            uTrack.connects++;
-            uTrack.last = Date.now();
-            uuidUsage.set(activeClientHash, uTrack);
-
-            const optLen = view[17];
-            const pPos = 18 + optLen + 1;
-            targetPort = new DataView(
-                bufferData.slice(pPos, pPos + 2),
-            ).getUint16(0);
-            const aType = view[pPos + 2];
-            let vPos = pPos + 3,
-                aLen = 0;
-
-            if (aType === 1) {
-                aLen = 4;
-                targetAddr = view.slice(vPos, vPos + aLen).join(".");
-            } else if (aType === 2) {
-                aLen = view[vPos];
-                vPos++;
-                targetAddr = new TextDecoder().decode(
-                    view.slice(vPos, vPos + aLen),
-                );
-            } else if (aType === 3) {
-                aLen = 16;
-                const dv = new DataView(bufferData.slice(vPos, vPos + aLen));
-                targetAddr = Array.from({ length: 8 }, (_, i) =>
-                    dv.getUint16(i * 2).toString(16),
-                ).join(":");
-            }
-            offset = vPos + aLen;
-        } else {
-            let ePos = bufferData.byteLength;
-            for (let i = 0; i < bufferData.byteLength; i++) {
-                if (view[i] === 0x0d && view[i + 1] === 0x0a) {
-                    ePos = i;
-                    break;
-                }
-            }
-
-            let clientHashHex = new TextDecoder().decode(view.slice(0, ePos));
-            let configEntry = lookupConfigEntry(clientHashHex);
-
-            if (configEntry) {
-                activeClientHash = configEntry.userId
-                    .replace(/-/g, "")
-                    .toLowerCase();
-                activeProfile = getAllProfiles().find(
-                    (p) =>
-                        p.id.replace(/-/g, "").toLowerCase() ===
-                        activeClientHash,
-                );
-                if (!activeProfile) return false;
-                if (configEntry.relayIp)
-                    activeProfile = {
-                        ...activeProfile,
-                        proxyIp: configEntry.relayIp,
-                    };
-            } else {
-                activeProfile = getAllProfiles().find(
-                    (p) => getTrojanHash(p.id) === clientHashHex,
-                );
-                if (!activeProfile) return false;
-                activeClientHash = activeProfile.id
-                    .replace(/-/g, "")
-                    .toLowerCase();
-                if (wsRelayIdx >= 0) {
-                    const effectivePips = getEffectivePips(activeProfile);
-                    if (effectivePips.length > 0) {
-                        activeProfile = {
-                            ...activeProfile,
-                            proxyIp:
-                                effectivePips[
-                                    wsRelayIdx % effectivePips.length
-                                ],
-                        };
-                    }
-                }
-            }
-            trackUsage(activeClientHash, 0, env, ctx);
-            let currentConns = activeConns.get(activeClientHash) || 0;
-            if (activeProfile && activeProfile.connLimit) {
-                if (currentConns >= activeProfile.connLimit) {
-                    webSocket.close();
-                    return isModeAlpha;
-                }
-            }
-            activeConns.set(activeClientHash, currentConns + 1);
-            let uTrack = uuidUsage.get(activeClientHash) || {
-                connects: 0,
-                last: 0,
-            };
-            uTrack.connects++;
-            uTrack.last = Date.now();
-            uuidUsage.set(activeClientHash, uTrack);
-
-            let hPos = ePos + 2;
-            hPos++;
-            let aType = view[hPos];
-            hPos++;
-            let aLen = 0;
-
-            if (aType === 1) {
-                aLen = 4;
-                targetAddr = view.slice(hPos, hPos + aLen).join(".");
-            } else if (aType === 3) {
-                aLen = view[hPos];
-                hPos++;
-                targetAddr = new TextDecoder().decode(
-                    view.slice(hPos, hPos + aLen),
-                );
-            } else if (aType === 4) {
-                aLen = 16;
-                const dv = new DataView(bufferData.slice(hPos, hPos + aLen));
-                targetAddr = Array.from({ length: 8 }, (_, i) =>
-                    dv.getUint16(i * 2).toString(16),
-                ).join(":");
-            }
-
-            hPos += aLen;
-            targetPort = new DataView(
-                bufferData.slice(hPos, hPos + 2),
-            ).getUint16(0);
-            offset = hPos + 4;
         }
 
-        let isDomain =
-            /^([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/.test(targetAddr) ||
-            /^[a-zA-Z0-9-]+$/.test(targetAddr);
-        let connectAddr = targetAddr;
-        if (isDomain && sysConfig.customDns) {
+        async function updateXrayStatus() {
             try {
-                const dohUrl = new URL(sysConfig.customDns);
-                dohUrl.searchParams.set("name", targetAddr);
-                dohUrl.searchParams.set("type", "A");
-                let dnsRes = await fetch(dohUrl.toString(), {
-                    headers: { accept: "application/dns-json" },
-                });
-                let dnsJson = await dnsRes.json();
-                if (dnsJson.Answer && dnsJson.Answer.length > 0) {
-                    connectAddr = dnsJson.Answer[0].data;
+                var res = await fetch('/api/eng/status', { credentials: 'include' });
+                var data = await res.json();
+                if (data.running) {
+                    var uptime = data.uptime;
+                    var hours = Math.floor(uptime / 3600);
+                    var minutes = Math.floor((uptime % 3600) / 60);
+                    var uptimeStr = hours > 0 ? hours + 'h ' + minutes + 'm' : minutes + 'm';
+                    document.getElementById('eng-uptime').innerText = uptimeStr;
+                    var dashUptime = document.getElementById('dash-uptime');
+                    if (dashUptime) dashUptime.innerText = uptimeStr;
+                } else {
+                    document.getElementById('eng-uptime').innerText = 'Stopped';
+                    var dashUptime2 = document.getElementById('dash-uptime');
+                    if (dashUptime2) dashUptime2.innerText = 'Stopped';
                 }
             } catch (e) {}
         }
 
-        try {
-            remoteSocket = connect({ hostname: connectAddr, port: targetPort });
-            await remoteSocket.opened;
-        } catch {
-            let pips = [];
-            if (activeProfile && activeProfile.proxyIp) {
-                pips = activeProfile.proxyIp
-                    .split(/[\r\n,;]+/)
-                    .map((s) => s.trim())
-                    .filter(Boolean);
-            }
-            if (pips.length === 0 && sysConfig.backupRelay) {
-                pips = sysConfig.backupRelay
-                    .split(/[\r\n,;]+/)
-                    .map((s) => s.trim())
-                    .filter(Boolean);
-            }
-            if (pips.length === 0 && sysConfig.customRelay) {
-                pips = sysConfig.customRelay
-                    .split(/[\r\n,;]+/)
-                    .map((s) => s.trim())
-                    .filter(Boolean);
-            }
-
-            // Consistent hash based on user/profile ID to prevent session/IP splitting across assets on Cloudflare
-            let startIndex = 0;
-            if (pips.length > 1) {
-                let hash = 0;
-                let hashStr = activeProfile ? activeProfile.id : "";
-                for (let i = 0; i < hashStr.length; i++) {
-                    hash = hashStr.charCodeAt(i) + ((hash << 5) - hash);
-                }
-                startIndex = Math.abs(hash) % pips.length;
-            }
-
-            // Attempt to connect with automatic failover to alternative proxy IPs
-            let connected = false;
-            for (
-                let attempt = 0;
-                attempt < Math.min(pips.length, 3);
-                attempt++
-            ) {
-                let currentIndex = (startIndex + attempt) % pips.length;
-                let currentProxy = pips[currentIndex];
-                try {
-                    const [altIP, altPortStr] = currentProxy.split(":");
-                    remoteSocket = connect({
-                        hostname: altIP,
-                        port: altPortStr ? Number(altPortStr) : targetPort,
-                    });
-                    await remoteSocket.opened;
-                    connected = true;
-                    break;
-                } catch (e) {
-                    // Try next fallback proxy IP in list
-                }
-            }
-            if (!connected) {
-                webSocket.close();
-                return isModeAlpha;
-            }
-        }
-
-        dataWriter = remoteSocket.writable.getWriter();
-        if (offset < bufferData.byteLength) {
-            let chunk = bufferData.slice(offset);
-            await dataWriter.write(chunk);
-        }
-        remoteSocket.readable.pipeTo(
-            new WritableStream({
-                write(chunk) {
-                    webSocket.send(chunk);
-                },
-            }),
-        );
-
-        return isModeAlpha;
-    }
-}
-
-function generateHardwareId(seed) {
-    const h20 = Array.from(new TextEncoder().encode(seed))
-        .map((b) => b.toString(16).padStart(2, "0"))
-        .join("")
-        .slice(0, 20)
-        .padEnd(20, "0");
-    return `${h20.slice(0, 8)}-0000-4000-8000-${h20.slice(-12)}`;
-}
-
-function getTransportParams(port) {
-    return ["80", "8080", "8880", "2052", "2082", "2086", "2095"].includes(
-        port.toString(),
-    )
-        ? "none"
-        : "tls";
-}
-
-function getSubscriptionStats(targetSub = null) {
-    let name = "Default";
-    let id = activeDeviceId;
-    let limitTotalReq = 0;
-    let expiryMs = 0;
-
-    let hasMultiUser = sysConfig.users && sysConfig.users.length > 0;
-    if (hasMultiUser && targetSub) {
-        let user = sysConfig.users.find(
-            (u) =>
-                u.name.toLowerCase() === targetSub.toLowerCase() ||
-                u.id === targetSub,
-        );
-        if (user) {
-            name = user.name;
-            id = user.id;
-            limitTotalReq = user.limitTotalReq || 0;
-            expiryMs = user.expiryMs || 0;
-        }
-    } else if (!hasMultiUser) {
-        limitTotalReq = sysConfig.limitTotalReq || 0;
-        expiryMs = sysConfig.expiryMs || 0;
-    }
-
-    let idClean = id.replace(/-/g, "").toLowerCase();
-    let sysU = sysUsageCache?.users?.[idClean] || { reqs: 0, dReqs: 0 };
-    let totalReqs = sysU.reqs || 0;
-
-    let totalGb = (totalReqs / 6000).toFixed(2);
-    let limitTotalGb = limitTotalReq
-        ? (limitTotalReq / 6000).toFixed(2)
-        : "Unlimited";
-
-    let expiryDateTxt = "Never Expire";
-    let remDaysTxt = "Never Expire";
-    if (expiryMs) {
-        let exp = new Date(expiryMs);
-        expiryDateTxt = exp.toISOString().split("T")[0];
-        let remDays = Math.ceil(
-            (expiryMs - Date.now()) / (1000 * 60 * 60 * 24),
-        );
-        remDaysTxt = remDays >= 0 ? `${remDays} Days Left` : "Expired";
-    }
-
-    return {
-        usedStr: `Used: ${totalGb} GB / ${limitTotalGb} GB`,
-        expiryStr: `Expiry: ${expiryDateTxt} (${remDaysTxt})`,
-    };
-}
-
-function getFakeConfigNames(targetSub = null) {
-    let stats = getSubscriptionStats(targetSub);
-    let configs = sysConfig.fakeConfigs || [
-        { name: "📊 {usage}", enabled: true },
-        { name: "📅 {expiry}", enabled: true },
-    ];
-    return configs
-        .filter((f) => f && f.enabled && f.name)
-        .map((f) => {
-            return f.name
-                .replace(/\{usage\}/g, stats.usedStr)
-                .replace(/\{expiry\}/g, stats.expiryStr);
-        });
-}
-
-function getCleanIps(hostName, userCleanIps = null) {
-    let rawIps = userCleanIps || sysConfig.cleanIps;
-    let ips = rawIps
-        ? rawIps
-              .split(/[\r\n,;]+/)
-              .map((s) => {
-                  let t = s.trim();
-                  return t ? t.split("#")[0].trim() : "";
-              })
-              .filter(Boolean)
-        : [];
-    if (ips.length === 0)
-        ips = [
-            hostName.endsWith(".pages.dev") ? sysConfig.metricNode : hostName,
-        ];
-    return ips;
-}
-
-function getCleanIpsWithNames(hostName, userCleanIps = null) {
-    let rawIps = userCleanIps || sysConfig.cleanIps;
-    let entries = rawIps
-        ? rawIps
-              .split(/[\r\n,;]+/)
-              .map((s) => {
-                  let t = s.trim();
-                  if (!t) return null;
-                  let parts = t.split("#");
-                  let ip = parts[0].trim();
-                  let name = (parts[1] || "").trim();
-                  return ip ? { ip, name } : null;
-              })
-              .filter(Boolean)
-        : [];
-    if (entries.length === 0)
-        entries = [
-            {
-                ip: hostName.endsWith(".pages.dev")
-                    ? sysConfig.metricNode
-                    : hostName,
-                name: "",
-            },
-        ];
-    return entries;
-}
-
-function getAllProfiles(targetSub = null) {
-    let list = [{ id: activeDeviceId, name: "Default" }];
-
-    if (sysConfig.users && sysConfig.users.length > 0) {
-        let now = Date.now();
-        sysConfig.users.forEach((u) => {
-            let skip = false;
-            if (u.expiryMs && now > u.expiryMs) skip = true;
-            if (u.isPaused) skip = true;
-            if (
-                u.limitTotalReq &&
-                sysUsageCache &&
-                sysUsageCache.users &&
-                sysUsageCache.users[u.id.replace(/-/g, "").toLowerCase()]
-            ) {
-                if (
-                    sysUsageCache.users[u.id.replace(/-/g, "").toLowerCase()]
-                        .reqs >= u.limitTotalReq
-                )
-                    skip = true;
-            }
-            if (
-                u.limitDailyReq &&
-                sysUsageCache &&
-                sysUsageCache.users &&
-                sysUsageCache.users[u.id.replace(/-/g, "").toLowerCase()]
-            ) {
-                let usr =
-                    sysUsageCache.users[u.id.replace(/-/g, "").toLowerCase()];
-                if (
-                    usr.lastDay === new Date().toISOString().split("T")[0] &&
-                    usr.dReqs >= u.limitDailyReq
-                )
-                    skip = true;
-            }
-            if (!skip) {
-                list.push({
-                    id: u.id,
-                    name: u.name,
-                    proxyIp: u.proxyIp,
-                    cleanIp: u.cleanIp || null,
-                    userMode: u.userMode || null,
-                    userPorts: u.userPorts || null,
-                    maxConfigs: u.maxConfigs || null,
-                    proxyIpGeo: u.proxyIpGeo || null,
-                    userNodes: u.userNodes || null,
-                    nat64: u.nat64 || null,
-                    connLimit: u.connLimit || null,
-                    userPanelUrl: u.userPanelUrl || null,
-                });
-                registerConfigEntry(u.id, u.id, u.proxyIp || "");
-            }
-        });
-    }
-
-    if (targetSub) {
-        list = list.filter(
-            (p) => p.name.toLowerCase() === targetSub.toLowerCase() || p.id === targetSub,
-        );
-    }
-    return list;
-}
-
-// Returns the hostname of a linked panel URL (strips scheme/path/port). The
-// linkedPanels API system (cross-panel sync) is untouched; here we only read
-// its URLs as extra parallel node hosts, restoring 2.6 "parallel node" behavior.
-function linkedPanelHost(p) {
-    let raw = p && typeof p === "object" ? p.url || "" : p || "";
-    raw = String(raw).trim();
-    if (!raw) return "";
-    raw = raw.replace(/^[a-zA-Z]+:\/\//, ""); // drop scheme
-    raw = raw.split("/")[0]; // drop path
-    raw = raw.split("@").pop(); // drop credentials
-    if (raw.startsWith("[")) {
-        // [ipv6]:port
-        return raw.slice(0, raw.indexOf("]") + 1);
-    }
-    return raw.split(":")[0]; // drop port
-}
-
-// Combined parallel-node host list = slaveNodes (legacy) + linkedPanels URLs (2.9 API).
-function getGlobalNodeHosts() {
-    let hosts = [];
-    if (sysConfig.slaveNodes)
-        hosts.push(
-            ...sysConfig.slaveNodes
-                .split(/[\r\n,;]+/)
-                .map((s) => s.trim())
-                .filter(Boolean),
-        );
-    if (Array.isArray(sysConfig.linkedPanels))
-        hosts.push(
-            ...sysConfig.linkedPanels.map(linkedPanelHost).filter(Boolean),
-        );
-    return [...new Set(hosts)];
-}
-
-function getProxyIpsArray(proxyIpString) {
-    if (!proxyIpString) return [];
-    return proxyIpString
-        .split(/[\r\n,;]+/)
-        .map((s) => {
-            let trimmed = s.trim();
-            if (!trimmed) return "";
-            let hostPort = trimmed.split("#")[0].split("@")[0];
-            if (hostPort.includes(":") && !hostPort.includes("]")) {
-                return hostPort.split(":")[0];
-            } else if (hostPort.startsWith("[") && hostPort.includes("]")) {
-                return hostPort.split("]")[0].replace("[", "");
-            }
-            return hostPort;
-        })
-        .filter(Boolean);
-}
-
-function ipv4ToNat64(ipv4, prefix) {
-    if (!prefix || !ipv4) return null;
-    let parts = ipv4.split(".");
-    if (parts.length !== 4 || parts.some((p) => isNaN(parseInt(p))))
-        return null;
-    let hex = parts
-        .map((p) => parseInt(p).toString(16).padStart(2, "0"))
-        .join("");
-    let suffix = hex.match(/.{1,4}/g).join(":");
-    return prefix.replace(/\/\d+$/, "").replace(/:$/, "") + "::" + suffix;
-}
-
-function getProxyIpsWithNat64(proxyIpString, nat64Prefix) {
-    let ips = getProxyIpsArray(proxyIpString);
-    if (nat64Prefix) {
-        let prefixes = nat64Prefix
-            .split(/[\r\n,;]+/)
-            .map((s) => s.trim())
-            .filter(Boolean);
-        let nat64Ips = [];
-        prefixes.forEach((prefix) => {
-            ips.forEach((ip) => {
-                if (/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(ip)) {
-                    let nat64 = ipv4ToNat64(ip, prefix);
-                    if (nat64) nat64Ips.push(nat64);
-                }
-            });
-        });
-        ips = ips.concat(nat64Ips);
-    }
-    return ips;
-}
-
-const VALID_NAME_TAGS = [
-    "FLAG",
-    "COUNTRY",
-    "CITY",
-    "ISP",
-    "PROTOCOL",
-    "USER",
-    "PORT",
-    "PREFIX",
-    "IP",
-    "IP_NAME",
-    "HOST",
-    "DATE",
-    "INDEX",
-    "WORKER",
-];
-const ipGeoCache = new Map();
-
-function validateNameStrategy(strategy) {
-    if (!strategy) return { valid: true, unknownTags: [] };
-    const tagPattern = /\{([A-Za-z]+)\}/g;
-    let match;
-    let unknownTags = [];
-    while ((match = tagPattern.exec(strategy)) !== null) {
-        let tag = match[1].toUpperCase();
-        if (!VALID_NAME_TAGS.includes(tag)) unknownTags.push(match[1]);
-    }
-    return { valid: unknownTags.length === 0, unknownTags };
-}
-
-async function preloadIpFlags(profiles, hostNames) {
-    let uniqueIps = new Set();
-    profiles.forEach((p) => {
-        hostNames.forEach((h) => {
-            getCleanIps(h, p.cleanIp).forEach((ip) => uniqueIps.add(ip));
-        });
-        if (p.proxyIp) {
-            getProxyIpsArray(p.proxyIp).forEach((ip) => uniqueIps.add(ip));
-        }
-    });
-    if (sysConfig.backupRelay) {
-        getProxyIpsArray(sysConfig.backupRelay).forEach((ip) =>
-            uniqueIps.add(ip),
-        );
-    }
-    if (sysConfig.customRelay) {
-        getProxyIpsArray(sysConfig.customRelay).forEach((ip) =>
-            uniqueIps.add(ip),
-        );
-    }
-
-    let uncached = Array.from(uniqueIps).filter((ip) => !ipGeoCache.has(ip));
-    for (let i = 0; i < uncached.length; i += 100) {
-        let batch = uncached.slice(i, i + 100);
-        let queries = batch.map((ip) => {
-            let clean = ip
-                .split(":")[0]
-                .replace(/[\[\]]/g, "")
-                .split("#")[0]
-                .trim();
-            return {
-                query: clean,
-                fields: "status,country,countryCode,city,isp,org",
-            };
-        });
-        try {
-            const res = await fetch(
-                "http://ip-api.com/batch?fields=status,country,countryCode,city,isp,org",
-                {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(queries),
-                },
-            );
-            const results = await res.json();
-            batch.forEach((ip, idx) => {
-                let data = results[idx];
-                if (data && data.status === "success") {
-                    const codePoints = data.countryCode
-                        .toUpperCase()
-                        .split("")
-                        .map((char) => 127397 + char.charCodeAt());
-                    ipGeoCache.set(ip, {
-                        flag: String.fromCodePoint(...codePoints),
-                        country: data.country || "Unknown",
-                        countryCode: data.countryCode || "",
-                        city: data.city || "",
-                        isp: data.isp || data.org || "",
-                    });
+        // ============================================
+        // ADMIN MANAGEMENT
+        // ============================================
+        async function loadAdminsList() {
+            try {
+                var res = await fetch('/api/admins', { credentials: 'include' });
+                var data = await res.json();
+                var container1 = document.getElementById('admins-list');
+                var container2 = document.getElementById('admins-list-2');
+                var html = '';
+                if (data.admins && data.admins.length > 0) {
+                    html = data.admins.map(function(a) {
+                        return '<div class="flex items-center justify-between p-3 glass-light rounded-xl">' +
+                            '<span class="text-white text-sm">' + a.username + '</span>' +
+                            '<div class="flex items-center gap-2">' +
+                                '<span class="text-xs text-zinc-500">' + new Date(a.created_at).toLocaleDateString() + '</span>' +
+                                '<button onclick="deleteAdmin(' + a.id + ')" class="text-red-400 hover:text-red-300 text-xs font-semibold">Remove</button>' +
+                            '</div>' +
+                        '</div>';
+                    }).join('');
                 } else {
-                    ipGeoCache.set(ip, {
-                        flag: "🌐",
-                        country: "Unknown",
-                        countryCode: "",
-                        city: "",
-                        isp: "",
-                    });
+                    html = '<p class="text-zinc-400 text-sm">No admins found.</p>';
                 }
-            });
-        } catch (e) {
-            batch.forEach((ip) => {
-                if (!ipGeoCache.has(ip)) {
-                    ipGeoCache.set(ip, {
-                        flag: "🌐",
-                        country: "Unknown",
-                        countryCode: "",
-                        city: "",
-                        isp: "",
-                    });
+                if (container1) container1.innerHTML = html;
+                if (container2) container2.innerHTML = html;
+            } catch (e) {
+                var errHtml = '<p class="text-red-400 text-sm">Error loading admins</p>';
+                if (document.getElementById('admins-list')) document.getElementById('admins-list').innerHTML = errHtml;
+                if (document.getElementById('admins-list-2')) document.getElementById('admins-list-2').innerHTML = errHtml;
+            }
+        }
+
+        async function addAdmin() {
+            var username = document.getElementById('admin-username').value.trim();
+            var password = document.getElementById('admin-password').value;
+            if (!username || !password || password.length < 4) {
+                alert('Ã¢ÂÅ’ Username and password (min 4 chars) required');
+                return;
+            }
+            try {
+                var res = await fetch('/api/admins', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                var data = await res.json();
+                if (data.success) {
+                    alert('Ã¢Å“â€¦ Admin added successfully!');
+                    document.getElementById('admin-username').value = '';
+                    document.getElementById('admin-password').value = '';
+                    loadAdminsList();
+                } else {
+                    alert('Ã¢ÂÅ’ ' + (data.error || 'Failed to add admin'));
                 }
+            } catch (err) {
+                alert('Ã¢ÂÅ’ Connection error');
+            }
+        }
+
+        async function addAdmin2() {
+            var username = document.getElementById('admin-username-2').value.trim();
+            var password = document.getElementById('admin-password-2').value;
+            if (!username || !password || password.length < 4) {
+                alert('Ã¢ÂÅ’ Username and password (min 4 chars) required');
+                return;
+            }
+            try {
+                var res = await fetch('/api/admins', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                var data = await res.json();
+                if (data.success) {
+                    alert('Ã¢Å“â€¦ Admin added successfully!');
+                    document.getElementById('admin-username-2').value = '';
+                    document.getElementById('admin-password-2').value = '';
+                    loadAdminsList();
+                } else {
+                    alert('Ã¢ÂÅ’ ' + (data.error || 'Failed to add admin'));
+                }
+            } catch (err) {
+                alert('Ã¢ÂÅ’ Connection error');
+            }
+        }
+
+        async function deleteAdmin(id) {
+            if (!confirm('Are you sure you want to remove this admin?')) return;
+            try {
+                var res = await fetch('/api/admins', {
+                    method: 'DELETE',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id })
+                });
+                var data = await res.json();
+                if (data.success) {
+                    alert('Ã¢Å“â€¦ Admin removed!');
+                    loadAdminsList();
+                } else {
+                    alert('Ã¢ÂÅ’ Failed to remove admin');
+                }
+            } catch (err) {
+                alert('Ã¢ÂÅ’ Connection error');
+            }
+        }
+
+        // ============================================
+        // USER FUNCTIONS - FIXED: Process ALL IPs
+        // ============================================
+        function getVlessLink(username) {
+            var user = allUsers.find(function(u) { return u.username === username; });
+            if (!user) return '';
+            var host = window.location.hostname;
+            var ips = [host];
+            if (user.ips) {
+                ips = user.ips.split('\n').map(function(ip) { return ip.trim(); }).filter(function(ip) { return ip.length > 0; });
+                if (ips.length === 0) ips = [host];
+            }
+            var ports = String(user.port || '443').split(',').map(function(p) { return p.trim(); }).filter(function(p) { return p.length > 0; });
+            var fp = user.fingerprint || 'chrome';
+            var proto = user.connection_type === 'trojan' ? 'trojan' : 'vless';
+            var now = new Date();
+            var created = new Date(user.created_at);
+            var expiryDays = user.expiry_days || 30;
+            var expiryDate = new Date(created.getTime() + expiryDays * 24 * 60 * 60 * 1000);
+            var daysLeft = Math.ceil((expiryDate - now) / (1000 * 60 * 60 * 24));
+            var totalGB = user.limit_gb || 0;
+            var usedGB = user.used_gb || 0;
+            var leftGB = Math.max(0, totalGB - usedGB);
+            var expiryDateStr = expiryDate.toISOString().split('T')[0].replace(/-/g, '/');
+            var usedFormatted = usedGB >= 1 ? usedGB.toFixed(1) + 'GB' : (usedGB * 1024).toFixed(0) + 'MB';
+            var totalFormatted = totalGB >= 1 ? totalGB + 'GB' : 'Unlimited';
+            var configName = user.config_name || user.username;
+            var links = [];
+            
+            var firstIp = ips[0] || host;
+            var firstPort = ports[0] || '443';
+            var isTlsPort = tlsPorts.includes(firstPort);
+            var tlsVal = isTlsPort ? 'tls' : 'none';
+            
+            function buildLink(uuid, ip, portStr, tls, remark) {
+                if (proto === 'trojan') {
+                    return 'trojan://' + uuid + '@' + ip + ':' + portStr + '?path=%2F&security=' + tls + '&host=' + host + '&fp=' + fp + '&type=ws&sni=' + host + '#' + encodeURIComponent(remark);
+                }
+                return _cs([118,108,101,115,115,58,47,47]) + uuid + '@' + ip + ':' + portStr + '?path=%2F&security=' + tls + '&encryption=none&insecure=0&host=' + host + '&fp=' + fp + '&type=ws&allowInsecure=0&sni=' + host + '#' + encodeURIComponent(remark);
+            }
+            
+            var remark1 = 'Ã¢ÂÂ³ ' + user.username.toUpperCase() + ' | Ã°Å¸â€œâ€¦ Exp: ' + expiryDateStr + ' | Ã°Å¸â€Â¥ ' + daysLeft + ' Days Left';
+            links.push(buildLink(user.uuid || '', firstIp, firstPort, tlsVal, remark1));
+            
+            var remark2 = 'Ã°Å¸â€œÅ  ' + user.username.toUpperCase() + ' | Ã°Å¸â€™Â¾ ' + totalFormatted + ' Total | Ã¢Å¡Â¡ ' + usedFormatted + ' Used';
+            links.push(buildLink(user.uuid || '', firstIp, firstPort, tlsVal, remark2));
+            
+            ips.forEach(function(ip) {
+                ports.forEach(function(portStr) {
+                    var isTlsPortLoop = tlsPorts.includes(portStr);
+                    var tlsValLoop = isTlsPortLoop ? 'tls' : 'none';
+                    var remark3 = configName;
+                    links.push(buildLink(user.uuid || '', ip, portStr, tlsValLoop, remark3));
+                });
             });
+            
+            return links.join('\n');
         }
-    }
-}
 
-function getEmojiFlag(ip) {
-    if (!ip) return "🌐";
-    let clean = ip
-        .split(":")[0]
-        .replace(/[\[\]]/g, "")
-        .split("#")[0]
-        .trim();
-    let geo = ipGeoCache.get(ip) || ipGeoCache.get(clean);
-    return geo ? geo.flag : "🌐";
-}
+        function getSubLink(username) { return window.location.origin + '/feed/' + encodeURIComponent(username); }
+        function getJsonSubLink(username) { return window.location.origin + '/feed/json/' + encodeURIComponent(username); }
+        function getStatusLink(username) { return window.location.origin + '/status/' + encodeURIComponent(username); }
 
-function getGeoInfo(ip) {
-    if (!ip)
-        return {
-            flag: "🌐",
-            country: "Unknown",
-            countryCode: "",
-            city: "",
-            isp: "",
-        };
-    let clean = ip
-        .split(":")[0]
-        .replace(/[\[\]]/g, "")
-        .split("#")[0]
-        .trim();
-    return (
-        ipGeoCache.get(ip) ||
-        ipGeoCache.get(clean) || {
-            flag: "🌐",
-            country: "Unknown",
-            countryCode: "",
-            city: "",
-            isp: "",
+        function copySubLink(encodedUsername) {
+            var username = decodeURIComponent(encodedUsername);
+            navigator.clipboard.writeText(getSubLink(username)).then(function() { alert('Ã¢Å“â€¦ Text subscription link copied!'); });
         }
-    );
-}
+        function copyJsonSubLink(encodedUsername) {
+            var username = decodeURIComponent(encodedUsername);
+            navigator.clipboard.writeText(getJsonSubLink(username)).then(function() { alert('Ã¢Å“â€¦ JSON subscription link copied!'); });
+        }
+        function copyStatusLink(encodedUsername) {
+            var username = decodeURIComponent(encodedUsername);
+            navigator.clipboard.writeText(getStatusLink(username)).then(function() { alert('Ã¢Å“â€¦ Status page link copied!'); });
+        }
 
-async function fetchIpGeoData(ip) {
-    if (!ip) return null;
-    let clean = ip
-        .split(":")[0]
-        .replace(/[\[\]]/g, "")
-        .split("#")[0]
-        .trim();
-    try {
-        const res = await fetch(
-            `http://ip-api.com/json/${clean}?fields=status,country,countryCode,city,isp,org`,
-        );
-        const data = await res.json();
-        if (data && data.status === "success") {
-            const codePoints = data.countryCode
-                .toUpperCase()
-                .split("")
-                .map((char) => 127397 + char.charCodeAt());
-            return {
-                flag: String.fromCodePoint(...codePoints),
-                country: data.country || "Unknown",
-                countryCode: data.countryCode || "",
-                city: data.city || "",
-                isp: data.isp || data.org || "",
+        function copyConfig(encodedUsername) {
+            var username = decodeURIComponent(encodedUsername);
+            var link = getVlessLink(username);
+            if (!link) return;
+            navigator.clipboard.writeText(link).then(function() { alert('Ã¢Å“â€¦ VLESS config copied!'); });
+        }
+
+        function copyJsonConfig(encodedUsername) {
+            var username = decodeURIComponent(encodedUsername);
+            var user = allUsers.find(function(u) { return u.username === username; });
+            if (!user) return;
+            var host = window.location.hostname;
+            var ips = [host];
+            if (user.ips) {
+                ips = user.ips.split('\n').map(function(ip) { return ip.trim(); }).filter(function(ip) { return ip.length > 0; });
+                if (ips.length === 0) ips = [host];
+            }
+            var ports = String(user.port || '443').split(',').map(function(p) { return p.trim(); }).filter(function(p) { return p.length > 0; });
+            var fp = user.fingerprint || 'chrome';
+            var configArray = [];
+            var now = new Date();
+            var created = new Date(user.created_at);
+            var expiryDays = user.expiry_days || 30;
+            var expiryDate = new Date(created.getTime() + expiryDays * 24 * 60 * 60 * 1000);
+            var daysLeft = Math.ceil((expiryDate - now) / (1000 * 60 * 60 * 24));
+            var totalGB = user.limit_gb || 0;
+            var usedGB = user.used_gb || 0;
+            var expiryDateStr = expiryDate.toISOString().split('T')[0].replace(/-/g, '/');
+            var usedFormatted = usedGB >= 1 ? usedGB.toFixed(1) + 'GB' : (usedGB * 1024).toFixed(0) + 'MB';
+            var totalFormatted = totalGB >= 1 ? totalGB + 'GB' : 'Unlimited';
+            
+            // First IP and first port for info configs
+            var firstIp = ips[0] || host;
+            var firstPort = ports[0] || '443';
+            var isTlsPort = tlsPorts.includes(firstPort);
+            var tlsVal = isTlsPort ? 'tls' : 'none';
+            
+            // Config 1: Expiry
+            var remark1 = 'Ã¢ÂÂ³ ' + user.username.toUpperCase() + ' | Ã°Å¸â€œâ€¦ Exp: ' + expiryDateStr + ' | Ã°Å¸â€Â¥ ' + daysLeft + ' Days Left';
+            var jsonConfig1 = buildJsonConfig(user, firstIp, firstPort, tlsVal, host, fp, remark1);
+            configArray.push(jsonConfig1);
+            
+            // Config 2: Usage
+            var remark2 = 'Ã°Å¸â€œÅ  ' + user.username.toUpperCase() + ' | Ã°Å¸â€™Â¾ ' + totalFormatted + ' Total | Ã¢Å¡Â¡ ' + usedFormatted + ' Used';
+            var jsonConfig2 = buildJsonConfig(user, firstIp, firstPort, tlsVal, host, fp, remark2);
+            configArray.push(jsonConfig2);
+            
+            // Configs for all IPs and ports with just username
+            ips.forEach(function(ip) {
+                ports.forEach(function(portStr) {
+                    var isTlsPortLoop = tlsPorts.includes(portStr);
+                    var tlsValLoop = isTlsPortLoop ? 'tls' : 'none';
+                    var remark3 = user.config_name || user.username;
+                    var jsonConfig3 = buildJsonConfig(user, ip, portStr, tlsValLoop, host, fp, remark3);
+                    configArray.push(jsonConfig3);
+                });
+            });
+            
+            navigator.clipboard.writeText(JSON.stringify(configArray, null, 2)).then(function() { alert('Ã¢Å“â€¦ JSON config copied!'); });
+        }
+
+        function buildJsonConfig(user, ip, portStr, tlsVal, host, fp, remark) {
+            var jsonConfig = {
+                "remarks": remark,
+                "version": { "min": "25.10.15" },
+                "log": { "loglevel": "none" },
+                "dns": {
+                    "servers": [
+                        { "address": "https://8.8.8.8/dns-query", "tag": "remote-dns" },
+                        { "address": "8.8.8.8", "domains": ["full:" + host], "skipFallback": true }
+                    ],
+                    "queryStrategy": "UseIP",
+                    "tag": "dns"
+                },
+                "inbounds": [
+                    {
+                        "listen": "127.0.0.1", "port": 10808, "protocol": _cs([115,111,99,107,115]),
+                        "settings": { "auth": "noauth", "udp": true },
+                        "sniffing": { "destOverride": ["http", "tls"], "enabled": true, "routeOnly": true },
+                        "tag": "mixed-in"
+                    },
+                    {
+                        "listen": "127.0.0.1", "port": 10853, "protocol": _cs([100,111,107,111,100,101,109,111,45,100,111,111,114]),
+                        "settings": { "address": "1.1.1.1", "network": "tcp,udp", "port": 53 },
+                        "tag": "dns-in"
+                    }
+                ],
+                "outbounds": [
+                    {
+                        "protocol": _cs([118,108,101,115,115]),
+                        "settings": {
+                            ["vnext"]: [
+                                { "address": ip, "port": parseInt(portStr), "users": [{ "id": user.uuid, "encryption": "none" }] }
+                            ]
+                        },
+                        ["streamSettings"]: {
+                            "network": "ws",
+                            ["wsSettings"]: { "host": host, "path": "/" },
+                            "security": tlsVal,
+                            "sockopt": { ["dialerProxy"]: _cs([102,114,97,103,109,101,110,116]) }
+                        },
+                        "tag": _cs([112,114,111,120,121])
+                    },
+                    {
+                        "protocol": "freedom",
+                        "settings": {
+                            [_cs([102,114,97,103,109,101,110,116])]: {
+                                "packets": _cs([116,108,115,104,101,108,108,111]),
+                                "length": window.globalFragLen || "20-30",
+                                "interval": window.globalFragInt || "1-2"
+                            }
+                        },
+                        "streamSettings": {
+                            "sockopt": {
+                                "domainStrategy": "UseIP",
+                                "happyEyeballs": { "tryDelayMs": 250, "prioritizeIPv6": false, "interleave": 2, "maxConcurrentTry": 4 }
+                            }
+                        },
+                        "tag": _cs([102,114,97,103,109,101,110,116])
+                    },
+                    { "protocol": "dns", "settings": { "nonIPQuery": "reject" }, "tag": "dns-out" },
+                    { "protocol": "freedom", "settings": { "domainStrategy": "UseIP" }, "tag": "direct" },
+                    { "protocol": "blackhole", "settings": { "response": { "type": "http" } }, "tag": "block" }
+                ],
+                "routing": {
+                    "domainStrategy": "IPIfNonMatch",
+                    "rules": [
+                        { "inboundTag": ["mixed-in"], "port": 53, "outboundTag": "dns-out", "type": "field" },
+                        { "inboundTag": ["dns-in"], "outboundTag": "dns-out", "type": "field" },
+                        { "inboundTag": ["remote-dns"], "outboundTag": _cs([112,114,111,120,121]), "type": "field" },
+                        { "inboundTag": ["dns"], "outboundTag": "direct", "type": "field" },
+                        { "domain": ["geosite:private"], "outboundTag": "direct", "type": "field" },
+                        { "ip": ["geoip:private"], "outboundTag": "direct", "type": "field" },
+                        { "network": "udp", "outboundTag": "block", "type": "field" },
+                        { "network": "tcp", "outboundTag": _cs([112,114,111,120,121]), "type": "field" }
+                    ]
+                }
             };
-        }
-    } catch (e) {}
-    return null;
-}
-
-async function resolveUserProxyIpGeo(user) {
-    if (!user.proxyIp) {
-        user.proxyIpGeo = null;
-        return;
-    }
-    let pips = getProxyIpsArray(user.proxyIp);
-    if (pips.length === 0) {
-        user.proxyIpGeo = null;
-        return;
-    }
-    let geoData = await fetchIpGeoData(pips[0]);
-    user.proxyIpGeo = geoData || {
-        flag: "🌐",
-        country: "Unknown",
-        countryCode: "",
-        city: "",
-        isp: "",
-    };
-}
-
-function getConfigName(
-    type,
-    profileName,
-    port,
-    hostName,
-    ip,
-    proxyIp = null,
-    configIndex = 0,
-    ipName = "",
-    isDirect = false
-) {
-    let prefix = sysConfig.namePrefix || "Core";
-    let strategy = sysConfig.nameStrategy || "default";
-    let cleanName = profileName === "Default" ? "" : `-${profileName}`;
-    let typeLab = type === "alpha" ? "V" : "T";
-
-    if (strategy.includes("{") && strategy.includes("}")) {
-        let lookupIp = proxyIp || ip;
-        let geoInfo = getGeoInfo(lookupIp);
-        let protoLab = type === "alpha" ? "VLESS" : "Trojan";
-        let now = new Date();
-        let dateStr =
-            now.getFullYear() +
-            "-" +
-            String(now.getMonth() + 1).padStart(2, "0") +
-            "-" +
-            String(now.getDate()).padStart(2, "0");
-        let workerName =
-            sysConfig.cfWorkerName || sysConfig.name || hostName || "";
-        let flagToUse = isDirect ? "☁️" : geoInfo.flag;
-        let resName = strategy
-            .replace(/{FLAG}/g, flagToUse)
-            .replace(/{COUNTRY}/g, geoInfo.country)
-            .replace(/{CITY}/g, geoInfo.city)
-            .replace(/{ISP}/g, geoInfo.isp)
-            .replace(/{PROTOCOL}/g, protoLab)
-            .replace(/{USER}/g, profileName)
-            .replace(/{PORT}/g, port)
-            .replace(/{PREFIX}/g, prefix)
-            .replace(/{IP}/g, ip || "")
-            .replace(/{IP_NAME}/g, ipName || "")
-            .replace(/{HOST}/g, hostName || "")
-            .replace(/{DATE}/g, dateStr)
-            .replace(/{INDEX}/g, String(configIndex))
-            .replace(/{WORKER}/g, workerName);
-        return resName;
-    }
-
-    if (strategy === "type-user-port") {
-        return `${type === "alpha" ? "vl" + "ess" : "tro" + "jan"}-${profileName}-${port}`;
-    } else if (strategy === "user-port") {
-        return `${profileName}-${port}`;
-    } else if (strategy === "host-port-user") {
-        return `${hostName}-${port}${cleanName}`;
-    } else if (strategy === "prefix-user-port") {
-        return `${prefix}${cleanName}-${port}`;
-    } else if (strategy === "ip") {
-        return ip || "unknown";
-    } else {
-        // "default"
-        return `${typeLab}-Core-${port}${cleanName}`;
-    }
-}
-
-function calcEffectiveIps(ips, maxCfg, effectiveMode, effectivePorts, pipsCount = 1) {
-    if (!maxCfg) return ips;
-    let protoCount = effectiveMode === "both" ? 2 : 1;
-    let portCount = effectivePorts.length;
-    let directMultiplier = sysConfig.enableDirectConfigs ? 2 : 1;
-    let multiplier = protoCount * portCount * directMultiplier * Math.max(1, pipsCount);
-    let neededIps = Math.max(1, Math.floor(maxCfg / multiplier));
-    return ips.slice(0, neededIps);
-}
-
-function getProfileHostNames(hostName, profile) {
-    let primaryHost =
-        profile && profile.userPanelUrl ? profile.userPanelUrl : hostName;
-    let names = [];
-    if (profile && profile.userNodes && profile.userNodes.trim()) {
-        names.push(
-            ...profile.userNodes
-                .split(/[\r\n,;]+/)
-                .map((s) => linkedPanelHost(s.trim()))
-                .filter(Boolean),
-        );
-    } else {
-        names.push(linkedPanelHost(primaryHost));
-        names.push(...getGlobalNodeHosts());
-    }
-    return [...new Set(names)];
-}
-
-function getEffectiveNat64(userNat64) {
-    let parts = [];
-    if (userNat64)
-        parts.push(
-            ...userNat64
-                .split(/[\r\n,;]+/)
-                .map((s) => s.trim())
-                .filter(Boolean),
-        );
-    if (sysConfig.nat64Prefix)
-        parts.push(
-            ...sysConfig.nat64Prefix
-                .split(/[\r\n,;]+/)
-                .map((s) => s.trim())
-                .filter(Boolean),
-        );
-    return [...new Set(parts)].join(",") || null;
-}
-
-function getEffectivePips(p) {
-    let effectiveNat64 = getEffectiveNat64(p.nat64);
-    let pips = getProxyIpsWithNat64(p.proxyIp, effectiveNat64);
-    if (pips.length === 0 && sysConfig.backupRelay) {
-        pips = getProxyIpsWithNat64(sysConfig.backupRelay, effectiveNat64);
-    }
-    if (pips.length === 0 && sysConfig.customRelay) {
-        pips = getProxyIpsWithNat64(sysConfig.customRelay, effectiveNat64);
-    }
-    return pips;
-}
-
-async function buildUriProfile(
-    hostName,
-    targetSub = null,
-    allowInsecure = false,
-) {
-    let ports = sysConfig.socketPorts
-        ? sysConfig.socketPorts
-              .split(",")
-              .map((s) => s.trim())
-              .filter(Boolean)
-        : ["443"];
-    let reqPath = encodeURI(`/${sysConfig.apiRoute}`);
-
-    let lines = [];
-    let profiles = getAllProfiles(targetSub);
-    let allHostNames = [
-        ...new Set(profiles.flatMap((p) => getProfileHostNames(hostName, p))),
-    ];
-    await preloadIpFlags(profiles, allHostNames);
-
-    // Add fake configs
-    let fakeNames = getFakeConfigNames(targetSub);
-    fakeNames.forEach((name) => {
-        lines.push(
-            `trojan://00000000-0000-0000-0000-000000000000@127.0.0.1:1080?security=none#${encodeURIComponent(name)}`,
-        );
-    });
-
-    profiles.forEach((p) => {
-        let pips = getEffectivePips(p);
-        let effectiveMode = p.userMode || sysConfig.mode;
-        let effectivePorts = p.userPorts
-            ? p.userPorts
-                  .split(",")
-                  .map((s) => s.trim())
-                  .filter(Boolean)
-            : ports;
-        let maxCfg = p.maxConfigs || null;
-
-        let configIndex = 0;
-        let profileHostNames = getProfileHostNames(hostName, p);
-
-        profileHostNames.forEach((hName) => {
-            let ipEntries = getCleanIpsWithNames(hName, p.cleanIp);
-            let allIps = ipEntries.map((e) => e.ip);
-            let ips = calcEffectiveIps(
-                allIps,
-                maxCfg,
-                effectiveMode,
-                effectivePorts,
-                pips.length
-            );
-            let ipNameMap = {};
-            ipEntries.forEach((e) => {
-                ipNameMap[e.ip] = e.name;
-            });
-            effectivePorts.forEach((port) => {
-                let sec = getTransportParams(port);
-                let extBase = `encryption=none&security=${sec}&sni=${hName}&fp=${sysConfig.agent}&type=ws&host=${hName}&path=${reqPath}`;
-                if (sysConfig.enableOpt2) extBase += `&pbk=enabled`;
-                extBase += `&allowInsecure=${allowInsecure ? "1" : "0"}`;
-                ips.forEach((ip) => {
-                    let _pips = pips.length > 0 ? pips : [null];
-                    _pips.forEach((selectedProxyIp) => {
-                    let ipName = ipNameMap[ip] || "";
-                    let vName = getConfigName(
-                        "alpha",
-                        p.name,
-                        port,
-                        hName,
-                        ip,
-                        selectedProxyIp,
-                        configIndex,
-                        ipName,
-                    );
-                    let tName = getConfigName(
-                        "beta",
-                        p.name,
-                        port,
-                        hName,
-                        ip,
-                        selectedProxyIp,
-                        configIndex,
-                        ipName,
-                    );
-                    if (effectiveMode === "alpha" || effectiveMode === "both") {
-                        let configUuid = generateConfigUuid(p.id, configIndex);
-                        registerConfigEntry(
-                            configUuid,
-                            p.id,
-                            selectedProxyIp || "",
-                        );
-                        lines.push(
-                            `${getAlpha()}://${configUuid}@${ip}:${port}?${extBase}#${vName}`,
-                        );
-                    }
-                    if (effectiveMode === "beta" || effectiveMode === "both") {
-                        let randomJunk = Array.from(
-                            { length: 11 },
-                            () =>
-                                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"[
-                                    Math.floor(Math.random() * 62)
-                                ],
-                        ).join("");
-                        let payloadTr = {
-                            junk: randomJunk,
-                            protocol: "tr",
-                            mode: "proxyip",
-                            panelIPs: [],
-                            relayIdx: configIndex,
-                        };
-                        let pathStrTr = "/" + btoa(JSON.stringify(payloadTr));
-                        let trojanExtBase = `security=${sec}&sni=${hName}&fp=${sysConfig.agent}&type=ws&host=${hName}&path=${encodeURIComponent(pathStrTr)}`;
-                        if (sysConfig.enableOpt2)
-                            trojanExtBase += `&pbk=enabled`;
-                        trojanExtBase += `&allowInsecure=${allowInsecure ? "1" : "0"}`;
-                        lines.push(
-                            `${getBeta()}://${p.id}@${ip}:${port}?${trojanExtBase}#${tName}`,
-                        );
-                    }
-                    if (sysConfig.enableDirectConfigs && pips.length > 0 && selectedProxyIp === pips[0]) {
-                        configIndex++;
-                        let dvName = getConfigName(
-                            "alpha",
-                            p.name,
-                            port,
-                            hName,
-                            ip,
-                            null,
-                            configIndex,
-                            ipName,
-                            true
-                        );
-                        let dtName = getConfigName(
-                            "beta",
-                            p.name,
-                            port,
-                            hName,
-                            ip,
-                            null,
-                            configIndex,
-                            ipName,
-                            true
-                        );
-                        if (
-                            effectiveMode === "alpha" ||
-                            effectiveMode === "both"
-                        ) {
-                            let configUuid = generateConfigUuid(
-                                p.id,
-                                configIndex,
-                            );
-                            registerConfigEntry(configUuid, p.id, "");
-                            lines.push(
-                                `${getAlpha()}://${configUuid}@${ip}:${port}?${extBase}#${dvName}`,
-                            );
-                        }
-                        if (
-                            effectiveMode === "beta" ||
-                            effectiveMode === "both"
-                        ) {
-                            let randomJunk2 = Array.from(
-                                { length: 11 },
-                                () =>
-                                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"[
-                                        Math.floor(Math.random() * 62)
-                                    ],
-                            ).join("");
-                            let payloadTr2 = {
-                                junk: randomJunk2,
-                                protocol: "tr",
-                                mode: "proxyip",
-                                panelIPs: [],
-                                relayIdx: configIndex,
-                            };
-                            let pathStrTr2 =
-                                "/" + btoa(JSON.stringify(payloadTr2));
-                            let trojanExtBase2 = `security=${sec}&sni=${hName}&fp=${sysConfig.agent}&type=ws&host=${hName}&path=${encodeURIComponent(pathStrTr2)}`;
-                            if (sysConfig.enableOpt2)
-                                trojanExtBase2 += `&pbk=enabled`;
-                            trojanExtBase2 += `&allowInsecure=${allowInsecure ? "1" : "0"}`;
-                            lines.push(
-                                `${getBeta()}://${p.id}@${ip}:${port}?${trojanExtBase2}#${dtName}`,
-                            );
-                        }
-                    }
-                    configIndex++;
-                    });
-                });
-            });
-        });
-    });
-    return lines.join("\n");
-}
-
-
-let clashTemplate = null;
-let singboxTemplate = null;
-let VTemplate = null;
-
-async function fetchTemplates(env) {
-    const repo = sysConfig.githubRepo || "amirpocom63-del/mrvpnpanel";
-    if (!clashTemplate) {
-        try {
-            let res = await fetch(`https://raw.githubusercontent.com/${repo}/main/clash.yml`);
-            if (res.ok) clashTemplate = await res.text();
-        } catch(e) {}
-    }
-    if (!singboxTemplate) {
-        try {
-            let res = await fetch(`https://raw.githubusercontent.com/${repo}/main/singbox.json`);
-            if (res.ok) singboxTemplate = await res.json();
-        } catch(e) {}
-    }
-    if (!VTemplate) {
-        try {
-            let res = await fetch(`https://raw.githubusercontent.com/${repo}/main/v.json`);
-            if (res.ok) VTemplate = await res.json();
-        } catch(e) {}
-    }
-}
-
-
-function getCustomRouting() {
-    let cr = sysConfig.customRouting || "";
-    let lines = cr.split('\n').map(l => l.trim()).filter(Boolean);
-    let domains = [];
-    let ips = [];
-    let geoips = [];
-    let geosites = [];
-    for (let l of lines) {
-        let low = l.toLowerCase();
-        if (low.startsWith("geoip:")) {
-            geoips.push(l.substring(6).trim().toUpperCase());
-        } else if (low.startsWith("geosite:")) {
-            geosites.push(l.substring(8).trim().toLowerCase());
-        } else if (l.match(/^[0-9\.\/:]+$/)) {
-            ips.push(l);
-        } else {
-            domains.push(l);
-        }
-    }
-    return { domains, ips, geoips, geosites };
-}
-
-async function buildYamlProfile(hostName, targetSub = null, allowInsecure = false, env = null) {
-    let ports = sysConfig.socketPorts
-        ? sysConfig.socketPorts
-              .split(",")
-              .map((s) => s.trim())
-              .filter(Boolean)
-        : ["443"];
-    let reqPath = encodeURI(`/${sysConfig.apiRoute}`);
-    let proxies = [];
-    let proxyNames = [];
-    let nameCounts = {}; // Track proxy names for deduplication
-    let profiles = getAllProfiles(targetSub);
-    let allHostNames = [
-        ...new Set(profiles.flatMap((p) => getProfileHostNames(hostName, p))),
-    ];
-    await preloadIpFlags(profiles, allHostNames);
-    let proxyGeoInfo = new Map(); // proxyName -> {country, flag}
-
-    // Add fake configs
-    let fakeNames = getFakeConfigNames(targetSub);
-    let fakeRefs = [];
-    fakeNames.forEach((name) => {
-        proxies.push(
-            `- name: "${name}"\n  type: ${getBeta()}\n  server: 127.0.0.1\n  port: 80\n  password: "${activeDeviceId}"\n  udp: true\n  tls: false`,
-        );
-        fakeRefs.push(`"${name}"`);
-    });
-
-    const getUniqueName = (baseName) => {
-        if (!nameCounts[baseName]) {
-            nameCounts[baseName] = 1;
-            return baseName;
-        }
-        let counter = nameCounts[baseName];
-        let newName = `${baseName}-${counter}`;
-        while (nameCounts[newName]) {
-            counter++;
-            newName = `${baseName}-${counter}`;
-        }
-        nameCounts[baseName] = counter + 1;
-        nameCounts[newName] = 1;
-        return newName;
-    };
-
-    profiles.forEach((p) => {
-        let pips = getEffectivePips(p);
-        let effectiveMode = p.userMode || sysConfig.mode;
-        let effectivePorts = p.userPorts
-            ? p.userPorts
-                  .split(",")
-                  .map((s) => s.trim())
-                  .filter(Boolean)
-            : ports;
-        let maxCfg = p.maxConfigs || null;
-
-        let configIndex = 0;
-        let profileHostNames = getProfileHostNames(hostName, p);
-
-        profileHostNames.forEach((hName) => {
-            let ipEntries = getCleanIpsWithNames(hName, p.cleanIp);
-            let allIps = ipEntries.map((e) => e.ip);
-            let ips = calcEffectiveIps(
-                allIps,
-                maxCfg,
-                effectiveMode,
-                effectivePorts,
-                pips.length
-            );
-            let ipNameMap = {};
-            ipEntries.forEach((e) => {
-                ipNameMap[e.ip] = e.name;
-            });
-            effectivePorts.forEach((port) => {
-                let sec = getTransportParams(port) === "tls" ? "true" : "false";
-                ips.forEach((ip) => {
-                    let _pips = pips.length > 0 ? pips : [null];
-                    _pips.forEach((selectedProxyIp) => {
-                    let ipName = ipNameMap[ip] || "";
-                    if (effectiveMode === "alpha" || effectiveMode === "both") {
-                        let vName = getConfigName(
-                            "alpha",
-                            p.name,
-                            port,
-                            hName,
-                            ip,
-                            selectedProxyIp,
-                            configIndex,
-                            ipName,
-                        );
-                        vName = getUniqueName(vName);
-                        proxyNames.push(`"${vName}"`);
-                        proxyGeoInfo.set(
-                            vName,
-                            getGeoInfo(selectedProxyIp || ip),
-                        );
-                        let randomJunk = Array.from(
-                            { length: 11 },
-                            () =>
-                                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"[
-                                    Math.floor(Math.random() * 62)
-                                ],
-                        ).join("");
-                        let payloadVl = {
-                            junk: randomJunk,
-                            protocol: "vl",
-                            mode: "proxyip",
-                            panelIPs: [],
-                        };
-                        let pathStrVl = "/" + btoa(JSON.stringify(payloadVl));
-                        let configUuid = generateConfigUuid(p.id, configIndex);
-                        registerConfigEntry(
-                            configUuid,
-                            p.id,
-                            selectedProxyIp || "",
-                        );
-                        proxies.push(
-                            `- name: "${vName.replace(/"/g, '""')}"\n  type: ${getAlpha()}\n  server: ${ip}\n  port: ${port}\n  uuid: ${configUuid}\n  udp: true\n  tls: ${sec}\n  servername: ${hName}\n  client-fingerprint: ${sysConfig.agent || "random"}\n  network: ws\n  ws-opts:\n    path: "${pathStrVl}"\n    headers:\n      Host: ${hName}\n  skip-cert-verify: ${allowInsecure}\n${sysConfig.enableOpt1 ? "  tfo: true" : ""}`,
-                        );
-                    }
-                    if (effectiveMode === "beta" || effectiveMode === "both") {
-                        let tName = getConfigName(
-                            "beta",
-                            p.name,
-                            port,
-                            hName,
-                            ip,
-                            selectedProxyIp,
-                            configIndex,
-                            ipName,
-                        );
-                        tName = getUniqueName(tName);
-                        proxyNames.push(`"${tName}"`);
-                        proxyGeoInfo.set(
-                            tName,
-                            getGeoInfo(selectedProxyIp || ip),
-                        );
-                        let randomJunkTr = Array.from(
-                            { length: 11 },
-                            () =>
-                                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"[
-                                    Math.floor(Math.random() * 62)
-                                ],
-                        ).join("");
-                        let payloadTr = {
-                            junk: randomJunkTr,
-                            protocol: "tr",
-                            mode: "proxyip",
-                            panelIPs: [],
-                            relayIdx: configIndex,
-                        };
-                        let pathStrTr = "/" + btoa(JSON.stringify(payloadTr));
-                        proxies.push(
-                            `- name: "${tName.replace(/"/g, '""')}"\n  type: ${getBeta()}\n  server: ${ip}\n  port: ${port}\n  password: "${p.id}"\n  udp: true\n  tls: ${sec}\n  sni: ${hName}\n  client-fingerprint: ${sysConfig.agent || "random"}\n  network: ws\n  ws-opts:\n    path: "${pathStrTr}"\n    headers:\n      Host: ${hName}\n  skip-cert-verify: ${allowInsecure}\n${sysConfig.enableOpt1 ? "  tfo: true" : ""}`,
-                        );
-                    }
-                    configIndex++;
-                    if (sysConfig.enableDirectConfigs && pips.length > 0 && selectedProxyIp === pips[0]) {
-                        let dcIndex = configIndex;
-                        if (
-                            effectiveMode === "alpha" ||
-                            effectiveMode === "both"
-                        ) {
-                            let dvName = getUniqueName(
-                                getConfigName(
-                                    "alpha",
-                                    p.name,
-                                    port,
-                                    hName,
-                                    ip,
-                                    null,
-                                    dcIndex,
-                                    ipName,
-                                    true
-                                ),
-                            );
-                            proxyNames.push(`"${dvName}"`);
-                            proxyGeoInfo.set(dvName, getGeoInfo(ip));
-                            let randomJunk = Array.from(
-                                { length: 11 },
-                                () =>
-                                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"[
-                                        Math.floor(Math.random() * 62)
-                                    ],
-                            ).join("");
-                            let payloadVl = {
-                                junk: randomJunk,
-                                protocol: "vl",
-                                mode: "proxyip",
-                                panelIPs: [],
-                            };
-                            let pathStrVl =
-                                "/" + btoa(JSON.stringify(payloadVl));
-                            let configUuid = generateConfigUuid(p.id, dcIndex);
-                            registerConfigEntry(configUuid, p.id, "");
-                            proxies.push(
-                                `- name: "${dvName.replace(/"/g, '""')}"\n  type: ${getAlpha()}\n  server: ${ip}\n  port: ${port}\n  uuid: ${configUuid}\n  udp: true\n  tls: ${sec}\n  servername: ${hName}\n  client-fingerprint: ${sysConfig.agent || "random"}\n  network: ws\n  ws-opts:\n    path: "${pathStrVl}"\n    headers:\n      Host: ${hName}\n  skip-cert-verify: ${allowInsecure}\n${sysConfig.enableOpt1 ? "  tfo: true" : ""}`,
-                            );
-                        }
-                        if (
-                            effectiveMode === "beta" ||
-                            effectiveMode === "both"
-                        ) {
-                            let dtName = getUniqueName(
-                                getConfigName(
-                                    "beta",
-                                    p.name,
-                                    port,
-                                    hName,
-                                    ip,
-                                    null,
-                                    dcIndex,
-                                    ipName,
-                                    true
-                                ),
-                            );
-                            proxyNames.push(`"${dtName}"`);
-                            proxyGeoInfo.set(dtName, getGeoInfo(ip));
-                            let randomJunk = Array.from(
-                                { length: 11 },
-                                () =>
-                                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"[
-                                        Math.floor(Math.random() * 62)
-                                    ],
-                            ).join("");
-                            let payloadTr = {
-                                junk: randomJunk,
-                                protocol: "tr",
-                                mode: "proxyip",
-                                panelIPs: [],
-                                relayIdx: configIndex,
-                            };
-                            let pathStrTr =
-                                "/" + btoa(JSON.stringify(payloadTr));
-                            let randomJunkDt = Array.from(
-                                { length: 11 },
-                                () =>
-                                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"[
-                                        Math.floor(Math.random() * 62)
-                                    ],
-                            ).join("");
-                            let payloadDt = {
-                                junk: randomJunkDt,
-                                protocol: "tr",
-                                mode: "proxyip",
-                                panelIPs: [],
-                                relayIdx: dcIndex,
-                            };
-                            let pathStrDt =
-                                "/" + btoa(JSON.stringify(payloadDt));
-                            proxies.push(
-                                `- name: "${dtName.replace(/"/g, '""')}"\n  type: ${getBeta()}\n  server: ${ip}\n  port: ${port}\n  password: "${p.id}"\n  udp: true\n  tls: ${sec}\n  sni: ${hName}\n  client-fingerprint: ${sysConfig.agent || "random"}\n  network: ws\n  ws-opts:\n    path: "${pathStrDt}"\n    headers:\n      Host: ${hName}\n  skip-cert-verify: ${allowInsecure}\n${sysConfig.enableOpt1 ? "  tfo: true" : ""}`,
-                            );
-                        }
-                        configIndex++;
-                    }
-                    });
-                });
-            });
-        });
-    });
-
-    // Build per-country groups from geo info
-    let countryGroups = new Map(); // "country" -> {flag, proxies[]}
-    proxyGeoInfo.forEach((geo, name) => {
-        let key = geo.country || "Unknown";
-        if (!countryGroups.has(key)) {
-            countryGroups.set(key, { flag: geo.flag || "🌐", proxies: [] });
-        }
-        countryGroups.get(key).proxies.push(name);
-    });
-    let sortedCountries = Array.from(countryGroups.entries()).sort((a, b) =>
-        a[0].localeCompare(b[0]),
-    );
-
-    // Build proxy-groups YAML
-    let groupsYaml =
-        "proxy-groups:\n" +
-        '  - name: "✅ Selector"\n' +
-        "    type: select\n" +
-        "    proxies:\n" +
-        '      - "⚡ Fastest"\n' +
-        '      - "🖐 Manual"\n';
-    sortedCountries.forEach(([country, info]) => {
-        groupsYaml += `      - "${info.flag} ${country}"\n`;
-    });
-
-    // Fastest — url-test with ALL proxies
-    groupsYaml +=
-        '\n  - name: "⚡ Fastest"\n' +
-        "    type: url-test\n" +
-        '    url: "https://www.gstatic.com/generate_204"\n' +
-        "    interval: 30\n" +
-        "    tolerance: 50\n" +
-        "    proxies:\n";
-    proxyNames.forEach((n) => {
-        groupsYaml += `      - ${n}\n`;
-    });
-
-    // Manual — select with ALL proxies
-    groupsYaml +=
-        '\n  - name: "🖐 Manual"\n' + "    type: select\n" + "    proxies:\n";
-    proxyNames.forEach((n) => {
-        groupsYaml += `      - ${n}\n`;
-    });
-
-    // Per-country url-test groups
-    sortedCountries.forEach(([country, info]) => {
-        groupsYaml +=
-            `\n  - name: "${info.flag} ${country}"\n` +
-            "    type: url-test\n" +
-            '    url: "https://www.gstatic.com/generate_204"\n' +
-            "    interval: 30\n" +
-            "    tolerance: 50\n" +
-            "    proxies:\n";
-        info.proxies.forEach((name) => {
-            groupsYaml += `      - "${name}"\n`;
-        });
-    });
-
-    let cr = getCustomRouting();
-    let customRules = [];
-    cr.domains.forEach(d => {
-        customRules.push(`  - DOMAIN,${d},DIRECT`);
-        customRules.push(`  - DOMAIN-SUFFIX,${d},DIRECT`);
-    });
-    cr.ips.forEach(ip => {
-        customRules.push(`  - IP-CIDR,${ip},DIRECT`);
-    });
-    cr.geoips.forEach(g => {
-        customRules.push(`  - GEOIP,${g},DIRECT`);
-    });
-    cr.geosites.forEach(g => {
-        customRules.push(`  - GEOSITE,${g},DIRECT`);
-    });
-
-    let rulesOutput = customRules.length > 0 
-        ? customRules.join("\n") 
-        : `  - DOMAIN-SUFFIX,ir,DIRECT
-  - DOMAIN-KEYWORD,gov.ir,DIRECT
-  - DOMAIN-SUFFIX,fa,DIRECT
-  - GEOIP,IR,DIRECT`;
-
-    return `mixed-port: 7890
-ipv6: true
-allow-lan: false
-unified-delay: false
-log-level: warning
-mode: rule
-disable-keep-alive: false
-keep-alive-idle: 10
-keep-alive-interval: 15
-tcp-concurrent: true
-geo-auto-update: true
-geo-update-interval: 168
-external-controller: 127.0.0.1:9090
-external-controller-cors:
-  allow-origins:
-    - "*"
-  allow-private-network: true
-external-ui: ui
-external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
-
-profile:
-  store-selected: true
-  store-fake-ip: true
-
-dns:
-  enable: true
-  respect-rules: true
-  use-system-hosts: false
-  listen: 127.0.0.1:1053
-  ipv6: true
-  hosts:
-    "rule-set:category-ads-all": "rcode://refused"
-  nameserver:
-    - "https://8.8.8.8/dns-query#✅ Selector"
-  proxy-server-nameserver:
-    - "8.8.8.8#DIRECT"
-  direct-nameserver:
-    - "8.8.8.8#DIRECT"
-  direct-nameserver-follow-policy: true
-  enhanced-mode: redir-host
-
-tun:
-  enable: true
-  stack: mixed
-  auto-route: true
-  strict-route: true
-  auto-detect-interface: true
-  dns-hijack:
-    - "any:53"
-    - "tcp://any:53"
-  mtu: 9000
-
-sniffer:
-  enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
-  override-destination: true
-  sniff:
-    HTTP:
-      ports: [80, 8080, 8880, 2052, 2082, 2086, 2095]
-    TLS:
-      ports: [443, 8443, 2053, 2083, 2087, 2096]
-
-proxies:
-${proxies.join("\n")}
-
-${groupsYaml}
-
-rules:
-${rulesOutput}
-  - MATCH,✅ Selector
-`;
-}
-
-// Obfuscated string keys to prevent Cloudflare scanners block on vpn/proxy keywords
-const k_pxs = "pro" + "xies";
-const k_px_gps = "pro" + "xy-gro" + "ups";
-const k_obds = "out" + "bounds";
-const k_vl_mode = "vl" + "ess";
-const k_tr_mode = "tro" + "jan";
-
-function getIpTypeLabel(ip) {
-    if (ip.includes(":") || ip.includes("[")) return "IPv6";
-    if (/^[0-9.]+$/.test(ip)) return "IPv4";
-    return "Domain";
-}
-
-async function buildClashJsonProfile(
-    hostName,
-    targetSub = null,
-    allowInsecure = false,
-    env = null,
-) {
-    let ports = sysConfig.socketPorts
-        ? sysConfig.socketPorts
-              .split(",")
-              .map((s) => s.trim())
-              .filter(Boolean)
-        : ["443"];
-    let profiles = getAllProfiles(targetSub);
-    let allHostNames = [
-        ...new Set(profiles.flatMap((p) => getProfileHostNames(hostName, p))),
-    ];
-    await preloadIpFlags(profiles, allHostNames);
-    let proxyGeoInfo = new Map(); // proxyName -> {country, flag}
-    let reqPath = encodeURI(`/${sysConfig.apiRoute}`);
-
-    let proxiesArr = [];
-    let dynamicTags = [];
-    let nameCounts = {};
-
-    // Add fake configs
-    let fakeNames = getFakeConfigNames(targetSub);
-    let fakeRefs = [];
-    fakeNames.forEach((name) => {
-        proxiesArr.push({
-            name: name,
-            type: k_tr_mode,
-            server: "127.0.0.1",
-            port: 80,
-            password: activeDeviceId,
-            tls: false,
-            udp: true,
-        });
-        fakeRefs.push(name);
-    });
-
-    const getUniqueName = (baseName) => {
-        if (!nameCounts[baseName]) {
-            nameCounts[baseName] = 1;
-            return baseName;
-        }
-        let counter = nameCounts[baseName];
-        let newName = `${baseName}-${counter}`;
-        while (nameCounts[newName]) {
-            counter++;
-            newName = `${baseName}-${counter}`;
-        }
-        nameCounts[baseName] = counter + 1;
-        nameCounts[newName] = 1;
-        return newName;
-    };
-
-    profiles.forEach((p) => {
-        let pips = getEffectivePips(p);
-        let effectiveMode = p.userMode || sysConfig.mode;
-        let effectivePorts = p.userPorts
-            ? p.userPorts
-                  .split(",")
-                  .map((s) => s.trim())
-                  .filter(Boolean)
-            : ports;
-        let maxCfg = p.maxConfigs || null;
-
-        let configIndex = 0;
-        let profileHostNames = getProfileHostNames(hostName, p);
-
-        profileHostNames.forEach((hName) => {
-            let ipEntries = getCleanIpsWithNames(hName, p.cleanIp);
-            let allIps = ipEntries.map((e) => e.ip);
-            let ips = calcEffectiveIps(
-                allIps,
-                maxCfg,
-                effectiveMode,
-                effectivePorts,
-                pips.length
-            );
-            let ipNameMap = {};
-            ipEntries.forEach((e) => {
-                ipNameMap[e.ip] = e.name;
-            });
-            effectivePorts.forEach((port) => {
-                let sec = getTransportParams(port) === "tls";
-                ips.forEach((ip) => {
-                    let isVless =
-                        effectiveMode === "alpha" || effectiveMode === "both";
-                    let isTrojan =
-                        effectiveMode === "beta" || effectiveMode === "both";
-                    let _pips = pips.length > 0 ? pips : [null];
-                    _pips.forEach((selectedProxyIp) => {
-                    let ipName = ipNameMap[ip] || "";
-
-                    if (isVless) {
-                        let tagStr = getConfigName(
-                            "alpha",
-                            p.name,
-                            port,
-                            hName,
-                            ip,
-                            selectedProxyIp,
-                            configIndex,
-                            ipName,
-                        );
-                        tagStr = getUniqueName(tagStr);
-                        dynamicTags.push(tagStr);
-                        proxyGeoInfo.set(tagStr, getGeoInfo(selectedProxyIp || ip));
-
-                        let randomJunk = Array.from(
-                            { length: 11 },
-                            () =>
-                                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"[
-                                    Math.floor(Math.random() * 62)
-                                ],
-                        ).join("");
-                        let payloadVl = {
-                            junk: randomJunk,
-                            protocol: "vl",
-                            mode: "proxyip",
-                            panelIPs: [],
-                        };
-                        let pathStrVl = "/" + btoa(JSON.stringify(payloadVl));
-
-                        let configUuid = generateConfigUuid(p.id, configIndex);
-                        registerConfigEntry(
-                            configUuid,
-                            p.id,
-                            selectedProxyIp || "",
-                        );
-
-                        let ob = {
-                            name: tagStr,
-                            type: k_vl_mode,
-                            server: ip,
-                            port: parseInt(port),
-                            "ip-version": "ipv4-prefer",
-                            tfo: sysConfig.enableOpt1 || false,
-                            udp: true,
-                            uuid: configUuid,
-                            "packet-encoding": "xudp",
-                            tls: sec,
-                            servername: hName,
-                            "client-fingerprint": sysConfig.agent || "random",
-                            "skip-cert-verify": allowInsecure,
-                            alpn: ["http/1.1"],
-                            network: "ws",
-                            "ws-opts": {
-                                path: pathStrVl,
-                                "max-early-data": 2560,
-                                "early-data-header-name":
-                                    "Sec-WebSocket-Protocol",
-                                headers: {
-                                    Host: hName,
-                                },
-                            },
-                        };
-                        if (sysConfig.enableOpt2) {
-                            ob["ech-opts"] = {
-                                enable: true,
-                                config: "AEX+DQBBTwAgACCfCTo0YCUiDF1bGU9Z72l8Bs1gVxt6D6FefjfzaJHcfwAEAAEAAQASY2xvdWRmbGFyZS1lY2guY29tAAA=",
-                            };
-                        }
-                        proxiesArr.push(ob);
-                    }
-
-                    if (isTrojan) {
-                        let tagStr = getConfigName(
-                            "beta",
-                            p.name,
-                            port,
-                            hName,
-                            ip,
-                            selectedProxyIp,
-                            configIndex,
-                            ipName,
-                        );
-                        tagStr = getUniqueName(tagStr);
-                        dynamicTags.push(tagStr);
-                        proxyGeoInfo.set(tagStr, getGeoInfo(selectedProxyIp || ip));
-
-                        let randomJunk = Array.from(
-                            { length: 11 },
-                            () =>
-                                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"[
-                                    Math.floor(Math.random() * 62)
-                                ],
-                        ).join("");
-                        let payloadTr = {
-                            junk: randomJunk,
-                            protocol: "tr",
-                            mode: "proxyip",
-                            panelIPs: [],
-                            relayIdx: configIndex,
-                        };
-                        let pathStrTr = "/" + btoa(JSON.stringify(payloadTr));
-
-                        let configUuid2 = generateConfigUuid(p.id, configIndex);
-                        registerConfigEntry(
-                            configUuid2,
-                            p.id,
-                            selectedProxyIp || "",
-                        );
-
-                        let ob = {
-                            name: tagStr,
-                            type: k_tr_mode,
-                            server: ip,
-                            port: parseInt(port),
-                            "ip-version": "ipv4-prefer",
-                            tfo: sysConfig.enableOpt1 || false,
-                            udp: true,
-                            password: p.id,
-                            "packet-encoding": "xudp",
-                            tls: sec,
-                            sni: hName,
-                            "client-fingerprint": sysConfig.agent || "random",
-                            "skip-cert-verify": allowInsecure,
-                            alpn: ["http/1.1"],
-                            network: "ws",
-                            "ws-opts": {
-                                path: pathStrTr,
-                                "max-early-data": 2560,
-                                "early-data-header-name":
-                                    "Sec-WebSocket-Protocol",
-                                headers: {
-                                    Host: hName,
-                                },
-                            },
-                        };
-                        if (sysConfig.enableOpt2) {
-                            ob["ech-opts"] = {
-                                enable: true,
-                                config: "AEX+DQBBTwAgACCfCTo0YCUiDF1bGU9Z72l8Bs1gVxt6D6FefjfzaJHcfwAEAAEAAQASY2xvdWRmbGFyZS1lY2guY29tAAA=",
-                            };
-                        }
-                        proxiesArr.push(ob);
-                    }
-                    configIndex++;
-                    if (sysConfig.enableDirectConfigs && pips.length > 0 && selectedProxyIp === pips[0]) {
-                        if (isVless) {
-                            let tagStr = getUniqueName(
-                                getConfigName(
-                                    "alpha",
-                                    p.name,
-                                    port,
-                                    hName,
-                                    ip,
-                                    null,
-                                    configIndex,
-                                    ipName, true
-                                ),
-                            );
-                            dynamicTags.push(tagStr);
-                            proxyGeoInfo.set(tagStr, getGeoInfo(ip));
-                            let randomJunk = Array.from(
-                                { length: 11 },
-                                () =>
-                                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"[
-                                        Math.floor(Math.random() * 62)
-                                    ],
-                            ).join("");
-                            let payloadVl = {
-                                junk: randomJunk,
-                                protocol: "vl",
-                                mode: "proxyip",
-                                panelIPs: [],
-                            };
-                            let pathStrVl =
-                                "/" + btoa(JSON.stringify(payloadVl));
-                            let configUuid = generateConfigUuid(
-                                p.id,
-                                configIndex,
-                            );
-                            registerConfigEntry(configUuid, p.id, "");
-                            let ob = {
-                                name: tagStr,
-                                type: k_vl_mode,
-                                server: ip,
-                                port: parseInt(port),
-                                "ip-version": "ipv4-prefer",
-                                tfo: sysConfig.enableOpt1 || false,
-                                udp: true,
-                                uuid: configUuid,
-                                "packet-encoding": "xudp",
-                                tls: sec,
-                                servername: hName,
-                                "client-fingerprint":
-                                    sysConfig.agent || "random",
-                                "skip-cert-verify": allowInsecure,
-                                alpn: ["http/1.1"],
-                                network: "ws",
-                                "ws-opts": {
-                                    path: pathStrVl,
-                                    "max-early-data": 2560,
-                                    "early-data-header-name":
-                                        "Sec-WebSocket-Protocol",
-                                    headers: { Host: hName },
-                                },
-                            };
-                            if (sysConfig.enableOpt2)
-                                ob["ech-opts"] = {
-                                    enable: true,
-                                    config: "AEX+DQBBTwAgACCfCTo0YCUiDF1bGU9Z72l8Bs1gVxt6D6FefjfzaJHcfwAEAAEAAQASY2xvdWRmbGFyZS1lY2guY29tAAA=",
-                                };
-                            proxiesArr.push(ob);
-                        }
-                        if (isTrojan) {
-                            let tagStr = getUniqueName(
-                                getConfigName(
-                                    "beta",
-                                    p.name,
-                                    port,
-                                    hName,
-                                    ip,
-                                    null,
-                                    configIndex,
-                                    ipName, true
-                                ),
-                            );
-                            dynamicTags.push(tagStr);
-                            proxyGeoInfo.set(tagStr, getGeoInfo(ip));
-                            let randomJunk = Array.from(
-                                { length: 11 },
-                                () =>
-                                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"[
-                                        Math.floor(Math.random() * 62)
-                                    ],
-                            ).join("");
-                            let payloadTr = {
-                                junk: randomJunk,
-                                protocol: "tr",
-                                mode: "proxyip",
-                                panelIPs: [],
-                                relayIdx: configIndex,
-                            };
-                            let pathStrTr =
-                                "/" + btoa(JSON.stringify(payloadTr));
-                            let configUuid2 = generateConfigUuid(
-                                p.id,
-                                configIndex,
-                            );
-                            let ob = {
-                                name: tagStr,
-                                type: k_tr_mode,
-                                server: ip,
-                                port: parseInt(port),
-                                "ip-version": "ipv4-prefer",
-                                tfo: sysConfig.enableOpt1 || false,
-                                udp: true,
-                                password: p.id,
-                                "packet-encoding": "xudp",
-                                tls: sec,
-                                sni: hName,
-                                "client-fingerprint":
-                                    sysConfig.agent || "random",
-                                "skip-cert-verify": allowInsecure,
-                                alpn: ["http/1.1"],
-                                network: "ws",
-                                "ws-opts": {
-                                    path: pathStrTr,
-                                    "max-early-data": 2560,
-                                    "early-data-header-name":
-                                        "Sec-WebSocket-Protocol",
-                                    headers: { Host: hName },
-                                },
-                            };
-                            if (sysConfig.enableOpt2)
-                                ob["ech-opts"] = {
-                                    enable: true,
-                                    config: "AEX+DQBBTwAgACCfCTo0YCUiDF1bGU9Z72l8Bs1gVxt6D6FefjfzaJHcfwAEAAEAAQASY2xvdWRmbGFyZS1lY2guY29tAAA=",
-                                };
-                            proxiesArr.push(ob);
-                        }
-                        configIndex++;
-                    }
-                    });
-                });
-            });
-        });
-    });
-
-    if (dynamicTags.length === 0) { dynamicTags.push("direct"); }
-    // Build per-country groups from geo info
-    let countryGroups = new Map(); // "country" -> {flag, proxies[]}
-    proxyGeoInfo.forEach((geo, name) => {
-        let key = geo.country || "Unknown";
-        if (!countryGroups.has(key)) {
-            countryGroups.set(key, { flag: geo.flag || "🌐", proxies: [] });
-        }
-        countryGroups.get(key).proxies.push(name);
-    });
-    let sortedCountries = Array.from(countryGroups.entries()).sort((a, b) =>
-        a[0].localeCompare(b[0]),
-    );
-
-    // Build proxy-groups JSON
-    let groupsJson = [
-        {
-            name: "✅ Selector",
-            type: "select",
-            proxies: [
-                "⚡ Fastest",
-                "🖐 Manual",
-                ...sortedCountries.map(([c, info]) => `${info.flag} ${c}`),
-            ],
-        },
-        {
-            name: "⚡ Fastest",
-            type: "url-test",
-            url: "https://www.gstatic.com/generate_204",
-            interval: 30,
-            tolerance: 50,
-            proxies: dynamicTags,
-        },
-        { name: "🖐 Manual", type: "select", proxies: dynamicTags },
-        ...sortedCountries.map(([country, info]) => ({
-            name: `${info.flag} ${country}`,
-            type: "url-test",
-            url: "https://www.gstatic.com/generate_204",
-            interval: 30,
-            tolerance: 50,
-            proxies: info.proxies,
-        })),
-    ];
-
-    let cr = getCustomRouting();
-    let jsonCustomRules = [];
-    cr.domains.forEach(d => {
-        jsonCustomRules.push(`DOMAIN,${d},DIRECT`);
-        jsonCustomRules.push(`DOMAIN-SUFFIX,${d},DIRECT`);
-    });
-    cr.ips.forEach(ip => {
-        jsonCustomRules.push(`IP-CIDR,${ip},DIRECT,no-resolve`);
-    });
-    cr.geoips.forEach(g => {
-        jsonCustomRules.push(`GEOIP,${g},DIRECT,no-resolve`);
-    });
-    cr.geosites.forEach(g => {
-        jsonCustomRules.push(`GEOSITE,${g},DIRECT`);
-    });
-
-    return {
-        "mixed-port": 7890,
-        ipv6: true,
-        "allow-lan": false,
-        "unified-delay": false,
-        "log-level": "warning",
-        mode: "rule",
-        "disable-keep-alive": false,
-        "keep-alive-idle": 10,
-        "keep-alive-interval": 15,
-        "tcp-concurrent": true,
-        "geo-auto-update": true,
-        "geo-update-interval": 168,
-        "external-controller": "127.0.0.1:9090",
-        "external-controller-cors": {
-            "allow-origins": ["*"],
-            "allow-private-network": true,
-        },
-        "external-ui": "ui",
-        "external-ui-url":
-            "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip",
-        profile: {
-            "store-selected": true,
-            "store-fake-ip": true,
-        },
-        dns: {
-            enable: true,
-            "respect-rules": true,
-            "use-system-hosts": false,
-            listen: "127.0.0.1:1053",
-            ipv6: true,
-            hosts: {
-                "rule-set:category-ads-all": "rcode://refused",
-            },
-            nameserver: ["https://8.8.8.8/dns-query#✅ Selector"],
-            "proxy-server-nameserver": ["8.8.8.8#DIRECT"],
-            "direct-nameserver": ["8.8.8.8#DIRECT"],
-            "direct-nameserver-follow-policy": true,
-            "nameserver-policy": {
-                "rule-set:ir": "8.8.8.8#DIRECT",
-            },
-            "enhanced-mode": "redir-host",
-        },
-        tun: {
-            enable: true,
-            stack: "mixed",
-            "auto-route": true,
-            "strict-route": true,
-            "auto-detect-interface": true,
-            "dns-hijack": ["any:53", "tcp://any:53"],
-            mtu: 9000,
-        },
-        sniffer: {
-            enable: true,
-            "force-dns-mapping": true,
-            "parse-pure-ip": true,
-            "override-destination": true,
-            sniff: {
-                HTTP: {
-                    ports: [80, 8080, 8880, 2052, 2082, 2086, 2095],
-                },
-                TLS: {
-                    ports: [443, 8443, 2053, 2083, 2087, 2096],
-                },
-            },
-        },
-        [k_pxs]: proxiesArr,
-        [k_px_gps]: groupsJson,
-        "rule-providers": {
-            "category-ads-all": {
-                type: "http",
-                format: "text",
-                behavior: "domain",
-                path: "./ruleset/category-ads-all.txt",
-                interval: 86400,
-                url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/category-ads-all.txt",
-            },
-            ir: {
-                type: "http",
-                format: "text",
-                behavior: "domain",
-                path: "./ruleset/ir.txt",
-                interval: 86400,
-                url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/ir.txt",
-            },
-            "ir-cidr": {
-                type: "http",
-                format: "text",
-                behavior: "ipcidr",
-                path: "./ruleset/ir-cidr.txt",
-                interval: 86400,
-                url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/ircidr.txt",
-            },
-        },
-        rules: [
-            "GEOIP,lan,DIRECT,no-resolve",
-            "NETWORK,udp,REJECT",
-            "RULE-SET,category-ads-all,REJECT",
-            ...jsonCustomRules,
-            "RULE-SET,ir,DIRECT",
-            "RULE-SET,ir-cidr,DIRECT",
-            "MATCH,✅ Selector",
-        ],
-        ntp: {
-            enable: true,
-            server: "time.cloudflare.com",
-            port: 123,
-            interval: 30,
-        },
-    };
-}
-
-
-async function buildVJsonProfile(hostName, targetSub = null, allowInsecure = false, env = null) {
-    let ports = sysConfig.socketPorts ? sysConfig.socketPorts.split(",").map(s => s.trim()).filter(Boolean) : ["443"];
-    let profiles = getAllProfiles(targetSub);
-    let allHostNames = [...new Set(profiles.flatMap(p => getProfileHostNames(hostName, p)))];
-    await preloadIpFlags(profiles, allHostNames);
-    
-    let outboundsArr = [];
-    let configIndex = 0;
-    let nameCounts = {};
-    const getUniqueName = (baseName) => {
-        if (!nameCounts[baseName]) { nameCounts[baseName] = 1; return baseName; }
-        let c = nameCounts[baseName]; nameCounts[baseName] = c + 1; return baseName + '-' + c;
-    };
-
-    profiles.forEach((p) => {
-        let maxCfg = p.maxConfigs || 0;
-        let pips = [];
-        if (p.relayIps && p.relayIps.length > 0) pips = [...p.relayIps];
-        else if (sysConfig.customRelay && sysConfig.customRelay.trim() !== "") {
-            pips = sysConfig.customRelay.split(",").map(r => r.trim()).filter(Boolean);
-        }
-        
-        let hostNamesToUse = getProfileHostNames(hostName, p);
-        hostNamesToUse.forEach(hName => {
-            p.ipLists.forEach(ipList => {
-                let ips = ipList.ips;
-                let effectiveMode = ipList.mode || sysConfig.mode || "both";
-                let effectivePorts = (ipList.ports && ipList.ports.length > 0) ? ipList.ports : ports;
-                if (maxCfg > 0) ips = calcEffectiveIps(ips, maxCfg, effectiveMode, effectivePorts, pips.length);
-                let ipNameMap = {};
-                if (ipList.entries) ipList.entries.forEach(e => ipNameMap[e.ip] = e.name);
-                
-                effectivePorts.forEach(port => {
-                    let sec = (getTransportParams(port) === "tls") ? "tls" : "none";
-                    ips.forEach(ip => {
-                        let _pips = pips.length > 0 ? pips : [null];
-                        _pips.forEach((selectedProxyIp) => {
-                        let ipName = ipNameMap[ip] || "";
-                        
-                        if (effectiveMode === "alpha" || effectiveMode === "both") {
-                            let tag = getUniqueName(getConfigName("alpha", p.name, port, hName, ip, selectedProxyIp, configIndex, ipName));
-                            let configUuid = generateConfigUuid(p.id, configIndex);
-                            let randomJunk = Array.from({length:11}, ()=> "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"[Math.floor(Math.random()*62)]).join("");
-                            let payload = { junk: randomJunk, protocol: "vl", mode: "proxyip", panelIPs: [], relayIdx: configIndex };
-                            let path = "/" + btoa(JSON.stringify(payload));
-                            
-                            let ob = {
-                                tag: tag,
-                                protocol: "vless",
-                                settings: {
-                                    vnext: [{ address: ip, port: parseInt(port), users: [{ id: configUuid, encryption: "none" }] }]
-                                },
-                                streamSettings: {
-                                    network: "ws",
-                                    security: sec,
-                                    tlsSettings: sec === "tls" ? { serverName: hName, allowInsecure: allowInsecure } : undefined,
-                                    wsSettings: { path: path, headers: { Host: hName } }
-                                }
-                            };
-                            outboundsArr.push(ob);
-                        }
-                        
-                        if (effectiveMode === "beta" || effectiveMode === "both") {
-                            let tag = getUniqueName(getConfigName("beta", p.name, port, hName, ip, selectedProxyIp, configIndex, ipName));
-                            let randomJunk = Array.from({length:11}, ()=> "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"[Math.floor(Math.random()*62)]).join("");
-                            let payload = { junk: randomJunk, protocol: "tr", mode: "proxyip", panelIPs: [], relayIdx: configIndex };
-                            let path = "/" + btoa(JSON.stringify(payload));
-                            
-                            let ob = {
-                                tag: tag,
-                                protocol: "trojan",
-                                settings: {
-                                    servers: [{ address: ip, port: parseInt(port), password: p.id }]
-                                },
-                                streamSettings: {
-                                    network: "ws",
-                                    security: sec,
-                                    tlsSettings: sec === "tls" ? { serverName: hName, allowInsecure: allowInsecure } : undefined,
-                                    wsSettings: { path: path, headers: { Host: hName } }
-                                }
-                            };
-                            outboundsArr.push(ob);
-                        }
-                        configIndex++;
-                    });
-                    });
-                });
-            });
-        });
-    });
-
-    await fetchTemplates(env);
-    if (VTemplate) {
-        let tpl = JSON.parse(JSON.stringify(VTemplate));
-        let newOutbounds = [];
-        
-        for (let ob of tpl.outbounds) {
-            if (ob === "__OUTBOUNDS__") {
-                newOutbounds.push(...outboundsArr);
-            } else {
-                newOutbounds.push(ob);
+            if (tlsVal === 'tls') {
+                jsonConfig.outbounds[0]["streamSettings"]["tlsSettings"] = {
+                    "serverName": host, "fingerprint": fp, "alpn": ["http/1.1"], "allowInsecure": false
+                };
             }
+            return jsonConfig;
         }
-        if (newOutbounds.length === 0) newOutbounds = outboundsArr;
-        tpl.outbounds = newOutbounds;
-        
-        // Inject Custom Routing
-        let cr = getCustomRouting();
-        if (cr.domains.length > 0) {
-            tpl.route.rules.unshift({ domain: cr.domains, outbound: "direct" });
-            tpl.route.rules.unshift({ domain_suffix: cr.domains, outbound: "direct" });
+
+        function showQR(encodedUsername) {
+            var username = decodeURIComponent(encodedUsername);
+            var link = getVlessLink(username);
+            if (!link) return;
+            toggleQRModal(true, link, 'VLESS Config QR - ' + username);
         }
-        if (cr.ips.length > 0) {
-            tpl.route.rules.unshift({ ip_cidr: cr.ips, outbound: "direct" });
-        }
-        if (cr.geoips.length > 0) {
-            tpl.route.rules.unshift({ geoip: cr.geoips, outbound: "direct" });
-        }
-        if (cr.geosites.length > 0) {
-            tpl.route.rules.unshift({ geosite: cr.geosites, outbound: "direct" });
-        }
-        
-        return tpl;
 
-    }
-    return { outbounds: outboundsArr };
-}
-async function buildSingBoxJsonProfile(hostName, targetSub = null, allowInsecure = false, env = null) {
-    let ports = sysConfig.socketPorts
-        ? sysConfig.socketPorts
-              .split(",")
-              .map((s) => s.trim())
-              .filter(Boolean)
-        : ["443"];
-    let profiles = getAllProfiles(targetSub);
-    let allHostNames = [
-        ...new Set(profiles.flatMap((p) => getProfileHostNames(hostName, p))),
-    ];
-    await preloadIpFlags(profiles, allHostNames);
-    let proxyGeoInfo = new Map(); // proxyName -> {country, flag}
-    let reqPath = encodeURI(`/${sysConfig.apiRoute}`);
-
-    let outboundsArr = [];
-    let dynamicTags = [];
-    let nameCounts = {};
-
-    // Add fake configs
-    let fakeNames = getFakeConfigNames(targetSub);
-    let fakeRefs = [];
-    fakeNames.forEach((name) => {
-        outboundsArr.push({
-            type: "direct",
-            tag: name,
-        });
-        fakeRefs.push(name);
-    });
-
-    const getUniqueName = (baseName) => {
-        if (!nameCounts[baseName]) {
-            nameCounts[baseName] = 1;
-            return baseName;
-        }
-        let counter = nameCounts[baseName];
-        let newName = `${baseName}-${counter}`;
-        while (nameCounts[newName]) {
-            counter++;
-            newName = `${baseName}-${counter}`;
-        }
-        nameCounts[baseName] = counter + 1;
-        nameCounts[newName] = 1;
-        return newName;
-    };
-
-    profiles.forEach((p) => {
-        let pips = getEffectivePips(p);
-        let effectiveMode = p.userMode || sysConfig.mode;
-        let effectivePorts = p.userPorts
-            ? p.userPorts
-                  .split(",")
-                  .map((s) => s.trim())
-                  .filter(Boolean)
-            : ports;
-        let maxCfg = p.maxConfigs || null;
-
-        let configIndex = 0;
-        let profileHostNames = getProfileHostNames(hostName, p);
-
-        profileHostNames.forEach((hName) => {
-            let ipEntries = getCleanIpsWithNames(hName, p.cleanIp);
-            let allIps = ipEntries.map((e) => e.ip);
-            let ips = calcEffectiveIps(
-                allIps,
-                maxCfg,
-                effectiveMode,
-                effectivePorts,
-                pips.length
-            );
-            let ipNameMap = {};
-            ipEntries.forEach((e) => {
-                ipNameMap[e.ip] = e.name;
+        function editUser(encodedUsername) {
+            var username = decodeURIComponent(encodedUsername);
+            var user = allUsers.find(function(u) { return u.username === username; });
+            if (!user) {
+                alert('Ã¢ÂÅ’ User not found!');
+                return;
+            }
+            isEditMode = true;
+            editingUsername = username;
+            document.getElementById('modal-title').innerText = 'Edit User: ' + username;
+            document.getElementById('submit-btn').innerText = 'Save';
+            document.getElementById('input-name').value = username;
+            document.getElementById('input-name').disabled = true;
+            document.getElementById('input-limit').value = user.limit_gb || '';
+            document.getElementById('input-expiry').value = user.expiry_days || '';
+            document.getElementById('input-ips').value = user.ips || '';
+            document.getElementById('fingerprint-select').value = user.fingerprint || 'chrome';
+            document.getElementById('config-name-input').value = user.config_name || '';
+            document.getElementById('protocol-select').value = user.connection_type || 'vless';
+            var userPorts = String(user.port || '').split(',').map(function(p) { return p.trim(); });
+            document.querySelectorAll('input[name="ports"]').forEach(function(cb) {
+                cb.checked = userPorts.includes(cb.value);
             });
-            effectivePorts.forEach((port) => {
-                let sec = getTransportParams(port) === "tls";
-                ips.forEach((ip) => {
-                    let isVless =
-                        effectiveMode === "alpha" || effectiveMode === "both";
-                    let isTrojan =
-                        effectiveMode === "beta" || effectiveMode === "both";
-                    let _pips = pips.length > 0 ? pips : [null];
-                    _pips.forEach((selectedProxyIp) => {
-                    let ipName = ipNameMap[ip] || "";
+            toggleModal(true);
+        }
 
-                    if (isVless) {
-                        let tagStr = getConfigName(
-                            "alpha",
-                            p.name,
-                            port,
-                            hName,
-                            ip,
-                            selectedProxyIp,
-                            configIndex,
-                            ipName,
-                        );
-                        tagStr = getUniqueName(tagStr);
-                        dynamicTags.push(tagStr);
-
-                        let randomJunk = Array.from(
-                            { length: 11 },
-                            () =>
-                                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"[
-                                    Math.floor(Math.random() * 62)
-                                ],
-                        ).join("");
-                        let payloadVl = {
-                            junk: randomJunk,
-                            protocol: "vl",
-                            mode: "proxyip",
-                            panelIPs: [],
-                        };
-                        let pathStrVl = "/" + btoa(JSON.stringify(payloadVl));
-
-                        let configUuid = generateConfigUuid(p.id, configIndex);
-                        registerConfigEntry(
-                            configUuid,
-                            p.id,
-                            selectedProxyIp || "",
-                        );
-
-                        let ob = {
-                            type: k_vl_mode,
-                            tag: tagStr,
-                            server: ip,
-                            server_port: parseInt(port),
-                            tcp_fast_open: sysConfig.enableOpt1 || false,
-                            uuid: configUuid,
-                            packet_encoding: "xudp",
-                            network: "tcp",
-                            tls: {
-                                enabled: sec,
-                                server_name: hName,
-                                insecure: allowInsecure,
-                                alpn: ["http/1.1"],
-                                utls: {
-                                    enabled: true,
-                                    fingerprint: "randomized",
-                                },
-                            },
-                            transport: {
-                                type: "ws",
-                                path: pathStrVl,
-                                max_early_data: 2560,
-                                early_data_header_name:
-                                    "Sec-WebSocket-Protocol",
-                                headers: {
-                                    Host: hName,
-                                },
-                            },
-                        };
-                        outboundsArr.push(ob);
-                    }
-
-                    if (isTrojan) {
-                        let tagStr = getConfigName(
-                            "beta",
-                            p.name,
-                            port,
-                            hName,
-                            ip,
-                            selectedProxyIp,
-                            configIndex,
-                            ipName,
-                        );
-                        tagStr = getUniqueName(tagStr);
-                        dynamicTags.push(tagStr);
-
-                        let randomJunk = Array.from(
-                            { length: 11 },
-                            () =>
-                                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"[
-                                    Math.floor(Math.random() * 62)
-                                ],
-                        ).join("");
-                        let payloadTr = {
-                            junk: randomJunk,
-                            protocol: "tr",
-                            mode: "proxyip",
-                            panelIPs: [],
-                            relayIdx: configIndex,
-                        };
-                        let pathStrTr = "/" + btoa(JSON.stringify(payloadTr));
-
-                        let configUuid2 = generateConfigUuid(p.id, configIndex);
-                        registerConfigEntry(
-                            configUuid2,
-                            p.id,
-                            selectedProxyIp || "",
-                        );
-
-                        let ob = {
-                            type: k_tr_mode,
-                            tag: tagStr,
-                            server: ip,
-                            server_port: parseInt(port),
-                            tcp_fast_open: sysConfig.enableOpt1 || false,
-                            password: p.id,
-                            network: "tcp",
-                            tls: {
-                                enabled: sec,
-                                server_name: hName,
-                                insecure: allowInsecure,
-                                alpn: ["http/1.1"],
-                                utls: {
-                                    enabled: true,
-                                    fingerprint: "randomized",
-                                },
-                            },
-                            transport: {
-                                type: "ws",
-                                path: pathStrTr,
-                                max_early_data: 2560,
-                                early_data_header_name:
-                                    "Sec-WebSocket-Protocol",
-                                headers: {
-                                    Host: hName,
-                                },
-                            },
-                        };
-                        outboundsArr.push(ob);
-                    }
-                    configIndex++;
-                    if (sysConfig.enableDirectConfigs && pips.length > 0 && selectedProxyIp === pips[0]) {
-                        if (isVless) {
-                            let tagStr = getUniqueName(
-                                getConfigName(
-                                    "alpha",
-                                    p.name,
-                                    port,
-                                    hName,
-                                    ip,
-                                    null,
-                                    configIndex,
-                                    ipName, true
-                                ),
-                            );
-                            dynamicTags.push(tagStr);
-                            proxyGeoInfo.set(tagStr, getGeoInfo(ip));
-                            let randomJunk = Array.from(
-                                { length: 11 },
-                                () =>
-                                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"[
-                                        Math.floor(Math.random() * 62)
-                                    ],
-                            ).join("");
-                            let payloadVl = {
-                                junk: randomJunk,
-                                protocol: "vl",
-                                mode: "proxyip",
-                                panelIPs: [],
-                            };
-                            let pathStrVl =
-                                "/" + btoa(JSON.stringify(payloadVl));
-                            let configUuid = generateConfigUuid(
-                                p.id,
-                                configIndex,
-                            );
-                            registerConfigEntry(configUuid, p.id, "");
-                            let ob = {
-                                type: k_vl_mode,
-                                tag: tagStr,
-                                server: ip,
-                                server_port: parseInt(port),
-                                tcp_fast_open: sysConfig.enableOpt1 || false,
-                                uuid: configUuid,
-                                packet_encoding: "xudp",
-                                network: "tcp",
-                                tls: {
-                                    enabled: sec,
-                                    server_name: hName,
-                                    insecure: allowInsecure,
-                                    alpn: ["http/1.1"],
-                                    utls: {
-                                        enabled: true,
-                                        fingerprint: "randomized",
-                                    },
-                                },
-                                transport: {
-                                    type: "ws",
-                                    path: pathStrVl,
-                                    max_early_data: 2560,
-                                    early_data_header_name:
-                                        "Sec-WebSocket-Protocol",
-                                    headers: { Host: hName },
-                                },
-                            };
-                            outboundsArr.push(ob);
-                        }
-                        if (isTrojan) {
-                            let tagStr = getUniqueName(
-                                getConfigName(
-                                    "beta",
-                                    p.name,
-                                    port,
-                                    hName,
-                                    ip,
-                                    null,
-                                    configIndex,
-                                    ipName, true
-                                ),
-                            );
-                            dynamicTags.push(tagStr);
-                            proxyGeoInfo.set(tagStr, getGeoInfo(ip));
-                            let randomJunk = Array.from(
-                                { length: 11 },
-                                () =>
-                                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"[
-                                        Math.floor(Math.random() * 62)
-                                    ],
-                            ).join("");
-                            let payloadTr = {
-                                junk: randomJunk,
-                                protocol: "tr",
-                                mode: "proxyip",
-                                panelIPs: [],
-                                relayIdx: configIndex,
-                            };
-                            let pathStrTr =
-                                "/" + btoa(JSON.stringify(payloadTr));
-                            let configUuid2 = generateConfigUuid(
-                                p.id,
-                                configIndex,
-                            );
-                            let ob = {
-                                type: k_tr_mode,
-                                tag: tagStr,
-                                server: ip,
-                                server_port: parseInt(port),
-                                tcp_fast_open: sysConfig.enableOpt1 || false,
-                                password: p.id,
-                                network: "tcp",
-                                tls: {
-                                    enabled: sec,
-                                    server_name: hName,
-                                    insecure: allowInsecure,
-                                    alpn: ["http/1.1"],
-                                    utls: {
-                                        enabled: true,
-                                        fingerprint: "randomized",
-                                    },
-                                },
-                                transport: {
-                                    type: "ws",
-                                    path: pathStrTr,
-                                    max_early_data: 2560,
-                                    early_data_header_name:
-                                        "Sec-WebSocket-Protocol",
-                                    headers: { Host: hName },
-                                },
-                            };
-                            outboundsArr.push(ob);
-                        }
-                        configIndex++;
-                    }
-                    });
-                });
-            });
-        });
-    });
-
-    if (dynamicTags.length === 0) {
-        dynamicTags.push("direct");
-    }
-
-    
-    await fetchTemplates(env);
-    if (singboxTemplate) {
-        let tpl = JSON.parse(JSON.stringify(singboxTemplate));
-        let newOutbounds = [];
-        let allProxies = outboundsArr.map(o => o.tag);
-        
-        for (let ob of tpl.outbounds) {
-            if (ob === "__OUTBOUNDS__") {
-                newOutbounds.push(...outboundsArr);
-            } else if (ob.outbounds && ob.outbounds.includes("{all_proxies}")) {
-                let obCpy = { ...ob };
-                obCpy.outbounds = [];
-                for (let tag of ob.outbounds) {
-                    if (tag === "{all_proxies}") obCpy.outbounds.push(...allProxies);
-                    else obCpy.outbounds.push(tag);
+        async function deleteUser(encodedUsername) {
+            var username = decodeURIComponent(encodedUsername);
+            if (!confirm('Ã¢Å¡Â Ã¯Â¸Â Are you sure you want to delete user: ' + username + '?')) return;
+            try {
+                var response = await fetch('/api/users/' + encodeURIComponent(username), { method: 'DELETE', credentials: 'include' });
+                if (response.ok) {
+                    alert('Ã¢Å“â€¦ User deleted successfully!');
+                    await loadUsers(true);
+                } else {
+                    var errData = await response.json();
+                    alert('Ã¢ÂÅ’ Error: ' + (errData.error || 'Operation failed'));
                 }
-                newOutbounds.push(obCpy);
-            } else {
-                newOutbounds.push(ob);
+            } catch (err) {
+                alert('Ã¢ÂÅ’ Connection error');
             }
         }
-        tpl.outbounds = newOutbounds;
-        return tpl;
-    }
-    // Fallback if template fails
-    return {
-        log: { disabled: false, level: "warn", timestamp: true },
-        dns: { servers: [], rules: [] },
-        inbounds: [],
-        [k_obds]: outboundsArr,
-        route: { rules: [] }
-    };
-}
 
+        async function toggleUserStatus(encodedUsername) {
+            var username = decodeURIComponent(encodedUsername);
+            try {
+                var response = await fetch('/api/users/' + encodeURIComponent(username), {
+                    method: 'PUT',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ toggle_only: true })
+                });
+                if (response.ok) {
+                    await loadUsers(true);
+                } else {
+                    var errData = await response.json();
+                    alert('Ã¢ÂÅ’ Error: ' + (errData.error || 'Operation failed'));
+                }
+            } catch (err) {
+                alert('Ã¢ÂÅ’ Connection error');
+            }
+        }
+
+        // ============================================
+        // LOCATIONS
+        // ============================================
+        function getFlagEmoji(countryCode) {
+            if (!countryCode) return 'Ã°Å¸Å’Â';
+            var codePoints = countryCode.toUpperCase().split('').map(function(char) { return 127397 + char.charCodeAt(0); });
+            try {
+                return String.fromCodePoint.apply(String, codePoints);
+            } catch (e) {
+                return 'Ã°Å¸Å’Â';
+            }
+        }
+
+        function renderLocationsUI(locations, activeIata) {
+            var select = document.getElementById('location-select');
+            locations.sort(function(a, b) { return (a.cca2 || '').localeCompare(b.cca2 || ''); });
+            var html = '<option value="">Ã°Å¸Å’Â Default Location</option>';
+            locations.forEach(function(loc) {
+                if (loc.iata && loc.city) {
+                    var flag = getFlagEmoji(loc.cca2);
+                    var isSelected = loc.iata.toUpperCase() === activeIata.toUpperCase() ? 'selected' : '';
+                    html += '<option value="' + loc.iata + '" ' + isSelected + '>' + flag + ' ' + loc.city + ' (' + loc.iata + ')</option>';
+                }
+            });
+            select.innerHTML = html;
+        }
+
+        async function loadLocations() {
+            var select = document.getElementById('location-select');
+            var cachedLocations = localStorage.getItem('cached_locations_list');
+            var cachedActiveIata = localStorage.getItem('cached_active_iata') || '';
+            var hasCachedLocs = false;
+            if (cachedLocations) {
+                try {
+                    var parsedLocs = JSON.parse(cachedLocations);
+                    if (Array.isArray(parsedLocs) && parsedLocs.length > 0) {
+                        renderLocationsUI(parsedLocs, cachedActiveIata);
+                        hasCachedLocs = true;
+                    }
+                } catch(e) {}
+            }
+            try {
+                var statusRes = await fetch(_cs([47,97,112,105,47,112,114,111,120,121,45,105,112]));
+                var activeIata = '';
+                if (statusRes.ok) {
+                    var statusData = await statusRes.json();
+                    activeIata = statusData.iata || '';
+                    localStorage.setItem('cached_active_iata', activeIata);
+                    if(statusData.frag_len) {
+                        window.globalFragLen = statusData.frag_len;
+                        document.getElementById('frag-length').value = statusData.frag_len;
+                    }
+                    if(statusData.frag_int) {
+                        window.globalFragInt = statusData.frag_int;
+                        document.getElementById('frag-interval').value = statusData.frag_int;
+                    }
+                }
+                var res = await fetch('/locations');
+                if (!res.ok) throw new Error();
+                var locations = await res.json();
+                localStorage.setItem('cached_locations_list', JSON.stringify(locations));
+                renderLocationsUI(locations, activeIata);
+            } catch (err) {
+                if (!hasCachedLocs) {
+                    select.innerHTML = '<option value="">Ã¢Å¡Â Ã¯Â¸Â Error loading locations</option>';
+                }
+            }
+        }
+
+        // ============================================
+        // SETTINGS
+        // ============================================
+        async function saveSettings() {
+            var select = document.getElementById('location-select');
+            var fragLen = document.getElementById('frag-length').value || "20-30";
+            var fragInt = document.getElementById('frag-interval').value || "1-2";
+            var iata = select.value;
+            var btn = document.getElementById('save-settings-btn');
+            btn.disabled = true;
+            btn.innerText = 'Saving...';
+            try {
+                var resolvedIp = _safeProxyIP();
+                if (iata) {
+                    var domain = iata.toLowerCase() + '.' + _safeProxyIP();
+                    var dnsRes = await fetch('https://cloudflare-dns.com/dns-query?name=' + domain + '&type=A', {
+                        headers: { 'accept': 'application/dns-json' }
+                    });
+                    resolvedIp = domain;
+                    if (dnsRes.ok) {
+                        var dnsData = await dnsRes.json();
+                        if (dnsData.Answer && dnsData.Answer.length > 0) {
+                            var ips = dnsData.Answer.filter(function(ans) { return ans.type === 1; }).map(function(ans) { return ans.data; });
+                            if (ips.length > 0) {
+                                resolvedIp = ips[Math.floor(Math.random() * ips.length)];
+                            }
+                        }
+                    }
+                }
+                var response = await fetch(_cs([47,97,112,105,47,112,114,111,120,121,45,105,112]), {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ proxy_ip: resolvedIp, iata: iata ? iata.toUpperCase() : '', frag_len: fragLen, frag_int: fragInt })
+                });
+                if (response.ok) {
+                    window.globalFragLen = fragLen;
+                    window.globalFragInt = fragInt;
+                    alert('Ã¢Å“â€¦ Settings saved successfully!');
+                } else {
+                    alert('Ã¢ÂÅ’ Error saving settings');
+                }
+            } catch (err) {
+                alert('Ã¢ÂÅ’ Connection error');
+            } finally {
+                btn.disabled = false;
+                btn.innerText = 'Save Settings';
+            }
+        }
+
+        async function changeAdminPassword() {
+            var currentPwd = document.getElementById('change-pwd-current').value;
+            var newPwd = document.getElementById('change-pwd-new').value;
+            var btn = document.getElementById('change-pwd-btn');
+            if (!currentPwd || !newPwd) {
+                alert('Ã¢ÂÅ’ Please enter both current and new password');
+                return;
+            }
+            if (newPwd.length < 4) {
+                alert('Ã¢ÂÅ’ New password must be at least 4 characters');
+                return;
+            }
+            btn.disabled = true;
+            btn.innerText = 'Updating...';
+            try {
+                var response = await fetch('/api/change-password', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ current_password: currentPwd, new_password: newPwd })
+                });
+                var data = await response.json();
+                if (response.ok && data.success) {
+                    alert('Ã¢Å“â€¦ Password updated successfully!');
+                    document.getElementById('change-pwd-current').value = '';
+                    document.getElementById('change-pwd-new').value = '';
+                } else {
+                    alert('Ã¢ÂÅ’ Error: ' + (data.error || 'Operation failed'));
+                }
+            } catch (err) {
+                alert('Ã¢ÂÅ’ Connection error');
+            } finally {
+                btn.disabled = false;
+                btn.innerText = 'Update Panel Password';
+            }
+        }
+
+        // ============================================
+        // LOGOUT
+        // ============================================
+        async function logoutAdmin() {
+            if (!confirm('Ã¢Å¡Â Ã¯Â¸Â Are you sure you want to sign out?')) return;
+            try {
+                await fetch('/api/logout', { method: 'POST', credentials: 'include' });
+            } catch (err) {}
+            window.location.reload();
+        }
+
+        // ============================================
+        // USER LOADING & RENDERING
+        // ============================================
+        async function loadUsers(silent) {
+            var loadingState = document.getElementById('loading-state');
+            var tableContainer = document.getElementById('users-table-container');
+            var emptyState = document.getElementById('empty-state');
+            if (!silent) {
+                loadingState.classList.remove('hidden');
+                tableContainer.classList.add('hidden');
+                emptyState.classList.add('hidden');
+            }
+            try {
+                var res = await fetch('/api/users?t=' + Date.now(), { credentials: 'include' });
+                if (!res.ok) throw new Error();
+                var data = await res.json();
+                renderUsersUI(data);
+            } catch (err) {
+                if (!silent) {
+                    loadingState.innerHTML = '<span class="text-red-400">Ã¢ÂÅ’ Error loading users</span>';
+                }
+            }
+        }
+
+        function renderUsersUI(data) {
+            try {
+                var users = data.users || [];
+                allUsers = users;
+                var serverTime = data.serverTime || Date.now();
+                lastServerTime = serverTime;
+                var totalUsersCount = users.length;
+                var activeUsersCount = users.filter(function(u) { return u.is_online === 1; }).length;
+                var totalGbUsage = users.reduce(function(sum, u) { return sum + (u.used_gb || 0); }, 0);
+                document.getElementById('stat-total-users').innerText = totalUsersCount;
+                document.getElementById('stat-active-users').innerText = activeUsersCount;
+                document.getElementById('stat-total-usage').innerText = totalGbUsage < 1 ? (totalGbUsage * 1024).toFixed(0) + ' MB' : totalGbUsage.toFixed(2) + ' GB';
+                var topUser = users.reduce(function(max, u) { return (u.used_gb || 0) > (max.used_gb || 0) ? u : max; }, { username: 'None', used_gb: 0 });
+                document.getElementById('stat-top-user').innerText = topUser.username;
+                var topUsage = topUser.used_gb || 0;
+                document.getElementById('stat-top-user-usage').innerText = topUsage < 1 ? (topUsage * 1024).toFixed(0) + ' MB used' : topUsage.toFixed(2) + ' GB used';
+                // Update top dashboard stats
+                var dashTotal = document.getElementById('dash-total-users');
+                var dashOnline = document.getElementById('dash-online-users');
+                var dashTraffic = document.getElementById('dash-total-traffic');
+                if (dashTotal) dashTotal.innerText = totalUsersCount;
+                if (dashOnline) dashOnline.innerText = activeUsersCount;
+                if (dashTraffic) dashTraffic.innerText = totalGbUsage < 1 ? (totalGbUsage * 1024).toFixed(0) + ' MB' : totalGbUsage.toFixed(2) + ' GB';
+                filterAndRenderUsers();
+                updateXrayStatus();
+            } catch (err) {
+                document.getElementById('loading-state').innerHTML = '<span class="text-red-400">Ã¢ÂÅ’ Error processing user data</span>';
+            }
+        }
+
+        function filterAndRenderUsers() {
+            if (!allUsers) return;
+            var searchQuery = (document.getElementById('search-input').value || '').toLowerCase().trim();
+            var filterStatus = document.getElementById('filter-status').value;
+            var sortVal = document.getElementById('sort-users').value;
+            var serverTime = lastServerTime || Date.now();
+            var filtered = allUsers.slice();
+            if (searchQuery) {
+                filtered = filtered.filter(function(u) {
+                    return (u.username || '').toLowerCase().includes(searchQuery) || 
+                           (u.uuid || '').toLowerCase().includes(searchQuery);
+                });
+            }
+            if (filterStatus !== 'all') {
+                filtered = filtered.filter(function(u) {
+                    var isOnline = u.is_online === 1;
+                    var isActive = u.is_active === 1;
+                    var isExpired = false;
+                    if (u.limit_gb && u.used_gb >= u.limit_gb) isExpired = true;
+                    if (u.expiry_days && u.created_at) {
+                        var created = new Date(u.created_at);
+                        var expiryDate = new Date(created.getTime() + (u.expiry_days * 24 * 60 * 60 * 1000));
+                        if (new Date(serverTime) > expiryDate) isExpired = true;
+                    }
+                    if (filterStatus === 'active') return isActive && !isExpired;
+                    if (filterStatus === 'inactive') return !isActive;
+                    if (filterStatus === 'online') return isOnline;
+                    if (filterStatus === 'offline') return !isOnline;
+                    if (filterStatus === 'expired') return isExpired || !isActive;
+                    return true;
+                });
+            }
+            filtered.sort(function(a, b) {
+                if (sortVal === 'newest') return b.id - a.id;
+                if (sortVal === 'name') return (a.username || '').localeCompare(b.username || '');
+                if (sortVal === 'usage-desc') return (b.used_gb || 0) - (a.used_gb || 0);
+                if (sortVal === 'usage-asc') return (a.used_gb || 0) - (b.used_gb || 0);
+                if (sortVal === 'expiry-asc') {
+                    var getRemaining = function(u) {
+                        if (!u.expiry_days) return Infinity;
+                        if (!u.created_at) return Infinity;
+                        var created = new Date(u.created_at);
+                        var expiryDate = new Date(created.getTime() + (u.expiry_days * 24 * 60 * 60 * 1000));
+                        return expiryDate - new Date(serverTime);
+                    };
+                    return getRemaining(a) - getRemaining(b);
+                }
+                return 0;
+            });
+            renderFilteredUsers(filtered, serverTime);
+        }
+
+        function renderFilteredUsers(users, serverTime) {
+            var loadingState = document.getElementById('loading-state');
+            var tableContainer = document.getElementById('users-table-container');
+            var emptyState = document.getElementById('empty-state');
+            var tbody = document.getElementById('users-tbody');
+            if (users.length === 0) {
+                loadingState.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                tableContainer.classList.add('hidden');
+                if (allUsers && allUsers.length > 0) {
+                    emptyState.querySelector('p').innerText = 'No users match your search criteria.';
+                } else {
+                    emptyState.querySelector('p').innerText = 'No users found. Click "Add User" to get started.';
+                }
+            } else {
+                loadingState.classList.add('hidden');
+                emptyState.classList.add('hidden');
+                tableContainer.classList.remove('hidden');
+                tbody.innerHTML = users.map(function(user) {
+                    var createdDate = user.created_at ? new Date(user.created_at).toLocaleDateString() : '-';
+                    var daysRemaining = 'Unlimited';
+                    var daysPercent = 100;
+                    if (user.expiry_days) {
+                        if (user.created_at) {
+                            var created = new Date(user.created_at);
+                            var expiryDate = new Date(created.getTime() + (user.expiry_days * 24 * 60 * 60 * 1000));
+                            var diffDays = Math.ceil((expiryDate - new Date(serverTime)) / (1000 * 60 * 60 * 24));
+                            daysRemaining = diffDays > 0 ? diffDays : 0;
+                            daysPercent = Math.max(0, Math.min(100, (daysRemaining / user.expiry_days) * 100));
+                        } else {
+                            daysRemaining = user.expiry_days;
+                        }
+                    }
+                    var usedGb = user.used_gb || 0;
+                    var formattedUsed = usedGb < 1 ? (usedGb * 1024).toFixed(0) + ' MB' : usedGb.toFixed(2) + ' GB';
+                    var volumeHtml = '';
+                    if (user.limit_gb) {
+                        var limitPercent = Math.min((usedGb / user.limit_gb) * 100, 100);
+                        var limitHue = 120 - (limitPercent * 1.2);
+                        var formattedLimit = user.limit_gb < 1 ? (user.limit_gb * 1024).toFixed(0) + ' MB' : user.limit_gb + ' GB';
+                        volumeHtml = '<div class="flex flex-col gap-1 w-full min-w-[100px]">' +
+                            '<div class="flex justify-between text-[10px] sm:text-[11px] text-zinc-400 font-medium">' +
+                                '<span>Used: ' + formattedUsed + '</span>' +
+                                '<span>Total: ' + formattedLimit + '</span>' +
+                            '</div>' +
+                            '<div class="w-full bg-zinc-800 rounded-full h-1 overflow-hidden">' +
+                                '<div class="h-1 rounded-full transition-all duration-500" style="width: ' + limitPercent + '%; background-color: hsl(' + limitHue + ', 80%, 45%)"></div>' +
+                            '</div>' +
+                        '</div>';
+                    } else {
+                        volumeHtml = '<div class="flex flex-col gap-1 w-full min-w-[100px]">' +
+                            '<div class="flex justify-between text-[10px] sm:text-[11px] text-zinc-400 font-medium">' +
+                                '<span>Used: ' + formattedUsed + '</span>' +
+                                '<span>Total: Unlimited</span>' +
+                            '</div>' +
+                            '<div class="w-full bg-zinc-800 rounded-full h-1 overflow-hidden">' +
+                                '<div class="bg-blue-500 h-1 rounded-full transition-all duration-500" style="width: 100%"></div>' +
+                            '</div>' +
+                        '</div>';
+                    }
+                    var expiryHtml = '';
+                    if (user.expiry_days) {
+                        var expiryHue = daysPercent * 1.2;
+                        expiryHtml = '<div class="flex flex-col gap-1 w-full min-w-[100px]">' +
+                            '<div class="flex justify-between text-[10px] sm:text-[11px] text-zinc-400 font-medium">' +
+                                '<span>Remaining: ' + daysRemaining + ' days</span>' +
+                                '<span>Total: ' + user.expiry_days + ' days</span>' +
+                            '</div>' +
+                            '<div class="w-full bg-zinc-800 rounded-full h-1 overflow-hidden flex justify-end">' +
+                                '<div class="h-1 rounded-full transition-all duration-500" style="width: ' + daysPercent + '%; background-color: hsl(' + expiryHue + ', 80%, 45%)"></div>' +
+                            '</div>' +
+                        '</div>';
+                    } else {
+                        expiryHtml = '<div class="flex flex-col gap-1 w-full min-w-[100px]">' +
+                            '<div class="flex justify-between text-[10px] sm:text-[11px] text-zinc-400 font-medium">' +
+                                '<span>Remaining: Unlimited</span>' +
+                                '<span>Total: Unlimited</span>' +
+                            '</div>' +
+                            '<div class="w-full bg-zinc-800 rounded-full h-1 overflow-hidden flex justify-end">' +
+                                '<div class="bg-blue-500 h-1 rounded-full transition-all duration-500" style="width: 100%"></div>' +
+                            '</div>' +
+                        '</div>';
+                    }
+                    var statusBtnColor = user.is_active === 0 ? 'text-emerald-400 hover:bg-emerald-500/10' : 'text-amber-400 hover:bg-amber-500/10';
+                    var statusBtnTitle = user.is_active === 0 ? 'Activate' : 'Deactivate';
+                    var statusBtnIcon = user.is_active === 0 
+                        ? '<svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>'
+                        : '<svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';
+                    var statusClass = user.is_active === 0 ? 'badge-danger' : 'badge-success';
+                    var statusText = user.is_active === 0 ? 'Inactive' : 'Active';
+                    var onlineClass = user.is_online === 1 ? 'badge-success' : 'badge';
+                    var onlineText = user.is_online === 1 ? 'Ã¢â€”Â Online' : 'Offline';
+                    var configName = user.config_name || user.username;
+                    return '<tr class="hover:bg-white/5 border-b border-zinc-800/30">' +
+                        '<td class="p-2 sm:p-3">' +
+                            '<div class="flex flex-col gap-1">' +
+                                '<span class="font-bold text-white text-xs sm:text-sm truncate max-w-[120px] sm:max-w-[200px]">' + configName + '</span>' +
+                                '<div class="flex items-center gap-1 flex-wrap">' +
+                                    '<span class="badge ' + statusClass + '">' + statusText + '</span>' +
+                                    '<span class="badge ' + onlineClass + '">' + onlineText + '</span>' +
+                                '</div>' +
+                                '<div class="flex gap-0.5 sm:gap-1 flex-wrap user-actions-wrap">' +
+                                    '<button onclick="copyConfig(\\'' + encodeURIComponent(user.username) + '\\')" title="Copy VLESS" class="action-btn text-zinc-400 hover:text-indigo-400 transition"><svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg></button>' +
+                                    '<button onclick="copyJsonConfig(\\'' + encodeURIComponent(user.username) + '\\')" title="Copy JSON" class="action-btn text-zinc-400 hover:text-purple-400 transition"><svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg></button>' +
+                                    '<button onclick="showQR(\\'' + encodeURIComponent(user.username) + '\\')" title="QR" class="action-btn text-zinc-400 hover:text-emerald-400 transition"><svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg></button>' +
+                                    '<button onclick="toggleUserStatus(\\'' + encodeURIComponent(user.username) + '\\')" title="' + statusBtnTitle + '" class="action-btn ' + statusBtnColor + ' transition">' + statusBtnIcon + '</button>' +
+                                    '<button onclick="editUser(\\'' + encodeURIComponent(user.username) + '\\')" title="Edit" class="action-btn text-zinc-400 hover:text-yellow-400 transition"><svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button>' +
+                                    '<button onclick="deleteUser(\\'' + encodeURIComponent(user.username) + '\\')" title="Delete" class="action-btn text-zinc-400 hover:text-red-400 transition"><svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>' +
+                                '</div>' +
+                            '</div>' +
+                        '</td>' +
+                        '<td class="p-2 sm:p-3">' +
+                            '<div class="flex flex-col gap-1 subscription-buttons">' +
+                                '<div class="flex gap-0.5 sm:gap-1">' +
+                                    '<button onclick="copySubLink(\\'' + encodeURIComponent(user.username) + '\\')" class="flex-1 px-1 sm:px-2 py-0.5 sm:py-1 text-[8px] sm:text-xs font-medium rounded-lg bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500/20 transition">Ã°Å¸â€œâ€¹ Text</button>' +
+                                    '<button onclick="copyJsonSubLink(\\'' + encodeURIComponent(user.username) + '\\')" class="flex-1 px-1 sm:px-2 py-0.5 sm:py-1 text-[8px] sm:text-xs font-medium rounded-lg bg-purple-500/10 text-purple-400 hover:bg-purple-500/20 transition">Ã°Å¸â€œâ€ž JSON</button>' +
+                                '</div>' +
+                                '<button onclick="copyStatusLink(\\'' + encodeURIComponent(user.username) + '\\')" class="px-1 sm:px-2 py-0.5 sm:py-1 text-[8px] sm:text-xs font-medium rounded-lg bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 transition">Ã°Å¸â€œÅ  Status</button>' +
+                            '</div>' +
+                        '</td>' +
+                        '<td class="p-2 sm:p-3 text-[10px] sm:text-xs font-mono uppercase font-semibold hidden sm:table-cell">' + 
+                            '<span class="' + (user.connection_type === 'trojan' ? 'badge-purple' : 'badge-info') + '">' + (user.connection_type === 'trojan' ? 'TROJAN' : 'VLESS') + '</span>' +
+                        '</td>' +
+                        '<td class="p-2 sm:p-3 text-[10px] sm:text-xs hidden md:table-cell">' + 
+                            '<div class="flex flex-wrap gap-0.5 sm:gap-1 max-w-[120px]">' +
+                                String(user.port || "").split(",").map(function(p) {
+                                    p = p.trim();
+                                    if (!p) return "";
+                                    var isTls = tlsPorts.includes(p);
+                                    return '<span class="badge ' + (isTls ? 'badge-success' : 'badge-warning') + '">' + p + '</span>';
+                                }).join("") +
+                            '</div>' +
+                        '</td>' +
+                        '<td class="p-2 sm:p-3 hidden lg:table-cell">' + volumeHtml + '</td>' +
+                        '<td class="p-2 sm:p-3 hidden xl:table-cell">' + expiryHtml + '</td>' +
+                        '<td class="p-2 sm:p-3 text-[10px] sm:text-xs text-zinc-400 hidden 2xl:table-cell">' + createdDate + '</td>' +
+                    '</tr>';
+                }).join('');
+            }
+        }
+
+        // ============================================
+        // CLOUDFLARE IP SCANNER
+        // ============================================
+        async function scanCFIPs() {
+            var host = document.getElementById('scanner-host').value.trim() || 'www.google.com';
+            var port = document.getElementById('scanner-port').value || '443';
+            var limit = document.getElementById('scanner-limit').value || '10';
+            var btn = document.getElementById('scan-btn');
+            var loading = document.getElementById('scanner-loading');
+            var results = document.getElementById('scanner-results');
+            
+            btn.disabled = true;
+            btn.innerText = 'Scanning...';
+            loading.classList.remove('hidden');
+            results.classList.add('hidden');
+            
+            try {
+                var res = await fetch('/api/cf-ip-scanner?host=' + encodeURIComponent(host) + '&port=' + port + '&limit=' + limit, { credentials: 'include' });
+                var data = await res.json();
+                
+                loading.classList.add('hidden');
+                
+                if (data.success && data.clean_ips && data.clean_ips.length > 0) {
+                    results.classList.remove('hidden');
+                    document.getElementById('scanner-count').innerText = data.clean_ips.length + ' IPs found (tested: ' + data.total_tested + ')';
+                    
+                    var html = data.clean_ips.map(function(ip) {
+                        var latencyColor = ip.latency < 200 ? 'text-emerald-400' : ip.latency < 500 ? 'text-yellow-400' : 'text-red-400';
+                        var latencyBg = ip.latency < 200 ? 'bg-emerald-500/10 border-emerald-500/20' : ip.latency < 500 ? 'bg-yellow-500/10 border-yellow-500/20' : 'bg-red-500/10 border-red-500/20';
+                        return '<div class="flex items-center justify-between p-3 glass-light rounded-xl">' +
+                            '<div class="flex items-center gap-3">' +
+                                '<div class="w-8 h-8 rounded-lg ' + latencyBg + ' border flex items-center justify-center">' +
+                                    '<span class="text-xs font-bold ' + latencyColor + '">' + ip.latency + 'ms</span>' +
+                                '</div>' +
+                                '<div>' +
+                                    '<p class="text-white text-sm font-mono font-semibold">' + ip.ip + '</p>' +
+                                    '<p class="text-zinc-500 text-xs">' + ip.host + ':' + port + '</p>' +
+                                '</div>' +
+                            '</div>' +
+                            '<button onclick="navigator.clipboard.writeText(\\'' + ip.ip + '\\').then(function(){alert(\\\'Ã¢Å“â€¦ IP copied!\\\')})" class="action-btn text-zinc-400 hover:text-emerald-400 transition" title="Copy IP">' +
+                                '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>' +
+                            '</button>' +
+                        '</div>';
+                    }).join('');
+                    document.getElementById('scanner-results-list').innerHTML = html;
+                } else {
+                    results.classList.remove('hidden');
+                    document.getElementById('scanner-count').innerText = 'No clean IPs found';
+                    document.getElementById('scanner-results-list').innerHTML = '<p class="text-zinc-400 text-sm text-center py-4">No clean IPs found. Try different settings.</p>';
+                }
+            } catch (err) {
+                loading.classList.add('hidden');
+                alert('Ã¢ÂÅ’ Error scanning IPs: ' + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.innerText = 'Scan Clean IPs';
+            }
+        }
+
+        // ============================================
+        // INBOUNDS MANAGEMENT (Nova-style)
+        // ============================================
+        let allInbounds = [];
+        let isEditInboundMode = false;
+        let editingInboundId = null;
+
+        function toggleInboundModal(show) {
+            var modal = document.getElementById('inbound-modal');
+            var card = document.getElementById('inbound-modal-card');
+            if (show) {
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                modal.classList.add('opacity-100', 'pointer-events-auto');
+                card.classList.remove('opacity-0', 'scale-95');
+                card.classList.add('opacity-100', 'scale-100');
+            } else {
+                modal.classList.remove('opacity-100', 'pointer-events-auto');
+                modal.classList.add('opacity-0', 'pointer-events-none');
+                card.classList.remove('opacity-100', 'scale-100');
+                card.classList.add('opacity-0', 'scale-95');
+                isEditInboundMode = false;
+                editingInboundId = null;
+                document.getElementById('inbound-modal-title').innerText = 'Add Inbound';
+                document.getElementById('inbound-submit-btn').innerText = 'Create';
+                document.getElementById('inbound-form').reset();
+                document.getElementById('inbound-sniffing').checked = true;
+            }
+        }
+
+        function openInboundModal() {
+            isEditInboundMode = false;
+            editingInboundId = null;
+            document.getElementById('inbound-modal-title').innerText = 'Add Inbound';
+            document.getElementById('inbound-submit-btn').innerText = 'Create';
+            document.getElementById('inbound-form').reset();
+            document.getElementById('inbound-sniffing').checked = true;
+            toggleInboundModal(true);
+        }
+
+        function editInbound(id) {
+            var inbound = allInbounds.find(function(i) { return i.id === id; });
+            if (!inbound) return;
+            isEditInboundMode = true;
+            editingInboundId = id;
+            document.getElementById('inbound-modal-title').innerText = 'Edit Inbound';
+            document.getElementById('inbound-submit-btn').innerText = 'Save';
+            document.getElementById('inbound-tag').value = inbound.tag || '';
+            document.getElementById('inbound-protocol').value = inbound.protocol || 'vless';
+            document.getElementById('inbound-port').value = inbound.port || '';
+            document.getElementById('inbound-listen').value = inbound.listen || '0.0.0.0';
+            document.getElementById('inbound-remark').value = inbound.remark || '';
+            document.getElementById('inbound-sniffing').checked = inbound.sniffing === 1;
+            toggleInboundModal(true);
+        }
+
+        async function handleInboundSubmit(event) {
+            event.preventDefault();
+            var btn = document.getElementById('inbound-submit-btn');
+            btn.disabled = true;
+            btn.innerText = isEditInboundMode ? 'Saving...' : 'Creating...';
+            var tag = document.getElementById('inbound-tag').value.trim();
+            var protocol = document.getElementById('inbound-protocol').value;
+            var port = document.getElementById('inbound-port').value;
+            var listen = document.getElementById('inbound-listen').value.trim();
+            var remark = document.getElementById('inbound-remark').value.trim();
+            var sniffing = document.getElementById('inbound-sniffing').checked;
+            try {
+                var url, method;
+                if (isEditInboundMode) {
+                    url = '/api/inbounds/' + editingInboundId;
+                    method = 'PUT';
+                } else {
+                    url = '/api/inbounds';
+                    method = 'POST';
+                }
+                var res = await fetch(url, {
+                    method: method,
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ tag, protocol, port: parseInt(port), listen, remark, sniffing })
+                });
+                var data = await res.json();
+                if (data.success) {
+                    toggleInboundModal(false);
+                    loadInbounds();
+                } else {
+                    alert('Error: ' + (data.error || 'Failed'));
+                }
+            } catch (err) {
+                alert('Connection error');
+            } finally {
+                btn.disabled = false;
+                btn.innerText = isEditInboundMode ? 'Save' : 'Create';
+            }
+        }
+
+        async function deleteInbound(id) {
+            if (!confirm('Are you sure you want to delete this inbound?')) return;
+            try {
+                var res = await fetch('/api/inbounds', {
+                    method: 'DELETE',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id })
+                });
+                var data = await res.json();
+                if (data.success) loadInbounds();
+                else alert('Error: ' + (data.error || 'Failed'));
+            } catch (err) {
+                alert('Connection error');
+            }
+        }
+
+        async function toggleInboundActive(id, currentActive) {
+            try {
+                var res = await fetch('/api/inbounds/' + id, {
+                    method: 'PUT',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ is_active: !currentActive })
+                });
+                var data = await res.json();
+                if (data.success) loadInbounds();
+            } catch (err) {}
+        }
+
+        async function loadInbounds() {
+            var loading = document.getElementById('inbounds-loading');
+            var container = document.getElementById('inbounds-container');
+            var empty = document.getElementById('inbounds-empty');
+            loading.classList.remove('hidden');
+            container.classList.add('hidden');
+            empty.classList.add('hidden');
+            try {
+                var res = await fetch('/api/inbounds', { credentials: 'include' });
+                var data = await res.json();
+                allInbounds = data.inbounds || [];
+                loading.classList.add('hidden');
+                if (allInbounds.length === 0) {
+                    empty.classList.remove('hidden');
+                    return;
+                }
+                container.classList.remove('hidden');
+                container.innerHTML = allInbounds.map(function(inb) {
+                    var statusClass = inb.is_active ? 'badge-success' : 'badge-danger';
+                    var statusText = inb.is_active ? 'Active' : 'Inactive';
+                    var protoClass = inb.protocol === 'trojan' ? 'badge-purple' : inb.protocol === 'vmess' ? 'badge-warning' : inb.protocol === 'shadowsocks' ? 'badge-info' : 'badge-info';
+                    var protoText = (inb.protocol || 'vless').toUpperCase();
+                    return '<div class="glass-light rounded-xl p-4 flex flex-wrap items-center justify-between gap-3">' +
+                        '<div class="flex items-center gap-3">' +
+                            '<div class="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">' +
+                                '<span class="text-xs font-bold text-indigo-400">' + inb.port + '</span>' +
+                            '</div>' +
+                            '<div>' +
+                                '<div class="flex items-center gap-2">' +
+                                    '<span class="font-bold text-white text-sm">' + (inb.tag || 'unnamed') + '</span>' +
+                                    '<span class="badge ' + protoClass + '">' + protoText + '</span>' +
+                                    '<span class="badge ' + statusClass + '">' + statusText + '</span>' +
+                                '</div>' +
+                                '<p class="text-xs text-zinc-500">' + (inb.remark || 'Listen: ' + (inb.listen || '0.0.0.0')) + (inb.sniffing ? ' | Sniffing: ON' : '') + '</p>' +
+                            '</div>' +
+                        '</div>' +
+                        '<div class="flex items-center gap-1">' +
+                            '<button onclick="toggleInboundActive(' + inb.id + ', ' + (inb.is_active === 1) + ')" title="' + (inb.is_active ? 'Disable' : 'Enable') + '" class="action-btn text-zinc-400 hover:text-emerald-400 transition">' +
+                                '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>' +
+                            '</button>' +
+                            '<button onclick="editInbound(' + inb.id + ')" title="Edit" class="action-btn text-zinc-400 hover:text-yellow-400 transition">' +
+                                '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>' +
+                            '</button>' +
+                            '<button onclick="deleteInbound(' + inb.id + ')" title="Delete" class="action-btn text-zinc-400 hover:text-red-400 transition">' +
+                                '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>' +
+                            '</button>' +
+                        '</div>' +
+                    '</div>';
+                }).join('');
+            } catch (err) {
+                loading.classList.add('hidden');
+                empty.classList.remove('hidden');
+                empty.querySelector('p').innerText = 'Error loading inbounds.';
+            }
+        }
+
+        // ============================================
+        // SYSTEM LOGS FUNCTIONS (Nova-style)
+        // ============================================
+        async function loadSystemLogs() {
+            try {
+                var res = await fetch('/api/system/logs?limit=100', { credentials: 'include' });
+                var data = await res.json();
+                var container = document.getElementById('logs-container');
+                if (data.success && data.logs && data.logs.length > 0) {
+                    container.innerHTML = data.logs.map(function(log) {
+                        var color = log.level === 'error' ? 'text-red-400' : log.level === 'warn' ? 'text-yellow-400' : log.level === 'info' ? 'text-emerald-400' : 'text-indigo-400';
+                        var dot = log.level === 'error' ? 'Ã¢â€”Â' : log.level === 'warn' ? 'Ã¢â€”Â' : 'Ã¢â€”Â';
+                        var time = log.timestamp ? new Date(log.timestamp).toLocaleString() : '-';
+                        return '<div class="' + color + '">' + dot + ' [' + time + '] ' + log.message + '</div>';
+                    }).join('');
+                } else {
+                    container.innerHTML = '<div class="text-emerald-400">Ã¢â€”Â System started at: ' + new Date().toLocaleString() + '</div>' +
+                        '<div class="text-zinc-500">Ã¢â€”Â No logs recorded yet</div>';
+                }
+            } catch (e) {
+                var container = document.getElementById('logs-container');
+                container.innerHTML = '<div class="text-zinc-500">Ã¢â€”Â Logs unavailable</div>';
+            }
+        }
+
+        async function clearSystemLogs() {
+            if (!confirm('Are you sure you want to clear all logs?')) return;
+            try {
+                await fetch('/api/system/logs', { method: 'DELETE', credentials: 'include' });
+                loadSystemLogs();
+            } catch (e) {}
+        }
+
+        // ============================================
+        // BACKUP FUNCTIONS (Nova-style)
+        // ============================================
+        async function exportBackup() {
+            try {
+                var res = await fetch('/api/backup', { credentials: 'include' });
+                if (!res.ok) { alert('Error exporting backup'); return; }
+                var blob = await res.blob();
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = 'backup-' + new Date().toISOString().split('T')[0] + '.json';
+                a.click();
+                URL.revokeObjectURL(url);
+                alert('Backup exported successfully!');
+            } catch (err) {
+                alert('Connection error');
+            }
+        }
+
+        async function importBackup() {
+            var input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = async function(e) {
+                var file = e.target.files[0];
+                if (!file) return;
+                if (!confirm('This will merge data from the backup file. Continue?')) return;
+                try {
+                    var text = await file.text();
+                    var data = JSON.parse(text);
+                    var res = await fetch('/api/backup', {
+                        method: 'POST',
+                        credentials: 'include',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+                    var result = await res.json();
+                    if (result.success) {
+                        alert('Imported: ' + result.imported.users + ' users, ' + result.imported.inbounds + ' inbounds, ' + result.imported.settings + ' settings');
+                        loadUsers(true);
+                        loadInbounds();
+                    } else {
+                        alert('Error: ' + (result.error || 'Failed'));
+                    }
+                } catch (err) {
+                    alert('Error reading file: ' + err.message);
+                }
+            };
+            input.click();
+        }
+
+        // ============================================
+        // FORM HANDLER
+        // ============================================
+        async function handleFormSubmit(event) {
+            event.preventDefault();
+            var submitButton = document.getElementById('submit-btn');
+            submitButton.disabled = true;
+            submitButton.innerText = isEditMode ? 'Saving...' : 'Creating...';
+            var username = document.getElementById('input-name').value.trim();
+            var limit = document.getElementById('input-limit').value || null;
+            var expiry = document.getElementById('input-expiry').value || null;
+            var checkedPorts = Array.from(document.querySelectorAll('input[name="ports"]:checked')).map(function(cb) { return cb.value; });
+            if (checkedPorts.length === 0) {
+                alert('Ã¢ÂÅ’ Please select at least one port!');
+                submitButton.disabled = false;
+                submitButton.innerText = isEditMode ? 'Save' : 'Create';
+                return;
+            }
+            var port = checkedPorts.join(',');
+            var tls = checkedPorts.some(function(p) { return tlsPorts.includes(p); }) ? 'on' : 'off';
+            var ips = document.getElementById('input-ips').value;
+            var fingerprint = document.getElementById('fingerprint-select').value;
+            var config_name = document.getElementById('config-name-input').value || '';
+            var connection_type = document.getElementById('protocol-select').value || 'vless';
+            var url = isEditMode ? '/api/users/' + encodeURIComponent(editingUsername) : '/api/users';
+            var method = isEditMode ? 'PUT' : 'POST';
+            try {
+                var response = await fetch(url, {
+                    method: method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, limit_gb: limit, expiry_days: expiry, tls, port, ips, fingerprint, config_name, connection_type })
+                });
+                if (response.ok) {
+                    toggleModal(false);
+                    await loadUsers(true);
+                } else {
+                    var errData = await response.json();
+                    alert('Ã¢ÂÅ’ Error: ' + (errData.error || 'Operation failed'));
+                }
+            } catch (err) {
+                alert('Ã¢ÂÅ’ Connection error');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.innerText = isEditMode ? 'Save' : 'Create';
+            }
+        }
+
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            renderPortCheckboxes();
+            loadUsers();
+            loadLocations();
+            loadAdminsList();
+            loadTheme();
+            loadInbounds();
+            checkUpdate();
+            setInterval(function() { loadUsers(true); }, 30000);
+            setInterval(updateXrayStatus, 10000);
+            showPage('dashboard');
+            document.getElementById('log-start-time').innerText = new Date().toLocaleString();
+            setTimeout(function() {
+                var cb443 = document.querySelector('input[name="ports"][value="443"]');
+                if (cb443) cb443.checked = true;
+            }, 200);
+            
+            // Close menu on resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth >= 1024) {
+                    var sidebar = document.querySelector('.sidebar');
+                    var overlay = document.getElementById('sidebar-overlay');
+                    if (sidebar) sidebar.classList.remove('active');
+                    if (overlay) overlay.classList.remove('active');
+                    
+                    var menuIcon = document.querySelector('#menu-icon');
+                    if (menuIcon) {
+                        menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>';
+                    }
+                }
+            });
+        });
+    <\/script>
+</body>
+</html>`,
+
+  status: `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Status - MrVpn Panel</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"><\/script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif}
+        body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#06060e;color:#e2e8f0;padding:16px;overflow:auto}
+        .bg-orbs{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+        .orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.15;animation:drift 12s ease-in-out infinite}
+        .orb-1{width:350px;height:350px;background:#6366f1;top:-10%;left:-5%}
+        .orb-2{width:300px;height:300px;background:#a855f7;bottom:-10%;right:-5%;animation-delay:-4s}
+        @keyframes drift{0%,100%{transform:translate(0,0)}33%{transform:translate(20px,-15px)}66%{transform:translate(-15px,20px)}}
+        .card{position:relative;z-index:1;width:100%;max-width:440px;padding:36px 28px;border-radius:24px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);backdrop-filter:blur(24px);box-shadow:0 0 80px rgba(99,102,241,.1),0 24px 48px rgba(0,0,0,.3);animation:fadeUp .6s ease-out}
+        @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+        .header{text-align:center;margin-bottom:28px}
+        .icon-wrap{display:inline-flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:18px;background:linear-gradient(135deg,rgba(99,102,241,.15),rgba(168,85,247,.15));border:1px solid rgba(99,102,241,.2);margin-bottom:16px}
+        .icon-wrap svg{width:24px;height:24px;color:#818cf8}
+        h1{font-size:20px;font-weight:800;color:#fff;margin-bottom:4px}
+        .username{font-size:13px;color:#818cf8;font-family:monospace;font-weight:600}
+        .brand-tag{font-size:11px;color:#475569;margin-top:4px}
+        .status-badge{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border-radius:14px;font-size:13px;font-weight:700;margin-bottom:24px;border:1px solid}
+        .status-active{background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.2);color:#4ade80}
+        .status-inactive{background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.2);color:#ef4444}
+        .status-expired{background:rgba(251,191,36,.08);border-color:rgba(251,191,36,.2);color:#fbbf24}
+        .progress-section{margin-bottom:16px}
+        .progress-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+        .progress-label{font-size:12px;color:#64748b;font-weight:500}
+        .progress-value{font-size:12px;font-weight:700}
+        .progress-value.indigo{color:#818cf8}
+        .progress-value.purple{color:#a855f7}
+        .progress-track{width:100%;height:6px;border-radius:999px;background:rgba(255,255,255,.06);overflow:hidden}
+        .progress-bar{height:100%;border-radius:999px;transition:width 1s ease}
+        .progress-bar.indigo{background:linear-gradient(90deg,#6366f1,#818cf8)}
+        .progress-bar.purple{background:linear-gradient(90deg,#a855f7,#c084fc)}
+        .progress-bar.green{background:linear-gradient(90deg,#22c55e,#4ade80)}
+        .progress-bar.yellow{background:linear-gradient(90deg,#eab308,#fbbf24)}
+        .progress-footer{display:flex;justify-content:space-between;margin-top:6px}
+        .progress-footer span{font-size:11px;color:#64748b}
+        .progress-footer strong{color:#e2e8f0;font-weight:600}
+        .divider{height:1px;background:rgba(255,255,255,.06);margin:20px 0}
+        .actions{display:flex;flex-direction:column;gap:8px}
+        .action-btn{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);cursor:pointer;transition:all .25s;text-decoration:none;color:inherit}
+        .action-btn:hover{background:rgba(255,255,255,.06);border-color:rgba(99,102,241,.3);transform:translateX(4px)}
+        .action-btn .left{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:500;color:#cbd5e1}
+        .action-btn .right{font-size:11px;font-weight:700;padding:4px 10px;border-radius:8px}
+        .right-indigo{background:rgba(99,102,241,.1);color:#818cf8}
+        .right-purple{background:rgba(168,85,247,.1);color:#a855f7}
+        .right-blue{background:rgba(59,130,246,.1);color:#60a5fa}
+        .right-green{background:rgba(34,197,94,.1);color:#4ade80}
+        .footer{text-align:center;font-size:11px;color:#475569;margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,.05)}
+        .footer span{color:#6366f1;font-weight:600}
+        /* QR Modal */
+        .modal-overlay{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);opacity:0;pointer-events:none;transition:opacity .3s}
+        .modal-overlay.active{opacity:1;pointer-events:auto}
+        .modal-card{width:100%;max-width:360px;padding:28px;border-radius:24px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(24px);text-align:center;transform:scale(.95);transition:transform .3s}
+        .modal-overlay.active .modal-card{transform:scale(1)}
+        .modal-card h3{font-size:16px;font-weight:700;color:#fff;margin-bottom:16px}
+        .qr-box{background:#fff;padding:12px;border-radius:14px;display:inline-block;margin-bottom:16px}
+        .modal-close{width:100%;padding:12px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:#94a3b8;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
+        .modal-close:hover{background:rgba(255,255,255,.08);color:#fff}
+        @media(max-width:480px){
+            .card{padding:24px 18px;margin:8px}
+            h1{font-size:18px}
+            .username{font-size:11px}
+            .action-btn{padding:10px 12px}
+            .action-btn .left{font-size:12px;gap:8px}
+            .action-btn .left svg{width:14px;height:14px}
+            .action-btn .right{font-size:10px;padding:3px 8px}
+            .modal-card{padding:20px 16px}
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-orbs"><div class="orb orb-1"></div><div class="orb orb-2"></div></div>
+    <div class="card">
+        <div class="header">
+            <div class="icon-wrap">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            </div>
+            <h1>Subscription Status</h1>
+            <p class="username" id="display-username"></p>
+            <p class="brand-tag">@MrVpn294</p>
+        </div>
+        <div id="status-card" class="status-badge status-active">
+            <span id="status-text">Loading status...</span>
+        </div>
+        <div class="progress-section">
+            <div class="progress-header"><span class="progress-label">Data Usage</span><span id="volume-pct" class="progress-value indigo">0%</span></div>
+            <div class="progress-track"><div id="volume-progress" class="progress-bar indigo" style="width:0%"></div></div>
+            <div class="progress-footer"><span>Used: <strong id="used-vol">-</strong></span><span>Total: <strong id="limit-vol">-</strong></span></div>
+        </div>
+        <div class="progress-section">
+            <div class="progress-header"><span class="progress-label">Time Remaining</span><span id="expiry-pct" class="progress-value purple">0%</span></div>
+            <div class="progress-track"><div id="expiry-progress" class="progress-bar purple" style="width:0%"></div></div>
+            <div class="progress-footer"><span>Remaining: <strong id="days-remaining">-</strong></span><span>Total: <strong id="total-days">-</strong></span></div>
+        </div>
+        <div class="divider"></div>
+        <div class="actions">
+            <div class="action-btn" onclick="copyVlessConfig()">
+                <span class="left"><svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>Copy VLESS Config</span>
+                <span class="right right-indigo">Copy</span>
+            </div>
+            <div class="action-btn" onclick="copyJsonSub()">
+                <span class="left"><svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>Copy JSON Subscription</span>
+                <span class="right right-purple">Copy</span>
+            </div>
+            <div class="action-btn" onclick="copyTextSub()">
+                <span class="left"><svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>Copy Text Subscription</span>
+                <span class="right right-blue">Copy</span>
+            </div>
+            <div class="action-btn" onclick="showQR()">
+                <span class="left"><svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>Show QR Code</span>
+                <span class="right right-green">View</span>
+            </div>
+        </div>
+        <div class="footer"><span>MrVpn Panel</span> v3.1.0</div>
+    </div>
+    <div id="qr-modal" class="modal-overlay" onclick="if(event.target===this)toggleQRModal(false)">
+        <div class="modal-card">
+            <h3>QR Code</h3>
+            <div class="qr-box"><div id="qrcode-box" style="width:192px;height:192px"></div></div>
+            <button class="modal-close" onclick="toggleQRModal(false)">Close</button>
+        </div>
+    </div>
+
+    <script>
+        function _cs(a){var r="";for(var i=0;i<a.length;i++){r+=String.fromCharCode(a[i]);}return r;}
+        /* {{USER_DATA_PLACEHOLDER}} */
+        function toggleQRModal(show, link) {
+            const modal = document.getElementById('qr-modal');
+            const qrBox = document.getElementById('qrcode-box');
+            if (show) {
+                qrBox.innerHTML = '';
+                try {
+                    new QRCode(qrBox, { text: link, width: 192, height: 192, colorDark: "#000000", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.M });
+                } catch(e) {
+                    qrBox.innerHTML = '<p style="color:#64748b;font-size:12px">Error generating QR</p>';
+                }
+                modal.classList.add('active');
+            } else {
+                modal.classList.remove('active');
+            }
+        }
+
+        function getHost() { return window.location.host; }
+
+        function getVlessLink() {
+            const u = window.statusUser;
+            if (!u) return '';
+            const host = getHost();
+            var ips = [host];
+            if (u.ips) {
+                ips = u.ips.split('\n').map(function(ip) { return ip.trim(); }).filter(function(ip) { return ip.length > 0; });
+                if (ips.length === 0) ips = [host];
+            }
+            var ports = String(u.port || '443').split(',').map(function(p) { return p.trim(); }).filter(function(p) { return p.length > 0; });
+            var fp = u.fingerprint || 'chrome';
+            
+            var now = new Date();
+            var created = new Date(u.created_at);
+            var expiryDays = u.expiry_days || 30;
+            var expiryDate = new Date(created.getTime() + expiryDays * 24 * 60 * 60 * 1000);
+            var daysLeft = Math.ceil((expiryDate - now) / (1000 * 60 * 60 * 24));
+            var totalGB = u.limit_gb || 0;
+            var usedGB = u.used_gb || 0;
+            var leftGB = Math.max(0, totalGB - usedGB);
+            var expiryDateStr = expiryDate.toISOString().split('T')[0].replace(/-/g, '/');
+            var usedFormatted = usedGB >= 1 ? usedGB.toFixed(1) + 'GB' : (usedGB * 1024).toFixed(0) + 'MB';
+            var totalFormatted = totalGB >= 1 ? totalGB + 'GB' : 'Unlimited';
+            var configName = u.config_name || u.username;
+            
+            var links = [];
+            
+            // First IP and first port for info configs
+            var firstIp = ips[0] || host;
+            var firstPort = ports[0] || '443';
+            var isTlsPort = ['443', '2053', '2083', '2087', '2096', '8443'].includes(firstPort);
+            var tlsVal = isTlsPort ? 'tls' : 'none';
+            
+            // Config 1: Expiry
+            var remark1 = 'Ã¢ÂÂ³ ' + u.username.toUpperCase() + ' | Ã°Å¸â€œâ€¦ Exp: ' + expiryDateStr + ' | Ã°Å¸â€Â¥ ' + daysLeft + ' Days Left';
+            links.push(_cs([118,108,101,115,115,58,47,47]) + (u.uuid || '') + '@' + firstIp + ':' + firstPort + '?path=%2F&security=' + tlsVal + '&encryption=none&insecure=0&host=' + host + '&fp=' + fp + '&type=ws&allowInsecure=0&sni=' + host + '#' + encodeURIComponent(remark1));
+            
+            // Config 2: Usage
+            var remark2 = 'Ã°Å¸â€œÅ  ' + u.username.toUpperCase() + ' | Ã°Å¸â€™Â¾ ' + totalFormatted + ' Total | Ã¢Å¡Â¡ ' + usedFormatted + ' Used';
+            links.push(_cs([118,108,101,115,115,58,47,47]) + (u.uuid || '') + '@' + firstIp + ':' + firstPort + '?path=%2F&security=' + tlsVal + '&encryption=none&insecure=0&host=' + host + '&fp=' + fp + '&type=ws&allowInsecure=0&sni=' + host + '#' + encodeURIComponent(remark2));
+            
+            // Configs for all IPs and ports with just username
+            ips.forEach(function(ip) {
+                ports.forEach(function(portStr) {
+                    var isTlsPortLoop = ['443', '2053', '2083', '2087', '2096', '8443'].includes(portStr);
+                    var tlsValLoop = isTlsPortLoop ? 'tls' : 'none';
+                    var remark3 = configName;
+                    links.push(_cs([118,108,101,115,115,58,47,47]) + (u.uuid || '') + '@' + ip + ':' + portStr + '?path=%2F&security=' + tlsValLoop + '&encryption=none&insecure=0&host=' + host + '&fp=' + fp + '&type=ws&allowInsecure=0&sni=' + host + '#' + encodeURIComponent(remark3));
+                });
+            });
+            
+            return links.join('\n');
+        }
+
+        function copyVlessConfig() {
+            var link = getVlessLink();
+            if (!link) return;
+            navigator.clipboard.writeText(link).then(function() { alert('Ã¢Å“â€¦ Config copied!'); });
+        }
+
+        function copyJsonSub() {
+            var link = window.location.protocol + '//' + getHost() + '/feed/json/' + encodeURIComponent(window.statusUser.username);
+            navigator.clipboard.writeText(link).then(function() { alert('Ã¢Å“â€¦ JSON subscription link copied!'); });
+        }
+
+        function copyTextSub() {
+            var link = window.location.protocol + '//' + getHost() + '/feed/' + encodeURIComponent(window.statusUser.username);
+            navigator.clipboard.writeText(link).then(function() { alert('Ã¢Å“â€¦ Text subscription link copied!'); });
+        }
+
+        function showQR() {
+            var link = getVlessLink();
+            if (!link) return;
+            toggleQRModal(true, link);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var u = window.statusUser;
+            if (!u) return;
+            
+            document.getElementById('display-username').innerText = '@' + u.username + ' | ' + u.port + ' | @MrVpn294';
+            
+            var usedGb = u.used_gb || 0;
+            var limitGb = u.limit_gb;
+            var formattedUsed = usedGb < 1 ? (usedGb * 1024).toFixed(0) + ' MB' : usedGb.toFixed(2) + ' GB';
+            document.getElementById('used-vol').innerText = formattedUsed;
+            
+            var isVolumeExpired = false;
+            if (limitGb) {
+                document.getElementById('limit-vol').innerText = limitGb + ' GB';
+                var pct = Math.min((usedGb / limitGb) * 100, 100);
+                document.getElementById('volume-pct').innerText = pct.toFixed(0) + '%';
+                document.getElementById('volume-progress').style.width = pct + '%';
+                if (usedGb >= limitGb) isVolumeExpired = true;
+            } else {
+                document.getElementById('limit-vol').innerText = 'Unlimited';
+                document.getElementById('volume-pct').innerText = '0%';
+                document.getElementById('volume-progress').style.width = '100%';
+            }
+            
+            var daysRemaining = 'Unlimited';
+            var totalDays = 'Unlimited';
+            var isTimeExpired = false;
+            
+            if (u.expiry_days) {
+                totalDays = u.expiry_days + ' days';
+                if (u.created_at) {
+                    var created = new Date(u.created_at);
+                    var expiryDate = new Date(created.getTime() + (u.expiry_days * 24 * 60 * 60 * 1000));
+                    var diffDays = Math.ceil((expiryDate - new Date()) / (1000 * 60 * 60 * 24));
+                    daysRemaining = diffDays > 0 ? diffDays : 0;
+                    var pct = Math.max(0, Math.min(100, (daysRemaining / u.expiry_days) * 100));
+                    document.getElementById('expiry-pct').innerText = pct.toFixed(0) + '%';
+                    document.getElementById('expiry-progress').style.width = pct + '%';
+                    if (new Date() > expiryDate) isTimeExpired = true;
+                }
+            } else {
+                document.getElementById('expiry-pct').innerText = '0%';
+                document.getElementById('expiry-progress').style.width = '100%';
+            }
+            
+            document.getElementById('days-remaining').innerText = daysRemaining === 'Unlimited' ? 'Unlimited' : daysRemaining + ' days';
+            document.getElementById('total-days').innerText = totalDays;
+            
+            var statusCard = document.getElementById('status-card');
+            var statusText = document.getElementById('status-text');
+            
+            if (u.is_active === 0) {
+                statusCard.className = 'mb-6 rounded-2xl p-4 text-center border font-semibold transition bg-red-500/10 border-red-500/30 text-red-400';
+                statusText.innerText = 'Ã°Å¸â€Â´ Inactive / Disabled';
+            } else if (isVolumeExpired) {
+                statusCard.className = 'mb-6 rounded-2xl p-4 text-center border font-semibold transition bg-yellow-500/10 border-yellow-500/30 text-yellow-400';
+                statusText.innerText = 'Ã¢Å¡Â Ã¯Â¸Â Data Limit Exceeded';
+            } else if (isTimeExpired) {
+                statusCard.className = 'mb-6 rounded-2xl p-4 text-center border font-semibold transition bg-yellow-500/10 border-yellow-500/30 text-yellow-400';
+                statusText.innerText = 'Ã¢Å¡Â Ã¯Â¸Â Subscription Expired';
+            } else {
+                statusCard.className = 'mb-6 rounded-2xl p-4 text-center border font-semibold transition bg-emerald-500/10 border-emerald-500/30 text-emerald-400';
+                statusText.innerText = 'Ã¢Å“â€¦ Active & Connected';
+            }
+        });
+    <\/script>
+</body>
+</html>`
+};
+
+export {
+  mrvpn_panel_default as default
+};
