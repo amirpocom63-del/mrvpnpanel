@@ -26,7 +26,7 @@ const safeBtoa = (str) => {
 
 const SYSTEM_DEFAULTS = {
     name: "",
-    apiRoute: "sync",
+    apiRoute: "",
     maintenanceHost: "https://www.yahoo.com, https://www.linux.org",
     backupRelay: "",
     customRelay: "",
