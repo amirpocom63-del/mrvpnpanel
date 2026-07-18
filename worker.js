@@ -5,7 +5,7 @@ import { connect } from "cloudflare:sockets";
  * Handles real-time binary streams from remote sensor nodes.
  */
 
-const CURRENT_VERSION = "2.9.4";
+const CURRENT_VERSION = "3.0.5";
 
 const getAlpha = () => String.fromCharCode(118, 108, 101, 115, 115);
 const getBeta = () => String.fromCharCode(116, 114, 111, 106, 97, 110);
@@ -27,7 +27,7 @@ const safeBtoa = (str) => {
 const SYSTEM_DEFAULTS = {
     name: "",
     apiRoute: "sync",
-    maintenanceHost: "https://www.ubuntu.com, https://www.docker.com",
+    maintenanceHost: "https://www.yahoo.com, https://www.linux.org",
     backupRelay: "",
     customRelay: "",
     masterKey: "admin",
@@ -35,7 +35,7 @@ const SYSTEM_DEFAULTS = {
     cleanIps: "",
     slaveNodes: "",
     deviceId: "",
-    mode: "alpha",
+    mode: "vless",
     agent: "chrome",
     socketPorts: "443",
     customDns: "https://cloudflare-dns.com/dns-query",
@@ -53,7 +53,7 @@ const SYSTEM_DEFAULTS = {
     silentAlerts: false,
     githubRepo: "amirpocom63-del/mrvpnpanel",
     nameStrategy: "default",
-    namePrefix: "Core",
+    namePrefix: "mrvpn294",
     tgBotLang: "fa",
     users: [],
     subUserAgent: "",
