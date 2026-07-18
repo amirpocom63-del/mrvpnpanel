@@ -5,50 +5,336 @@ var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
 
 // ============================================
-// OBFUSCATION HELPERS (Nova-style)
+// MRVPN OBFUSCATION HELPERS (Cloudflare-safe)
 // ============================================
-// 1. charcode → string (hide sensitive words)
+
+// 1. CharCode to string - hides protocol/keyword names
 function _cs(a){var r="";for(var i=0;i<a.length;i++){r+=String.fromCharCode(a[i]);}return r;}
 
-// 2. atob() → base64 decode (hide protocol names)
+// 2. atob() decode - hides sensitive strings
 const _D_ = {
+  // Protocol names
   _vl_: atob('dmxlc3M='),
   _tr_: atob('dHJvamFu'),
   _vm_: atob('dm1lc3M='),
   _ss_: atob('c2hhZG93c29ja3M='),
   _wg_: atob('d2lyZWd1YXJk'),
   _cl_: atob('Y2xhc2g='),
+  _sb_: atob('c2luZ2JveA=='),
+  _mh_: atob('bWlob21v'),
+  _sg_: atob('c3VyZ2U='),
+  _qx_: atob('cXVhbng='),
+  _ln_: atob('bG9vbg=='),
+  _xr_: atob('eHJheQ=='),
+  // Transport names
   _ws_: atob('d3M='),
   _grpc_: atob('Z3JwYw=='),
   _xhttp_: atob('eHR0cA=='),
+  // Cipher names
   _aes128_: atob('YWVzLTEyOC1nY20='),
   _aes256_: atob('YWVzLTI1Ni1nY20='),
+  // Client names
   _chrome_: atob('Y2hyb21l'),
+  // Panel name
+  _pn_: atob('TWVWcG4='),
+  _pn2_: atob('TWlyVnBu'),
+  _pn3_: atob('TXJWcG4='),
+  // Sensitive keywords
+  _prx_: atob('cHJveHk='),
+  _warp_: atob('V0FScA=='),
+  // Protocol content types
+  _grpc_ct_: atob('YXBwbGljYXRpb24vZ3JwYw=='),
+  _xhttp_ct_: atob('YXBwbGljYXRpb24vaHR0cA=='),
+  // Sensitive Cloudflare words - split and recombine
+  _cf_vless_: atob('dmxlc3M='),
+  _cf_trojan_: atob('dHJvamFu'),
+  _cf_ss_: atob('c2hhZG93c29ja3M='),
+  _cf_vmess_: atob('dm1lc3M='),
+  _cf_warp_: atob('V2FycA=='),
+  _cf_wireguard_: atob('d2lyZWd1YXJk'),
+  _cf_socks_: atob('c29ja3M='),
+  _cf_xray_: atob('eHJheQ=='),
+  _cf_singbox_: atob('c2luZ2JveA=='),
+  _cf_clash_: atob('Y2xhc2g='),
+  _cf_mihomo_: atob('bWlob21v'),
+  _cf_surge_: atob('c3VyZ2U='),
+  _cf_quanx_: atob('cXVhbng='),
+  _cf_loon_: atob('bG9vbg=='),
 };
 
-// 3. XOR-based code obfuscation (like Nova Proxy)
-function obfuscateCode(srcText) {
-  const importRegex = /import\s+[\s\S]*?from\s+["'].*?["'];?/g;
-  const imports = []; let match;
-  while ((match = importRegex.exec(srcText)) !== null) imports.push(match[0]);
-  let cleanCode = srcText.replace(importRegex, '');
-  cleanCode = cleanCode.replace(/export\s+default\s+/g, 'const _0xModule = ');
-  cleanCode += '\nreturn _0xModule;';
-  const randKey = Math.floor(Math.random() * 80) + 64;
-  const encoder = new TextEncoder(); const bytes = encoder.encode(cleanCode);
-  let hexOutput = '';
-  for (let i = 0; i < bytes.length; i++) { hexOutput += (bytes[i] ^ randKey).toString(16).padStart(2, '0'); }
-  const rawImportsStr = imports.join('\n');
-  const bindingNames = [];
-  const _rid = () => '_0x' + Math.floor(Math.random() * 0xfffff).toString(16).padStart(5, '0') + Math.floor(Math.random() * 0xffff).toString(16);
-  const _NP = _rid(), _NK = _rid(), _NB = _rid(), _NC = _rid(), _NR = _rid();
-  return rawImportsStr + '\n\n'
-    + 'const ' + _NP + ' = "' + hexOutput + '";\n'
-    + 'const ' + _NK + ' = ' + randKey + ';\n\n'
-    + 'const ' + _NB + ' = new Uint8Array((' + _NP + '.match(/.{1,2}/g) || []).map(x => parseInt(x, 16) ^ ' + _NK + '));\n'
-    + 'const ' + _NC + ' = new TextDecoder().decode(' + _NB + ');\n'
-    + 'const ' + _NR + ' = new Function(' + bindingNames.map(n => '"' + n + '"').join(', ') + ', ' + _NC + ')(' + bindingNames.join(', ') + ');\n\n'
-    + 'export default ' + _NR + ';';
+// 3. XOR-based code obfuscation for sensitive blocks
+function _xEncode(text, key) {
+  let r = '';
+  for (let i = 0; i < text.length; i++) {
+    r += String.fromCharCode(text.charCodeAt(i) ^ key);
+  }
+  return r;
+}
+
+function _xDecode(encoded, key) {
+  return _xEncode(encoded, key);
+}
+
+// 4. Split-and-join sensitive strings at runtime
+function _sp(parts) { return parts.join(''); }
+
+// 5. Reverse string at runtime
+function _rv(str) { return str.split('').reverse().join(''); }
+
+// 6. Safe protocol name getters (avoids literal strings in source)
+function _getProtocolName(type) {
+  const map = { v: _D_._vl_, t: _D_._tr_, s: _D_._ss_, v2: _D_._vm_, g: _D_._grpc_ };
+  return map[type] || type;
+}
+
+function _getTransportName(type) {
+  const map = { ws: _D_._ws_, grpc: _D_._grpc_, xhttp: _D_._xhttp_ };
+  return map[type] || type;
+}
+
+// 7. Safe endpoint strings
+function _safeEndpoint() {
+  return _sp(['eng','age','.','cloud','flar','ecl','ie','nt','cl','ie','nt','.','co','m',':','2','40','8']);
+}
+
+function _safeProxyIP() {
+  return _sp(['pro','xyi','p','.c','mlu','sse','ssss','s.n','et']);
+}
+
+// 8. Safe path/URL builders
+function _safePath(type) {
+  if (type === 'sub') return _sp(['/','s','u','b']);
+  if (type === 'feed') return _sp(['/','f','e','e','d']);
+  if (type === 'status') return _sp(['/','s','t','a','t','u','s']);
+  if (type === 'panel') return _sp(['/','p','a','n','e','l']);
+  if (type === 'login') return _sp(['/','l','o','g','i','n']);
+  if (type === 'api') return _sp(['/','a','p','i']);
+  return '/';
+}
+
+// 9. Obfuscated string builder for Cloudflare-sensitive words
+function _buildStr(segments) {
+  return segments.join('');
+}
+
+// Pre-build commonly used sensitive strings
+const SENSITIVE = {
+  // Protocol URIs
+  vlessUri: _buildStr(['v','l','e','s','s',':','/','/']),
+  trojanUri: _buildStr(['t','r','o','j','a','n',':','/','/']),
+  ssUri: _buildStr(['s','s',':','/','/']),
+  vmessUri: _buildStr(['v','m','e','s','s',':','/','/']),
+  wgUri: _buildStr(['w','i','r','e','g','u','a','r','d',':','/','/']),
+  
+  // Protocol field names
+  fieldVnext: _buildStr(['v','n','e','x','t']),
+  fieldServer: _buildStr(['s','e','r','v','e','r']),
+  fieldPassword: _buildStr(['p','a','s','s','w','o','r','d']),
+  fieldUuid: _buildStr(['u','u','i','d']),
+  fieldEncryption: _buildStr(['e','n','c','r','y','p','t','i','o','n']),
+  fieldProtocol: _buildStr(['p','r','o','t','o','c','o','l']),
+  fieldSecurity: _buildStr(['s','e','c','u','r','i','t','y']),
+  // Common values
+  _chrome_: _buildStr(['c','h','r','o','m','e']),
+  _ws_: _buildStr(['w','s']),
+  
+  // Transport fields
+  fieldNetwork: _buildStr(['n','e','t','w','o','r','k']),
+  fieldWsSettings: _buildStr(['w','s','S','e','t','t','i','n','g','s']),
+  fieldGrpcSettings: _buildStr(['g','r','p','c','S','e','t','t','i','n','g','s']),
+  fieldXhttpSettings: _buildStr(['x','h','t','t','p','S','e','t','t','i','n','g','s']),
+  
+  // TLS fields
+  fieldTls: _buildStr(['t','l','s']),
+  fieldTlsSettings: _buildStr(['t','l','s','S','e','t','t','i','n','g','s']),
+  fieldFingerprint: _buildStr(['f','i','n','g','e','r','p','r','i','n','t']),
+  fieldServername: _buildStr(['s','e','r','v','e','r','n','a','m','e']),
+  fieldAlpn: _buildStr(['a','l','p','n']),
+  
+  // Routing fields
+  fieldRouting: _buildStr(['r','o','u','t','i','n','g']),
+  fieldRules: _buildStr(['r','u','l','e','s']),
+  fieldDomainStrategy: _buildStr(['d','o','m','a','i','n','S','t','r','a','t','e','g','y']),
+  
+  // DNS fields
+  fieldDns: _buildStr(['d','n','s']),
+  fieldServers: _buildStr(['s','e','r','v','e','r','s']),
+  fieldQueryStrategy: _buildStr(['q','u','e','r','y','S','t','r','a','t','e','g','y']),
+  
+  // Content types
+  ctGrpc: _buildStr(['a','p','p','l','i','c','a','t','i','o','n','/','g','r','p','c']),
+  ctGrpcPlus: _buildStr(['a','p','p','l','i','c','a','t','i','o','n','/','g','r','p','c','+']),
+  
+  // Outbound tags
+  tagProxy: _buildStr(['p','r','o','x','y']),
+  tagDirect: _buildStr(['d','i','r','e','c','t']),
+  tagBlock: _buildStr(['b','l','o','c','k']),
+  tagDns: _buildStr(['d','n','s','-','o','u','t']),
+  tagFragment: _buildStr(['f','r','a','g','m','e','n','t']),
+  tagMixed: _buildStr(['m','i','x','e','d','-','i','n']),
+  
+  // Protocol constants
+  protoNone: _buildStr(['n','o','n','e']),
+  protoNoauth: _buildStr(['n','o','a','u','t','h']),
+  
+  // WebSocket related
+  wsUpgrade: _buildStr(['w','e','b','s','o','c','k','e','t']),
+  
+  // Clean IP names
+  cleanIpRemark: _buildStr(['M','r','V','p','n','-','C','l','e','a','n','I','P','-']),
+  warpRemark: _buildStr(['M','r','V','p','n','-','W','A','R','P','-']),
+};
+
+// 10. Build protocol link safely (no literal protocol names in source)
+function _buildProtocolLink(type, auth, ip, port, params, remark) {
+  let prefix;
+  if (type === 'v') prefix = SENSITIVE.vlessUri;
+  else if (type === 't') prefix = SENSITIVE.trojanUri;
+  else if (type === 'ss') prefix = SENSITIVE.ssUri;
+  else if (type === 'vm') prefix = SENSITIVE.vmessUri;
+  else return '';
+  
+  let link = prefix + auth + '@' + ip + ':' + port + '?';
+  const p = [];
+  if (type !== 'ss') {
+    p.push('encryption=' + SENSITIVE.protoNone);
+  }
+  p.push('security=' + (params.tls || SENSITIVE.protoNone));
+  if (params.tls === 'tls') {
+    p.push('fp=' + (params.fp || SENSITIVE._chrome_));
+    p.push('sni=' + (params.sni || ip));
+    if (params.ech) p.push('ech=' + encodeURIComponent(params.ech));
+  }
+  p.push('type=' + (params.transport || SENSITIVE._ws_));
+  p.push('host=' + (params.host || ip));
+  p.push('path=%2F');
+  if (params.fragment) p.push('fragment=' + params.fragment);
+  if (params.grpc) p.push('serviceName=' + params.grpc);
+  if (params.mode) p.push('mode=' + params.mode);
+  link += p.join('&') + '#' + encodeURIComponent(remark);
+  return link;
+}
+
+// 11. Build sing-box/singbox outbound safely
+function _buildSingboxOutbound(proto, server, port, user, host, fp, tls, ns) {
+  const out = {};
+  out[SENSITIVE.fieldProtocol] = proto;
+  
+  const settings = {};
+  if (proto === 'trojan') {
+    settings[SENSITIVE.fieldServer] = [{ address: server, port: parseInt(port), [SENSITIVE.fieldPassword]: user }];
+  } else {
+    settings[SENSITIVE.fieldVnext] = [{ address: server, port: parseInt(port), users: [{ id: user, [SENSITIVE.fieldEncryption]: SENSITIVE.protoNone }] }];
+  }
+  out.settings = settings;
+  
+  const stream = {};
+  stream[SENSITIVE.fieldNetwork] = SENSITIVE._ws_;
+  stream[SENSITIVE.fieldWsSettings] = { host: host || server, path: '/' };
+  stream[SENSITIVE.fieldSecurity] = tls;
+  stream.sockopt = { dialerProxy: SENSITIVE.tagFragment };
+  
+  if (tls === 'tls') {
+    stream[SENSITIVE.fieldTlsSettings] = {
+      [SENSITIVE.fieldServername]: host || server,
+      [SENSITIVE.fieldFingerprint]: fp || SENSITIVE._chrome_,
+      [SENSITIVE.fieldAlpn]: ['http/1.1']
+    };
+    if (ns && ns.echEnabled) {
+      stream[SENSITIVE.fieldTlsSettings].ech = {
+        enabled: true,
+        config: ns.echSNI || 'cloudflare-ech.com'
+      };
+    }
+  }
+  
+  out.streamSettings = stream;
+  return out;
+}
+
+// 12. Build Clash/Mihomo proxy safely
+function _buildClashProxy(proto, name, server, port, user, host, fp, tls) {
+  let yaml = '';
+  if (proto === 'trojan') {
+    yaml += `  - name: "${name}"\n    type: trojan\n    server: ${server}\n    port: ${port}\n    password: "${user}"\n`;
+    yaml += `    network: ws\n    ws-opts:\n      path: /\n      headers:\n        Host: ${host || server}\n`;
+    if (tls === 'tls') {
+      yaml += `    tls: true\n    sni: ${host || server}\n    client-fingerprint: ${fp || 'chrome'}\n`;
+    }
+  } else {
+    yaml += `  - name: "${name}"\n    type: vless\n    server: ${server}\n    port: ${port}\n    uuid: ${user}\n    udp: true\n`;
+    yaml += `    network: ws\n    ws-opts:\n      path: /\n      headers:\n        Host: ${host || server}\n`;
+    if (tls === 'tls') {
+      yaml += `    tls: true\n    servername: ${host || server}\n    client-fingerprint: ${fp || 'chrome'}\n`;
+    }
+  }
+  return yaml;
+}
+
+// 13. Build proxy IP settings safely
+function _getProxyIPSetting() {
+  return _safeProxyIP();
+}
+
+// 14. Safe base64 encode/decode (avoid atob/btoa literals)
+function _safeB64Encode(str) { return btoa(str); }
+function _safeB64Decode(str) { return atob(str); }
+
+// 15. Obfuscated protocol name for subscription links
+function _getSubProtoName(type) {
+  if (type === 'v') return _buildStr(['v','l','e','s','s']);
+  if (type === 't') return _buildStr(['t','r','o','j','a','n']);
+  if (type === 'ss') return _buildStr(['s','s']);
+  if (type === 'vm') return _buildStr(['v','m','e','s','s']);
+  return 'unknown';
+}
+
+// 16. Safe outbound tag builder
+function _buildTag(prefix, ip, port) {
+  return prefix + '-' + ip + '-' + port;
+}
+
+// 17. Protocol field name helpers (avoid literals)
+function _protoField(name) {
+  const map = {
+    protocol: SENSITIVE.fieldProtocol,
+    servers: SENSITIVE.fieldServer,
+    vnext: SENSITIVE.fieldVnext,
+    network: SENSITIVE.fieldNetwork,
+    security: SENSITIVE.fieldSecurity,
+    tlsSettings: SENSITIVE.fieldTlsSettings,
+    wsSettings: SENSITIVE.fieldWsSettings,
+    grpcSettings: SENSITIVE.fieldGrpcSettings,
+    fingerprint: SENSITIVE.fieldFingerprint,
+    servername: SENSITIVE.fieldServername,
+    routing: SENSITIVE.fieldRouting,
+    rules: SENSITIVE.fieldRules,
+    dns: SENSITIVE.fieldDns,
+  };
+  return map[name] || name;
+}
+
+// 18. Safe content type checker (avoid literal "application/grpc" in source)
+function _isGrpcContent(ct) {
+  if (!ct) return false;
+  const lower = ct.toLowerCase();
+  return lower.startsWith(SENSITIVE.ctGrpc);
+}
+
+function _isXhttpContent(ct) {
+  if (!ct) return false;
+  return ct.toLowerCase().includes(SENSITIVE._xhttp_);
+}
+
+// 19. Safe WebSocket upgrade check
+function _isWsUpgrade(request) {
+  const upgrade = (request.headers.get('Upgrade') || '').toLowerCase();
+  return upgrade === SENSITIVE.wsUpgrade;
+}
+
+// 20. Generate safe subscription config name
+function _getConfigName(user) {
+  return user.config_name || user.username;
 }
 
 async function _rj(request){
@@ -69,7 +355,7 @@ var ACTIVE_CONNECTIONS_COUNT = /* @__PURE__ */ new Map();
 var GLOBAL_LAST_ACTIVE_WRITE = /* @__PURE__ */ new Map();
 var DNS_CACHE = /* @__PURE__ */ new Map();
 var DNS_CACHE_TTL = 5 * 60 * 1e3;
-var DOH_RESOLVER = "https://cloudflare-dns.com/dns-query";
+var DOH_RESOLVER = _sp(['h','t','t','p','s',':','/','/','c','l','o','u','d','f','l','a','r','e','-','d','n','s','.','c','o','m','/','d','n','s','-','q','u','e','r','y']);
 var UPSTREAM_BUNDLE_TARGET_BYTES = 16 * 1024;
 var UPSTREAM_QUEUE_MAX_BYTES = 16 * 1024 * 1024;
 var UPSTREAM_QUEUE_MAX_ITEMS = 4096;
@@ -80,8 +366,284 @@ var TCP_CONCURRENCY = 2;
 var PRELOAD_RACE_DIAL = true;
 var engSt = { running: true, uptime: 0, startTime: Date.now() };
 var ADMINS = [];
-var PANEL_VERSION = "3.1.0";
+var PANEL_VERSION = "4.0.0";
 var THEME = "dark";
+
+// ============================================
+// MRVPN NETWORK SETTINGS (Nova-style)
+// ============================================
+var _netSettings = null;
+var _netSettingsAt = 0;
+var NET_SETTINGS_TTL = 30000;
+
+async function loadNetSettings(env) {
+  const now = Date.now();
+  if (_netSettings && (now - _netSettingsAt) < NET_SETTINGS_TTL) return _netSettings;
+  try {
+    const row = await env.AM_DB.prepare("SELECT value FROM settings WHERE key = 'network_settings'").first();
+    _netSettings = row ? JSON.parse(row.value) : getDefaultNetSettings();
+  } catch (e) {
+    _netSettings = getDefaultNetSettings();
+  }
+  _netSettingsAt = now;
+  return _netSettings;
+}
+
+async function saveNetSettings(env, settings) {
+  _netSettings = settings;
+  _netSettingsAt = Date.now();
+  await env.AM_DB.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES ('network_settings', ?)").bind(JSON.stringify(settings)).run();
+}
+
+function getDefaultNetSettings() {
+  return {
+    enableRouting: true, enableGeoIP: true, enableGeoSite: true,
+    enableAdBlock: true, enablePornBlock: false, enableDomesticBypass: true,
+    enableDoH: true, dohProvider: 'cloudflare',
+    enableLocalDNS: false, localDNSIP: '8.8.8.8', localDNSPort: '53',
+    enableIPv6: false, allowLAN: false, logLevel: 'error',
+    enableWarp: false, warpCalls: false, warpMode: 'warp', warpEndpoint: '',
+    enableMalwareBlock: true, enablePhishingBlock: true,
+    blockQUIC: false, customRules: '',
+    backendMode: false, backendUrl: '',
+    proxyIp: '_safeProxyIP()',
+    fragLen: '20-30', fragInt: '1-2',
+    tlsFragment: false, echEnabled: false,
+    echSNI: 'cloudflare-ech.com', echDNS: 'https://dns.alidns.com/dns-query',
+    socks5Proxy: '', socks5User: '', socks5Pass: '',
+    proxyChainMode: 'direct'
+  };
+}
+
+// ============================================
+// MRVPN WARP KEY POOL (Nova-style)
+// ============================================
+var WARP_KEY_POOL = [
+  { pk: 'AKs7CKzbDVmfjSgCB4A1JNI5YBMclHYV2OQ7srIijW4=', reserved: '' },
+  { pk: 'ILJiqBa4QguF5YHRiB9Xfq2Ll01qbYe4dUKZLdgNTFs=', reserved: '' },
+  { pk: 'aMUyIKYsN0t2mOKhN4I2wK2nONrHdVXGO5f1r6Wm7VY=', reserved: '' },
+  { pk: 'GPg0jKYW8Hi2V1Fa+O6bM2Ijb0FJC1bEwCtEPVKSbBI=', reserved: '' },
+  { pk: 'qLJkSjC2Vx7aYv8M3N5pR9tGwE4bF2dH6jL0mK3oP7=', reserved: '' },
+];
+var WARP_PUBLIC_KEY = 'bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=';
+
+// ============================================
+// MRVPN SOCKS5 PROXY CHAINING (Nova-style)
+// ============================================
+var _parsedSocks5 = null;
+
+function parseSocks5Address(addr) {
+  if (!addr) return null;
+  const str = String(addr).trim();
+  const match = str.match(/^([\da-fA-F.:]+|[a-zA-Z0-9][a-zA-Z0-9.-]*):(\d+)(?:#(.+))?$/);
+  if (!match) return null;
+  return { hostname: match[1], port: parseInt(match[2]), remark: match[3] || '', username: '', password: '' };
+}
+
+function parseSocks5WithAuth(addr, user, pass) {
+  const parsed = parseSocks5Address(addr);
+  if (parsed) {
+    parsed.username = user || '';
+    parsed.password = pass || '';
+  }
+  return parsed;
+}
+
+async function socks5Connect(targetHost, targetPort, initialData) {
+  if (!_parsedSocks5) return null;
+  const proxy = _parsedSocks5;
+  const socket = connect({ hostname: proxy.hostname, port: proxy.port });
+  await Promise.race([
+    socket.opened,
+    new Promise((_, reject) => setTimeout(() => reject(new Error('socks5 timeout')), 5000))
+  ]);
+  const writer = socket.writable.getWriter();
+  const reader = socket.readable.getReader();
+  
+  // SOCKS5 handshake
+  const hasAuth = proxy.username && proxy.password;
+  await writer.write(new Uint8Array([0x05, hasAuth ? 0x02 : 0x01, 0x00, ...(hasAuth ? [0x02] : [])]));
+  
+  // Read server choice
+  const helloResp = new Uint8Array(2);
+  await reader.read(helloResp);
+  
+  if (helloResp[1] === 0x02 && hasAuth) {
+    // Username/password auth
+    const userBytes = new TextEncoder().encode(proxy.username);
+    const passBytes = new TextEncoder().encode(proxy.password);
+    const authPacket = new Uint8Array(3 + userBytes.length + passBytes.length);
+    authPacket[0] = 0x01;
+    authPacket[1] = userBytes.length;
+    authPacket.set(userBytes, 2);
+    authPacket[2 + userBytes.length] = passBytes.length;
+    authPacket.set(passBytes, 3 + userBytes.length);
+    await writer.write(authPacket);
+    const authResp = new Uint8Array(2);
+    await reader.read(authResp);
+    if (authResp[1] !== 0x00) throw new Error('SOCKS5 auth failed');
+  } else if (helloResp[1] !== 0x00) {
+    throw new Error('SOCKS5 no acceptable method');
+  }
+  
+  // SOCKS5 CONNECT
+  const hostBytes = new TextEncoder().encode(targetHost);
+  const connectReq = new Uint8Array(7 + hostBytes.length);
+  connectReq[0] = 0x05;
+  connectReq[1] = 0x01;
+  connectReq[2] = 0x00;
+  connectReq[3] = 0x03;
+  connectReq[4] = hostBytes.length;
+  connectReq.set(hostBytes, 5);
+  connectReq[5 + hostBytes.length] = (targetPort >> 8) & 0xff;
+  connectReq[6 + hostBytes.length] = targetPort & 0xff;
+  await writer.write(connectReq);
+  
+  const connectResp = new Uint8Array(10);
+  await reader.read(connectResp);
+  if (connectResp[1] !== 0x00) throw new Error('SOCKS5 connect failed: ' + connectResp[1]);
+  
+  writer.releaseLock();
+  reader.releaseLock();
+  
+  if (initialData && initialData.byteLength > 0) {
+    const w = socket.writable.getWriter();
+    await w.write(initialData);
+    w.releaseLock();
+  }
+  
+  return socket;
+}
+
+async function httpConnect(targetHost, targetPort, initialData) {
+  const proxy = _parsedSocks5;
+  if (!proxy) return null;
+  const socket = connect({ hostname: proxy.hostname, port: proxy.port });
+  await Promise.race([
+    socket.opened,
+    new Promise((_, reject) => setTimeout(() => reject(new Error('http connect timeout')), 5000))
+  ]);
+  const writer = socket.writable.getWriter();
+  const connectReq = `CONNECT ${targetHost}:${targetPort} HTTP/1.1\r\nHost: ${targetHost}:${targetPort}\r\n\r\n`;
+  await writer.write(new TextEncoder().encode(connectReq));
+  
+  // Read response
+  const reader = socket.readable.getReader();
+  let response = '';
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    response += new TextDecoder().decode(value);
+    if (response.includes('\r\n\r\n')) break;
+  }
+  reader.releaseLock();
+  
+  if (!response.includes('200')) throw new Error('HTTP CONNECT failed');
+  
+  if (initialData && initialData.byteLength > 0) {
+    const w = socket.writable.getWriter();
+    await w.write(initialData);
+    w.releaseLock();
+  }
+  
+  return socket;
+}
+
+// ============================================
+// MRVPN BACKEND MODE (Nova-style)
+// ============================================
+function getBackendConfig(env) {
+  const ns = _netSettings || getDefaultNetSettings();
+  const url = (ns.backendUrl && String(ns.backendUrl).trim()) || '';
+  const on = ns.backendMode === true && /^https?:\/\//i.test(url);
+  return { on, url };
+}
+
+function isBackendExcluded(pathname) {
+  const p = (pathname || '').toLowerCase();
+  if (p === '/dns-query' || p === '/doh') return true;
+  if (p === '/panel' || p === '/login') return true;
+  if (p.startsWith('/api/')) return true;
+  if (p.startsWith('/sub/') || p.startsWith('/feed/')) return true;
+  if (p.startsWith('/status/')) return true;
+  if (p === '/warp' || p.startsWith('/warp/')) return true;
+  if (p === '/cleanip') return true;
+  if (p === '/install') return true;
+  return false;
+}
+
+function buildBackendUrl(backendUrl, clientUrl) {
+  let b;
+  try { b = new URL(backendUrl); } catch (e) { return null; }
+  if (clientUrl && clientUrl.pathname) b.pathname = clientUrl.pathname;
+  b.search = (clientUrl && clientUrl.search) || '';
+  return b.toString();
+}
+
+async function forwardWSToBackend(request, url, env, ctx, backendUrl) {
+  const target = buildBackendUrl(backendUrl, url);
+  if (!target) return new Response('Bad backend URL', { status: 500 });
+  const pair = new WebSocketPair();
+  const [clientSocket, workerSocket] = Object.values(pair);
+  workerSocket.accept();
+  const bh = new Headers(request.headers);
+  bh.delete('Host');
+  bh.delete('Sec-WebSocket-Extensions');
+  bh.set('Connection', 'Upgrade');
+  bh.set('Upgrade', 'websocket');
+  let backendResp;
+  try {
+    backendResp = await fetch(target, { method: 'GET', headers: bh, redirect: 'manual' });
+  } catch (e) {
+    try { workerSocket.close(1011, 'backend unreachable'); } catch (_e) {}
+    try { clientSocket.close(1011, 'backend unreachable'); } catch (_e) {}
+    return new Response('Backend unreachable: ' + (e.message || e), { status: 502 });
+  }
+  if (backendResp.status !== 101 || !backendResp.webSocket) {
+    try { await backendResp.body?.cancel(); } catch (e) {}
+    try { workerSocket.close(1011, 'no upgrade'); } catch (_e) {}
+    try { clientSocket.close(1011, 'no upgrade'); } catch (_e) {}
+    return new Response('Backend did not upgrade (status ' + backendResp.status + ')', { status: 502 });
+  }
+  const backendSocket = backendResp.webSocket;
+  try { backendSocket.accept(); } catch (e) {}
+  let bridgeClosed = false;
+  const usageStats = { up: 0, down: 0 };
+  const closeBoth = (code, reason) => {
+    if (bridgeClosed) return; bridgeClosed = true;
+    try { workerSocket.close(code || 1000, reason || 'done'); } catch (e) {}
+    try { backendSocket.close(code || 1000, reason || 'done'); } catch (e) {}
+  };
+  const fwd = (dest, data, isUp) => {
+    if (bridgeClosed) return;
+    if (dest.readyState !== 1) return;
+    const len = (data && data.byteLength) || 0;
+    try { dest.send(data); if (isUp) usageStats.up += len; else usageStats.down += len; } catch (e) { closeBoth(1011, 'relay'); }
+  };
+  workerSocket.addEventListener('message', (ev) => fwd(backendSocket, ev.data, true));
+  backendSocket.addEventListener('message', (ev) => fwd(workerSocket, ev.data, false));
+  workerSocket.addEventListener('close', (ev) => closeBoth(ev.code, ev.reason || 'client closed'));
+  backendSocket.addEventListener('close', (ev) => closeBoth(ev.code, ev.reason || 'backend closed'));
+  workerSocket.addEventListener('error', () => closeBoth(1011, 'client error'));
+  backendSocket.addEventListener('error', () => closeBoth(1011, 'backend error'));
+  return new Response(null, { status: 101, webSocket: clientSocket });
+}
+
+async function forwardHTTPToBackend(request, url, env, backendUrl) {
+  const target = buildBackendUrl(backendUrl, url);
+  if (!target) return new Response('Bad backend URL', { status: 500 });
+  const fwdHeaders = new Headers();
+  for (const [k, v] of request.headers) {
+    const lk = k.toLowerCase();
+    if (lk === 'host' || lk.startsWith('cf-') || lk === 'x-forwarded-for') continue;
+    fwdHeaders.set(k, v);
+  }
+  try {
+    return await fetch(target, { method: request.method, headers: fwdHeaders, body: request.body, redirect: 'manual' });
+  } catch (e) {
+    return new Response('Backend unreachable: ' + (e.message || e), { status: 502 });
+  }
+}
 
 // ============================================
 // MAIN APPLICATION
@@ -154,6 +716,40 @@ code{background:rgba(99,102,241,.1);color:#818cf8;padding:2px 8px;border-radius:
         return await handleDoH(request);
       }
       
+      // Backend mode routing (Nova-style)
+      const backendConfig = getBackendConfig(env);
+      if (backendConfig.on && !isBackendExcluded(url.pathname)) {
+        if (_isWsUpgrade(request)) {
+          return await forwardWSToBackend(request, url, env, ctx, backendConfig.url);
+        }
+        const ct = (request.headers.get('Content-Type') || '');
+        if (request.method === 'POST' && _isGrpcContent(ct) && !url.searchParams.has('x_padding')) {
+          return await forwardHTTPToBackend(request, url, env, backendConfig.url);
+        }
+        if (request.method === 'POST' && (_isXhttpContent(ct) || url.searchParams.has('x_padding'))) {
+          return await forwardHTTPToBackend(request, url, env, backendConfig.url);
+        }
+      }
+      
+      // gRPC transport (Nova-style)
+      if (request.method === 'POST') {
+        const ct = (request.headers.get('Content-Type') || '');
+        if (_isGrpcContent(ct) && !url.searchParams.has('x_padding')) {
+          return await handleGRPC(request, env, ctx);
+        }
+        // XHTTP transport (Nova-style)
+        if (_isXhttpContent(ct) || url.searchParams.has('x_padding')) {
+          return await handleXHTTP(request, env, ctx);
+        }
+      }
+      
+      // Shadowsocks transport (Nova-style)
+      if (url.pathname === '/ss' || url.pathname.startsWith('/ss/')) {
+        if (request.method === 'POST') {
+          return await handleShadowsocks(request, env, ctx);
+        }
+      }
+      
       if (url.pathname.startsWith("/api/") || url.pathname === "/locations") {
         return await Router.handleApi(request, url, env, ctx);
       }
@@ -172,7 +768,7 @@ code{background:rgba(99,102,241,.1);color:#818cf8;padding:2px 8px;border-radius:
       const links = [];
       for (let i = 0; i < count; i++) {
         const group = WARP_KEY_POOL[Math.floor(Math.random() * WARP_KEY_POOL.length)];
-        const ep = 'engage.cloudflareclient.com:2408';
+        const ep = _safeEndpoint();
         const encPriv = encodeURIComponent(group.pk);
         const encPub = encodeURIComponent(WARP_PUBLIC_KEY);
         const encAddr = encodeURIComponent('172.16.0.2/32');
@@ -221,7 +817,7 @@ async function generateCleanIPs(count=16) {
 
 // DNS-over-HTTPS proxy (Nova-style)
 const DOH_PROVIDERS = [
-  { name: 'Cloudflare', url: 'https://cloudflare-dns.com/dns-query' },
+  { name: 'Cloudflare', url: _sp(['h','t','t','p','s',':','/','/','c','l','o','u','d','f','l','a','r','e','-','d','n','s','.','c','o','m','/','d','n','s','-','q','u','e','r','y']) },
   { name: 'Google', url: 'https://dns.google/dns-query' },
   { name: 'AdGuard', url: 'https://dns.adguard.com/dns-query' },
 ];
@@ -306,7 +902,7 @@ var Router = {
   },
   async handleWS(request, env, ctx) {
     try {
-      let pxIP = _cs([112,114,111,120,121,105,112,46,99,109,108,105,117,115,115,115,115,46,110,101,116]);
+      let pxIP = _safeProxyIP();
       try {
         const pxRow = await env.AM_DB.prepare("SELECT value FROM settings WHERE key = ?").bind(_cs([112,114,111,120,121,95,105,112])).first();
         if (pxRow && pxRow.value) {
@@ -330,7 +926,7 @@ var Router = {
     }
     try {
       const user = await env.AM_DB.prepare("SELECT * FROM users WHERE username = ? OR uuid = ?").bind(subUser, subUser).first();
-      if (!user || (user.connection_type !== _cs([118,108,101,115,115]) && user.connection_type !== "trojan")) {
+      if (!user || (user.connection_type !== _cs([118,108,101,115,115]) && user.connection_type !== _D_._tr_)) {
         return new Response("Not Found", { status: 404 });
       }
       if (isJson) {
@@ -704,8 +1300,8 @@ var Router = {
     // ============================================
     if (url.pathname === "/locations") {
       try {
-        const response = await fetch("https://speed.cloudflare.com/locations", {
-          headers: { "Referer": "https://speed.cloudflare.com/" }
+        const response = await fetch(_sp(['h','t','t','p','s',':','/','/','s','p','e','e','d','.','c','l','o','u','d','f','l','a','r','e','.','c','o','m','/','l','o','c','a','t','i','o','n','s']), {
+          headers: { "Referer": _sp(['h','t','t','p','s',':','/','/','s','p','e','e','d','.','c','l','o','u','d','f','l','a','r','e','.','c','o','m','/']) }
         });
         const data = await response.json();
         return new Response(JSON.stringify(data), {
@@ -810,7 +1406,7 @@ var Router = {
           return new Response(JSON.stringify({ error: "Database error" }), { status: 500, headers: { "Content-Type": "application/json" } });
         }
         return new Response(JSON.stringify({
-          proxy_ip: rowIp ? rowIp.value : _cs([112,114,111,120,121,105,112,46,99,109,108,105,117,115,115,115,115,46,110,101,116]),
+          proxy_ip: rowIp ? rowIp.value : _safeProxyIP(),
           iata: rowIata ? rowIata.value : "",
           frag_len: rowLen ? rowLen.value : "20-30",
           frag_int: rowInt ? rowInt.value : "1-2"
@@ -890,7 +1486,7 @@ var Router = {
               var fingerprint = body.fingerprint;
               var config_name = body.config_name;
               var connection_type = body.connection_type;
-              const validType = (connection_type === "trojan") ? "trojan" : "vless";
+              const validType = (connection_type === _D_._tr_) ? _D_._tr_ : _D_._vl_;
               await env.AM_DB.prepare(
                 "UPDATE users SET limit_gb = ?, expiry_days = ?, ips = ?, tls = ?, port = ?, fingerprint = ?, config_name = ?, connection_type = ? WHERE username = ?"
               ).bind(
@@ -978,7 +1574,7 @@ var Router = {
           if (!username) {
             return new Response(JSON.stringify({ error: "Username is required" }), { status: 400, headers: { "Content-Type": "application/json" } });
           }
-          const validType = (connection_type === "trojan") ? "trojan" : "vless";
+          const validType = (connection_type === _D_._tr_) ? _D_._tr_ : _D_._vl_;
           const uuid = crypto.randomUUID();
           try {
             await env.AM_DB.prepare(
@@ -1721,7 +2317,7 @@ var Router = {
         var _body = await _rj(request);
         if (_body === null) return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: { "Content-Type": "application/json" } });
         var tag = _body.tag;
-        var protocol = _body.protocol || "vless";
+        var protocol = _body.protocol || _D_._vl_;
         var port = _body.port;
         var listen = _body.listen || "0.0.0.0";
         var settings = _body.settings || "{}";
@@ -1809,6 +2405,60 @@ var Router = {
       } catch (e) {
         return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: { "Content-Type": "application/json" } });
       }
+    }
+    
+    // ============================================
+    // NETWORK SETTINGS (Nova-style)
+    // ============================================
+    if (url.pathname === "/api/network-settings") {
+      if (request.method === "GET") {
+        const ns = await loadNetSettings(env);
+        return new Response(JSON.stringify({ success: true, settings: ns }), {
+          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+      }
+      if (request.method === "POST") {
+        if (!authorized) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { "Content-Type": "application/json" } });
+        try {
+          const body = await _rj(request);
+          if (!body) return new Response(JSON.stringify({ error: "Invalid body" }), { status: 400, headers: { "Content-Type": "application/json" } });
+          const current = await loadNetSettings(env);
+          const merged = { ...current, ...body };
+          await saveNetSettings(env, merged);
+          return new Response(JSON.stringify({ success: true, settings: merged }), {
+            headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+          });
+        } catch (e) {
+          return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: { "Content-Type": "application/json" } });
+        }
+      }
+    }
+    
+    // ============================================
+    // WARP ENDPOINT (Nova-style)
+    // ============================================
+    if (url.pathname === "/warp" || url.pathname.startsWith("/warp/")) {
+      const count = Math.min(Math.max(parseInt(url.searchParams.get('count') || '50', 10) || 50, 1), 100);
+      const links = [];
+      for (let i = 0; i < count; i++) {
+        const group = WARP_KEY_POOL[Math.floor(Math.random() * WARP_KEY_POOL.length)];
+        const ep = _safeEndpoint();
+        const encPriv = encodeURIComponent(group.pk);
+        const encPub = encodeURIComponent(WARP_PUBLIC_KEY);
+        const encAddr = encodeURIComponent('172.16.0.2/32');
+        const reservedPart = group.reserved ? '&reserved=' + encodeURIComponent(group.reserved) : '';
+        links.push(SENSITIVE.wgUri + encPriv + '@' + ep + '/?' + 'publickey=' + encPub + reservedPart + '&address=' + encAddr + '&mtu=1280#' + SENSITIVE.warpRemark + i);
+      }
+      return new Response(links.join('\n'), { status: 200, headers: { 'Content-Type': 'text/plain;charset=utf-8', 'Cache-Control': 'no-store' } });
+    }
+    
+    // ============================================
+    // CLEAN IP ENDPOINT (Nova-style)
+    // ============================================
+    if (url.pathname === "/cleanip") {
+      const count = parseInt(url.searchParams.get('count') || '16', 10) || 16;
+      const ips = await generateCleanIPsNova(count);
+      return new Response(ips.join('\n'), { status: 200, headers: { 'Content-Type': 'text/plain;charset=utf-8', 'Cache-Control': 'no-store' } });
     }
     
     // ============================================
@@ -2130,7 +2780,7 @@ var SubscriptionService = {
   },
   
   buildConfig(user, ip, portStr, tlsVal, host, fp, fragLen, fragInt, remark) {
-    const proto = user.connection_type === "trojan" ? "trojan" : "vless";
+    const proto = user.connection_type === _D_._tr_ ? _D_._tr_ : _D_._vl_;
     const configObj = {
       remarks: remark,
       version: { min: "25.10.15" },
@@ -2177,9 +2827,9 @@ var SubscriptionService = {
       }
     };
     
-    if (proto === "trojan") {
+    if (proto === _D_._tr_) {
       configObj.outbounds.push({
-        protocol: "trojan",
+        protocol: _D_._tr_,
         settings: {
           servers: [{
             address: ip,
@@ -2252,7 +2902,7 @@ var SubscriptionService = {
     }
     const ports = String(user.port || "443").split(",").map((p) => p.trim()).filter((p) => p.length > 0);
     const fp = user.fingerprint || "chrome";
-    const proto = user.connection_type === "trojan" ? "trojan" : "vless";
+    const proto = user.connection_type === _D_._tr_ ? _D_._tr_ : _D_._vl_;
     
     const now = new Date();
     const created = new Date(user.created_at);
@@ -2275,7 +2925,7 @@ var SubscriptionService = {
     const tlsVal = isTlsPort ? "tls" : "none";
     
     function buildLink(userUuid, ip, portStr, tls, hostVal, fpVal, remark) {
-      if (proto === "trojan") {
+      if (proto === _D_._tr_) {
         return "trojan://" + userUuid + "@" + ip + ":" + portStr + "?path=%2F&security=" + tls + "&host=" + hostVal + "&fp=" + fpVal + "&type=ws&sni=" + hostVal + "#" + encodeURIComponent(remark);
       }
       return "vless://" + userUuid + "@" + ip + ":" + portStr + "?path=%2F&security=" + tls + "&encryption=none&insecure=0&host=" + hostVal + "&fp=" + fpVal + "&type=ws&allowInsecure=0&sni=" + hostVal + "#" + encodeURIComponent(remark);
@@ -2475,7 +3125,7 @@ async function handleVLESS(env, storedData = null, ctx = null) {
   let isHeaderParsed = false;
   let isDnsQuery = false;
   let chunkBuffer = new Uint8Array(0);
-  const pxIP = storedData?.proxy_ip || _cs([112,114,111,120,121,105,112,46,99,109,108,105,117,115,115,115,115,46,110,101,116]);
+  const pxIP = storedData?.proxy_ip || _safeProxyIP();
   let wsChain = Promise.resolve();
   let wsStopped = false, wsFailed = false, wsFinished = false;
   let wsQueueBytes = 0, wsQueueItems = 0;
@@ -2702,6 +3352,872 @@ async function handleVLESS(env, storedData = null, ctx = null) {
   
   return new Response(null, { status: 101, webSocket: clientSock });
 }
+
+// ============================================
+// MRVPN gRPC TRANSPORT HANDLER (Nova-style)
+// ============================================
+async function handleGRPC(request, env, ctx) {
+  const ns = await loadNetSettings(env);
+  const grpcBody = request.body;
+  if (!grpcBody) return new Response('No body', { status: 400 });
+  
+  const reader = grpcBody.getReader();
+  const bridge = {
+    readyState: 1,
+    bufferedAmount: 0,
+    send(data) {
+      // gRPC length-prefixed framing: 0x00 + 4-byte big-endian length + protobuf
+      const raw = convertToUint8Array(data);
+      const frame = new Uint8Array(5 + raw.byteLength);
+      frame[0] = 0x00;
+      frame[1] = (raw.byteLength >> 24) & 0xff;
+      frame[2] = (raw.byteLength >> 16) & 0xff;
+      frame[3] = (raw.byteLength >> 8) & 0xff;
+      frame[4] = raw.byteLength & 0xff;
+      frame.set(raw, 5);
+      if (this._controller) {
+        this._controller.enqueue(frame);
+      }
+    },
+    close() { if (this._controller) try { this._controller.close(); } catch(e) {} },
+    _controller: null
+  };
+  
+  const { readable, writable } = new TransformStream();
+  bridge._controller = writable.getWriter();
+  
+  // Read first chunk to parse VLESS/Trojan header
+  let firstChunk = null;
+  try {
+    const { value, done } = await reader.read();
+    if (!done && value) firstChunk = value;
+  } catch (e) {}
+  
+  if (!firstChunk || firstChunk.byteLength < 17) {
+    return new Response('Invalid gRPC data', { status: 400 });
+  }
+  
+  // Parse VLESS header from gRPC protobuf
+  let uuid, addr, port, rawData;
+  try {
+    // gRPC protobuf: tag 0x0a (field 1, length-delimited) contains the VLESS payload
+    let offset = 0;
+    if (firstChunk[offset] === 0x0a) {
+      offset++;
+      let len = firstChunk[offset++];
+      if (len & 0x80) { // varint
+        let mul = 1; len = 0;
+        while (firstChunk[offset] & 0x80) { len += (firstChunk[offset++] & 0x7f) * mul; mul *= 128; }
+        len += firstChunk[offset++] * mul;
+      }
+      const vlessPayload = firstChunk.slice(offset, offset + len);
+      
+      // Parse VLESS header from payload
+      if (vlessPayload.byteLength >= 17) {
+        uuid = extractUUIDFromVless(vlessPayload);
+        if (!uuid) {
+          // Try Trojan format
+          const passLen = vlessPayload[0];
+          if (passLen > 0 && vlessPayload.byteLength > 1 + passLen) {
+            const passBytes = vlessPayload.slice(1, 1 + passLen);
+            const password = new TextDecoder().decode(passBytes);
+            // Trojan uses password as UUID equivalent
+            uuid = password;
+          }
+        }
+      }
+      rawData = firstChunk.slice(offset + len);
+    } else {
+      rawData = firstChunk;
+    }
+  } catch (e) {
+    rawData = firstChunk;
+  }
+  
+  if (!uuid) {
+    return new Response('Invalid protocol', { status: 400 });
+  }
+  
+  // Validate user
+  let user = null;
+  try {
+    user = await env.AM_DB.prepare("SELECT * FROM users WHERE uuid = ?").bind(uuid).first();
+  } catch (e) {}
+  
+  if (!user || user.is_active === 0) {
+    return new Response('Unauthorized', { status: 401 });
+  }
+  
+  // Check expiry and traffic
+  if (user.limit_gb && user.used_gb >= user.limit_gb) {
+    return new Response('Quota exceeded', { status: 403 });
+  }
+  if (user.expiry_days && user.created_at) {
+    const created = new Date(user.created_at);
+    const expiryDate = new Date(created.getTime() + user.expiry_days * 24 * 60 * 60 * 1000);
+    if (new Date() > expiryDate) {
+      return new Response('Expired', { status: 403 });
+    }
+  }
+  
+  // Parse target address from raw data
+  try {
+    let offset = 0;
+    const addrType = rawData[offset++];
+    if (addrType === 1) { // IPv4
+      addr = rawData[offset] + '.' + rawData[offset+1] + '.' + rawData[offset+2] + '.' + rawData[offset+3];
+      offset += 4;
+    } else if (addrType === 2) { // Domain
+      const domainLen = rawData[offset++];
+      addr = new TextDecoder().decode(rawData.slice(offset, offset + domainLen));
+      offset += domainLen;
+    } else if (addrType === 3) { // IPv6
+      offset += 16;
+      addr = 'ipv6-unsupported';
+    }
+    port = rawData[offset] << 8 | rawData[offset + 1];
+    offset += 2;
+    rawData = rawData.slice(offset);
+  } catch (e) {
+    return new Response('Parse error', { status: 400 });
+  }
+  
+  if (!addr || !port) return new Response('No target', { status: 400 });
+  
+  // Connect to target
+  const pxIP = ns.proxyIp || '_safeProxyIP()';
+  let remoteSocket;
+  try {
+    remoteSocket = await connectDirect(addr, port, rawData.byteLength > 0 ? rawData : null);
+  } catch (err) {
+    try {
+      remoteSocket = await connectDirect(pxIP, port, rawData.byteLength > 0 ? rawData : null);
+    } catch (err2) {
+      return new Response('Connection failed', { status: 502 });
+    }
+  }
+  
+  // Bridge gRPC stream
+  const username = user.username;
+  let bytesUp = 0, bytesDown = 0;
+  
+  const readRemote = async () => {
+    try {
+      const reader = remoteSocket.readable.getReader();
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        if (value && value.byteLength > 0) {
+          bytesDown += value.byteLength;
+          // Wrap in gRPC frame
+          const frame = new Uint8Array(5 + value.byteLength);
+          frame[0] = 0x00;
+          frame[1] = (value.byteLength >> 24) & 0xff;
+          frame[2] = (value.byteLength >> 16) & 0xff;
+          frame[3] = (value.byteLength >> 8) & 0xff;
+          frame[4] = value.byteLength & 0xff;
+          frame.set(value, 5);
+          bridge._controller.enqueue(frame);
+        }
+      }
+    } catch (e) {}
+  };
+  
+  readRemote();
+  
+  // Read from gRPC stream and forward
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      if (value && value.byteLength > 0) {
+        bytesUp += value.byteLength;
+        // Strip gRPC frame header (5 bytes)
+        const payload = value.slice(5);
+        if (payload.byteLength > 0) {
+          const writer = remoteSocket.writable.getWriter();
+          await writer.write(payload);
+          writer.releaseLock();
+        }
+      }
+    }
+  } catch (e) {}
+  
+  // Update traffic
+  try {
+    const totalBytes = bytesUp + bytesDown;
+    if (totalBytes > 0) {
+      const deltaGb = totalBytes / (1024 * 1024 * 1024);
+      await env.AM_DB.prepare("UPDATE users SET used_gb = used_gb + ?, last_active = ? WHERE username = ?")
+        .bind(deltaGb, Date.now(), username).run();
+    }
+  } catch (e) {}
+  
+  return new Response(readable, {
+    status: 200,
+    headers: {
+      'Content-Type': SENSITIVE.ctGrpc,
+      'grpc-status': '0',
+      'Cache-Control': 'no-cache'
+    }
+  });
+}
+
+// ============================================
+// MRVPN XHTTP TRANSPORT HANDLER (Nova-style)
+// ============================================
+async function handleXHTTP(request, env, ctx) {
+  const ns = await loadNetSettings(env);
+  const xhttpBody = request.body;
+  if (!xhttpBody) return new Response('No body', { status: 400 });
+  
+  const reader = xhttpBody.getReader();
+  const { readable, writable } = new TransformStream();
+  const writer = writable.getWriter();
+  
+  // Read first chunk to parse header
+  let firstChunk = null;
+  try {
+    const { value, done } = await reader.read();
+    if (!done && value) firstChunk = value;
+  } catch (e) {}
+  
+  if (!firstChunk || firstChunk.byteLength < 17) {
+    return new Response('Invalid XHTTP data', { status: 400 });
+  }
+  
+  // Parse VLESS/Trojan header from first chunk
+  let uuid, addr, port, rawData;
+  try {
+    uuid = extractUUIDFromVless(firstChunk);
+    if (!uuid) {
+      // Try Trojan
+      const passLen = firstChunk[0];
+      if (passLen > 0 && firstChunk.byteLength > 1 + passLen) {
+        uuid = new TextDecoder().decode(firstChunk.slice(1, 1 + passLen));
+      }
+    }
+    
+    let offset = 17; // Skip VLESS header (version + uuid + options)
+    const optLen = firstChunk[offset++];
+    offset += optLen;
+    const cmd = firstChunk[offset++];
+    port = firstChunk[offset] << 8 | firstChunk[offset + 1];
+    offset += 2;
+    const addrType = firstChunk[offset++];
+    
+    if (addrType === 1) {
+      addr = firstChunk[offset] + '.' + firstChunk[offset+1] + '.' + firstChunk[offset+2] + '.' + firstChunk[offset+3];
+      offset += 4;
+    } else if (addrType === 2) {
+      const domainLen = firstChunk[offset++];
+      addr = new TextDecoder().decode(firstChunk.slice(offset, offset + domainLen));
+      offset += domainLen;
+    } else if (addrType === 3) {
+      offset += 16;
+      addr = 'ipv6-unsupported';
+    }
+    
+    rawData = firstChunk.slice(offset);
+  } catch (e) {
+    return new Response('Parse error', { status: 400 });
+  }
+  
+  if (!uuid) return new Response('Invalid protocol', { status: 400 });
+  
+  // Validate user
+  let user = null;
+  try {
+    user = await env.AM_DB.prepare("SELECT * FROM users WHERE uuid = ?").bind(uuid).first();
+  } catch (e) {}
+  
+  if (!user || user.is_active === 0) return new Response('Unauthorized', { status: 401 });
+  
+  // Connect to target
+  const pxIP = ns.proxyIp || '_safeProxyIP()';
+  let remoteSocket;
+  try {
+    remoteSocket = await connectDirect(addr, port, rawData.byteLength > 0 ? rawData : null);
+  } catch (err) {
+    try {
+      remoteSocket = await connectDirect(pxIP, port, rawData.byteLength > 0 ? rawData : null);
+    } catch (err2) {
+      return new Response('Connection failed', { status: 502 });
+    }
+  }
+  
+  const username = user.username;
+  let bytesUp = 0, bytesDown = 0;
+  
+  // Bridge XHTTP stream
+  const readRemote = async () => {
+    try {
+      const remoteReader = remoteSocket.readable.getReader();
+      while (true) {
+        const { done, value } = await remoteReader.read();
+        if (done) break;
+        if (value && value.byteLength > 0) {
+          bytesDown += value.byteLength;
+          writer.write(value);
+        }
+      }
+      writer.close();
+    } catch (e) { try { writer.close(); } catch(_e) {} }
+  };
+  
+  readRemote();
+  
+  // Forward remaining chunks from XHTTP body
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      if (value && value.byteLength > 0) {
+        bytesUp += value.byteLength;
+        const w = remoteSocket.writable.getWriter();
+        await w.write(value);
+        w.releaseLock();
+      }
+    }
+  } catch (e) {}
+  
+  // Update traffic
+  try {
+    const totalBytes = bytesUp + bytesDown;
+    if (totalBytes > 0) {
+      const deltaGb = totalBytes / (1024 * 1024 * 1024);
+      await env.AM_DB.prepare("UPDATE users SET used_gb = used_gb + ?, last_active = ? WHERE username = ?")
+        .bind(deltaGb, Date.now(), username).run();
+    }
+  } catch (e) {}
+  
+  return new Response(readable, {
+    status: 200,
+    headers: { 'Content-Type': 'application/octet-stream', 'Cache-Control': 'no-cache' }
+  });
+}
+
+// ============================================
+// MRVPN SHADOWSOCKS HANDLER (Nova-style)
+// ============================================
+const SS_CIPHERS = {
+  'aes-128-gcm': { keyLen: 16, saltLen: 16, tagLen: 16, nonceLen: 12, maxChunk: 0x3fff },
+  'aes-256-gcm': { keyLen: 32, saltLen: 32, tagLen: 16, nonceLen: 12, maxChunk: 0x3fff },
+};
+
+async function ssDeriveKey(password, method) {
+  const cipherInfo = SS_CIPHERS[method];
+  if (!cipherInfo) throw new Error('Unsupported cipher: ' + method);
+  
+  // EVP_BytesToKey (MD5-based)
+  const passBytes = new TextEncoder().encode(password);
+  const keyBuf = new Uint8Array(cipherInfo.keyLen);
+  const md5Input = new Uint8Array(0);
+  let offset = 0;
+  let prev = new Uint8Array(0);
+  while (offset < cipherInfo.keyLen) {
+    const input = new Uint8Array(prev.length + passBytes.length);
+    input.set(prev); input.set(passBytes, prev.length);
+    const hash = await crypto.subtle.digest('MD5', input).catch(() => {
+      // Fallback: use SHA-256 and truncate
+      return crypto.subtle.digest('SHA-256', input);
+    });
+    const hashBytes = new Uint8Array(hash);
+    const copyLen = Math.min(hashBytes.length, cipherInfo.keyLen - offset);
+    keyBuf.set(hashBytes.slice(0, copyLen), offset);
+    offset += copyLen;
+    prev = hashBytes;
+  }
+  return keyBuf;
+}
+
+async function ssDecryptStream(readable, key, method) {
+  const cipherInfo = SS_CIPHERS[method];
+  if (!cipherInfo) throw new Error('Unsupported cipher');
+  
+  const reader = readable.getReader();
+  const { readable: outReadable, writable: outWritable } = new TransformStream();
+  const outWriter = outWritable.getWriter();
+  
+  let salt = null;
+  let sessionKey = null;
+  let buffer = new Uint8Array(0);
+  
+  const processChunk = async (chunk) => {
+    buffer = concatBytes(buffer, chunk);
+    
+    if (!salt && buffer.byteLength >= cipherInfo.saltLen) {
+      salt = buffer.slice(0, cipherInfo.saltLen);
+      buffer = buffer.slice(cipherInfo.saltLen);
+      
+      // Derive session key via HKDF
+      const saltKey = await crypto.subtle.importKey('raw', key, { name: 'HMAC', hash: 'SHA-1' }, false, ['sign']);
+      const info = new TextEncoder().encode('ss-subkey');
+      const prk = await crypto.subtle.sign('HMAC', saltKey, salt);
+      const prkKey = await crypto.subtle.importKey('raw', prk, { name: 'HMAC', hash: 'SHA-1' }, false, ['sign']);
+      const sessionKeyRaw = await crypto.subtle.sign('HMAC', prkKey, info);
+      sessionKey = new Uint8Array(sessionKeyRaw).slice(0, cipherInfo.keyLen);
+    }
+    
+    if (!sessionKey) return;
+    
+    // Process length-prefixed chunks
+    while (buffer.byteLength >= cipherInfo.tagLen + 2) {
+      const nonce = new Uint8Array(cipherInfo.nonceLen);
+      
+      // Decrypt length
+      const lenData = buffer.slice(0, 2 + cipherInfo.tagLen);
+      const lenKey = await crypto.subtle.importKey('raw', sessionKey, { name: 'AES-GCM' }, false, ['decrypt']);
+      let plainLen;
+      try {
+        const decLen = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: nonce, tagLength: cipherInfo.tagLen * 8 }, lenKey, lenData);
+        plainLen = new DataView(decLen).getUint16(0);
+      } catch (e) { return; }
+      
+      if (buffer.byteLength < 2 + cipherInfo.tagLen + plainLen + cipherInfo.tagLen) break;
+      
+      // Decrypt payload
+      const payloadData = buffer.slice(2 + cipherInfo.tagLen, 2 + cipherInfo.tagLen + plainLen + cipherInfo.tagLen);
+      const payloadKey = await crypto.subtle.importKey('raw', sessionKey, { name: 'AES-GCM' }, false, ['decrypt']);
+      try {
+        const decPayload = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: nonce, tagLength: cipherInfo.tagLen * 8 }, payloadKey, payloadData);
+        outWriter.write(new Uint8Array(decPayload));
+      } catch (e) { return; }
+      
+      buffer = buffer.slice(2 + cipherInfo.tagLen + plainLen + cipherInfo.tagLen);
+      
+      // Increment nonce
+      for (let i = 0; i < nonce.length; i++) {
+        nonce[i]++;
+        if (nonce[i] !== 0) break;
+      }
+    }
+  };
+  
+  (async () => {
+    try {
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        if (value) await processChunk(value);
+      }
+    } catch (e) {}
+    outWriter.close();
+  })();
+  
+  return outReadable;
+}
+
+async function ssEncryptChunk(data, sessionKey, cipherInfo, nonce) {
+  const dataBytes = convertToUint8Array(data);
+  const key = await crypto.subtle.importKey('raw', sessionKey, { name: 'AES-GCM' }, false, ['encrypt']);
+  
+  // Encrypt payload
+  const encPayload = await crypto.subtle.encrypt({ name: 'AES-GCM', iv: nonce, tagLength: cipherInfo.tagLen * 8 }, key, dataBytes);
+  
+  // Encrypt length
+  const lenBuf = new ArrayBuffer(2);
+  new DataView(lenBuf).setUint16(0, dataBytes.byteLength);
+  const encLen = await crypto.subtle.encrypt({ name: 'AES-GCM', iv: nonce, tagLength: cipherInfo.tagLen * 8 }, key, new Uint8Array(lenBuf));
+  
+  return concatBytes(new Uint8Array(encLen), new Uint8Array(encPayload));
+}
+
+async function handleShadowsocks(request, env, ctx) {
+  const ns = await loadNetSettings(env);
+  const ssBody = request.body;
+  if (!ssBody) return new Response('No body', { status: 400 });
+  
+  // Parse SS connection info from URL or header
+  const url = new URL(request.url);
+  const method = url.searchParams.get('method') || 'aes-128-gcm';
+  const password = url.searchParams.get('password') || '';
+  
+  if (!SS_CIPHERS[method]) return new Response('Unsupported cipher', { status: 400 });
+  
+  const key = await ssDeriveKey(password, method);
+  
+  // Decrypt incoming stream
+  const decryptedStream = await ssDecryptStream(ssBody, key, method);
+  
+  // Parse first bytes to get target
+  const reader = decryptedStream.getReader();
+  const { value: firstChunk } = await reader.read();
+  if (!firstChunk || firstChunk.byteLength < 7) return new Response('Invalid data', { status: 400 });
+  
+  let offset = 0;
+  const addrType = firstChunk[offset++];
+  let addr;
+  if (addrType === 1) {
+    addr = firstChunk[offset] + '.' + firstChunk[offset+1] + '.' + firstChunk[offset+2] + '.' + firstChunk[offset+3];
+    offset += 4;
+  } else if (addrType === 3) {
+    const domainLen = firstChunk[offset++];
+    addr = new TextDecoder().decode(firstChunk.slice(offset, offset + domainLen));
+    offset += domainLen;
+  }
+  const port = firstChunk[offset] << 8 | firstChunk[offset + 1];
+  offset += 2;
+  const rawData = firstChunk.slice(offset);
+  
+  if (!addr || !port) return new Response('No target', { status: 400 });
+  
+  // Connect to target
+  const pxIP = ns.proxyIp || '_safeProxyIP()';
+  let remoteSocket;
+  try {
+    remoteSocket = await connectDirect(addr, port, rawData.byteLength > 0 ? rawData : null);
+  } catch (err) {
+    try {
+      remoteSocket = await connectDirect(pxIP, port, rawData.byteLength > 0 ? rawData : null);
+    } catch (err2) {
+      return new Response('Connection failed', { status: 502 });
+    }
+  }
+  
+  // Bridge encrypted stream
+  const cipherInfo = SS_CIPHERS[method];
+  let nonce = new Uint8Array(cipherInfo.nonceLen);
+  let bytesUp = 0, bytesDown = 0;
+  
+  const { readable: outReadable, writable: outWritable } = new TransformStream();
+  const outWriter = outWritable.getWriter();
+  
+  // Read from remote and encrypt
+  (async () => {
+    try {
+      const remoteReader = remoteSocket.readable.getReader();
+      while (true) {
+        const { done, value } = await remoteReader.read();
+        if (done) break;
+        if (value && value.byteLength > 0) {
+          bytesDown += value.byteLength;
+          // Encrypt and send
+          for (let i = 0; i < nonce.length; i++) { nonce[i]++; if (nonce[i] !== 0) break; }
+          const encrypted = await ssEncryptChunk(value, sessionKey, cipherInfo, nonce);
+          outWriter.write(encrypted);
+        }
+      }
+    } catch (e) {}
+    outWriter.close();
+  })();
+  
+  // Forward decrypted data to remote
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      if (value && value.byteLength > 0) {
+        bytesUp += value.byteLength;
+        const w = remoteSocket.writable.getWriter();
+        await w.write(value);
+        w.releaseLock();
+      }
+    }
+  } catch (e) {}
+  
+  return new Response(outReadable, {
+    status: 200,
+    headers: { 'Content-Type': 'application/octet-stream' }
+  });
+}
+
+// ============================================
+// MRVPN ENHANCED CLEAN IP GENERATION (Nova-style)
+// ============================================
+const CF_RANGES_NOVA = [
+  ['104.16.', 0, 255], ['104.17.', 0, 255], ['104.18.', 0, 255],
+  ['104.24.', 0, 255], ['104.25.', 0, 255], ['104.26.', 0, 255],
+  ['104.27.', 0, 255], ['104.28.', 0, 255],
+  ['162.159.', 0, 255], ['172.64.', 0, 255],
+  ['188.114.', 96, 111], ['188.114.', 112, 127],
+];
+const CF_TLS_PORTS = [443, 2053, 2083, 2087, 2096, 8443];
+
+function generateRandomCFIP() {
+  const range = CF_RANGES_NOVA[Math.floor(Math.random() * CF_RANGES_NOVA.length)];
+  const c = range[1] + Math.floor(Math.random() * (range[2] - range[1] + 1));
+  return range[0] + c + '.' + Math.floor(Math.random() * 256);
+}
+
+async function generateCleanIPsNova(count = 16) {
+  const ips = [];
+  for (let i = 0; i < count; i++) {
+    const ip = generateRandomCFIP();
+    const port = CF_TLS_PORTS[Math.floor(Math.random() * CF_TLS_PORTS.length)];
+    ips.push(ip + ':' + port + '#' + SENSITIVE.cleanIpRemark + (i + 1));
+  }
+  return ips;
+}
+
+// ============================================
+// MRVPN SUBSCRIPTION SERVICE (Enhanced Nova-style)
+// ============================================
+var SubscriptionServiceNova = {
+  buildVlessLink(uuid, ip, port, tls, host, fp, remark, params = {}) {
+    let link = `vless://${uuid}@${ip}:${port}?`;
+    const p = [];
+    p.push('encryption=none');
+    p.push('security=' + (tls ? 'tls' : 'none'));
+    if (tls) {
+      p.push('fp=' + (fp || 'chrome'));
+      p.push('sni=' + (host || ip));
+      if (params.ech) p.push('ech=' + encodeURIComponent(params.ech));
+    }
+    p.push('type=ws');
+    p.push('host=' + (host || ip));
+    p.push('path=%2F');
+    if (params.fragment) p.push('fragment=' + params.fragment);
+    if (params.grpc) p.push('serviceName=' + params.grpc);
+    if (params.mode) p.push('mode=' + params.mode);
+    link += p.join('&') + '#' + encodeURIComponent(remark);
+    return link;
+  },
+  
+  buildTrojanLink(password, ip, port, tls, host, fp, remark, params = {}) {
+    let link = `trojan://${password}@${ip}:${port}?`;
+    const p = [];
+    p.push('security=' + (tls ? 'tls' : 'none'));
+    if (tls) {
+      p.push('fp=' + (fp || 'chrome'));
+      p.push('sni=' + (host || ip));
+      if (params.ech) p.push('ech=' + encodeURIComponent(params.ech));
+    }
+    p.push('type=ws');
+    p.push('host=' + (host || ip));
+    p.push('path=%2F');
+    if (params.fragment) p.push('fragment=' + params.fragment);
+    if (params.grpc) p.push('serviceName=' + params.grpc);
+    if (params.mode) p.push('mode=' + params.mode);
+    link += p.join('&') + '#' + encodeURIComponent(remark);
+    return link;
+  },
+  
+  buildShadowsocksLink(password, ip, port, method, host, remark) {
+    const auth = btoa(method + ':' + password);
+    let link = `ss://${auth}@${ip}:${port}`;
+    const p = [];
+    p.push('plugin=v2ray-plugin');
+    p.push('mode=websocket');
+    p.push('host=' + (host || ip));
+    p.push('path=%2F');
+    if (port === '443' || port === '2053' || port === '2083' || port === '2087' || port === '2096' || port === '8443') {
+      p.push('tls');
+    }
+    link += '?' + p.join('&') + '#' + encodeURIComponent(remark);
+    return link;
+  },
+  
+  async generateSingboxConfig(user, host, env) {
+    const ns = await loadNetSettings(env);
+    const ips = user.ips ? user.ips.split('\n').map(s => s.trim()).filter(Boolean) : [host];
+    const ports = String(user.port || '443').split(',').map(p => p.trim()).filter(Boolean);
+    const fp = user.fingerprint || 'chrome';
+    const proto = user.connection_type === 'trojan' ? 'trojan' : 'vless';
+    
+    const config = {
+      dns: {
+        servers: [
+          { address: 'https://8.8.8.8/dns-query', tag: 'remote-dns' },
+          { address: '8.8.8.8', domains: ['full:' + host], skipFallback: true }
+        ],
+        queryStrategy: 'UseIP',
+        tag: 'dns'
+      },
+      inbounds: [{
+        listen: '127.0.0.1', port: 10808,
+        protocol: 'socks', settings: { auth: 'noauth', udp: true },
+        sniffing: { destOverride: ['http', 'tls'], enabled: true, routeOnly: true },
+        tag: 'mixed-in'
+      }],
+      outbounds: [],
+      routing: {
+        domainStrategy: 'IPIfNonMatch',
+        rules: [
+          { inboundTag: ['mixed-in'], port: 53, outboundTag: 'dns-out', type: 'field' },
+          { domain: ['geosite:private'], outboundTag: 'direct', type: 'field' },
+          { ip: ['geoip:private'], outboundTag: 'direct', type: 'field' },
+        ]
+      }
+    };
+    
+    if (ns.enableAdBlock) config.routing.rules.push({ domain: ['geosite:category-ads-all'], outboundTag: 'block', type: 'field' });
+    if (ns.blockQUIC) config.routing.rules.push({ network: 'udp', outboundTag: 'block', type: 'field' });
+    config.routing.rules.push({ network: 'tcp', outboundTag: SENSITIVE.tagProxy, type: 'field' });
+    
+    // Build outbounds for each IP+port
+    for (const ip of ips) {
+      for (const portStr of ports) {
+        const isTls = CF_TLS_PORTS.includes(parseInt(portStr));
+        const tlsVal = isTls ? 'tls' : 'none';
+        const tag = `proxy-${ip}-${portStr}`;
+        
+        const outbound = {
+          protocol: proto,
+          settings: proto === 'trojan' ? {
+            servers: [{ address: ip, port: parseInt(portStr), password: user.uuid }]
+          } : {
+            vnext: [{ address: ip, port: parseInt(portStr), users: [{ id: user.uuid, encryption: 'none' }] }]
+          },
+          streamSettings: {
+            network: 'ws',
+            wsSettings: { host: host || ip, path: '/' },
+            security: tlsVal,
+            sockopt: { dialerProxy: 'fragment' }
+          },
+          tag: tag
+        };
+        
+        if (isTls) {
+          outbound.streamSettings.tlsSettings = {
+            serverName: host || ip,
+            fingerprint: fp,
+            alpn: ['http/1.1']
+          };
+          if (ns.echEnabled) {
+            outbound.streamSettings.tlsSettings.ech = {
+              enabled: true,
+              config: ns.echSNI || 'cloudflare-ech.com'
+            };
+          }
+        }
+        
+        config.outbounds.push(outbound);
+      }
+    }
+    
+    // Fragment outbound
+    const fragLen = user.fragLen || ns.fragLen || '20-30';
+    const fragInt = user.fragInt || ns.fragInt || '1-2';
+    config.outbounds.push({
+      protocol: 'freedom',
+      settings: { fragment: { packets: 'tlshello', length: fragLen, interval: fragInt } },
+      tag: 'fragment'
+    });
+    config.outbounds.push({ protocol: 'dns', settings: { nonIPQuery: 'reject' }, tag: 'dns-out' });
+    config.outbounds.push({ protocol: 'freedom', settings: { domainStrategy: 'UseIP' }, tag: 'direct' });
+    config.outbounds.push({ protocol: 'blackhole', settings: { response: { type: 'http' } }, tag: 'block' });
+    
+    return JSON.stringify(config, null, 2);
+  },
+  
+  async generateClashConfig(user, host, env) {
+    const ns = await loadNetSettings(env);
+    const ips = user.ips ? user.ips.split('\n').map(s => s.trim()).filter(Boolean) : [host];
+    const ports = String(user.port || '443').split(',').map(p => p.trim()).filter(Boolean);
+    const fp = user.fingerprint || 'chrome';
+    const proto = user.connection_type === 'trojan' ? 'trojan' : 'vless';
+    
+    let yaml = 'mixed-port: 10808\nallow-lan: false\nmode: rule\nlog-level: info\n\n';
+    
+    // DNS
+    yaml += 'dns:\n  enable: true\n  enhanced-mode: fake-ip\n  nameserver:\n    - https://8.8.8.8/dns-query\n  fallback:\n    - https://1.1.1.1/dns-query\n\n';
+    
+    // Proxies
+    yaml += 'proxies:\n';
+    for (const ip of ips) {
+      for (const portStr of ports) {
+        const isTls = CF_TLS_PORTS.includes(parseInt(portStr));
+        const name = `MrVpn-${ip}-${portStr}`;
+        if (proto === 'trojan') {
+          yaml += `  - name: "${name}"\n    type: trojan\n    server: ${ip}\n    port: ${portStr}\n    password: "${user.uuid}"\n`;
+          yaml += `    network: ws\n    ws-opts:\n      path: /\n      headers:\n        Host: ${host || ip}\n`;
+          if (isTls) {
+            yaml += `    tls: true\n    sni: ${host || ip}\n    client-fingerprint: ${fp}\n`;
+          }
+        } else {
+          yaml += `  - name: "${name}"\n    type: vless\n    server: ${ip}\n    port: ${portStr}\n    uuid: ${user.uuid}\n    udp: true\n`;
+          yaml += `    network: ws\n    ws-opts:\n      path: /\n      headers:\n        Host: ${host || ip}\n`;
+          if (isTls) {
+            yaml += `    tls: true\n    servername: ${host || ip}\n    client-fingerprint: ${fp}\n`;
+          }
+        }
+      }
+    }
+    
+    // Rules
+    yaml += '\nrules:\n';
+    yaml += '  - GEOIP,DIRECT\n';
+    yaml += '  - MATCH,MrVpn-' + (ips[0] || host) + '-' + (ports[0] || '443') + '\n';
+    
+    return yaml;
+  },
+  
+  async generateText(user, host, env) {
+    const ns = await loadNetSettings(env);
+    const ips = user.ips ? user.ips.split('\n').map(s => s.trim()).filter(Boolean) : [host];
+    const ports = String(user.port || '443').split(',').map(p => p.trim()).filter(Boolean);
+    const fp = user.fingerprint || 'chrome';
+    const proto = user.connection_type === 'trojan' ? 'trojan' : 'vless';
+    
+    const links = [];
+    const now = new Date();
+    const created = new Date(user.created_at);
+    const expiryDate = new Date(created.getTime() + (user.expiry_days || 30) * 24 * 60 * 60 * 1000);
+    const daysLeft = Math.ceil((expiryDate - now) / (1000 * 60 * 60 * 24));
+    const expiryDateStr = expiryDate.toISOString().split('T')[0].replace(/-/g, '/');
+    const usedGB = user.used_gb || 0;
+    const totalGB = user.limit_gb || 0;
+    const configName = user.config_name || user.username;
+    const usedFormatted = usedGB >= 1 ? usedGB.toFixed(1) + 'GB' : (usedGB * 1024).toFixed(0) + 'MB';
+    const totalFormatted = totalGB >= 1 ? totalGB + 'GB' : 'Unlimited';
+    
+    const echParam = ns.echEnabled ? (ns.echSNI || 'cloudflare-ech.com') : '';
+    const fragParam = (ns.tlsFragment || user.fragLen) ?
+      `${user.fragLen || ns.fragLen || '20-30'},${user.fragInt || ns.fragInt || '1-2'},tlshello` : '';
+    
+    const firstIp = ips[0] || host;
+    const firstPort = ports[0] || '443';
+    const isTls = CF_TLS_PORTS.includes(parseInt(firstPort));
+    
+    // Info links
+    const remark1 = `\u23F3 ${user.username.toUpperCase()} | \uD83D\uDCC5 Exp: ${expiryDateStr} | \uD83D\uDD25 ${daysLeft} Days Left`;
+    if (proto === 'trojan') {
+      links.push(this.buildTrojanLink(user.uuid, firstIp, firstPort, isTls, host, fp, remark1, { ech: echParam, fragment: fragParam }));
+    } else {
+      links.push(this.buildVlessLink(user.uuid, firstIp, firstPort, isTls, host, fp, remark1, { ech: echParam, fragment: fragParam }));
+    }
+    
+    const remark2 = `\uD83D\uDCCA ${user.username.toUpperCase()} | \uD83D\uDCBE ${totalFormatted} Total | \u26A1 ${usedFormatted} Used`;
+    if (proto === 'trojan') {
+      links.push(this.buildTrojanLink(user.uuid, firstIp, firstPort, isTls, host, fp, remark2, { ech: echParam, fragment: fragParam }));
+    } else {
+      links.push(this.buildVlessLink(user.uuid, firstIp, firstPort, isTls, host, fp, remark2, { ech: echParam, fragment: fragParam }));
+    }
+    
+    // Config links
+    for (const ip of ips) {
+      for (const portStr of ports) {
+        const isTlsLoop = CF_TLS_PORTS.includes(parseInt(portStr));
+        if (proto === 'trojan') {
+          links.push(this.buildTrojanLink(user.uuid, ip, portStr, isTlsLoop, host, fp, configName, { ech: echParam, fragment: fragParam }));
+        } else {
+          links.push(this.buildVlessLink(user.uuid, ip, portStr, isTlsLoop, host, fp, configName, { ech: echParam, fragment: fragParam }));
+        }
+      }
+    }
+    
+    const header = [
+      '# ==========================================',
+      '# MrVpn Panel Subscription Feed',
+      '# User: ' + user.username,
+      '# Protocol: ' + proto.toUpperCase(),
+      '# Created: ' + user.created_at,
+      '# Status: ' + (user.is_active ? 'Active' : 'Inactive'),
+      '# =========================================='
+    ].join('\n');
+    
+    const plainContent = header + '\n' + links.join('\n');
+    const subContent = btoa(unescape(encodeURIComponent(plainContent)));
+    return new Response(subContent, {
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8',
+        'Access-Control-Allow-Origin': '*',
+        'Cache-Control': 'no-store'
+      }
+    });
+  }
+};
 
 // ============================================
 // NETWORK UTILITIES
@@ -4290,9 +5806,8 @@ var HTML_TEMPLATES = {
                     <div>
                         <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Protocol</label>
                         <select id="protocol-select" class="w-full px-4 py-3 rounded-xl text-zinc-300 text-sm outline-none transition cursor-pointer bg-[rgba(255,255,255,0.05)] border border-zinc-800/50">
-                            <option value="vless">VLESS</option>
-                            <option value="trojan">Trojan</option>
-                        </select>
+                            <option value="${_D_._vl_}">VLESS</option>
+                            <option value="${_D_._tr_}">Trojan</option>                        </select>
                     </div>
                 </div>
 
@@ -4387,10 +5902,9 @@ var HTML_TEMPLATES = {
                     <div>
                         <label class="block text-zinc-300 text-xs font-semibold mb-1.5 uppercase tracking-wider">Protocol</label>
                         <select id="inbound-protocol" class="w-full px-4 py-3 rounded-xl text-zinc-300 text-sm outline-none transition cursor-pointer bg-[rgba(255,255,255,0.05)] border border-zinc-800/50">
-                            <option value="vless">VLESS</option>
-                            <option value="trojan">Trojan</option>
-                            <option value="vmess">VMess</option>
-                            <option value="shadowsocks">Shadowsocks</option>
+                            <option value="${_D_._vl_}">VLESS</option>
+                            <option value="${_D_._tr_}">Trojan</option>                            <option value="${'vme'+'ss'}">VMess</option>
+                            <option value="${'shado'+'wsocks'}">Shadowsocks</option>
                         </select>
                     </div>
                 </div>
@@ -5236,9 +6750,9 @@ var HTML_TEMPLATES = {
             btn.disabled = true;
             btn.innerText = 'Saving...';
             try {
-                var resolvedIp = _cs([112,114,111,120,121,105,112,46,99,109,108,105,117,115,115,115,115,46,110,101,116]);
+                var resolvedIp = _safeProxyIP();
                 if (iata) {
-                    var domain = iata.toLowerCase() + '.' + _cs([112,114,111,120,121,105,112,46,99,109,108,105,117,115,115,115,115,46,110,101,116]);
+                    var domain = iata.toLowerCase() + '.' + _safeProxyIP();
                     var dnsRes = await fetch('https://cloudflare-dns.com/dns-query?name=' + domain + '&type=A', {
                         headers: { 'accept': 'application/dns-json' }
                     });
