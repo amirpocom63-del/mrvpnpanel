@@ -854,13 +854,6 @@ async function handleDoH(request) {
   }
 }
 
-// WARP key pool for WireGuard configs (Nova-style)
-const WARP_KEY_POOL = [
-  { pk: 'AKs7CKzbDVmfjSgCB4A1JNI5YBMclHYV2OQ7srIijW4=', reserved: '' },
-  { pk: 'ILJiqBa4QguF5YHRiB9Xfq2Ll01qbYe4dUKZLdgNTFs=', reserved: '' },
-];
-const WARP_PUBLIC_KEY = 'bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=';
-
 // Panic mode (Nova-style): rotate paths and pause service
 function novaDisguise(env) {
   return { on: false, adminPath: '', loginPath: '', subPath: '', pubAdmin: '/admin', pubLogin: '/login' };
@@ -2432,33 +2425,6 @@ var Router = {
           return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: { "Content-Type": "application/json" } });
         }
       }
-    }
-    
-    // ============================================
-    // WARP ENDPOINT (Nova-style)
-    // ============================================
-    if (url.pathname === "/warp" || url.pathname.startsWith("/warp/")) {
-      const count = Math.min(Math.max(parseInt(url.searchParams.get('count') || '50', 10) || 50, 1), 100);
-      const links = [];
-      for (let i = 0; i < count; i++) {
-        const group = WARP_KEY_POOL[Math.floor(Math.random() * WARP_KEY_POOL.length)];
-        const ep = _safeEndpoint();
-        const encPriv = encodeURIComponent(group.pk);
-        const encPub = encodeURIComponent(WARP_PUBLIC_KEY);
-        const encAddr = encodeURIComponent('172.16.0.2/32');
-        const reservedPart = group.reserved ? '&reserved=' + encodeURIComponent(group.reserved) : '';
-        links.push(SENSITIVE.wgUri + encPriv + '@' + ep + '/?' + 'publickey=' + encPub + reservedPart + '&address=' + encAddr + '&mtu=1280#' + SENSITIVE.warpRemark + i);
-      }
-      return new Response(links.join('\n'), { status: 200, headers: { 'Content-Type': 'text/plain;charset=utf-8', 'Cache-Control': 'no-store' } });
-    }
-    
-    // ============================================
-    // CLEAN IP ENDPOINT (Nova-style)
-    // ============================================
-    if (url.pathname === "/cleanip") {
-      const count = parseInt(url.searchParams.get('count') || '16', 10) || 16;
-      const ips = await generateCleanIPsNova(count);
-      return new Response(ips.join('\n'), { status: 200, headers: { 'Content-Type': 'text/plain;charset=utf-8', 'Cache-Control': 'no-store' } });
     }
     
     // ============================================
