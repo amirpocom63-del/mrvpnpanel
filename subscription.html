@@ -1,127 +1,205 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MrVpn294 - Subscription</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; }
-        .bg-animated {
-            position: fixed; inset: 0; z-index: 0;
-            background: linear-gradient(135deg, #0a0e1a 0%, #0f172a 25%, #0a0e1a 50%, #1e1b4b 75%, #0a0e1a 100%);
-            background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
-        }
-        @keyframes gradientShift { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
-        .bg-animated::before {
-            content: ''; position: absolute; inset: 0;
-            background: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&q=80') center/cover no-repeat;
-            opacity: 0.06;
-        }
-        .orb { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.25; animation: float 8s ease-in-out infinite; }
-        .orb-1 { width: 350px; height: 350px; background: rgba(99,102,241,0.3); top: -80px; left: -80px; }
-        .orb-2 { width: 250px; height: 250px; background: rgba(139,92,246,0.2); bottom: -40px; right: -40px; animation-delay: 3s; }
-        @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-20px)} }
-        .glass { background: rgba(15,23,42,0.6); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); }
-        .glass-card { background: rgba(15,23,42,0.5); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.06); transition: all 0.3s; }
-        .glass-card:hover { border-color: rgba(99,102,241,0.3); transform: translateY(-2px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
-        .glow-text { text-shadow: 0 0 20px rgba(99,102,241,0.5); }
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(99,102,241,0.3); border-radius: 3px; }
-        .animate-in { animation: slideUp 0.6s ease-out forwards; opacity: 0; }
-        .delay-1 { animation-delay: 0.1s; } .delay-2 { animation-delay: 0.2s; } .delay-3 { animation-delay: 0.3s; }
-        @keyframes slideUp { 0%{opacity:0;transform:translateY(30px)} 100%{opacity:1;transform:translateY(0)} }
-        .config-item { background: rgba(15,23,42,0.4); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 12px 16px; transition: all 0.2s; cursor: pointer; }
-        .config-item:hover { background: rgba(99,102,241,0.08); border-color: rgba(99,102,241,0.2); }
-        .copy-btn { background: linear-gradient(135deg, #6366f1, #8b5cf6); transition: all 0.3s; }
-        .copy-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(99,102,241,0.4); }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#0a0e1a;color:#e2e8f0;min-height:100vh}
+        :root{--brand:#6366f1;--brand-light:#818cf8;--purple:#8b5cf6;--emerald:#10b981;--cyan:#06b6d4;--rose:#f43f5e;--amber:#f59e0b}
+        .bg-anim{position:fixed;inset:0;z-index:0;background:linear-gradient(135deg,#0a0e1a 0%,#0f172a 25%,#0a0e1a 50%,#1e1b4b 75%,#0a0e1a 100%);background-size:400% 400%;animation:gradShift 15s ease infinite}
+        @keyframes gradShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+        .bg-anim::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&q=80') center/cover no-repeat;opacity:.06}
+        .orb{position:absolute;border-radius:50%;filter:blur(60px);opacity:.2;animation:floatOrb 8s ease-in-out infinite}
+        @keyframes floatOrb{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+        .orb1{width:350px;height:350px;background:rgba(99,102,241,.3);top:-80px;left:-80px}
+        .orb2{width:250px;height:250px;background:rgba(139,92,246,.2);bottom:-40px;right:-40px;animation-delay:3s}
+        .glass{background:rgba(15,23,42,.65);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.07)}
+        .glass-card{background:rgba(15,23,42,.5);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.06);border-radius:20px;transition:all .3s}
+        .glass-card:hover{border-color:rgba(99,102,241,.2);transform:translateY(-2px);box-shadow:0 16px 40px rgba(0,0,0,.25)}
+        .container{position:relative;z-index:10;max-width:640px;margin:0 auto;padding:16px}
+        .header{display:flex;align-items:center;justify-content:space-between;padding:16px 0;margin-bottom:8px}
+        .header-left{display:flex;align-items:center;gap:10px}
+        .logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--purple));display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(99,102,241,.2)}
+        .logo svg{width:18px;height:18px;color:#fff}
+        .brand{font-size:16px;font-weight:800;color:#fff}
+        .sub-label{font-size:11px;color:#64748b}
+        .profile-card{padding:24px;margin-bottom:16px}
+        .profile-top{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+        .avatar{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(16,185,129,.2);flex-shrink:0}
+        .avatar svg{width:28px;height:28px;color:#fff}
+        .avatar.active{background:linear-gradient(135deg,var(--emerald),var(--cyan))}
+        .avatar.expired{background:linear-gradient(135deg,var(--rose),#dc2626)}
+        .avatar.paused{background:linear-gradient(135deg,var(--amber),#d97706)}
+        .profile-name{font-size:20px;font-weight:700;color:#fff}
+        .profile-sub{font-size:13px;color:#64748b;margin-top:2px}
+        .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+        .stat-box{text-align:center;padding:14px 8px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05)}
+        .stat-val{font-size:16px;font-weight:700;color:#fff;word-break:break-all}
+        .stat-val.emerald{color:#10b981}.stat-val.amber{color:#f59e0b}.stat-val.rose{color:#f43f5e}
+        .stat-lbl{font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin-top:4px}
+        .section-title{font-size:12px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px;padding-left:4px}
+        .config-item{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-radius:14px;background:rgba(15,23,42,.4);border:1px solid rgba(255,255,255,.05);margin-bottom:8px;transition:all .2s;cursor:pointer}
+        .config-item:hover{background:rgba(99,102,241,.06);border-color:rgba(99,102,241,.15)}
+        .config-left{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
+        .config-icon{width:32px;height:32px;border-radius:8px;background:rgba(99,102,241,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+        .config-icon svg{width:16px;height:16px;color:var(--brand-light)}
+        .config-name{font-size:13px;font-weight:600;color:#fff}
+        .config-desc{font-size:11px;color:#64748b;margin-top:1px}
+        .copy-btn{padding:6px 14px;border-radius:8px;background:linear-gradient(135deg,var(--brand),var(--purple));border:none;color:#fff;font-size:11px;font-weight:700;cursor:pointer;transition:all .3s;flex-shrink:0}
+        .copy-btn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(99,102,241,.35)}
+        .qr-box{padding:24px;text-align:center;margin-top:8px}
+        .qr-title{font-size:12px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.04em;margin-bottom:16px}
+        .qr-container{display:inline-flex;align-items:center;justify-content:center;width:180px;height:180px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);overflow:hidden}
+        .qr-container svg{width:48px;height:48px;color:#475569}
+        .qr-container img{width:160px;height:160px;border-radius:8px}
+        .qr-hint{font-size:11px;color:#64748b;margin-top:12px}
+        .error-box{text-align:center;padding:40px 20px}
+        .error-box svg{width:48px;height:48px;color:#ef4444;margin:0 auto 16px}
+        .error-box h2{font-size:18px;font-weight:700;color:#fff;margin-bottom:8px}
+        .error-box p{font-size:13px;color:#64748b}
+        .footer{text-align:center;padding:16px 0;font-size:11px;color:#475569}
+        .footer a{color:var(--brand-light);text-decoration:none;font-weight:600}
+        .footer a:hover{text-decoration:underline}
+        .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);padding:12px 24px;border-radius:12px;background:rgba(16,185,129,.92);color:#fff;font-size:13px;font-weight:600;z-index:100;transition:transform .3s cubic-bezier(.4,0,.2,1);pointer-events:none}
+        .toast.show{transform:translateX(-50%) translateY(0)}
+        ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(99,102,241,.25);border-radius:3px}
+        @keyframes fadeIn{0%{opacity:0;transform:translateY(20px)}100%{opacity:1;transform:translateY(0)}}
+        .animate{animation:fadeIn .5s ease forwards;opacity:0}
+        .delay1{animation-delay:.1s}.delay2{animation-delay:.2s}.delay3{animation-delay:.3s}
+        @media(max-width:480px){.stats-row{grid-template-columns:1fr}.profile-card{padding:16px}}
     </style>
 </head>
-<body class="min-h-screen text-slate-200">
-    <div class="bg-animated"><div class="orb orb-1"></div><div class="orb orb-2"></div></div>
-    <div class="relative z-10 min-h-screen flex flex-col">
-        <!-- Header -->
-        <header class="glass border-b border-white/5">
-            <div class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-brand-500 to-purple-600 flex items-center justify-center shadow-lg shadow-brand-500/20">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                    </div>
-                    <span class="font-bold text-white">MrVpn294</span>
-                </div>
-                <span class="text-xs text-slate-500">Subscription</span>
-            </div>
-        </header>
-        <!-- Content -->
-        <main class="flex-1 max-w-4xl mx-auto w-full px-4 py-8 space-y-6">
-            <!-- Profile Card -->
-            <div class="glass-card rounded-2xl p-6 animate-in delay-1">
-                <div class="flex items-center gap-4 mb-6">
-                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-emerald-500/20">
-                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-                    </div>
-                    <div>
-                        <h1 id="profile-name" class="text-xl font-bold text-white">Loading...</h1>
-                        <p id="profile-sub" class="text-sm text-slate-400">Fetching subscription data...</p>
-                    </div>
-                </div>
-                <!-- Stats -->
-                <div class="grid grid-cols-3 gap-3 mb-6">
-                    <div class="text-center p-3 rounded-xl bg-white/[0.03] border border-white/5">
-                        <p id="sub-traffic" class="text-lg font-bold text-white">-</p>
-                        <p class="text-[10px] text-slate-500 uppercase tracking-wider">Traffic</p>
-                    </div>
-                    <div class="text-center p-3 rounded-xl bg-white/[0.03] border border-white/5">
-                        <p id="sub-expire" class="text-lg font-bold text-white">-</p>
-                        <p class="text-[10px] text-slate-500 uppercase tracking-wider">Expires</p>
-                    </div>
-                    <div class="text-center p-3 rounded-xl bg-white/[0.03] border border-white/5">
-                        <p id="sub-status" class="text-lg font-bold text-emerald-400">-</p>
-                        <p class="text-[10px] text-slate-500 uppercase tracking-wider">Status</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Config List -->
-            <div class="space-y-3 animate-in delay-2">
-                <h2 class="text-sm font-bold text-slate-300 uppercase tracking-wider px-1">Available Configs</h2>
-                <div id="config-list" class="space-y-2">
-                    <div class="config-item flex items-center justify-between">
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-lg bg-brand-500/10 flex items-center justify-center"><svg class="w-4 h-4 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg></div>
-                            <div><p class="text-sm font-semibold text-white">Loading configs...</p><p class="text-xs text-slate-500">Fetching from server</p></div>
-                        </div>
-                        <button class="copy-btn px-3 py-1.5 rounded-lg text-xs font-bold text-white">Copy</button>
-                    </div>
-                </div>
-            </div>
-            <!-- QR Code -->
-            <div class="glass-card rounded-2xl p-6 text-center animate-in delay-3">
-                <h3 class="text-sm font-bold text-slate-300 uppercase tracking-wider mb-4">Scan to Connect</h3>
-                <div id="qr-container" class="inline-flex items-center justify-center w-48 h-48 rounded-2xl bg-white/5 border border-white/10">
-                    <svg class="w-12 h-12 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
-                </div>
-                <p class="text-xs text-slate-500 mt-3">Use V2RayNG, SingBox, or Clash to scan</p>
-            </div>
-        </main>
-        <!-- Footer -->
-        <footer class="text-center py-4 text-xs text-slate-600">
-            Powered by <span class="text-brand-400 font-semibold">MrVpn294</span> • <a href="https://github.com/amirpocom63-del/mrvpnpanel" target="_blank" class="hover:text-brand-400 transition-colors">GitHub</a>
-        </footer>
+<body>
+<div class="bg-anim"><div class="orb orb1"></div><div class="orb orb2"></div></div>
+<div class="container">
+    <div class="header">
+        <div class="header-left">
+            <div class="logo"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+            <span class="brand">MrVpn294</span>
+        </div>
+        <span class="sub-label">Subscription</span>
     </div>
-    <script>
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                const toast = document.createElement('div');
-                toast.className = 'fixed bottom-6 left-1/2 -translate-x-1/2 px-5 py-3 bg-emerald-600 text-white rounded-xl text-xs shadow-xl font-bold z-50';
-                toast.textContent = 'Copied!';
-                document.body.appendChild(toast);
-                setTimeout(() => toast.remove(), 2000);
+    <div id="content">
+        <div class="error-box glass-card animate delay1">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"/></svg>
+            <h2>Loading...</h2>
+            <p>Fetching subscription data...</p>
+        </div>
+    </div>
+    <div class="footer">Powered by <a href="https://github.com/amirpocom63-del/mrvpnpanel" target="_blank">MrVpn294</a></div>
+</div>
+<div id="toast" class="toast"></div>
+<script>
+(function(){
+    var params=new URLSearchParams(window.location.search);
+    var userName=params.get('sub');
+    if(!userName){showError('No username','Add ?sub=yourname to the URL');return}
+    var BASE=window.location.origin+'/'+(window.location.pathname.split('/').filter(Boolean)[0]||'mr');
+
+    // Worker injects data into these globals before serving the page
+    // If not present (direct browser access), fetch from API
+    if(typeof window.__SUB_DATA__!=='undefined'){
+        renderProfile(userName,window.__SUB_DATA__);
+    }else if(typeof window.USER_DATA__!=='undefined'){
+        renderProfile(userName,window.USER_DATA__);
+    }else{
+        // Fallback: fetch from users API (requires key in URL or stored locally)
+        var storedKey=localStorage.getItem('mr_master_key')||'';
+        fetch(BASE+'/api/users?key='+encodeURIComponent(storedKey))
+        .then(function(r){return r.json()})
+        .then(function(d){
+            if(!d.success||!d.users){showError('Access denied','No data available. Open this link from the dashboard.');return}
+            var user=d.users.find(function(u){return u.name===userName});
+            if(!user){showError('User not found','User "'+userName+'" does not exist.');return}
+            renderProfile(userName,{user:user,configs:user.configs||[]});
+        })
+        .catch(function(){showError('Connection error','Could not load subscription data.')});
+    }
+
+    function renderProfile(name,data){
+        var u=data.user||data;
+        var usage=u.usage||{};
+        var totalReqs=usage.total||usage.totalReqs||0;
+        var totalGB=totalReqs<1024?(totalReqs*1).toFixed(0)+' reqs':totalReqs<6144000?(totalReqs/6000).toFixed(2)+' GB':(totalReqs/6144000).toFixed(2)+' TB';
+        var limitReqs=usage.limit||usage.limitTotalReq||0;
+        var limitGB=limitReqs===0?'Unlimited':limitReqs<1024?limitReqs+' reqs':limitReqs<6144000?(limitReqs/6000).toFixed(1)+' GB':(limitReqs/6144000).toFixed(2)+' TB';
+        var expiry=u.expiryMs?(new Date(u.expiryMs).toLocaleDateString()):'Never';
+        var isExpired=u.expiryMs&&u.expiryMs<Date.now();
+        var isPaused=u.isPaused;
+        var isDisabled=!!u.disabledReason;
+        var statusText='Active',statusClass='emerald',avatarClass='active';
+        if(isExpired){statusText='Expired';statusClass='rose';avatarClass='expired'}
+        else if(isDisabled){statusText='Disabled';statusClass='rose';avatarClass='expired'}
+        else if(isPaused){statusText='Paused';statusClass='amber';avatarClass='paused'}
+
+        var configs=u.configs||data.configs||[];
+        var html='<div class="profile-card glass-card animate delay1">'
+            +'<div class="profile-top">'
+            +'<div class="avatar '+avatarClass+'"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg></div>'
+            +'<div><div class="profile-name">'+esc(name)+'</div><div class="profile-sub">'+esc(u.notes||'VPN Subscription')+'</div></div>'
+            +'</div>'
+            +'<div class="stats-row">'
+            +'<div class="stat-box"><div class="stat-val">'+totalGB+'</div><div class="stat-lbl">Used / '+limitGB+'</div></div>'
+            +'<div class="stat-box"><div class="stat-val">'+expiry+'</div><div class="stat-lbl">Expires</div></div>'
+            +'<div class="stat-box"><div class="stat-val '+statusClass+'">'+statusText+'</div><div class="stat-lbl">Status</div></div>'
+            +'</div></div>';
+
+        if(configs.length){
+            html+='<div class="animate delay2"><div class="section-title">Available Configs</div>';
+            configs.forEach(function(c,i){
+                var cfgName=c.name||c.remark||('Config '+(i+1));
+                var cfgType=c.type||c.protocol||'';
+                var cfgLink=c.link||c.url||c.configLink||c;
+                if(typeof cfgLink!=='string')cfgLink='';
+                html+='<div class="config-item" onclick="copyCfg(this)">';
+                html+='<div class="config-left"><div class="config-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg></div>';
+                html+='<div><div class="config-name">'+esc(cfgName)+'</div><div class="config-desc">'+esc(cfgType)+'</div></div></div>';
+                html+='<button class="copy-btn" data-link="'+esc(cfgLink)+'">Copy</button></div>';
             });
+            html+='</div>';
         }
-    </script>
+
+        html+='<div class="qr-box glass-card animate delay3">';
+        html+='<div class="qr-title">Scan to Connect</div>';
+        html+='<div class="qr-container" id="qr-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg></div>';
+        html+='<div class="qr-hint">Use V2RayNG, SingBox, or Clash to scan</div></div>';
+
+        document.getElementById('content').innerHTML=html;
+
+        if(configs.length){
+            var firstLink=configs[0].link||configs[0].url||configs[0].configLink||'';
+            if(firstLink&&typeof firstLink==='string')generateQR(firstLink);
+        }
+    }
+
+    function generateQR(text){
+        var box=document.getElementById('qr-box');
+        if(!box)return;
+        var api='https://api.qrserver.com/v1/create-qr-code/?size=160x160&data='+encodeURIComponent(text)+'&bgcolor=0a0e1a&color=818cf8&margin=10';
+        box.innerHTML='<img src="'+api+'" alt="QR Code" width="160" height="160">';
+    }
+
+    function showError(title,msg){
+        document.getElementById('content').innerHTML='<div class="error-box glass-card animate delay1"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"/></svg><h2>'+esc(title)+'</h2><p>'+esc(msg)+'</p></div>';
+    }
+
+    function esc(s){return s?(typeof s==='string'?s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'):s):''}
+
+    window.copyCfg=function(el){
+        var btn=el.querySelector('.copy-btn');
+        var link=btn.getAttribute('data-link');
+        if(!link)return;
+        navigator.clipboard.writeText(link).then(function(){showToast('Copied!')}).catch(function(){showToast('Copy failed')});
+    };
+
+    function showToast(msg){
+        var t=document.getElementById('toast');
+        t.textContent=msg;t.className='toast show';
+        setTimeout(function(){t.className='toast'},2000);
+    }
+})();
+</script>
 </body>
 </html>
