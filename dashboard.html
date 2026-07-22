@@ -571,12 +571,12 @@ function renderActivity(){
 
 function showSubLink(userId,userName){
     var route=BASE.replace(window.location.origin+'/','').replace(/\/$/,'')||'mr';
-    var url=window.location.origin+'/'+route+'/sub/'+encodeURIComponent(userName)+'/'+encodeURIComponent(userId);
+    var url=window.location.origin+'/'+route+'?sub='+encodeURIComponent(userName);
     document.getElementById('sub-title').textContent=userName+' - Subscription';
     document.getElementById('sub-url').textContent=url;
     if(CFG.profiles&&CFG.profiles.length){
         document.getElementById('sub-profiles').innerHTML='<div style="font-size:12px;color:#64748b;margin-bottom:8px">Available Profiles:</div>'+CFG.profiles.map(function(p){
-            return '<div class="sub-link-box" style="margin-bottom:8px"><code>'+url+'?profile='+encodeURIComponent(p.name)+'</code><button onclick="navigator.clipboard.writeText(this.previousElementSibling.textContent);toast(\'Copied!\')">Copy</button></div>';
+            return '<div class="sub-link-box" style="margin-bottom:8px"><code>'+url+'&profile='+encodeURIComponent(p.name)+'</code><button onclick="navigator.clipboard.writeText(this.previousElementSibling.textContent);toast(\'Copied!\')">Copy</button></div>';
         }).join('');
     }else{document.getElementById('sub-profiles').innerHTML='';}
     openModal('modal-sub');
