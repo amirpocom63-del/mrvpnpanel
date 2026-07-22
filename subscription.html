@@ -58,6 +58,18 @@
         .qr-box svg{width:48px;height:48px;color:#475569}
         .qr-box img{width:160px;height:160px;border-radius:8px}
         .qr-hint{font-size:11px;color:#64748b;margin-top:12px}
+        .configs-section{padding:24px;margin-bottom:16px}
+        .configs-title{font-size:12px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.04em;margin-bottom:12px;text-align:center}
+        .configs-btn{width:100%;padding:14px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--emerald),var(--cyan));color:#fff;font-size:14px;font-weight:700;cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center;gap:8px}
+        .configs-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(16,185,129,.3)}
+        .configs-btn:active{transform:translateY(0)}
+        .configs-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+        .configs-btn svg{width:18px;height:18px}
+        .configs-box{display:none;margin-top:12px;text-align:left}
+        .configs-box.show{display:block}
+        .configs-box pre{background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px;font-size:11px;color:#94a3b8;max-height:200px;overflow:auto;white-space:pre-wrap;word-break:break-all;font-family:monospace;line-height:1.6}
+        .configs-box .copy-all{margin-top:8px;width:100%;padding:10px;border:none;border-radius:8px;background:linear-gradient(135deg,var(--brand),var(--purple));color:#fff;font-size:12px;font-weight:700;cursor:pointer;transition:all .3s}
+        .configs-box .copy-all:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(99,102,241,.35)}
         .footer{text-align:center;padding:16px 0;font-size:11px;color:#475569}
         .footer a{color:var(--brand-light);text-decoration:none;font-weight:600}
         .footer a:hover{text-decoration:underline}
@@ -65,6 +77,7 @@
         .toast.show{transform:translateX(-50%) translateY(0)}
         ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(99,102,241,.25);border-radius:3px}
         @keyframes fadeIn{0%{opacity:0;transform:translateY(20px)}100%{opacity:1;transform:translateY(0)}}
+        @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
         .animate{animation:fadeIn .5s ease forwards;opacity:0}
         .delay1{animation-delay:.1s}.delay2{animation-delay:.2s}.delay3{animation-delay:.3s}
         @media(max-width:480px){.stats-grid{grid-template-columns:1fr}.main-card{padding:24px 16px}.step{flex-direction:column;align-items:center;text-align:center}}
@@ -110,6 +123,18 @@
                     <div class="url-text" id="sub-url">-</div>
                     <button class="copy-btn" onclick="copyUrl()">Copy</button>
                 </div>
+            </div>
+        </div>
+
+        <div class="configs-section glass-card animate delay2">
+            <div class="configs-title">Raw Configs (vless/trojan)</div>
+            <button class="configs-btn" id="fetch-configs-btn" onclick="fetchRawConfigs()">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+                Fetch & Copy Configs
+            </button>
+            <div class="configs-box" id="configs-box">
+                <pre id="configs-text"></pre>
+                <button class="copy-all" onclick="copyAllConfigs()">Copy All Configs</button>
             </div>
         </div>
 
@@ -240,6 +265,73 @@ function showToast(msg){
     var t=document.getElementById('toast');
     t.textContent=msg;t.className='toast show';
     setTimeout(function(){t.className='toast'},2000);
+}
+
+var rawConfigs='';
+
+function fetchRawConfigs(){
+    var btn=document.getElementById('fetch-configs-btn');
+    var box=document.getElementById('configs-box');
+    btn.disabled=true;
+    btn.innerHTML='<svg style="animation:spin 1s linear infinite" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg> Loading...';
+
+    var params=new URLSearchParams(window.location.search);
+    var userName=params.get('sub');
+    var BASE=window.location.origin+'/'+(window.location.pathname.split('/').filter(Boolean)[0]||'mr');
+    var subUrl=BASE+'?sub='+encodeURIComponent(userName);
+
+    fetch(subUrl,{
+        headers:{
+            'Accept':'text/plain, application/octet-stream, */*',
+            'User-Agent':'ClashForAndroid/2.5.12'
+        }
+    })
+    .then(function(r){return r.text()})
+    .then(function(data){
+        if(data&&data.indexOf('://')>-1){
+            rawConfigs=data.trim();
+            document.getElementById('configs-text').textContent=rawConfigs;
+            box.classList.add('show');
+            btn.innerHTML='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Configs Loaded!';
+            btn.style.background='linear-gradient(135deg,#059669,#10b981)';
+        }else{
+            // Fallback: try with different headers
+            fetch(subUrl,{
+                headers:{
+                    'Accept':'*/*',
+                    'User-Agent':'v2rayN/5.38'
+                }
+            })
+            .then(function(r){return r.text()})
+            .then(function(data2){
+                if(data2&&data2.indexOf('://')>-1){
+                    rawConfigs=data2.trim();
+                    document.getElementById('configs-text').textContent=rawConfigs;
+                    box.classList.add('show');
+                    btn.innerHTML='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Configs Loaded!';
+                    btn.style.background='linear-gradient(135deg,#059669,#10b981)';
+                }else{
+                    btn.innerHTML='No configs found';
+                    btn.style.background='linear-gradient(135deg,#dc2626,#ef4444)';
+                    setTimeout(function(){
+                        btn.innerHTML='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg> Fetch & Copy Configs';
+                        btn.style.background='';
+                        btn.disabled=false;
+                    },2000);
+                }
+            })
+            .catch(function(){btn.innerHTML='Error';btn.disabled=false;});
+        }
+    })
+    .catch(function(e){
+        btn.innerHTML='Error: '+e.message;
+        btn.disabled=false;
+    });
+}
+
+function copyAllConfigs(){
+    if(!rawConfigs){showToast('No configs to copy');return}
+    navigator.clipboard.writeText(rawConfigs).then(function(){showToast('All configs copied!')}).catch(function(){showToast('Copy failed')});
 }
 </script>
 </body>
