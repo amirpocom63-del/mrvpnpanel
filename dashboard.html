@@ -432,11 +432,15 @@ function timeAgo(ms){if(!ms)return'';var s=Math.floor((Date.now()-ms)/1000);if(s
 function togVis(){var i=document.getElementById('pwd');i.type=i.type==='password'?'text':'password';}
 
 function openSidebar(){
-    document.getElementById('sidebar').classList.add('open');
+    var sb=document.getElementById('sidebar');
+    sb.style.transform='';sb.style.transition='transform .3s ease';
+    sb.classList.add('open');
     document.getElementById('mob-overlay').style.display='block';
 }
 function closeSidebar(){
-    document.getElementById('sidebar').classList.remove('open');
+    var sb=document.getElementById('sidebar');
+    sb.classList.remove('open');
+    if(isMobile())sb.style.transform='translateX(-100%)';
     document.getElementById('mob-overlay').style.display='none';
 }
 
@@ -546,7 +550,7 @@ function renderTable(){
             +'<td><span class="badge badge-'+st.cls+'">'+st.txt+'</span></td>'
             +'<td>'+trf+'</td><td>'+exp+'</td>'
             +'<td><div class="actions">'
-            +'<button class="act-btn sub" onclick="showSubLink(\''+esc(u.name).replace(/'/g,"\\'")+'\')" title="Subscription"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg></button>'
+            +'<button class="act-btn sub" onclick="showSubLink(\''+u.id+'\',\''+esc(u.name).replace(/'/g,"\\'")+'\')" title="Subscription"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg></button>'
             +'<button class="act-btn toggle" onclick="toggleUser(\''+u.id+'\')" title="Toggle"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></button>'
             +'<button class="act-btn reset" onclick="resetUser(\''+u.id+'\')" title="Reset Traffic"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg></button>'
             +'<button class="act-btn edit" onclick="editUser(\''+u.id+'\')" title="Edit"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button>'
@@ -565,9 +569,10 @@ function renderActivity(){
     }).join('');
 }
 
-function showSubLink(name){
-    var url=window.location.origin+'/'+(BASE.replace(window.location.origin+'/','').replace(/\/$/,'')||'mr')+'/sub/'+encodeURIComponent(name);
-    document.getElementById('sub-title').textContent=name+' - Subscription';
+function showSubLink(userId,userName){
+    var route=BASE.replace(window.location.origin+'/','').replace(/\/$/,'')||'mr';
+    var url=window.location.origin+'/'+route+'/sub/'+encodeURIComponent(userName)+'/'+encodeURIComponent(userId);
+    document.getElementById('sub-title').textContent=userName+' - Subscription';
     document.getElementById('sub-url').textContent=url;
     if(CFG.profiles&&CFG.profiles.length){
         document.getElementById('sub-profiles').innerHTML='<div style="font-size:12px;color:#64748b;margin-bottom:8px">Available Profiles:</div>'+CFG.profiles.map(function(p){
@@ -688,15 +693,17 @@ function openModal(id){document.getElementById(id).classList.add('open')}
 function closeModal(id){document.getElementById(id).classList.remove('open')}
 
 function applyResponsive(){
+    var sb=document.getElementById('sidebar');
+    var mc=document.querySelector('.mobile-menu');
+    var mc_=document.getElementById('main-content');
     if(isMobile()){
-        document.getElementById('sidebar').style.transform='translateX(-100%)';
-        document.getElementById('main-content').style.marginLeft='0';
-        document.querySelector('.mobile-menu').style.display='block';
+        if(!sb.classList.contains('open'))sb.style.transform='translateX(-100%)';
+        mc_.style.marginLeft='0';
+        mc.style.display='block';
     }else{
-        document.getElementById('sidebar').style.transform='translateX(0)';
-        document.getElementById('sidebar').classList.remove('open');
-        document.getElementById('main-content').style.marginLeft='256px';
-        document.querySelector('.mobile-menu').style.display='none';
+        sb.style.transform='';sb.classList.remove('open');
+        mc_.style.marginLeft='256px';
+        mc.style.display='none';
         document.getElementById('mob-overlay').style.display='none';
     }
 }
