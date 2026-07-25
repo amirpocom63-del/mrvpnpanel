@@ -170,10 +170,6 @@
         .sub-link-box button:hover{background:rgba(139,92,246,.2)}
 
         /* ===== RESPONSIVE ===== */
-        @media(max-width:1024px){
-            .stat-grid{grid-template-columns:repeat(3,1fr)}
-            .info-grid{grid-template-columns:1fr}
-        }
         @media(max-width:768px){
             #sidebar{transform:translateX(-100%)}
             #sidebar.open{transform:translateX(0)}
@@ -181,17 +177,30 @@
             .form-row{grid-template-columns:1fr}
             .overview-grid{grid-template-columns:1fr!important}
             .section-title{font-size:18px}
-            .modal-box{padding:20px;margin:8px}
+            .modal-box{padding:20px;margin:8px;max-width:calc(100vw - 16px)}
             .stat-card .value{font-size:20px}
             .stat-card{padding:14px}
             thead th,tbody td{padding:10px 12px;font-size:12px}
+            .header-inner{gap:6px!important}
+            .header-inner span{font-size:9px!important;padding:3px 6px!important}
+            .actions{gap:2px}
+            .act-btn{padding:8px}
+            .act-btn svg{width:14px;height:14px}
         }
         @media(max-width:480px){
             .stat-grid{grid-template-columns:1fr 1fr}
             .stat-card:nth-child(5){grid-column:span 2}
             .flex-between{flex-wrap:wrap}
-            .header-inner{gap:8px!important}
-            .header-inner span{font-size:9px!important;padding:3px 6px!important}
+            .header-inner{gap:4px!important}
+            .header-inner span{font-size:8px!important;padding:2px 4px!important}
+            .table-wrap{border-radius:8px}
+            .panel{padding:14px}
+            .modal-box{padding:16px;margin:4px;border-radius:14px}
+            .btn{padding:8px 14px;font-size:12px}
+            .glass-input{padding:10px 12px;font-size:13px}
+            .form-section{margin:12px 0 6px}
+            .sub-link-box{flex-wrap:wrap}
+            .sub-link-box code{font-size:10px}
         }
         @media(min-width:769px){
             .mobile-menu{display:none!important}
@@ -225,14 +234,15 @@
 
 <!-- MOBILE OVERLAY -->
 <div id="mob-overlay" onclick="closeSidebar()"></div>
-
-<!-- APP -->
 <div id="app" style="display:none;position:relative;z-index:10;height:100vh;height:100dvh">
     <!-- SIDEBAR -->
     <aside id="sidebar">
         <div class="sb-logo">
             <div class="sb-logo-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
             <div><h1>MrVpn294</h1><div class="ver" id="sb-ver">v__CURRENT_VERSION__</div></div>
+            <button class="mobile-menu" onclick="closeSidebar()" style="margin-left:auto;padding:8px;border-radius:8px;background:none;border:1px solid rgba(255,255,255,.08);color:#94a3b8;cursor:pointer;display:none">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
         </div>
         <nav class="sb-nav">
             <button class="nav-item active" id="n-overview" onclick="go('overview')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>Dashboard</button>
@@ -289,13 +299,24 @@
 
                 <!-- USERS -->
                 <div id="v-users" style="display:none">
-                    <div class="flex-between" style="margin-bottom:16px">
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;flex-wrap:wrap">
                         <div class="section-title" style="margin-bottom:0">User Management</div>
-                        <button class="btn btn-primary" onclick="openUserModal()"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>Add User</button>
+                        <div style="display:flex;gap:8px;flex-wrap:wrap">
+                            <button class="btn btn-primary" onclick="openUserModal()"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>Add User</button>
+                            <button class="btn btn-ghost" onclick="openBatchExportModal()" title="Batch Export Configs"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>Export Selected</button>
+                        </div>
+                    </div>
+                    <div id="batch-bar" style="display:none;padding:10px 16px;border-radius:12px;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.2);margin-bottom:12px;align-items:center;gap:12px;flex-wrap:wrap">
+                        <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:#cbd5e1;cursor:pointer">
+                            <input type="checkbox" id="select-all-users" onchange="toggleSelectAll(this)"> Select All
+                        </label>
+                        <span id="selected-count" style="font-size:12px;color:#818cf8"></span>
+                        <button class="btn btn-primary" style="padding:8px 14px;font-size:12px" onclick="exportSelectedConfigs()">Copy Selected Configs</button>
+                        <button class="btn btn-ghost" style="padding:8px 14px;font-size:12px" onclick="clearSelections()">Clear</button>
                     </div>
                     <div class="table-wrap">
-                        <table><thead><tr><th>Name</th><th>Status</th><th>Traffic</th><th>Expiry</th><th>Actions</th></tr></thead>
-                        <tbody id="utbody"><tr><td colspan="5" class="empty">Loading...</td></tr></tbody></table>
+                        <table><thead><tr><th style="width:40px"><input type="checkbox" id="select-all-header" onchange="toggleSelectAll(this)" title="Select All"></th><th>Name</th><th>Status</th><th>Traffic</th><th>Expiry</th><th>Actions</th></tr></thead>
+                        <tbody id="utbody"><tr><td colspan="6" class="empty">Loading...</td></tr></tbody></table>
                     </div>
                 </div>
 
@@ -405,7 +426,19 @@
     </div>
 </div>
 
-<div id="toast"></div>
+        <!-- BATCH EXPORT MODAL -->
+        <div id="modal-batch" class="modal-bg">
+            <div class="modal-box" style="max-width:600px">
+                <div class="modal-head"><h3>Batch Config Export</h3><button class="modal-close" onclick="closeModal('modal-batch')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button></div>
+                <div id="batch-export-content" style="margin-bottom:16px"><div class="empty">No configs exported yet. Click "Export Selected" to fetch configs for selected users.</div></div>
+                <div class="form-actions">
+                    <button class="btn btn-ghost" onclick="closeModal('modal-batch')" style="flex:1">Close</button>
+                    <button class="btn btn-primary" onclick="copyBatchExport()" style="flex:1">Copy All</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="toast"></div>
 
 <script>
 var KEY='',BASE='',CFG={},USERS=[],STATS={},CF_CB=null;
@@ -426,7 +459,7 @@ function toast(m,t){
 }
 
 function esc(s){return s?s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'):''}
-function fmtBytes(b){if(!b||b===0)return'0 B';if(b<1024)return b.toFixed(1)+' GB';return(b/1024).toFixed(2)+' TB'}
+function fmtBytes(b){if(!b||b===0)return'0 B';if(b<1024)return b.toFixed(1)+' B';if(b<1048576)return(b/1024).toFixed(2)+' KB';if(b<1073741824)return(b/1048576).toFixed(2)+' MB';return(b/1073741824).toFixed(2)+' GB'}
 function fmtDate(ms){return ms?new Date(ms).toLocaleDateString():'Never'}
 function timeAgo(ms){if(!ms)return'';var s=Math.floor((Date.now()-ms)/1000);if(s<60)return s+'s ago';if(s<3600)return Math.floor(s/60)+'m ago';if(s<86400)return Math.floor(s/3600)+'h ago';return Math.floor(s/86400)+'d ago'}
 function togVis(){var i=document.getElementById('pwd');i.type=i.type==='password'?'text':'password';}
@@ -541,12 +574,14 @@ function getSubUrl(u){
 
 function renderTable(){
     var tb=document.getElementById('utbody');
-    if(!USERS.length){tb.innerHTML='<tr><td colspan="5" class="empty">No users yet</td></tr>';return}
+    if(!USERS.length){tb.innerHTML='<tr><td colspan="6" class="empty">No users yet</td></tr>';return}
     tb.innerHTML=USERS.map(function(u){
         var st=userStatus(u);
         var trf=u.usage?(fmtBytes(u.usage.total||0)+' / '+(u.usage.limit?fmtBytes(u.usage.limit):'∞')):'0 B';
         var exp=fmtDate(u.expiryMs);
-        return '<tr><td><div class="user-name">'+esc(u.name)+'</div><div class="user-note">'+esc(u.notes||'')+'</div></td>'
+        return '<tr>'
+            +'<td><input type="checkbox" class="user-select" value="'+u.id+'" onchange="updateSelectedCount()"></td>'
+            +'<td><div class="user-name">'+esc(u.name)+'</div><div class="user-note">'+esc(u.notes||'')+'</div></td>'
             +'<td><span class="badge badge-'+st.cls+'">'+st.txt+'</span></td>'
             +'<td>'+trf+'</td><td>'+exp+'</td>'
             +'<td><div class="actions">'
@@ -718,6 +753,83 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeModal(
     if(k){document.getElementById('pwd').value=k;doLogin()}
     applyResponsive();
 })();
+
+// ===== BATCH CONFIG EXPORT =====
+var selectedUsers=new Set();
+
+function toggleSelectAll(cb){
+    var checks=document.querySelectorAll('.user-select');
+    selectedUsers.clear();
+    checks.forEach(function(c){c.checked=cb.checked;if(cb.checked)selectedUsers.add(c.value)});
+    updateSelectedCount();
+}
+
+function updateSelectedCount(){
+    var checks=document.querySelectorAll('.user-select');
+    selectedUsers.clear();
+    checks.forEach(function(c){if(c.checked)selectedUsers.add(c.value)});
+    var bar=document.getElementById('batch-bar');
+    var count=document.getElementById('selected-count');
+    if(selectedUsers.size>0){
+        bar.style.display='flex';
+        count.textContent=selectedUsers.size+' user(s) selected';
+    }else{
+        bar.style.display='none';
+    }
+}
+
+function clearSelections(){
+    selectedUsers.clear();
+    document.querySelectorAll('.user-select').forEach(function(c){c.checked=false});
+    document.getElementById('select-all-header').checked=false;
+    document.getElementById('select-all-users').checked=false;
+    updateSelectedCount();
+}
+
+async function exportSelectedConfigs(){
+    if(!selectedUsers.size){toast('Select at least one user','err');return}
+    var btn=document.getElementById('export-selected-btn');
+    if(btn){btn.disabled=true;btn.textContent='Exporting...'}
+    var allConfigs='';
+    var userList=Array.from(selectedUsers);
+    for(var i=0;i<userList.length;i++){
+        try{
+            var uid=userList[i];
+            var route=BASE.replace(window.location.origin+'/','').replace(/\/$/,'');
+            var url=window.location.origin+'/'+route+'/sub/'+encodeURIComponent(uid);
+            var resp=await fetch(url,{headers:{'Accept':'text/plain, application/octet-stream, */*','User-Agent':'ClashForAndroid/2.5.12'}});
+            var data=await resp.text();
+            if(data&&data.indexOf('://')>-1){
+                var uData=USERS.find(function(u){return u.id===uid});
+                var uname=uData?uData.name:uid;
+                allConfigs+='\n\n===== CONFIG: '+esc(uname)+' =====\n'+data.trim()+'\n';
+            }
+        }catch(e){}
+    }
+    if(btn){btn.disabled=false;btn.textContent='Export Selected'}
+    if(!allConfigs.trim()){toast('No configs found','err');return}
+    document.getElementById('batch-export-content').innerHTML='<pre style="background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px;font-size:11px;color:#94a3b8;max-height:400px;overflow:auto;white-space:pre-wrap;word-break:break-all;font-family:monospace;line-height:1.6">'+esc(allConfigs.trim())+'</pre>';
+    openModal('modal-batch');
+}
+
+function copyBatchExport(){
+    var content=document.querySelector('#batch-export-content pre');
+    if(!content){toast('No content to copy','err');return}
+    copyToClipboard(content.textContent).then(function(){toast('Copied!')}).catch(function(){toast('Copy failed','err')});
+}
+
+function copyToClipboard(text){
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+        return navigator.clipboard.writeText(text);
+    }
+    return new Promise(function(resolve,reject){
+        var ta=document.createElement('textarea');
+        ta.value=text;ta.style.position='fixed';ta.style.left='-9999px';ta.style.top='-9999px';
+        document.body.appendChild(ta);ta.select();
+        try{document.execCommand('copy');resolve()}catch(e){reject(e)}
+        document.body.removeChild(ta);
+    });
+}
 </script>
 </body>
 </html>
