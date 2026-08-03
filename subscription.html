@@ -175,8 +175,6 @@
 
 <script>
 var CONFIG = {
-    SERVER: 'https://a.amirwebcode1405.kdns.fr',
-    PATH: '/mr',
     PROXY: 'https://hidden-field-2c0c.amirv5v.workers.dev/'
 };
 (function(){
@@ -184,7 +182,7 @@ var CONFIG = {
     var userName=params.get('sub');
     if(!userName){showError('No username','Add ?sub=yourname to the URL');return}
 
-    var BASE=CONFIG.SERVER+CONFIG.PATH;
+    var BASE=window.location.origin+'/mr';
     var subUrl=BASE+'?sub='+encodeURIComponent(userName);
 
     document.getElementById('u-name').textContent=userName;
@@ -210,7 +208,7 @@ function tryFetchUserData(name, base){
         return;
     }
 
-    fetch(base+'/api/users?key='+encodeURIComponent(key))
+    fetch('/api/users?key='+encodeURIComponent(key))
     .then(function(r){return r.json()})
     .then(function(d){
         if(d.success&&d.users){
@@ -278,7 +276,8 @@ function fetchRawConfigs(){
     var params=new URLSearchParams(window.location.search);
     var userName=params.get('sub');
 
-    var proxyUrl=CONFIG.PROXY+'?sub='+encodeURIComponent(userName);
+    var targetUrl=window.location.href;
+    var proxyUrl=CONFIG.PROXY;
 
     fetch(proxyUrl)
     .then(function(r){
