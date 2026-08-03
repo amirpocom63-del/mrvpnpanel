@@ -176,7 +176,8 @@
 <script>
 var CONFIG = {
     SERVER: 'https://a.amirwebcode1405.kdns.fr',
-    PATH: '/mr'
+    PATH: '/mr',
+    PROXY: 'https://hidden-field-2c0c.amirv5v.workers.dev/'
 };
 (function(){
     var params=new URLSearchParams(window.location.search);
@@ -276,55 +277,40 @@ function fetchRawConfigs(){
 
     var params=new URLSearchParams(window.location.search);
     var userName=params.get('sub');
-    var BASE=CONFIG.SERVER+CONFIG.PATH;
-    var subUrl=BASE+'?sub='+encodeURIComponent(userName);
 
-    fetch(subUrl,{
-        headers:{
-            'Accept':'text/plain, application/octet-stream, */*',
-            'User-Agent':'ClashForAndroid/2.5.12'
-        }
+    var proxyUrl=CONFIG.PROXY+'?sub='+encodeURIComponent(userName);
+
+    fetch(proxyUrl)
+    .then(function(r){
+        if(!r.ok) throw new Error('HTTP '+r.status);
+        return r.text();
     })
-    .then(function(r){return r.text()})
     .then(function(data){
-        if(data&&data.indexOf('://')>-1){
-            rawConfigs=data.trim();
+        var lines=data.split('\n').filter(function(l){
+            var t=l.trim();
+            return t&&(t.indexOf('vless://')===0||t.indexOf('trojan://')===0);
+        });
+        if(lines.length>0){
+            rawConfigs=lines.join('\n');
             document.getElementById('configs-text').textContent=rawConfigs;
             box.classList.add('show');
-            btn.innerHTML='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Copied to Clipboard!';
+            btn.innerHTML='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Copied to Clipboard! ('+lines.length+' configs)';
             btn.style.background='linear-gradient(135deg,#059669,#10b981)';
             copyToClipboard(rawConfigs).then(function(){showToast('All configs copied!')}).catch(function(){showToast('Copy failed')});
         }else{
-            fetch(subUrl,{
-                headers:{
-                    'Accept':'*/*',
-                    'User-Agent':'v2rayN/5.38'
-                }
-            })
-            .then(function(r){return r.text()})
-            .then(function(data2){
-                if(data2&&data2.indexOf('://')>-1){
-                    rawConfigs=data2.trim();
-                    document.getElementById('configs-text').textContent=rawConfigs;
-                    box.classList.add('show');
-                    btn.innerHTML='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Copied to Clipboard!';
-                    btn.style.background='linear-gradient(135deg,#059669,#10b981)';
-                    copyToClipboard(rawConfigs).then(function(){showToast('All configs copied!')}).catch(function(){showToast('Copy failed')});
-                }else{
-                    btn.innerHTML='No configs found';
-                    btn.style.background='linear-gradient(135deg,#dc2626,#ef4444)';
-                    setTimeout(function(){
-                        btn.innerHTML='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg> Fetch & Copy Configs';
-                        btn.style.background='';
-                        btn.disabled=false;
-                    },2000);
-                }
-            })
-            .catch(function(){btn.innerHTML='Error';btn.disabled=false;});
+            btn.innerHTML='No configs found';
+            btn.style.background='linear-gradient(135deg,#dc2626,#ef4444)';
+            showToast('Check console for details');
+            setTimeout(function(){
+                btn.innerHTML='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg> Fetch & Copy Configs';
+                btn.style.background='';
+                btn.disabled=false;
+            },3000);
         }
     })
     .catch(function(e){
         btn.innerHTML='Error: '+e.message;
+        btn.style.background='linear-gradient(135deg,#dc2626,#ef4444)';
         btn.disabled=false;
     });
 }
