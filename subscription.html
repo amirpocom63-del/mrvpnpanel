@@ -286,7 +286,12 @@ function fetchRawConfigs(){
         return r.text();
     })
     .then(function(data){
-        var lines=data.split('\n').filter(function(l){
+        var decoded=data.trim();
+        try{
+            var test=atob(decoded);
+            if(test.indexOf('://')>-1) decoded=test;
+        }catch(e){}
+        var lines=decoded.split('\n').filter(function(l){
             var t=l.trim();
             return t&&(t.indexOf('vless://')===0||t.indexOf('trojan://')===0);
         });
