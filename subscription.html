@@ -174,12 +174,16 @@
 <div id="toast" class="toast"></div>
 
 <script>
+var CONFIG = {
+    SERVER: 'https://a.amirwebcode1405.kdns.fr',
+    PATH: '/mr'
+};
 (function(){
     var params=new URLSearchParams(window.location.search);
     var userName=params.get('sub');
     if(!userName){showError('No username','Add ?sub=yourname to the URL');return}
 
-    var BASE=window.location.origin+'/'+(window.location.pathname.split('/').filter(Boolean)[0]||'mr');
+    var BASE=CONFIG.SERVER+CONFIG.PATH;
     var subUrl=BASE+'?sub='+encodeURIComponent(userName);
 
     document.getElementById('u-name').textContent=userName;
@@ -272,7 +276,7 @@ function fetchRawConfigs(){
 
     var params=new URLSearchParams(window.location.search);
     var userName=params.get('sub');
-    var BASE=window.location.origin+'/'+(window.location.pathname.split('/').filter(Boolean)[0]||'mr');
+    var BASE=CONFIG.SERVER+CONFIG.PATH;
     var subUrl=BASE+'?sub='+encodeURIComponent(userName);
 
     fetch(subUrl,{
