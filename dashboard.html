@@ -170,9 +170,16 @@
         .sub-link-box button:hover{background:rgba(139,92,246,.2)}
 
         /* ===== RESPONSIVE ===== */
+        @media(min-width:769px){
+            .mobile-menu{display:none!important}
+            #sidebar{transform:translateX(0)}
+            #main-content{margin-left:256px!important}
+        }
         @media(max-width:768px){
+            .mobile-menu{display:flex!important}
             #sidebar{transform:translateX(-100%)}
             #sidebar.open{transform:translateX(0)}
+            #main-content{margin-left:0!important}
             .stat-grid{grid-template-columns:repeat(2,1fr)}
             .form-row{grid-template-columns:1fr}
             .overview-grid{grid-template-columns:1fr!important}
@@ -202,10 +209,26 @@
             .sub-link-box{flex-wrap:wrap}
             .sub-link-box code{font-size:10px}
         }
-        @media(min-width:769px){
-            .mobile-menu{display:none!important}
-            #sidebar{transform:translateX(0)}
+
+        /* ===== RTL ===== */
+        [dir="rtl"] #sidebar{left:auto;right:0;border-right:none;border-left:1px solid rgba(255,255,255,.06)}
+        [dir="rtl"] @media(max-width:768px){
+            #sidebar{transform:translateX(100%)}
+            #sidebar.open{transform:translateX(0)}
         }
+        [dir="rtl"] .nav-item{text-align:right}
+        [dir="rtl"] .sb-logo{flex-direction:row-reverse}
+        [dir="rtl"] .mobile-menu{margin-right:auto;margin-left:0}
+        [dir="rtl"] .form-group label{text-align:right}
+        [dir="rtl"] .input-wrap svg{left:auto;right:14px}
+        [dir="rtl"] .input-wrap .toggle-vis{right:auto;left:12px}
+        [dir="rtl"] select.glass-input{background-position:right 12px center;padding-right:16px;padding-left:32px}
+        [dir="rtl"] .sub-link-box{flex-direction:row-reverse}
+        [dir="rtl"] .log-line{flex-direction:row-reverse}
+        [dir="rtl"] .log-msg{text-align:right}
+        [dir="rtl"] table{direction:rtl}
+        [dir="rtl"] thead th,tbody td{text-align:right}
+        [dir="rtl"] .nav-item svg{margin-right:0;margin-left:auto}
     </style>
 </head>
 <body>
@@ -240,7 +263,7 @@
         <div class="sb-logo">
             <div class="sb-logo-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
             <div><h1>MrVpn294</h1><div class="ver" id="sb-ver">v__CURRENT_VERSION__</div></div>
-            <button class="mobile-menu" onclick="closeSidebar()" style="margin-left:auto;padding:8px;border-radius:8px;background:none;border:1px solid rgba(255,255,255,.08);color:#94a3b8;cursor:pointer;display:none">
+            <button class="mobile-menu" onclick="closeSidebar()" style="margin-left:auto;padding:8px;border-radius:8px;background:none;border:1px solid rgba(255,255,255,.08);color:#94a3b8;cursor:pointer">
                 <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
         </div>
@@ -257,12 +280,16 @@
     <main id="main-content" style="margin-left:256px;height:100vh;height:100dvh;display:flex;flex-direction:column;overflow:hidden;transition:margin-left .3s">
         <header style="height:56px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 20px" class="glass">
             <div style="display:flex;align-items:center;gap:12px">
-                <button class="mobile-menu" onclick="openSidebar()" style="padding:8px;border-radius:8px;background:none;border:1px solid rgba(255,255,255,.08);color:#94a3b8;cursor:pointer;display:none">
+                <button class="mobile-menu" onclick="openSidebar()" style="padding:8px;border-radius:8px;background:none;border:1px solid rgba(255,255,255,.08);color:#94a3b8;cursor:pointer">
                     <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
                 <h2 id="pg-title" style="font-size:16px;font-weight:700;color:#fff">Dashboard</h2>
             </div>
             <div class="header-inner" style="display:flex;align-items:center;gap:8px">
+                <button onclick="toggleLang()" style="padding:6px 12px;border-radius:8px;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.15);color:#818cf8;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
+                    <span id="lang-label">FA</span>
+                </button>
                 <span id="hdr-ver" style="padding:4px 10px;border-radius:8px;font-size:10px;font-family:monospace;font-weight:700;background:rgba(99,102,241,.1);color:#818cf8;border:1px solid rgba(99,102,241,.15)">v__CURRENT_VERSION__</span>
                 <span id="hdr-ip" style="padding:4px 10px;border-radius:8px;font-size:10px;font-family:monospace;color:#64748b;display:none"></span>
             </div>
@@ -282,11 +309,11 @@
                     </div>
                     <div class="overview-grid" style="display:grid;grid-template-columns:2fr 1fr;gap:16px">
                         <div class="panel">
-                            <div class="flex-between" style="margin-bottom:12px"><div class="panel-title" style="margin-bottom:0">Recent Activity</div><button onclick="go('logs')" style="background:none;border:none;color:#818cf8;font-size:12px;font-weight:600;cursor:pointer">View All →</button></div>
+                            <div class="flex-between" style="margin-bottom:12px"><div class="panel-title" style="margin-bottom:0" id="act-title">Recent Activity</div><button onclick="go('logs')" style="background:none;border:none;color:#818cf8;font-size:12px;font-weight:600;cursor:pointer">View All →</button></div>
                             <div class="activity-card" id="activity-list"><div class="empty">Loading...</div></div>
                         </div>
                         <div class="panel">
-                            <div class="panel-title">Quick Actions</div>
+                            <div class="panel-title" id="quick-title">Quick Actions</div>
                             <div style="display:flex;flex-direction:column;gap:6px">
                                 <button class="quick-btn q-blue" onclick="openUserModal()"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>Add User</button>
                                 <button class="quick-btn q-purple" onclick="go('users')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>Manage Users</button>
@@ -442,6 +469,87 @@
 
 <script>
 var KEY='',BASE='',CFG={},USERS=[],STATS={},CF_CB=null;
+var LANG=localStorage.getItem('mr_lang')||'en';
+var T={
+    en:{dashboard:'Dashboard',users:'Users',logs:'Logs',settings:'Settings',logout:'Logout',
+        totalUsers:'Total Users',active:'Active',paused:'Paused',disabled:'Disabled',traffic:'Traffic',
+        recentActivity:'Recent Activity',viewAll:'View All →',quickActions:'Quick Actions',
+        addUser:'Add User',manageUsers:'Manage Users',syncConfigs:'Sync Configs',refresh:'Refresh',
+        userManagement:'User Management',exportSelected:'Export Selected',select:'Select',
+        all:'All',name:'Name',status:'Status',expiry:'Expiry',actions:'Actions',
+        systemLogs:'System Logs',systemSettings:'System Settings',serverInfo:'Server Info',
+        apiKeys:'API Keys',addKey:'Add Key',subscription:'Subscription Link',
+        subscriptionMsg:'Copy this link and import it in your VPN client:',
+        copy:'Copy',close:'Close',cancel:'Cancel',save:'Save',delete2:'Delete',
+        areYouSure:'Are you sure?',cannotUndo:'This cannot be undone.',
+        wrongPassword:'Wrong password.',connectionError:'Connection error:',
+        signIn:'Sign In',signingIn:'Signing in...',systemOnline:'System Online',encrypted:'🔒 Encrypted',
+        enterPassword:'Enter your password',addUserTitle:'Add User',editUser:'Edit User',
+        username:'Username',notes:'Notes (Optional)',trafficAndExpiry:'Traffic & Expiry',
+        totalLimit:'Total Limit (reqs)',dailyLimit:'Daily Limit (reqs)',
+        expiryDays:'Expiry (days)',maxConfigs:'Max Configs',
+        networkSettings:'Network Settings',proxyIP:'Proxy IP',cleanIP:'Clean IP',
+        userMode:'User Mode',connectionLimit:'Connection Limit',ports:'Ports',nodes:'Nodes',
+        customPanelURL:'Custom Panel URL',enableNAT64:'Enable NAT64',
+        status:'Status',pauseUser:'Pause user',disabledReason:'Disabled Reason',
+        batchExport:'Batch Config Export',batchExportMsg:'No configs exported yet. Click "Export Selected" to fetch configs for selected users.',
+        copyAll:'Copy All',addKeyName:'Key Name',create:'Create',
+        default:'Default',unlimited:'unlimited',never:'Never',viewLogs:'View Logs',
+        enable:'Enable',connectionError2:'Connection error'},
+    fa:{dashboard:'داشبورد',users:'کاربران',logs:'لاگ‌ها',settings:'تنظیمات',logout:'خروج',
+        totalUsers:'کل کاربران',active:'فعال',paused:'متوقف',disabled:'غیرفعال',traffic:'ترافیک',
+        recentActivity:'فعالیت اخیر',viewAll:'مشاهده همه ←',quickActions:'عملیات سریع',
+        addUser:'افزودن کاربر',manageUsers:'مدیریت کاربران',syncConfigs:'همگام‌سازی کانفیگ‌ها',refresh:'بروزرسانی',
+        userManagement:'مدیریت کاربران',exportSelected:'خروجی انتخاب شده',select:'انتخاب',
+        all:'همه',name:'نام',status:'وضعیت',expiry:'انقضا',actions:'عملیات',
+        systemLogs:'لاگ‌های سیستم',systemSettings:'تنظیمات سیستم',serverInfo:'اطلاعات سرور',
+        apiKeys:'کلیدهای API',addKey:'افزودن کلید',subscription:'لینک اشتراک',
+        subscriptionMsg:'این لینک رو کپی کنید و در VPN client ایمپورت کنید:',
+        copy:'کپی',close:'بستن',cancel:'لغو',save:'ذخیره',delete2:'حذف',
+        areYouSure:'مطمئنید؟',cannotUndo:'این عمل قابل بازگشت نیست.',
+        wrongPassword:'رمز عبور اشتباه.',connectionError:'خطای اتصال:',
+        signIn:'ورود',signingIn:'در حال ورود...',systemOnline:'سیستم آنلاین',encrypted:'🔒 رمزنگاری شده',
+        enterPassword:'رمز عبور را وارد کنید',addUserTitle:'افزودن کاربر',editUser:'ویرایش کاربر',
+        username:'نام کاربری',notes:'یادداشت (اختیاری)',trafficAndExpiry:'ترافیک و انقضا',
+        totalLimit:'حد کل (درخواست)',dailyLimit:'حد روزانه (درخواست)',
+        expiryDays:'انقضا (روز)',maxConfigs:'حداکثر کانفیگ',
+        networkSettings:'تنظیمات شبکه',proxyIP:'IP پروکسی',cleanIP:'IP تمیز',
+        userMode:'حالت کاربر',connectionLimit:'حد اتصال',ports:'پورت‌ها',nodes:'نودها',
+        customPanelURL:'آدرس پنل سفارشی',enableNAT64:'فعال‌سازی NAT64',
+        status:'وضعیت',pauseUser:'توقف کاربر',disabledReason:'دلیل غیرفعالسازی',
+        batchExport:'خروجی گروهی کانفیگ',batchExportMsg:'هنوز کانفیگی خروجی گرفته نشده. "خروجی انتخاب شده" را بزنید.',
+        copyAll:'کپی همه',addKeyName:'نام کلید',create:'ایجاد',
+        default:'پیش‌فرض',unlimited:'نامحدود',never:'هرگز',viewLogs:'مشاهده لاگ‌ها',
+        enable:'فعال',connectionError2:'خطای اتصال'}
+};
+
+function setDir(){
+    document.documentElement.dir=LANG==='fa'?'rtl':'ltr';
+    document.documentElement.lang=LANG;
+    document.getElementById('lang-label').textContent=LANG==='fa'?'EN':'FA';
+    applyTranslations();
+}
+
+function toggleLang(){
+    LANG=LANG==='en'?'fa':'en';
+    localStorage.setItem('mr_lang',LANG);
+    setDir();
+}
+
+function applyTranslations(){
+    var t=T[LANG];
+    var el;
+    el=document.getElementById('pg-title');if(el)el.textContent=t.dashboard;
+    el=document.getElementById('n-overview');if(el)el.innerHTML='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>'+t.dashboard;
+    el=document.getElementById('n-users');if(el)el.innerHTML='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>'+t.users;
+    el=document.getElementById('n-logs');if(el)el.innerHTML='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>'+t.logs;
+    el=document.getElementById('n-settings');if(el)el.innerHTML='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>'+t.settings;
+    var statsLabels=document.querySelectorAll('.stat-card .label');
+    var statsKeys=['totalUsers','active','paused','disabled','traffic'];
+    statsLabels.forEach(function(s,i){if(statsKeys[i])s.textContent=t[statsKeys[i]]});
+    el=document.getElementById('act-title');if(el)el.textContent=t.recentActivity;
+    el=document.getElementById('quick-title');if(el)el.textContent=t.quickActions;
+}
 
 function getBase(){
     var p=window.location.pathname.split('/').filter(Boolean);
@@ -473,7 +581,9 @@ function openSidebar(){
 function closeSidebar(){
     var sb=document.getElementById('sidebar');
     sb.classList.remove('open');
-    if(isMobile())sb.style.transform='translateX(-100%)';
+    if(isMobile()){
+        sb.style.transform=LANG==='fa'?'translateX(100%)':'translateX(-100%)';
+    }
     document.getElementById('mob-overlay').style.display='none';
 }
 
@@ -497,6 +607,7 @@ async function doLogin(){
             localStorage.setItem('mrk',KEY);
             document.getElementById('login-screen').style.display='none';
             document.getElementById('app').style.display='block';
+            setDir();
             applyResponsive();
             loadAll();
         }else{
