@@ -45,7 +45,7 @@
 ## 🌐 نحوه دسترسی به پنل / Access Links
 
 - **ورود به پنل مدیریت:**
-  `https://your-worker-domain.workers.dev/panel`
+  `https://your-worker-domain.workers.dev/mr/dash`
 
 ---
 
