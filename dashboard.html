@@ -59,6 +59,7 @@
         .sb-footer{padding:12px;border-top:1px solid rgba(255,255,255,.05)}
 
         #mob-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:45;display:none}
+        #main-content{margin-left:256px}
 
         .stat-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
         .stat-card{position:relative;overflow:hidden;background:rgba(15,23,42,.5);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:16px;transition:all .3s}
@@ -212,6 +213,7 @@
 
         /* ===== RTL ===== */
         [dir="rtl"] #sidebar{left:auto;right:0;border-right:none;border-left:1px solid rgba(255,255,255,.06)}
+        [dir="rtl"] #main-content{margin-left:0;margin-right:256px}
         [dir="rtl"] .nav-item{text-align:right}
         [dir="rtl"] .sb-logo{flex-direction:row-reverse}
         [dir="rtl"] .mobile-menu{margin-right:auto;margin-left:0}
@@ -228,6 +230,7 @@
         @media(max-width:768px){
             [dir="rtl"] #sidebar{transform:translateX(100%)}
             [dir="rtl"] #sidebar.open{transform:translateX(0)}
+            [dir="rtl"] #main-content{margin-left:0;margin-right:0}
         }
     </style>
 </head>
@@ -277,7 +280,7 @@
     </aside>
 
     <!-- MAIN -->
-    <main id="main-content" style="margin-left:256px;height:100vh;height:100dvh;display:flex;flex-direction:column;overflow:hidden;transition:margin-left .3s">
+    <main id="main-content" style="height:100vh;height:100dvh;display:flex;flex-direction:column;overflow:hidden;transition:margin-left .3s">
         <header style="height:56px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 20px" class="glass">
             <div style="display:flex;align-items:center;gap:12px">
                 <button class="mobile-menu" onclick="openSidebar()" style="padding:8px;border-radius:8px;background:none;border:1px solid rgba(255,255,255,.08);color:#94a3b8;cursor:pointer">
@@ -581,9 +584,7 @@ function openSidebar(){
 function closeSidebar(){
     var sb=document.getElementById('sidebar');
     sb.classList.remove('open');
-    if(isMobile()){
-        sb.style.transform=LANG==='fa'?'translateX(100%)':'translateX(-100%)';
-    }
+    sb.style.transform='';
     document.getElementById('mob-overlay').style.display='none';
 }
 
@@ -828,11 +829,11 @@ function go(tab){
         var v=document.getElementById('v-'+t);if(v)v.style.display=t===tab?'block':'none';
         var n=document.getElementById('n-'+t);if(n){n.classList.remove('active');if(t===tab)n.classList.add('active')}
     });
-    var titles={overview:'Dashboard',users:'Users',logs:'Logs',settings:'Settings'};
+    var titles=LANG==='fa'?{dashboard:'داشبورد',users:'کاربران',logs:'لاگ‌ها',settings:'تنظیمات'}:{dashboard:'Dashboard',users:'Users',logs:'Logs',settings:'Settings'};
     document.getElementById('pg-title').textContent=titles[tab]||tab;
     if(tab==='settings')loadSettings();
     if(tab==='logs')loadLogs();
-    closeSidebar();
+    if(isMobile())closeSidebar();
 }
 
 function openModal(id){document.getElementById(id).classList.add('open')}
@@ -840,16 +841,8 @@ function closeModal(id){document.getElementById(id).classList.remove('open')}
 
 function applyResponsive(){
     var sb=document.getElementById('sidebar');
-    var mc=document.querySelector('.mobile-menu');
-    var mc_=document.getElementById('main-content');
-    if(isMobile()){
-        if(!sb.classList.contains('open'))sb.style.transform='translateX(-100%)';
-        mc_.style.marginLeft='0';
-        mc.style.display='block';
-    }else{
+    if(!isMobile()){
         sb.style.transform='';sb.classList.remove('open');
-        mc_.style.marginLeft='256px';
-        mc.style.display='none';
         document.getElementById('mob-overlay').style.display='none';
     }
 }
