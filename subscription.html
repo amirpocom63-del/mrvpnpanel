@@ -276,8 +276,8 @@ function fetchRawConfigs(){
     var params=new URLSearchParams(window.location.search);
     var userName=params.get('sub');
 
-    var targetUrl=window.location.href;
-    var proxyUrl=CONFIG.PROXY;
+    var targetUrl=window.location.origin+window.location.pathname+'?sub='+encodeURIComponent(userName);
+    var proxyUrl=CONFIG.PROXY+'?url='+encodeURIComponent(targetUrl);
 
     fetch(proxyUrl)
     .then(function(r){
