@@ -54,7 +54,7 @@
         .step-text strong{color:#e2e8f0}
         .qr-section{padding:24px;text-align:center;margin-bottom:16px}
         .qr-title{font-size:12px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.04em;margin-bottom:16px}
-        .qr-box{display:inline-flex;align-items:center;justify-content-center;width:180px;height:180px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);overflow:hidden}
+        .qr-box{display:inline-flex;align-items:center;justify-content:center;width:180px;height:180px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);overflow:hidden}
         .qr-box svg{width:48px;height:48px;color:#475569}
         .qr-box img{width:160px;height:160px;border-radius:8px}
         .qr-hint{font-size:11px;color:#64748b;margin-top:12px}
@@ -167,28 +167,6 @@
             </div>
             <div class="qr-hint">Scan with VPN app to import directly</div>
         </div>
-
-        <!-- BATCH CONFIG COPY SECTION -->
-        <div class="configs-section glass-card animate delay3">
-            <div class="configs-title">Batch Config Export</div>
-            <div style="margin-bottom:12px">
-                <input type="text" id="batch-users" class="glass-input" placeholder="Enter sub-accounts to export (comma separated, e.g. user1,user2,all)" style="margin-bottom:8px" />
-                <div style="display:flex;gap:8px;flex-wrap:wrap">
-                    <button class="configs-btn" onclick="fetchBatchConfigs()" style="flex:1;min-width:120px">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
-                        Export & Copy All
-                    </button>
-                    <button class="configs-btn" onclick="copyBatchConfigs()" id="batch-copy-btn" style="flex:1;min-width:120px;background:linear-gradient(135deg,#059669,#10b981)">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-                        Copy Batch
-                    </button>
-                </div>
-            </div>
-            <div class="configs-box" id="batch-configs-box">
-                <pre id="batch-configs-text"></pre>
-                <button class="copy-all" onclick="copyBatchConfigs()">Copy All Exported Configs</button>
-            </div>
-        </div>
     </div>
 
     <div class="footer">Powered by <a href="https://github.com/amirpocom63-del/mrvpnpanel" target="_blank">MrVpn294</a></div>
@@ -208,13 +186,10 @@
     document.getElementById('sub-url').textContent=subUrl;
     generateQR(subUrl);
 
-    // Try to get user data from the page (worker may inject it)
-    // or from the API if the key is available
     tryFetchUserData(userName, BASE);
 })();
 
 function tryFetchUserData(name, base){
-    // The worker may have injected user data as a global variable
     if(typeof window.__USER_DATA__!=='undefined'){
         renderStats(window.__USER_DATA__);
         return;
@@ -224,10 +199,8 @@ function tryFetchUserData(name, base){
         return;
     }
 
-    // Try fetching from API with stored key
     var key=localStorage.getItem('mr_master_key')||'';
     if(!key){
-        // No key available, just show the subscription URL (still works for VPN clients)
         document.getElementById('u-status').textContent='VPN clients can import this URL';
         return;
     }
@@ -314,10 +287,10 @@ function fetchRawConfigs(){
             rawConfigs=data.trim();
             document.getElementById('configs-text').textContent=rawConfigs;
             box.classList.add('show');
-            btn.innerHTML='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Configs Loaded!';
+            btn.innerHTML='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Copied to Clipboard!';
             btn.style.background='linear-gradient(135deg,#059669,#10b981)';
+            copyToClipboard(rawConfigs).then(function(){showToast('All configs copied!')}).catch(function(){showToast('Copy failed')});
         }else{
-            // Fallback: try with different headers
             fetch(subUrl,{
                 headers:{
                     'Accept':'*/*',
@@ -330,8 +303,9 @@ function fetchRawConfigs(){
                     rawConfigs=data2.trim();
                     document.getElementById('configs-text').textContent=rawConfigs;
                     box.classList.add('show');
-                    btn.innerHTML='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Configs Loaded!';
+                    btn.innerHTML='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Copied to Clipboard!';
                     btn.style.background='linear-gradient(135deg,#059669,#10b981)';
+                    copyToClipboard(rawConfigs).then(function(){showToast('All configs copied!')}).catch(function(){showToast('Copy failed')});
                 }else{
                     btn.innerHTML='No configs found';
                     btn.style.background='linear-gradient(135deg,#dc2626,#ef4444)';
@@ -367,54 +341,6 @@ function copyToClipboard(text){
         try{document.execCommand('copy');resolve()}catch(e){reject(e)}
         document.body.removeChild(ta);
     });
-}
-
-var batchRawConfigs='';
-
-function fetchBatchConfigs(){
-    var input=document.getElementById('batch-users').value.trim();
-    if(!input){showToast('Enter usernames or "all"');return}
-    var btn=document.getElementById('fetch-configs-btn');
-    var box=document.getElementById('batch-configs-box');
-    var originalBtn=btn.innerHTML;
-    btn.disabled=true;
-    btn.innerHTML='<svg style="animation:spin 1s linear infinite" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg> Fetching...';
-
-    var params=new URLSearchParams(window.location.search);
-    var userName=params.get('sub');
-    var BASE=window.location.origin+'/'+(window.location.pathname.split('/').filter(Boolean)[0]||'mr');
-    var users=input.toLowerCase()==='all'?[userName||'']:input.split(',').map(function(u){return u.trim()}).filter(function(u){return u});
-
-    var allConfigs='';
-    var promises=users.map(function(u){
-        var subUrl=BASE+'?sub='+encodeURIComponent(u);
-        return fetch(subUrl,{headers:{'Accept':'text/plain, application/octet-stream, */*','User-Agent':'ClashForAndroid/2.5.12'}})
-        .then(function(r){return r.text()})
-        .then(function(data){
-            if(data&&data.indexOf('://')>-1){
-                allConfigs+='\n=== Config for: '+u+' ===\n'+data.trim()+'\n';
-            }
-        }).catch(function(){return Promise.resolve()});
-    });
-
-    Promise.all(promises).then(function(){
-        if(!allConfigs.trim()){
-            btn.innerHTML='No configs found';btn.style.background='linear-gradient(135deg,#dc2626,#ef4444)';
-            setTimeout(function(){btn.innerHTML=originalBtn;btn.style.background='';btn.disabled=false},2000);
-            return;
-        }
-        batchRawConfigs=allConfigs.trim();
-        document.getElementById('batch-configs-text').textContent=batchRawConfigs;
-        box.classList.add('show');
-        btn.innerHTML='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Configs Ready!';
-        btn.style.background='linear-gradient(135deg,#059669,#10b981)';
-        btn.disabled=false;
-    });
-}
-
-function copyBatchConfigs(){
-    if(!batchRawConfigs){showToast('No batch configs to copy');return}
-    copyToClipboard(batchRawConfigs).then(function(){showToast('Batch configs copied!')}).catch(function(){showToast('Copy failed')});
 }
 </script>
 </body>
